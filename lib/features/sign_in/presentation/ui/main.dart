@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mumag/common/services/authentication/auth_provider.dart';
 
 class SignInView extends ConsumerWidget {
@@ -7,6 +8,8 @@ class SignInView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final googleSignIn = GoogleSignIn();
+
     return Scaffold(
       appBar: AppBar(),
       body: Column(

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "219114654985",
+    "project_id": "mu-mag",
+    "storage_bucket": "mu-mag.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219114654985:android:3f7f7253fac50882e857d8",
+        "android_client_info": {
+          "package_name": "com.example.mumag"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "219114654985-8oe0tnnh5li7ub0hu1nc7m6ro39g8pgh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcCq8E9_7iV3IJad3OpzBorpOZCJ3fCzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "219114654985-8oe0tnnh5li7ub0hu1nc7m6ro39g8pgh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
