@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -8,7 +11,31 @@ class SignInView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final googleSignIn = GoogleSignIn();
+    Future<UserCredential> signInWithGoogle() async {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    }
+
+    Future<void> onSignIn() async {
+      final credentials = await signInWithGoogle();
+      if (credentials.user == null) {
+        log('Null user');
+        return;
+      }
+
+      ref.read(isAuthProvider.notifier).trigger();
+
+      log(credentials.user!.email.toString());
+    }
 
     return Scaffold(
       appBar: AppBar(),
@@ -17,7 +44,7 @@ class SignInView extends ConsumerWidget {
           const Text('Sign In Page'),
           ElevatedButton(
             onPressed: ref.read(isAuthProvider.notifier).trigger,
-            child: const Text('Logar'),
+            child: const Text('Sign In With Google'),
           )
         ],
       ),
