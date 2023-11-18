@@ -32,6 +32,8 @@ class SignInView extends ConsumerWidget {
         return;
       }
 
+      log('VIM PRA CÁ');
+
       ref.read(isAuthProvider.notifier).trigger();
 
       log(credentials.user!.email.toString());
@@ -43,7 +45,7 @@ class SignInView extends ConsumerWidget {
         children: [
           const Text('Sign In Page'),
           ElevatedButton(
-            onPressed: ref.read(isAuthProvider.notifier).trigger,
+            onPressed: onSignIn,
             child: const Text('Sign In With Google'),
           )
         ],
