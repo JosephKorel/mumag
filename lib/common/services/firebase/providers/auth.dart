@@ -5,13 +5,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'auth.g.dart';
 
 @riverpod
-FirebaseAuth authInstance(AuthInstanceRef ref) {
-  return FirebaseAuth.instance;
-}
-
-@riverpod
 FirebaseAuthService authService(AuthServiceRef ref) {
-  return FirebaseAuthService(ref.watch(authInstanceProvider));
+  return FirebaseAuthService(FirebaseAuth.instance);
 }
 
 @riverpod

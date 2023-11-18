@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mumag/common/services/authentication/auth_provider.dart';
+import 'package:mumag/common/services/firebase/providers/auth.dart';
 import 'package:mumag/routes/routes.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -9,14 +9,14 @@ part 'router.g.dart';
 @riverpod
 GoRouter router(RouterRef ref) {
   final routerKey = GlobalKey<NavigatorState>(debugLabel: 'routerKey');
-  final isAuth = ValueNotifier<AsyncValue<bool>>(const AsyncData(false));
+  final isAuth = ValueNotifier<AsyncValue<bool>>(const AsyncLoading());
 
   ref
     ..onDispose(isAuth.dispose)
     ..listen(
-      isAuthProvider.select((value) => value.whenData((value) => value)),
+      authStreamProvider.select((value) => value.whenData((value) => value)),
       (_, next) {
-        isAuth.value = next;
+        isAuth.value = AsyncData(next.requireValue != null);
       },
     );
 

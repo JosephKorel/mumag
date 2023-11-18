@@ -6,21 +6,7 @@ part of 'auth.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authInstanceHash() => r'c93ae649db5649e8d3fbe9376a77c24f815cfa58';
-
-/// See also [authInstance].
-@ProviderFor(authInstance)
-final authInstanceProvider = AutoDisposeProvider<FirebaseAuth>.internal(
-  authInstance,
-  name: r'authInstanceProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$authInstanceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef AuthInstanceRef = AutoDisposeProviderRef<FirebaseAuth>;
-String _$authServiceHash() => r'4c67132ce7d00b9f773b81e938ac8c51c90dcb6b';
+String _$authServiceHash() => r'a56a0385ca8cbbee4ff3ebcc22faf5e3799685fd';
 
 /// See also [authService].
 @ProviderFor(authService)
