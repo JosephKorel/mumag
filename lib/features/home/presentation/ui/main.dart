@@ -1,27 +1,20 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotify_sdk/spotify_sdk.dart';
+import 'package:mumag/common/services/spotify/providers/api.dart';
 
 class HomeView extends ConsumerWidget {
   const HomeView({super.key});
 
-  static const url = 'https://mumagweb.com/auth';
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final authController = ref.watch(spotifyAuthProvider);
+
     Future<void> requestAccess() async {
       try {
-        final onConnect = await SpotifySdk.getAccessToken(
-            clientId: dotenv.env['SPOTIFY_CLIENT_ID']!,
-            redirectUrl: url,
-            scope:
-                'playlist-read-private,playlist-modify-private,playlist-modify-public');
-        log('TO CHEGANDO ATÉ AQUI');
-
-        log(onConnect.toString());
+        final token = await authController.connect();
+        ref.read(spotifyUserTokenProvider.notifier).updateToken(token: token);
       } catch (e) {
         log('DEU ERROO AQUI');
       }
@@ -33,8 +26,9 @@ class HomeView extends ConsumerWidget {
         children: [
           const Text('Home Page'),
           ElevatedButton(
-              onPressed: requestAccess,
-              child: const Text('CONNECT WITH SPOTIFY'))
+            onPressed: requestAccess,
+            child: const Text('CONNECT WITH SPOTIFY'),
+          )
         ],
       ),
     );

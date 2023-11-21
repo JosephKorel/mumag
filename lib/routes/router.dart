@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mumag/common/services/firebase/providers/auth.dart';
+import 'package:mumag/common/services/spotify/providers/api.dart';
 import 'package:mumag/routes/routes.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -10,6 +13,7 @@ part 'router.g.dart';
 GoRouter router(RouterRef ref) {
   final routerKey = GlobalKey<NavigatorState>(debugLabel: 'routerKey');
   final isAuth = ValueNotifier<AsyncValue<bool>>(const AsyncLoading());
+  final isConnected = ValueNotifier<String?>(null);
 
   ref
     ..onDispose(isAuth.dispose)
@@ -18,7 +22,12 @@ GoRouter router(RouterRef ref) {
       (_, next) {
         isAuth.value = AsyncData(next.requireValue != null);
       },
-    );
+    )
+    ..listen(spotifyUserTokenProvider, (_, next) {
+      isConnected.value = next;
+    });
+
+  log(isConnected.toString());
 
   return GoRouter(
     navigatorKey: routerKey,
@@ -43,6 +52,12 @@ GoRouter router(RouterRef ref) {
 
       final isLoggingIn = state.uri.path == const SignInRoute().location;
       if (isLoggingIn) return auth ? const HomeRoute().location : null;
+
+      final isHome = state.uri.path == const HomeRoute().location;
+      if (isHome) {
+        log('Vim pra cá');
+        return isConnected.value == null ? null : const ProfileRoute().location;
+      }
 
       return auth ? null : const SplashRoute().location;
     },

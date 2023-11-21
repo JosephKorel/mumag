@@ -6,27 +6,11 @@ part of 'api.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$clientCredentialsHash() => r'6ee86227e4f694096fa7e897504e631078c64315';
-
-/// See also [clientCredentials].
-@ProviderFor(clientCredentials)
-final clientCredentialsProvider =
-    AutoDisposeProvider<SpotifyApiCredentials>.internal(
-  clientCredentials,
-  name: r'clientCredentialsProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$clientCredentialsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef ClientCredentialsRef = AutoDisposeProviderRef<SpotifyApiCredentials>;
-String _$spotifyAuthHash() => r'5343faf5765781e99c90a6161c7cf7952cb11fb6';
+String _$spotifyAuthHash() => r'2050a44168fb415417ba937c77e206229f306712';
 
 /// See also [spotifyAuth].
 @ProviderFor(spotifyAuth)
-final spotifyAuthProvider = AutoDisposeProvider<SpotifyAuth>.internal(
+final spotifyAuthProvider = AutoDisposeProvider<SpotifyAuthController>.internal(
   spotifyAuth,
   name: r'spotifyAuthProvider',
   debugGetCreateSourceHash:
@@ -35,36 +19,36 @@ final spotifyAuthProvider = AutoDisposeProvider<SpotifyAuth>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef SpotifyAuthRef = AutoDisposeProviderRef<SpotifyAuth>;
-String _$spotifyClientHash() => r'1bcbc48dd4bb2b4c74c597a1595a416671941b21';
+typedef SpotifyAuthRef = AutoDisposeProviderRef<SpotifyAuthController>;
+String _$spotifyApiHash() => r'eb3e6500afe8bc62ff3510805aa8912333d50279';
 
-/// See also [spotifyClient].
-@ProviderFor(spotifyClient)
-final spotifyClientProvider = AutoDisposeProvider<SpotifyApi>.internal(
-  spotifyClient,
-  name: r'spotifyClientProvider',
+/// See also [spotifyApi].
+@ProviderFor(spotifyApi)
+final spotifyApiProvider = AutoDisposeProvider<SpotifyApi>.internal(
+  spotifyApi,
+  name: r'spotifyApiProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$spotifyApiHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef SpotifyApiRef = AutoDisposeProviderRef<SpotifyApi>;
+String _$spotifyUserTokenHash() => r'a548c206b099003f228a8205c921b2caf7c4c93b';
+
+/// See also [SpotifyUserToken].
+@ProviderFor(SpotifyUserToken)
+final spotifyUserTokenProvider =
+    AutoDisposeNotifierProvider<SpotifyUserToken, String?>.internal(
+  SpotifyUserToken.new,
+  name: r'spotifyUserTokenProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$spotifyClientHash,
+      : _$spotifyUserTokenHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef SpotifyClientRef = AutoDisposeProviderRef<SpotifyApi>;
-String _$linkListenerHash() => r'bb46bdefdbeace8d8faa83a4516dfaa4bd0a1a28';
-
-/// See also [linkListener].
-@ProviderFor(linkListener)
-final linkListenerProvider =
-    AutoDisposeProvider<StreamSubscription<Uri?>>.internal(
-  linkListener,
-  name: r'linkListenerProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$linkListenerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef LinkListenerRef = AutoDisposeProviderRef<StreamSubscription<Uri?>>;
+typedef _$SpotifyUserToken = AutoDisposeNotifier<String?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
