@@ -5,6 +5,10 @@ final class FirebaseAuthService {
 
   final FirebaseAuth _instance;
 
+  User? currentUser() {
+    return _instance.currentUser;
+  }
+
   Stream<User?> authenticatedUser() {
     return _instance.authStateChanges();
   }
