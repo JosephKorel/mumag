@@ -26,7 +26,7 @@ class HomeView extends ConsumerWidget {
 
     Future<void> checkValues() async {
       try {
-        await ref.read(spotifyAuthProvider).authenticate();
+        await ref.read(spotifyClientProvider.notifier).updateCredentials();
       } catch (e) {
         log('DEU ERROO AQUI');
         log(e.toString());

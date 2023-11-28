@@ -48,14 +48,16 @@ final class SpotifyAuthController {
       );
 
       final authResp = await client.requestAuthorization(
-          clientId: clientId,
-          customParams: {'show_dialog': 'true'},
-          scopes: scope.split(','));
+        clientId: clientId,
+        customParams: {'show_dialog': 'true'},
+        scopes: scope.split(','),
+      );
 
       final accessToken = await client.requestAccessToken(
         code: authResp.code.toString(),
         clientId: clientId,
         clientSecret: clientSecret,
+        scopes: scope.split(','),
       );
 
       log('ACCESS TOKEN IS ${accessToken.accessToken}');
@@ -67,7 +69,7 @@ final class SpotifyAuthController {
         accessToken: accessToken.accessToken,
         refreshToken: accessToken.refreshToken,
         expiration: accessToken.expirationDate,
-        scopes: scope.split(','),
+        scopes: accessToken.scope,
       );
     } catch (e) {
       rethrow;
