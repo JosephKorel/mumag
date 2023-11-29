@@ -2,10 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mumag/common/services/spotify/domain/auth.dart';
+import 'package:mumag/common/services/shared_pref/providers/shared_pref.dart';
 import 'package:mumag/common/services/spotify/providers/api.dart';
 import 'package:mumag/common/services/spotify/providers/auth.dart';
-import 'package:spotify/spotify.dart';
 
 class HomeView extends ConsumerWidget {
   const HomeView({super.key});
@@ -13,7 +12,8 @@ class HomeView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authController = ref.watch(spotifyAuthProvider);
-    final spotify = SpotifyApi(ref.watch(spotifyClientProvider));
+    /* final spotify =
+        SpotifyApi(ref.watch(credentialsControllerProvider).credentials); */
 
     Future<void> requestAccess() async {
       try {
@@ -33,7 +33,7 @@ class HomeView extends ConsumerWidget {
       }
     }
 
-    Future<void> checkUser() async {
+    /* Future<void> checkUser() async {
       try {
         var newCredentials = await spotify.getCredentials();
 
@@ -54,6 +54,10 @@ class HomeView extends ConsumerWidget {
         log('DEU ERROO AQUI');
         log(e.toString());
       }
+    } */
+
+    void checkUser() {
+      ref.read(credentialsImplementationProvider).deleteCredentials();
     }
 
     return Scaffold(

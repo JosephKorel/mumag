@@ -24,8 +24,8 @@ AuthState _$AuthStateFromJson(Map<String, dynamic> json) {
       return Loading.fromJson(json);
     case 'authenticated':
       return Authenticated.fromJson(json);
-    case 'hasPermissions':
-      return HasPermissions.fromJson(json);
+    case 'hasCredentials':
+      return HasCredentials.fromJson(json);
 
     default:
       throw CheckedFromJsonException(json, 'runtimeType', 'AuthState',
@@ -41,7 +41,7 @@ mixin _$AuthState {
     required TResult Function() unauthenticated,
     required TResult Function() loading,
     required TResult Function() authenticated,
-    required TResult Function() hasPermissions,
+    required TResult Function() hasCredentials,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -50,7 +50,7 @@ mixin _$AuthState {
     TResult? Function()? unauthenticated,
     TResult? Function()? loading,
     TResult? Function()? authenticated,
-    TResult? Function()? hasPermissions,
+    TResult? Function()? hasCredentials,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -59,7 +59,7 @@ mixin _$AuthState {
     TResult Function()? unauthenticated,
     TResult Function()? loading,
     TResult Function()? authenticated,
-    TResult Function()? hasPermissions,
+    TResult Function()? hasCredentials,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -69,7 +69,7 @@ mixin _$AuthState {
     required TResult Function(Unauthenticated value) unauthenticated,
     required TResult Function(Loading value) loading,
     required TResult Function(Authenticated value) authenticated,
-    required TResult Function(HasPermissions value) hasPermissions,
+    required TResult Function(HasCredentials value) hasCredentials,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -78,7 +78,7 @@ mixin _$AuthState {
     TResult? Function(Unauthenticated value)? unauthenticated,
     TResult? Function(Loading value)? loading,
     TResult? Function(Authenticated value)? authenticated,
-    TResult? Function(HasPermissions value)? hasPermissions,
+    TResult? Function(HasCredentials value)? hasCredentials,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -87,7 +87,7 @@ mixin _$AuthState {
     TResult Function(Unauthenticated value)? unauthenticated,
     TResult Function(Loading value)? loading,
     TResult Function(Authenticated value)? authenticated,
-    TResult Function(HasPermissions value)? hasPermissions,
+    TResult Function(HasCredentials value)? hasCredentials,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -160,7 +160,7 @@ class _$AuthStateImpl implements _AuthState {
     required TResult Function() unauthenticated,
     required TResult Function() loading,
     required TResult Function() authenticated,
-    required TResult Function() hasPermissions,
+    required TResult Function() hasCredentials,
   }) {
     return $default();
   }
@@ -172,7 +172,7 @@ class _$AuthStateImpl implements _AuthState {
     TResult? Function()? unauthenticated,
     TResult? Function()? loading,
     TResult? Function()? authenticated,
-    TResult? Function()? hasPermissions,
+    TResult? Function()? hasCredentials,
   }) {
     return $default?.call();
   }
@@ -184,7 +184,7 @@ class _$AuthStateImpl implements _AuthState {
     TResult Function()? unauthenticated,
     TResult Function()? loading,
     TResult Function()? authenticated,
-    TResult Function()? hasPermissions,
+    TResult Function()? hasCredentials,
     required TResult orElse(),
   }) {
     if ($default != null) {
@@ -200,7 +200,7 @@ class _$AuthStateImpl implements _AuthState {
     required TResult Function(Unauthenticated value) unauthenticated,
     required TResult Function(Loading value) loading,
     required TResult Function(Authenticated value) authenticated,
-    required TResult Function(HasPermissions value) hasPermissions,
+    required TResult Function(HasCredentials value) hasCredentials,
   }) {
     return $default(this);
   }
@@ -212,7 +212,7 @@ class _$AuthStateImpl implements _AuthState {
     TResult? Function(Unauthenticated value)? unauthenticated,
     TResult? Function(Loading value)? loading,
     TResult? Function(Authenticated value)? authenticated,
-    TResult? Function(HasPermissions value)? hasPermissions,
+    TResult? Function(HasCredentials value)? hasCredentials,
   }) {
     return $default?.call(this);
   }
@@ -224,7 +224,7 @@ class _$AuthStateImpl implements _AuthState {
     TResult Function(Unauthenticated value)? unauthenticated,
     TResult Function(Loading value)? loading,
     TResult Function(Authenticated value)? authenticated,
-    TResult Function(HasPermissions value)? hasPermissions,
+    TResult Function(HasCredentials value)? hasCredentials,
     required TResult orElse(),
   }) {
     if ($default != null) {
@@ -298,7 +298,7 @@ class _$UnauthenticatedImpl implements Unauthenticated {
     required TResult Function() unauthenticated,
     required TResult Function() loading,
     required TResult Function() authenticated,
-    required TResult Function() hasPermissions,
+    required TResult Function() hasCredentials,
   }) {
     return unauthenticated();
   }
@@ -310,7 +310,7 @@ class _$UnauthenticatedImpl implements Unauthenticated {
     TResult? Function()? unauthenticated,
     TResult? Function()? loading,
     TResult? Function()? authenticated,
-    TResult? Function()? hasPermissions,
+    TResult? Function()? hasCredentials,
   }) {
     return unauthenticated?.call();
   }
@@ -322,7 +322,7 @@ class _$UnauthenticatedImpl implements Unauthenticated {
     TResult Function()? unauthenticated,
     TResult Function()? loading,
     TResult Function()? authenticated,
-    TResult Function()? hasPermissions,
+    TResult Function()? hasCredentials,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -338,7 +338,7 @@ class _$UnauthenticatedImpl implements Unauthenticated {
     required TResult Function(Unauthenticated value) unauthenticated,
     required TResult Function(Loading value) loading,
     required TResult Function(Authenticated value) authenticated,
-    required TResult Function(HasPermissions value) hasPermissions,
+    required TResult Function(HasCredentials value) hasCredentials,
   }) {
     return unauthenticated(this);
   }
@@ -350,7 +350,7 @@ class _$UnauthenticatedImpl implements Unauthenticated {
     TResult? Function(Unauthenticated value)? unauthenticated,
     TResult? Function(Loading value)? loading,
     TResult? Function(Authenticated value)? authenticated,
-    TResult? Function(HasPermissions value)? hasPermissions,
+    TResult? Function(HasCredentials value)? hasCredentials,
   }) {
     return unauthenticated?.call(this);
   }
@@ -362,7 +362,7 @@ class _$UnauthenticatedImpl implements Unauthenticated {
     TResult Function(Unauthenticated value)? unauthenticated,
     TResult Function(Loading value)? loading,
     TResult Function(Authenticated value)? authenticated,
-    TResult Function(HasPermissions value)? hasPermissions,
+    TResult Function(HasCredentials value)? hasCredentials,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -435,7 +435,7 @@ class _$LoadingImpl implements Loading {
     required TResult Function() unauthenticated,
     required TResult Function() loading,
     required TResult Function() authenticated,
-    required TResult Function() hasPermissions,
+    required TResult Function() hasCredentials,
   }) {
     return loading();
   }
@@ -447,7 +447,7 @@ class _$LoadingImpl implements Loading {
     TResult? Function()? unauthenticated,
     TResult? Function()? loading,
     TResult? Function()? authenticated,
-    TResult? Function()? hasPermissions,
+    TResult? Function()? hasCredentials,
   }) {
     return loading?.call();
   }
@@ -459,7 +459,7 @@ class _$LoadingImpl implements Loading {
     TResult Function()? unauthenticated,
     TResult Function()? loading,
     TResult Function()? authenticated,
-    TResult Function()? hasPermissions,
+    TResult Function()? hasCredentials,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -475,7 +475,7 @@ class _$LoadingImpl implements Loading {
     required TResult Function(Unauthenticated value) unauthenticated,
     required TResult Function(Loading value) loading,
     required TResult Function(Authenticated value) authenticated,
-    required TResult Function(HasPermissions value) hasPermissions,
+    required TResult Function(HasCredentials value) hasCredentials,
   }) {
     return loading(this);
   }
@@ -487,7 +487,7 @@ class _$LoadingImpl implements Loading {
     TResult? Function(Unauthenticated value)? unauthenticated,
     TResult? Function(Loading value)? loading,
     TResult? Function(Authenticated value)? authenticated,
-    TResult? Function(HasPermissions value)? hasPermissions,
+    TResult? Function(HasCredentials value)? hasCredentials,
   }) {
     return loading?.call(this);
   }
@@ -499,7 +499,7 @@ class _$LoadingImpl implements Loading {
     TResult Function(Unauthenticated value)? unauthenticated,
     TResult Function(Loading value)? loading,
     TResult Function(Authenticated value)? authenticated,
-    TResult Function(HasPermissions value)? hasPermissions,
+    TResult Function(HasCredentials value)? hasCredentials,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -571,7 +571,7 @@ class _$AuthenticatedImpl implements Authenticated {
     required TResult Function() unauthenticated,
     required TResult Function() loading,
     required TResult Function() authenticated,
-    required TResult Function() hasPermissions,
+    required TResult Function() hasCredentials,
   }) {
     return authenticated();
   }
@@ -583,7 +583,7 @@ class _$AuthenticatedImpl implements Authenticated {
     TResult? Function()? unauthenticated,
     TResult? Function()? loading,
     TResult? Function()? authenticated,
-    TResult? Function()? hasPermissions,
+    TResult? Function()? hasCredentials,
   }) {
     return authenticated?.call();
   }
@@ -595,7 +595,7 @@ class _$AuthenticatedImpl implements Authenticated {
     TResult Function()? unauthenticated,
     TResult Function()? loading,
     TResult Function()? authenticated,
-    TResult Function()? hasPermissions,
+    TResult Function()? hasCredentials,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -611,7 +611,7 @@ class _$AuthenticatedImpl implements Authenticated {
     required TResult Function(Unauthenticated value) unauthenticated,
     required TResult Function(Loading value) loading,
     required TResult Function(Authenticated value) authenticated,
-    required TResult Function(HasPermissions value) hasPermissions,
+    required TResult Function(HasCredentials value) hasCredentials,
   }) {
     return authenticated(this);
   }
@@ -623,7 +623,7 @@ class _$AuthenticatedImpl implements Authenticated {
     TResult? Function(Unauthenticated value)? unauthenticated,
     TResult? Function(Loading value)? loading,
     TResult? Function(Authenticated value)? authenticated,
-    TResult? Function(HasPermissions value)? hasPermissions,
+    TResult? Function(HasCredentials value)? hasCredentials,
   }) {
     return authenticated?.call(this);
   }
@@ -635,7 +635,7 @@ class _$AuthenticatedImpl implements Authenticated {
     TResult Function(Unauthenticated value)? unauthenticated,
     TResult Function(Loading value)? loading,
     TResult Function(Authenticated value)? authenticated,
-    TResult Function(HasPermissions value)? hasPermissions,
+    TResult Function(HasCredentials value)? hasCredentials,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -660,42 +660,42 @@ abstract class Authenticated implements AuthState {
 }
 
 /// @nodoc
-abstract class _$$HasPermissionsImplCopyWith<$Res> {
-  factory _$$HasPermissionsImplCopyWith(_$HasPermissionsImpl value,
-          $Res Function(_$HasPermissionsImpl) then) =
-      __$$HasPermissionsImplCopyWithImpl<$Res>;
+abstract class _$$HasCredentialsImplCopyWith<$Res> {
+  factory _$$HasCredentialsImplCopyWith(_$HasCredentialsImpl value,
+          $Res Function(_$HasCredentialsImpl) then) =
+      __$$HasCredentialsImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$HasPermissionsImplCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$HasPermissionsImpl>
-    implements _$$HasPermissionsImplCopyWith<$Res> {
-  __$$HasPermissionsImplCopyWithImpl(
-      _$HasPermissionsImpl _value, $Res Function(_$HasPermissionsImpl) _then)
+class __$$HasCredentialsImplCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$HasCredentialsImpl>
+    implements _$$HasCredentialsImplCopyWith<$Res> {
+  __$$HasCredentialsImplCopyWithImpl(
+      _$HasCredentialsImpl _value, $Res Function(_$HasCredentialsImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$HasPermissionsImpl implements HasPermissions {
-  _$HasPermissionsImpl({final String? $type})
-      : $type = $type ?? 'hasPermissions';
+class _$HasCredentialsImpl implements HasCredentials {
+  _$HasCredentialsImpl({final String? $type})
+      : $type = $type ?? 'hasCredentials';
 
-  factory _$HasPermissionsImpl.fromJson(Map<String, dynamic> json) =>
-      _$$HasPermissionsImplFromJson(json);
+  factory _$HasCredentialsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$HasCredentialsImplFromJson(json);
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString() {
-    return 'AuthState.hasPermissions()';
+    return 'AuthState.hasCredentials()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$HasPermissionsImpl);
+        (other.runtimeType == runtimeType && other is _$HasCredentialsImpl);
   }
 
   @JsonKey(ignore: true)
@@ -709,9 +709,9 @@ class _$HasPermissionsImpl implements HasPermissions {
     required TResult Function() unauthenticated,
     required TResult Function() loading,
     required TResult Function() authenticated,
-    required TResult Function() hasPermissions,
+    required TResult Function() hasCredentials,
   }) {
-    return hasPermissions();
+    return hasCredentials();
   }
 
   @override
@@ -721,9 +721,9 @@ class _$HasPermissionsImpl implements HasPermissions {
     TResult? Function()? unauthenticated,
     TResult? Function()? loading,
     TResult? Function()? authenticated,
-    TResult? Function()? hasPermissions,
+    TResult? Function()? hasCredentials,
   }) {
-    return hasPermissions?.call();
+    return hasCredentials?.call();
   }
 
   @override
@@ -733,11 +733,11 @@ class _$HasPermissionsImpl implements HasPermissions {
     TResult Function()? unauthenticated,
     TResult Function()? loading,
     TResult Function()? authenticated,
-    TResult Function()? hasPermissions,
+    TResult Function()? hasCredentials,
     required TResult orElse(),
   }) {
-    if (hasPermissions != null) {
-      return hasPermissions();
+    if (hasCredentials != null) {
+      return hasCredentials();
     }
     return orElse();
   }
@@ -749,9 +749,9 @@ class _$HasPermissionsImpl implements HasPermissions {
     required TResult Function(Unauthenticated value) unauthenticated,
     required TResult Function(Loading value) loading,
     required TResult Function(Authenticated value) authenticated,
-    required TResult Function(HasPermissions value) hasPermissions,
+    required TResult Function(HasCredentials value) hasCredentials,
   }) {
-    return hasPermissions(this);
+    return hasCredentials(this);
   }
 
   @override
@@ -761,9 +761,9 @@ class _$HasPermissionsImpl implements HasPermissions {
     TResult? Function(Unauthenticated value)? unauthenticated,
     TResult? Function(Loading value)? loading,
     TResult? Function(Authenticated value)? authenticated,
-    TResult? Function(HasPermissions value)? hasPermissions,
+    TResult? Function(HasCredentials value)? hasCredentials,
   }) {
-    return hasPermissions?.call(this);
+    return hasCredentials?.call(this);
   }
 
   @override
@@ -773,26 +773,26 @@ class _$HasPermissionsImpl implements HasPermissions {
     TResult Function(Unauthenticated value)? unauthenticated,
     TResult Function(Loading value)? loading,
     TResult Function(Authenticated value)? authenticated,
-    TResult Function(HasPermissions value)? hasPermissions,
+    TResult Function(HasCredentials value)? hasCredentials,
     required TResult orElse(),
   }) {
-    if (hasPermissions != null) {
-      return hasPermissions(this);
+    if (hasCredentials != null) {
+      return hasCredentials(this);
     }
     return orElse();
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$HasPermissionsImplToJson(
+    return _$$HasCredentialsImplToJson(
       this,
     );
   }
 }
 
-abstract class HasPermissions implements AuthState {
-  factory HasPermissions() = _$HasPermissionsImpl;
+abstract class HasCredentials implements AuthState {
+  factory HasCredentials() = _$HasCredentialsImpl;
 
-  factory HasPermissions.fromJson(Map<String, dynamic> json) =
-      _$HasPermissionsImpl.fromJson;
+  factory HasCredentials.fromJson(Map<String, dynamic> json) =
+      _$HasCredentialsImpl.fromJson;
 }

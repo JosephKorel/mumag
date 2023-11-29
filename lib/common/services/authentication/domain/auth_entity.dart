@@ -13,7 +13,7 @@ class AuthState with _$AuthState {
 
   factory AuthState.authenticated() = Authenticated;
 
-  factory AuthState.hasPermissions() = HasPermissions;
+  factory AuthState.hasCredentials() = HasCredentials;
 
   factory AuthState.fromJson(Map<String, dynamic> json) =>
       _$AuthStateFromJson(json);

@@ -36,7 +36,7 @@ final capabilitiesProvider =
 );
 
 typedef CapabilitiesRef = AutoDisposeStreamProviderRef<ConnectionStatus>;
-String _$spotifyClientHash() => r'738cf151e9f5d64f25649fc119ab8dd4071a8a01';
+String _$spotifyClientHash() => r'2049f059b6934f7f974eca779243dbc3b8fdd813';
 
 /// See also [SpotifyClient].
 @ProviderFor(SpotifyClient)

@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:mumag/common/services/authentication/domain/auth_entity.dart';
 import 'package:mumag/common/services/authentication/providers/auth.dart';
 import 'package:mumag/common/services/firebase/providers/auth.dart';
+import 'package:mumag/common/services/shared_pref/providers/shared_pref.dart';
+import 'package:mumag/common/services/spotify/providers/credentials.dart';
 import 'package:mumag/routes/routes.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -35,34 +37,33 @@ GoRouter router(RouterRef ref) {
     ..listen(
       authStreamProvider.select((value) => value.whenData((value) => value)),
       (prev, next) {
-        ref.read(authStateControllerProvider.notifier).updateState(
-              next.requireValue == null ? Unauthenticated() : Authenticated(),
-            );
+        if (next.requireValue != null) {
+          /* ref
+              .read(authStateControllerProvider.notifier)
+              .updateState(Authenticated()); */
+
+          final credentials =
+              ref.read(credentialsImplementationProvider).retrieveCredentials();
+
+          if (credentials != null) {
+            ref
+                .read(authStateControllerProvider.notifier)
+                .updateState(HasCredentials());
+          } else {
+            ref
+                .read(authStateControllerProvider.notifier)
+                .updateState(Authenticated());
+          }
+        }
       },
     )
-    /* ..listen(spotifyPermissionsProvider, (prev, next) {
-      log('Changed from: $prev, next: $next');
-
-      if (next.isLoading || next.hasError) {
-        return;
-      }
-
-      if (next.requireValue == null) {
-        return;
-      }
-
-      if (next.requireValue!.connected) {
+    ..listen(credentialsControllerProvider, (previous, next) {
+      if (next != null) {
         ref
             .read(authStateControllerProvider.notifier)
-            .updateState(HasPermissions());
+            .updateState(HasCredentials());
       }
-
-      /* if (next.requireValue.isLoggedIn()) {
-        ref
-            .read(authStateControllerProvider.notifier)
-            .updateState(HasPermissions());
-      } */
-    }) */
+    })
     ..listen(authStateControllerProvider, (prev, next) {
       log('Changed from: $prev, next: $next');
       isAuth.value = next;
@@ -99,7 +100,7 @@ GoRouter router(RouterRef ref) {
             log('É AUTENTICADO');
             return const HomeRoute().location;
           },
-          hasPermissions: () {
+          hasCredentials: () {
             log('É CONNECTADO');
 
             return const ProfileRoute().location;

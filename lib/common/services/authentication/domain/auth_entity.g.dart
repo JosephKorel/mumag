@@ -48,13 +48,13 @@ Map<String, dynamic> _$$AuthenticatedImplToJson(_$AuthenticatedImpl instance) =>
       'runtimeType': instance.$type,
     };
 
-_$HasPermissionsImpl _$$HasPermissionsImplFromJson(Map<String, dynamic> json) =>
-    _$HasPermissionsImpl(
+_$HasCredentialsImpl _$$HasCredentialsImplFromJson(Map<String, dynamic> json) =>
+    _$HasCredentialsImpl(
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$HasPermissionsImplToJson(
-        _$HasPermissionsImpl instance) =>
+Map<String, dynamic> _$$HasCredentialsImplToJson(
+        _$HasCredentialsImpl instance) =>
     <String, dynamic>{
       'runtimeType': instance.$type,
     };

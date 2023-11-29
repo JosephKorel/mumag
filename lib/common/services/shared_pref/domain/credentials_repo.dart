@@ -1,7 +1,7 @@
-import 'package:mumag/common/services/shared_pref/domain/credentials_format.dart';
+import 'package:spotify/spotify.dart';
 
 abstract class SpotifyApiCredentialsRepository {
-  Future<bool> saveCredentials({required CredentialsFormat credentials});
+  Future<bool> saveCredentials({required SpotifyApiCredentials credentials});
 
-  CredentialsFormat? retrieveCredentials();
+  SpotifyApiCredentials? retrieveCredentials();
 }
