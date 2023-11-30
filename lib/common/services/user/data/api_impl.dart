@@ -26,4 +26,22 @@ final class UserApiUsecase extends UserApiUsecaseRepository {
       return ApiException(errorMsg: '', userMsg: '');
     });
   }
+
+  @override
+  ApiResult<UserEntity?> getUser({required GetParams getParams}) {
+    return TaskEither.tryCatch(() async {
+      final result = await _api.get(
+        path: _path,
+        query: getParams.toMap(),
+      );
+
+      if (result == null) {
+        return null;
+      }
+
+      return UserEntity.fromJson(result);
+    }, (o, s) {
+      return ApiException(errorMsg: '', userMsg: '');
+    });
+  }
 }

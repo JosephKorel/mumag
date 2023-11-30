@@ -13,8 +13,9 @@ void main() {
   final api = MockApi();
   final userApiUsecase = UserApiUsecase(api);
   final insertParams = InsertParams(email: 'joseph@email.com', name: 'Joseph');
+  final getParams = GetParams(email: 'joseph@email.com');
 
-  group('api impl ...', () {
+  group('User Api usecase implementation tests', () {
     test('Should insert user and return a user entity', () async {
       // arrange
       when(
@@ -50,6 +51,40 @@ void main() {
         user,
         isA<Left<AppException, UserEntity>>(),
       );
+    });
+
+    test('Should return null from get request', () async {
+      // arrange
+      when(
+        () => api.get(path: '/user', query: getParams.toMap()),
+      ).thenAnswer((_) async => null);
+
+      // prepare
+      final user = await userApiUsecase.getUser(getParams: getParams).run();
+
+      // assert
+      expect(
+        user,
+        const Right(null),
+      );
+    });
+
+    test('Should return UserEntity from get request', () async {
+      // arrange
+      when(
+        () => api.get(path: '/user', query: getParams.toMap()),
+      ).thenAnswer((_) async => {...insertParams.toMap(), 'id': 1});
+
+      // prepare
+      final user = await userApiUsecase.getUser(getParams: getParams).run();
+
+      // assert
+      expect(
+          user,
+          Right(
+            UserEntity(
+                id: 1, name: insertParams.name, email: insertParams.email),
+          ));
     });
   });
 }

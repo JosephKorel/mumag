@@ -13,3 +13,15 @@ class InsertParams extends UserDatabaseEvents {
     };
   }
 }
+
+class GetParams extends UserDatabaseEvents {
+  final String email;
+
+  GetParams({required this.email});
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'email': email,
+    };
+  }
+}
