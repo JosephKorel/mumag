@@ -3,61 +3,30 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/services/shared_pref/providers/shared_pref.dart';
-import 'package:mumag/common/services/spotify/providers/api.dart';
-import 'package:mumag/common/services/spotify/providers/auth.dart';
+import 'package:mumag/common/services/spotify_auth/providers/api.dart';
+import 'package:mumag/common/services/spotify_auth/providers/credentials.dart';
 
 class HomeView extends ConsumerWidget {
   const HomeView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authController = ref.watch(spotifyAuthProvider);
-    /* final spotify =
-        SpotifyApi(ref.watch(credentialsControllerProvider).credentials); */
-
-    Future<void> requestAccess() async {
+    Future<void> connect() async {
       try {
-        final token = await authController.connect();
-        ref.read(spotifyUserTokenProvider.notifier).updateToken(token: token);
-      } catch (e) {
-        log('DEU ERROO AQUI');
-      }
-    }
+        final newCredentials =
+            await ref.read(spotifyAuthProvider).authenticate();
 
-    Future<void> checkValues() async {
-      try {
-        await ref.read(spotifyClientProvider.notifier).updateCredentials();
+        if (newCredentials.accessToken != null) {
+          ref.read(credentialsImplementationProvider).saveCredentials(
+                credentials: newCredentials,
+              );
+
+          ref.invalidate(credentialsControllerProvider);
+        }
       } catch (e) {
         log('DEU ERROO AQUI');
         log(e.toString());
       }
-    }
-
-    /* Future<void> checkUser() async {
-      try {
-        var newCredentials = await spotify.getCredentials();
-
-        ref.read(spotifyClientProvider.notifier).update(
-              credentials: newCredentials,
-            );
-
-        newCredentials.scopes = SpotifyAuthController.scope.split(',');
-
-        log('SCOPES ${newCredentials.scopes}');
-
-        var newClient = SpotifyApi(newCredentials);
-
-        final me = newClient.me.savedAlbums();
-        final myList = await me.first(10);
-        final result = myList.items;
-      } catch (e) {
-        log('DEU ERROO AQUI');
-        log(e.toString());
-      }
-    } */
-
-    void checkUser() {
-      ref.read(credentialsImplementationProvider).deleteCredentials();
     }
 
     return Scaffold(
@@ -66,17 +35,9 @@ class HomeView extends ConsumerWidget {
         children: [
           const Text('Home Page'),
           ElevatedButton(
-            onPressed: requestAccess,
-            child: const Text('CONNECT WITH SPOTIFY'),
+            onPressed: connect,
+            child: const Text('CONNECT'),
           ),
-          ElevatedButton(
-            onPressed: checkValues,
-            child: const Text('CHECK VALUES'),
-          ),
-          ElevatedButton(
-            onPressed: checkUser,
-            child: const Text('CHECK USER'),
-          )
         ],
       ),
     );

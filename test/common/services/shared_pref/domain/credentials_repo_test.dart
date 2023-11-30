@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mumag/common/services/shared_pref/data/credentials_impl.dart';
-import 'package:mumag/common/services/shared_pref/domain/credentials_format.dart';
 import 'package:mumag/common/services/shared_pref/domain/credentials_repo.dart';
+import 'package:mumag/common/services/spotify_auth/domain/credentials.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:spotify/spotify.dart';
 
-final fakeCredentials = CredentialsFormat(
+final fakeCredentials = SpotifyApiCredentials(
+  '',
+  '',
   accessToken: '123',
   refreshToken: '456',
   scopes: ['scope'],
@@ -27,7 +30,7 @@ void main() async {
       credentialsImpl = SpotifyApiCredentialsImpl(sharedPreferences);
 
       await credentialsImpl.saveCredentials(credentials: fakeCredentials);
-      final insertedCredentials = CredentialsFormat.fromJson(
+      final insertedCredentials = CredentialsAdapter.fromJson(
           sharedPreferences.getString('credentials')!);
 
       expect(insertedCredentials.accessToken, '123');
@@ -56,7 +59,7 @@ void main() async {
       final result = credentialsImpl.retrieveCredentials();
 
       // assert
-      expect(result, isA<CredentialsFormat>());
+      expect(result, isA<SpotifyApiCredentials>());
     });
   });
 }

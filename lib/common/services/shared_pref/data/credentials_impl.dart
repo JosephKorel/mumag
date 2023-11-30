@@ -1,6 +1,6 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mumag/common/services/shared_pref/domain/credentials_repo.dart';
-import 'package:mumag/common/services/spotify/domain/credentials.dart';
+import 'package:mumag/common/services/spotify_auth/domain/credentials.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spotify/spotify.dart';
 
@@ -37,9 +37,5 @@ final class SpotifyApiCredentialsImpl extends SpotifyApiCredentialsRepository {
 
   void deleteCredentials() {
     _sharedPref.remove(credentialsKey);
-  }
-
-  Future<bool> saveFullCredentials({required String credentials}) async {
-    return await _sharedPref.setString(credentialsKey, credentials);
   }
 }

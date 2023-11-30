@@ -1,7 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/services/shared_pref/providers/shared_pref.dart';
-import 'package:mumag/common/services/spotify/providers/api.dart';
+import 'package:mumag/common/services/spotify_auth/providers/api.dart';
 
 class ProfileView extends ConsumerWidget {
   const ProfileView({super.key});
@@ -21,8 +23,10 @@ class ProfileView extends ConsumerWidget {
       ref.read(credentialsImplementationProvider).deleteCredentials();
     }
 
-    void checkSharedPref() {
-      // log('FOI ISTO ${sharedPref.retrieveFullCredentials()?.refreshToken}');
+    void checkSharedPref() async {
+      final isValidToken = await spotify.getCredentials();
+
+      log('TOKEN É: ${isValidToken.canRefresh}');
     }
 
     return Scaffold(

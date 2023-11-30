@@ -34,21 +34,5 @@ final spotifyApiProvider = AutoDisposeProvider<SpotifyApi>.internal(
 );
 
 typedef SpotifyApiRef = AutoDisposeProviderRef<SpotifyApi>;
-String _$spotifyUserTokenHash() => r'a548c206b099003f228a8205c921b2caf7c4c93b';
-
-/// See also [SpotifyUserToken].
-@ProviderFor(SpotifyUserToken)
-final spotifyUserTokenProvider =
-    AutoDisposeNotifierProvider<SpotifyUserToken, String?>.internal(
-  SpotifyUserToken.new,
-  name: r'spotifyUserTokenProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$spotifyUserTokenHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$SpotifyUserToken = AutoDisposeNotifier<String?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -1,26 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:mumag/common/services/shared_pref/domain/credentials_format.dart';
 import 'package:spotify/spotify.dart';
-
-final class SpotifyCredentials {
-  static const url = 'mumag.music.app://callback';
-  static final clientId = dotenv.env['SPOTIFY_CLIENT_ID']!;
-  static final clientSecret = dotenv.env['SPOTIFY_CLIENT_SECRET']!;
-
-  SpotifyCredentials(this._credentials);
-
-  final CredentialsFormat? _credentials;
-
-  SpotifyApiCredentials get credentials => SpotifyApiCredentials(
-        clientId,
-        clientSecret,
-        accessToken: _credentials?.accessToken,
-        refreshToken: _credentials?.refreshToken,
-        scopes: _credentials?.scopes,
-      );
-}
 
 final class CredentialsAdapter {
   static final clientId = dotenv.env['SPOTIFY_CLIENT_ID']!;
@@ -46,8 +27,6 @@ final class CredentialsAdapter {
   static Map<String, dynamic> toMap(
       {required SpotifyApiCredentials credentials}) {
     return {
-      /* 'clientId': credentials.clientId,
-      'clientSecret': credentials.clientSecret, */
       'accessToken': credentials.accessToken,
       'refreshToken': credentials.refreshToken,
       'scopes': credentials.scopes,
