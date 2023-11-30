@@ -35,7 +35,12 @@ GoRouter router(RouterRef ref) {
                 .read(authStateControllerProvider.notifier)
                 .updateState(Authenticated());
           }
+          return;
         }
+
+        ref
+            .read(authStateControllerProvider.notifier)
+            .updateState(Unauthenticated());
       },
     )
     ..listen(credentialsControllerProvider, (previous, next) {
