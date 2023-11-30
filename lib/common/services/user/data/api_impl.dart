@@ -11,17 +11,19 @@ final class UserApiUsecase extends UserApiUsecaseRepository {
 
   UserApiUsecase(this._api);
 
+  static const _path = '/user';
+
   @override
-  ApiResult<UserEntity> insertUser({required InsertParams insertParams}) async {
-    try {
+  ApiResult<UserEntity> insertUser({required InsertParams insertParams}) {
+    return TaskEither.tryCatch(() async {
       final result = await _api.post(
-        path: 'user',
+        path: _path,
         params: insertParams.toMap(),
       );
 
-      return Right(UserEntity.fromJson(result));
-    } catch (e) {
-      return Left(ApiException(errorMsg: '', userMsg: ''));
-    }
+      return UserEntity.fromJson(result);
+    }, (o, s) {
+      return ApiException(errorMsg: '', userMsg: '');
+    });
   }
 }

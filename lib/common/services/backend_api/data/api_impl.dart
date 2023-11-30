@@ -11,6 +11,7 @@ final class ApiImplementation extends ApiRepository {
       {required String path, required Map<String, dynamic> params}) async {
     try {
       final result = await _client.post(path, data: params);
+
       return result.data;
     } catch (e) {
       rethrow;
