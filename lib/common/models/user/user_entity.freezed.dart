@@ -20,9 +20,9 @@ UserEntity _$UserEntityFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserEntity {
-  String get username => throw _privateConstructorUsedError;
-  String get avatar => throw _privateConstructorUsedError;
-  bool get hasConnected => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +36,7 @@ abstract class $UserEntityCopyWith<$Res> {
           UserEntity value, $Res Function(UserEntity) then) =
       _$UserEntityCopyWithImpl<$Res, UserEntity>;
   @useResult
-  $Res call({String username, String avatar, bool hasConnected});
+  $Res call({int id, String name, String email});
 }
 
 /// @nodoc
@@ -52,23 +52,23 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = null,
-    Object? avatar = null,
-    Object? hasConnected = null,
+    Object? id = null,
+    Object? name = null,
+    Object? email = null,
   }) {
     return _then(_value.copyWith(
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      avatar: null == avatar
-          ? _value.avatar
-          : avatar // ignore: cast_nullable_to_non_nullable
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
               as String,
-      hasConnected: null == hasConnected
-          ? _value.hasConnected
-          : hasConnected // ignore: cast_nullable_to_non_nullable
-              as bool,
     ) as $Val);
   }
 }
@@ -81,7 +81,7 @@ abstract class _$$UserEntityImplCopyWith<$Res>
       __$$UserEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String username, String avatar, bool hasConnected});
+  $Res call({int id, String name, String email});
 }
 
 /// @nodoc
@@ -95,23 +95,23 @@ class __$$UserEntityImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = null,
-    Object? avatar = null,
-    Object? hasConnected = null,
+    Object? id = null,
+    Object? name = null,
+    Object? email = null,
   }) {
     return _then(_$UserEntityImpl(
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      avatar: null == avatar
-          ? _value.avatar
-          : avatar // ignore: cast_nullable_to_non_nullable
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
               as String,
-      hasConnected: null == hasConnected
-          ? _value.hasConnected
-          : hasConnected // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -120,23 +120,21 @@ class __$$UserEntityImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserEntityImpl with DiagnosticableTreeMixin implements _UserEntity {
   const _$UserEntityImpl(
-      {required this.username,
-      required this.avatar,
-      required this.hasConnected});
+      {required this.id, required this.name, required this.email});
 
   factory _$UserEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserEntityImplFromJson(json);
 
   @override
-  final String username;
+  final int id;
   @override
-  final String avatar;
+  final String name;
   @override
-  final bool hasConnected;
+  final String email;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserEntity(username: $username, avatar: $avatar, hasConnected: $hasConnected)';
+    return 'UserEntity(id: $id, name: $name, email: $email)';
   }
 
   @override
@@ -144,9 +142,9 @@ class _$UserEntityImpl with DiagnosticableTreeMixin implements _UserEntity {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'UserEntity'))
-      ..add(DiagnosticsProperty('username', username))
-      ..add(DiagnosticsProperty('avatar', avatar))
-      ..add(DiagnosticsProperty('hasConnected', hasConnected));
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('email', email));
   }
 
   @override
@@ -154,16 +152,14 @@ class _$UserEntityImpl with DiagnosticableTreeMixin implements _UserEntity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserEntityImpl &&
-            (identical(other.username, username) ||
-                other.username == username) &&
-            (identical(other.avatar, avatar) || other.avatar == avatar) &&
-            (identical(other.hasConnected, hasConnected) ||
-                other.hasConnected == hasConnected));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.email, email) || other.email == email));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, username, avatar, hasConnected);
+  int get hashCode => Object.hash(runtimeType, id, name, email);
 
   @JsonKey(ignore: true)
   @override
@@ -181,19 +177,19 @@ class _$UserEntityImpl with DiagnosticableTreeMixin implements _UserEntity {
 
 abstract class _UserEntity implements UserEntity {
   const factory _UserEntity(
-      {required final String username,
-      required final String avatar,
-      required final bool hasConnected}) = _$UserEntityImpl;
+      {required final int id,
+      required final String name,
+      required final String email}) = _$UserEntityImpl;
 
   factory _UserEntity.fromJson(Map<String, dynamic> json) =
       _$UserEntityImpl.fromJson;
 
   @override
-  String get username;
+  int get id;
   @override
-  String get avatar;
+  String get name;
   @override
-  bool get hasConnected;
+  String get email;
   @override
   @JsonKey(ignore: true)
   _$$UserEntityImplCopyWith<_$UserEntityImpl> get copyWith =>
