@@ -20,7 +20,7 @@ final userProfileProvider = AutoDisposeFutureProvider<User>.internal(
 );
 
 typedef UserProfileRef = AutoDisposeFutureProviderRef<User>;
-String _$userGenresHash() => r'f7ed1c58f40f877b2ec7224cdb05e801b3602693';
+String _$userGenresHash() => r'5d5d3fc57e87a4194dc54ca0fa465b12571236ff';
 
 /// See also [userGenres].
 @ProviderFor(userGenres)

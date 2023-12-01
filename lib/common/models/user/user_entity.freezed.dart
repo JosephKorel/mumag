@@ -14,17 +14,13 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-UserEntity _$UserEntityFromJson(Map<String, dynamic> json) {
-  return _UserEntity.fromJson(json);
-}
-
 /// @nodoc
 mixin _$UserEntity {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
+  List<String> get genres => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $UserEntityCopyWith<UserEntity> get copyWith =>
       throw _privateConstructorUsedError;
@@ -36,7 +32,7 @@ abstract class $UserEntityCopyWith<$Res> {
           UserEntity value, $Res Function(UserEntity) then) =
       _$UserEntityCopyWithImpl<$Res, UserEntity>;
   @useResult
-  $Res call({int id, String name, String email});
+  $Res call({int id, String name, String email, List<String> genres});
 }
 
 /// @nodoc
@@ -55,6 +51,7 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
     Object? id = null,
     Object? name = null,
     Object? email = null,
+    Object? genres = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -69,6 +66,10 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      genres: null == genres
+          ? _value.genres
+          : genres // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -81,7 +82,7 @@ abstract class _$$UserEntityImplCopyWith<$Res>
       __$$UserEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, String email});
+  $Res call({int id, String name, String email, List<String> genres});
 }
 
 /// @nodoc
@@ -98,6 +99,7 @@ class __$$UserEntityImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? email = null,
+    Object? genres = null,
   }) {
     return _then(_$UserEntityImpl(
       id: null == id
@@ -112,18 +114,23 @@ class __$$UserEntityImplCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      genres: null == genres
+          ? _value._genres
+          : genres // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
-class _$UserEntityImpl with DiagnosticableTreeMixin implements _UserEntity {
-  const _$UserEntityImpl(
-      {required this.id, required this.name, required this.email});
 
-  factory _$UserEntityImpl.fromJson(Map<String, dynamic> json) =>
-      _$$UserEntityImplFromJson(json);
+class _$UserEntityImpl implements _UserEntity {
+  const _$UserEntityImpl(
+      {required this.id,
+      required this.name,
+      required this.email,
+      final List<String> genres = const []})
+      : _genres = genres;
 
   @override
   final int id;
@@ -131,20 +138,18 @@ class _$UserEntityImpl with DiagnosticableTreeMixin implements _UserEntity {
   final String name;
   @override
   final String email;
-
+  final List<String> _genres;
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserEntity(id: $id, name: $name, email: $email)';
+  @JsonKey()
+  List<String> get genres {
+    if (_genres is EqualUnmodifiableListView) return _genres;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_genres);
   }
 
   @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'UserEntity'))
-      ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('email', email));
+  String toString() {
+    return 'UserEntity(id: $id, name: $name, email: $email, genres: $genres)';
   }
 
   @override
@@ -154,35 +159,27 @@ class _$UserEntityImpl with DiagnosticableTreeMixin implements _UserEntity {
             other is _$UserEntityImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.email, email) || other.email == email));
+            (identical(other.email, email) || other.email == email) &&
+            const DeepCollectionEquality().equals(other._genres, _genres));
   }
 
-  @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, email);
+  int get hashCode => Object.hash(runtimeType, id, name, email,
+      const DeepCollectionEquality().hash(_genres));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$UserEntityImplCopyWith<_$UserEntityImpl> get copyWith =>
       __$$UserEntityImplCopyWithImpl<_$UserEntityImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$UserEntityImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _UserEntity implements UserEntity {
   const factory _UserEntity(
       {required final int id,
       required final String name,
-      required final String email}) = _$UserEntityImpl;
-
-  factory _UserEntity.fromJson(Map<String, dynamic> json) =
-      _$UserEntityImpl.fromJson;
+      required final String email,
+      final List<String> genres}) = _$UserEntityImpl;
 
   @override
   int get id;
@@ -190,6 +187,8 @@ abstract class _UserEntity implements UserEntity {
   String get name;
   @override
   String get email;
+  @override
+  List<String> get genres;
   @override
   @JsonKey(ignore: true)
   _$$UserEntityImplCopyWith<_$UserEntityImpl> get copyWith =>

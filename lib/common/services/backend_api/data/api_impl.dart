@@ -37,4 +37,21 @@ final class ApiImplementation extends ApiRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<Map<String, dynamic>?> put({
+    required String path,
+    required Map<String, dynamic> params,
+  }) async {
+    try {
+      final result = await _client.put<Map<String, dynamic>?>(
+        path,
+        data: params,
+      );
+
+      return result.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

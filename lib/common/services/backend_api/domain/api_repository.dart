@@ -8,4 +8,9 @@ abstract class ApiRepository {
     required String path,
     required Map<String, dynamic> query,
   });
+
+  Future<Map<String, dynamic>?> put({
+    required String path,
+    required Map<String, dynamic> params,
+  });
 }

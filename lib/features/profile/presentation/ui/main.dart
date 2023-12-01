@@ -10,12 +10,6 @@ class ProfileView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProfileProvider);
 
-    /*  void checkInfo() async {
-      final user = await spotify.me.recentlyPlayed().first();
-      final credentials = user.items;
-      // log('USUÁRIO É ${user.scopes.toString()}');
-    } */
-
     return user.when(
       data: (data) => const UserProfileView(),
       error: (error, stackTrace) => Scaffold(
@@ -23,7 +17,6 @@ class ProfileView extends ConsumerWidget {
         body: const Column(
           children: [
             Text('Something went wrong'),
-            /*  ElevatedButton(onPressed: checkInfo, child: const Text('Check info')), */
           ],
         ),
       ),

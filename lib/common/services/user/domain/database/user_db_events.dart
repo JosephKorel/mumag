@@ -1,10 +1,9 @@
 sealed class UserDatabaseEvents {}
 
 class InsertParams extends UserDatabaseEvents {
+  InsertParams({required this.email, required this.name});
   final String email;
   final String name;
-
-  InsertParams({required this.email, required this.name});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -15,13 +14,25 @@ class InsertParams extends UserDatabaseEvents {
 }
 
 class GetParams extends UserDatabaseEvents {
-  final String email;
-
   GetParams({required this.email});
+  final String email;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'email': email,
+    };
+  }
+}
+
+class UpdateGenresParam extends UserDatabaseEvents {
+  UpdateGenresParam({required this.userId, required this.genres});
+  final int userId;
+  final String genres;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'userId': userId,
+      'genres': genres,
     };
   }
 }

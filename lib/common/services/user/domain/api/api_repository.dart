@@ -6,4 +6,8 @@ abstract class UserApiUsecaseRepository {
   ApiResult<UserEntity> insertUser({required InsertParams insertParams});
 
   ApiResult<UserEntity?> getUser({required GetParams getParams});
+
+  ApiResult<String> updateGenres({
+    required UpdateGenresParam updateGenresParam,
+  });
 }

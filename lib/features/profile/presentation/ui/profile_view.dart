@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/features/profile/presentation/providers/profile.dart';
@@ -11,8 +9,6 @@ class UserProfileView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProfileProvider).requireValue;
-
-    log('USER AVATAR URL ${user.images?.length}');
 
     Future<void> checkAlbum() async {}
 
@@ -35,16 +31,5 @@ class UserProfileView extends ConsumerWidget {
         ),
       ),
     );
-  }
-}
-
-class MyImg extends StatelessWidget {
-  const MyImg({required this.img, super.key});
-
-  final Image img;
-
-  @override
-  Widget build(BuildContext context) {
-    return img;
   }
 }

@@ -7,9 +7,21 @@ class ProfileInteractor {
 
   Future<List<String>> favoriteGenres() async {
     final recentlyPlayed = await spotify.me.recentlyPlayed(limit: 40).all();
+    final topArtists = await spotify.me.topArtists().all();
     final foundArtists = <String>[];
     final artistsIdList = <String>[];
+    final retrievedGenres = <String>[];
 
+    for (final artist in topArtists) {
+      if (artist.genres == null) {
+        continue;
+      }
+
+      final genreList =
+          artist.genres!.map<String?>((e) => e).whereType<String>().toList();
+      retrievedGenres.addAll(genreList);
+    }
+/* 
     for (final e in recentlyPlayed) {
       final artists = e.track?.artists;
 
@@ -44,9 +56,9 @@ class ProfileInteractor {
         .expand(
           (element) => element,
         )
-        .toList();
+        .toList(); */
 
-    return mostCommonGenres(genres);
+    return mostCommonGenres(retrievedGenres);
   }
 }
 
@@ -60,7 +72,7 @@ List<String> mostCommonGenres(List<String> allGenres) {
   final validGenres = Map<String, int>.fromEntries(
     genreMap.entries.toList()
       ..sort(
-        (a, b) => a.value.compareTo(b.value),
+        (a, b) => b.value.compareTo(a.value),
       ),
   ).keys.toList();
 

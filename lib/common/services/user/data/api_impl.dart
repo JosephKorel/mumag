@@ -8,6 +8,7 @@ import 'package:mumag/common/services/user/domain/database/user_db_events.dart';
 
 final class UserApiUsecase extends UserApiUsecaseRepository {
   UserApiUsecase(this._api);
+
   final ApiRepository _api;
 
   static const _path = '/user';
@@ -35,6 +36,22 @@ final class UserApiUsecase extends UserApiUsecaseRepository {
       );
 
       return result == null ? null : UserEntity.fromJson(result);
+    }, (o, s) {
+      return ApiException(errorMsg: '', userMsg: '');
+    });
+  }
+
+  @override
+  ApiResult<String> updateGenres({
+    required UpdateGenresParam updateGenresParam,
+  }) {
+    return TaskEither.tryCatch(() async {
+      final result = await _api.put(
+        path: '$_path/update-genres',
+        params: updateGenresParam.toMap(),
+      );
+
+      return result!['genres'] as String;
     }, (o, s) {
       return ApiException(errorMsg: '', userMsg: '');
     });
