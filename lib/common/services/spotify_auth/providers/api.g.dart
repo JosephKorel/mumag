@@ -20,7 +20,7 @@ final spotifyAuthProvider = AutoDisposeProvider<SpotifyAuthController>.internal(
 );
 
 typedef SpotifyAuthRef = AutoDisposeProviderRef<SpotifyAuthController>;
-String _$spotifyApiHash() => r'fbf846b3cc70b1e13c6f19a3fed14e4082e29c3a';
+String _$spotifyApiHash() => r'947502c343cf64de4560441a703b229d2e9c6848';
 
 /// See also [spotifyApi].
 @ProviderFor(spotifyApi)

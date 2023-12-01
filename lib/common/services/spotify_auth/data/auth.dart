@@ -13,7 +13,7 @@ final class SpotifyAuthController {
 
   Future<SpotifyApiCredentials> authenticate() async {
     try {
-      SpotifyOAuth2Client client = SpotifyOAuth2Client(
+      final client = SpotifyOAuth2Client(
         customUriScheme: 'mumag.music.app',
         redirectUri: 'mumag.music.app://callback',
       );

@@ -13,24 +13,25 @@ final class CredentialsAdapter {
     return SpotifyApiCredentials(
       clientId,
       clientSecret,
-      accessToken: map['accessToken'],
-      refreshToken: map['refreshToken'],
-      expiration: DateTime.parse(map['expiration']),
-      scopes: List.from(map['scopes'] as List<dynamic>)
+      accessToken: map['accessToken'] as String,
+      refreshToken: map['refreshToken'] as String,
+      expiration: DateTime.parse(map['expiration'] as String),
+      scopes: List<String>.from(map['scopes'] as List<dynamic>)
           .map(
-            (e) => e.toString(),
+            (e) => e,
           )
           .toList(),
     );
   }
 
-  static Map<String, dynamic> toMap(
-      {required SpotifyApiCredentials credentials}) {
+  static Map<String, dynamic> toMap({
+    required SpotifyApiCredentials credentials,
+  }) {
     return {
       'accessToken': credentials.accessToken,
       'refreshToken': credentials.refreshToken,
       'scopes': credentials.scopes,
-      'expiration': credentials.expiration.toString()
+      'expiration': credentials.expiration.toString(),
     };
   }
 
