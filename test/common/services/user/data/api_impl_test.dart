@@ -65,7 +65,7 @@ void main() {
       // assert
       expect(
         user,
-        const Right(null),
+        const Right<AppException, UserEntity?>(null),
       );
     });
 
@@ -80,11 +80,15 @@ void main() {
 
       // assert
       expect(
-          user,
-          Right(
-            UserEntity(
-                id: 1, name: insertParams.name, email: insertParams.email),
-          ));
+        user,
+        Right<AppException, UserEntity?>(
+          UserEntity(
+            id: 1,
+            name: insertParams.name,
+            email: insertParams.email,
+          ),
+        ),
+      );
     });
   });
 }

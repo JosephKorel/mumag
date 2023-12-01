@@ -14,6 +14,13 @@ class HandleConnection extends _$HandleConnection {
   FutureOr<void> build() {}
 
   Future<void> _saveUser() async {
+    final userDocument = await ref.read(userProvider.future);
+
+    if (userDocument != null) {
+      ref.invalidate(userProvider);
+      return;
+    }
+
     final user = await ref.read(spotifyApiProvider).me.get();
     final email = ref.watch(authServiceProvider).currentUser()!.email!;
 

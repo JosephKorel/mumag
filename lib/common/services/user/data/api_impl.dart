@@ -7,9 +7,8 @@ import 'package:mumag/common/services/user/domain/api/api_repository.dart';
 import 'package:mumag/common/services/user/domain/database/user_db_events.dart';
 
 final class UserApiUsecase extends UserApiUsecaseRepository {
-  final ApiRepository _api;
-
   UserApiUsecase(this._api);
+  final ApiRepository _api;
 
   static const _path = '/user';
 
@@ -35,11 +34,7 @@ final class UserApiUsecase extends UserApiUsecaseRepository {
         query: getParams.toMap(),
       );
 
-      if (result == null) {
-        return null;
-      }
-
-      return UserEntity.fromJson(result);
+      return result == null ? null : UserEntity.fromJson(result);
     }, (o, s) {
       return ApiException(errorMsg: '', userMsg: '');
     });
