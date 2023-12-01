@@ -29,9 +29,14 @@ GoRouter router(RouterRef ref) {
     )
     ..listen(userProvider, (previous, next) {
       if (next.requireValue != null) {
-        ref
-            .read(authStateControllerProvider.notifier)
-            .updateState(HasCredentials());
+        final credentials =
+            ref.read(credentialsImplementationProvider).retrieveCredentials();
+
+        if (credentials != null) {
+          ref
+              .read(authStateControllerProvider.notifier)
+              .updateState(HasCredentials());
+        }
       }
     })
     ..listen(authStateControllerProvider, (prev, next) {
