@@ -18,6 +18,8 @@ SpotifyApi spotifyApi(SpotifyApiRef ref) {
   return SpotifyApi(
     credentialsProvider ??
         SpotifyApiCredentials(
-            CredentialsAdapter.clientId, CredentialsAdapter.clientSecret),
+          CredentialsAdapter.clientId,
+          CredentialsAdapter.clientSecret,
+        ),
   );
 }
