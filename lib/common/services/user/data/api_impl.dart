@@ -42,6 +42,22 @@ final class UserApiUsecase extends UserApiUsecaseRepository {
   }
 
   @override
+  ApiResult<UserEntity> updateUser({
+    required UserEntity userEntity,
+  }) {
+    return TaskEither.tryCatch(() async {
+      final result = await _api.put(
+        path: _path,
+        params: userEntityToMap(userEntity),
+      );
+
+      return UserEntity.fromJson(result!);
+    }, (o, s) {
+      return ApiException(errorMsg: '', userMsg: '');
+    });
+  }
+
+  @override
   ApiResult<String> updateGenres({
     required UpdateGenresParam updateGenresParam,
   }) {

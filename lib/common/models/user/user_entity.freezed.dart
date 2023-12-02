@@ -18,7 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$UserEntity {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String get avatarUrl => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
+  DateTime get lastUpdatedAt => throw _privateConstructorUsedError;
   List<String> get genres => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -32,7 +34,13 @@ abstract class $UserEntityCopyWith<$Res> {
           UserEntity value, $Res Function(UserEntity) then) =
       _$UserEntityCopyWithImpl<$Res, UserEntity>;
   @useResult
-  $Res call({int id, String name, String email, List<String> genres});
+  $Res call(
+      {int id,
+      String name,
+      String avatarUrl,
+      String email,
+      DateTime lastUpdatedAt,
+      List<String> genres});
 }
 
 /// @nodoc
@@ -50,7 +58,9 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? avatarUrl = null,
     Object? email = null,
+    Object? lastUpdatedAt = null,
     Object? genres = null,
   }) {
     return _then(_value.copyWith(
@@ -62,10 +72,18 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      avatarUrl: null == avatarUrl
+          ? _value.avatarUrl
+          : avatarUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      lastUpdatedAt: null == lastUpdatedAt
+          ? _value.lastUpdatedAt
+          : lastUpdatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       genres: null == genres
           ? _value.genres
           : genres // ignore: cast_nullable_to_non_nullable
@@ -82,7 +100,13 @@ abstract class _$$UserEntityImplCopyWith<$Res>
       __$$UserEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, String email, List<String> genres});
+  $Res call(
+      {int id,
+      String name,
+      String avatarUrl,
+      String email,
+      DateTime lastUpdatedAt,
+      List<String> genres});
 }
 
 /// @nodoc
@@ -98,7 +122,9 @@ class __$$UserEntityImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? avatarUrl = null,
     Object? email = null,
+    Object? lastUpdatedAt = null,
     Object? genres = null,
   }) {
     return _then(_$UserEntityImpl(
@@ -110,10 +136,18 @@ class __$$UserEntityImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      avatarUrl: null == avatarUrl
+          ? _value.avatarUrl
+          : avatarUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      lastUpdatedAt: null == lastUpdatedAt
+          ? _value.lastUpdatedAt
+          : lastUpdatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       genres: null == genres
           ? _value._genres
           : genres // ignore: cast_nullable_to_non_nullable
@@ -125,10 +159,12 @@ class __$$UserEntityImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$UserEntityImpl implements _UserEntity {
-  const _$UserEntityImpl(
+  _$UserEntityImpl(
       {required this.id,
       required this.name,
+      required this.avatarUrl,
       required this.email,
+      required this.lastUpdatedAt,
       final List<String> genres = const []})
       : _genres = genres;
 
@@ -137,7 +173,11 @@ class _$UserEntityImpl implements _UserEntity {
   @override
   final String name;
   @override
+  final String avatarUrl;
+  @override
   final String email;
+  @override
+  final DateTime lastUpdatedAt;
   final List<String> _genres;
   @override
   @JsonKey()
@@ -149,7 +189,7 @@ class _$UserEntityImpl implements _UserEntity {
 
   @override
   String toString() {
-    return 'UserEntity(id: $id, name: $name, email: $email, genres: $genres)';
+    return 'UserEntity(id: $id, name: $name, avatarUrl: $avatarUrl, email: $email, lastUpdatedAt: $lastUpdatedAt, genres: $genres)';
   }
 
   @override
@@ -159,13 +199,17 @@ class _$UserEntityImpl implements _UserEntity {
             other is _$UserEntityImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.avatarUrl, avatarUrl) ||
+                other.avatarUrl == avatarUrl) &&
             (identical(other.email, email) || other.email == email) &&
+            (identical(other.lastUpdatedAt, lastUpdatedAt) ||
+                other.lastUpdatedAt == lastUpdatedAt) &&
             const DeepCollectionEquality().equals(other._genres, _genres));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, email,
-      const DeepCollectionEquality().hash(_genres));
+  int get hashCode => Object.hash(runtimeType, id, name, avatarUrl, email,
+      lastUpdatedAt, const DeepCollectionEquality().hash(_genres));
 
   @JsonKey(ignore: true)
   @override
@@ -175,10 +219,12 @@ class _$UserEntityImpl implements _UserEntity {
 }
 
 abstract class _UserEntity implements UserEntity {
-  const factory _UserEntity(
+  factory _UserEntity(
       {required final int id,
       required final String name,
+      required final String avatarUrl,
       required final String email,
+      required final DateTime lastUpdatedAt,
       final List<String> genres}) = _$UserEntityImpl;
 
   @override
@@ -186,7 +232,11 @@ abstract class _UserEntity implements UserEntity {
   @override
   String get name;
   @override
+  String get avatarUrl;
+  @override
   String get email;
+  @override
+  DateTime get lastUpdatedAt;
   @override
   List<String> get genres;
   @override
