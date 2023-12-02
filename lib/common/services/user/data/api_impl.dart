@@ -23,7 +23,7 @@ final class UserApiUsecase extends UserApiUsecaseRepository {
 
       return UserEntity.fromJson(result);
     }, (o, s) {
-      return ApiException(errorMsg: '', userMsg: '');
+      return ApiException(error: o, userMsg: 'Failed to insert user');
     });
   }
 
@@ -37,7 +37,7 @@ final class UserApiUsecase extends UserApiUsecaseRepository {
 
       return result == null ? null : UserEntity.fromJson(result);
     }, (o, s) {
-      return ApiException(errorMsg: '', userMsg: '');
+      return ApiException(error: o, userMsg: 'Failed to get user');
     });
   }
 
@@ -53,7 +53,7 @@ final class UserApiUsecase extends UserApiUsecaseRepository {
 
       return UserEntity.fromJson(result!);
     }, (o, s) {
-      return ApiException(errorMsg: '', userMsg: '');
+      return ApiException(error: o, userMsg: 'Failed to update user');
     });
   }
 
@@ -69,7 +69,7 @@ final class UserApiUsecase extends UserApiUsecaseRepository {
 
       return result!['genres'] as String;
     }, (o, s) {
-      return ApiException(errorMsg: '', userMsg: '');
+      return ApiException(error: o, userMsg: '');
     });
   }
 }

@@ -1,14 +1,24 @@
 sealed class UserDatabaseEvents {}
 
 class InsertParams extends UserDatabaseEvents {
-  InsertParams({required this.email, required this.name});
+  InsertParams({
+    required this.email,
+    required this.name,
+    required this.genres,
+    required this.avatarUrl,
+  });
+
   final String email;
   final String name;
+  final String genres;
+  final String? avatarUrl;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'email': email,
       'name': name,
+      'genres': genres,
+      'avatarUrl': avatarUrl,
     };
   }
 }

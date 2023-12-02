@@ -1,41 +1,59 @@
+import 'package:fpdart/fpdart.dart';
+import 'package:mumag/common/models/exception/exception.dart';
 import 'package:mumag/common/services/firebase/providers/auth.dart';
 import 'package:mumag/common/services/shared_pref/providers/shared_pref.dart';
 import 'package:mumag/common/services/spotify_auth/providers/api.dart';
 import 'package:mumag/common/services/spotify_auth/providers/credentials.dart';
-import 'package:mumag/common/services/user/domain/database/user_db_events.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
+import 'package:mumag/features/home/domain/save_user_controller.dart';
+import 'package:mumag/features/home/domain/save_user_repo.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'connect.g.dart';
+
+@riverpod
+SaveUserRepository saveUserRepo(SaveUserRepoRef ref) {
+  throw UnimplementedError();
+}
+
+@riverpod
+SaveUserController saveUserController(SaveUserControllerRef ref) {
+  return SaveUserController(
+    ref.watch(saveUserRepoProvider),
+    ref.watch(userApiProvider),
+  );
+}
 
 @riverpod
 class HandleConnection extends _$HandleConnection {
   @override
   FutureOr<void> build() {}
 
-  Future<void> _saveUser() async {
-    final userDocument = await ref.read(userProvider.future);
+  // Save the user in database
+  TaskEither<AppException, void> _saveUser() {
+    return TaskEither.tryCatch(
+      () async {
+        final userDocument = await ref.read(userProvider.future);
 
-    if (userDocument != null) {
-      ref.invalidate(userProvider);
-      return;
-    }
+        if (userDocument != null) {
+          ref.invalidate(userProvider);
+          return;
+        }
 
-    final user = await ref.read(spotifyApiProvider).me.get();
-    final email = ref.watch(authServiceProvider).currentUser()!.email!;
+        final email = ref.watch(authServiceProvider).currentUser()!.email!;
 
-    if (user.displayName == null) {
-      return;
-    }
+        final insertUser = await ref
+            .read(saveUserControllerProvider)
+            .newUser(email: email)
+            .run();
 
-    final saveRequest = await ref
-        .read(userApiProvider)
-        .insertUser(
-          insertParams: InsertParams(email: email, name: user.displayName!),
-        )
-        .run();
-
-    saveRequest.fold((l) => null, (r) => ref.invalidate(userProvider));
+        return insertUser.fold(
+          (l) => l,
+          (r) {},
+        );
+      },
+      (error, stackTrace) => CreateUserException(error: error),
+    );
   }
 
   Future<void> connect() async {
@@ -49,7 +67,12 @@ class HandleConnection extends _$HandleConnection {
 
         ref.invalidate(credentialsControllerProvider);
 
-        await _saveUser();
+        final result = await _saveUser().run();
+
+        result.fold(
+          (l) => AsyncError<void>(l, StackTrace.current),
+          (r) => ref.invalidate(userProvider),
+        );
       }
     } catch (e) {
       return;

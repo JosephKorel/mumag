@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$UserEntity {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get avatarUrl => throw _privateConstructorUsedError;
+  String? get avatarUrl => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   DateTime get lastUpdatedAt => throw _privateConstructorUsedError;
   List<String> get genres => throw _privateConstructorUsedError;
@@ -37,7 +37,7 @@ abstract class $UserEntityCopyWith<$Res> {
   $Res call(
       {int id,
       String name,
-      String avatarUrl,
+      String? avatarUrl,
       String email,
       DateTime lastUpdatedAt,
       List<String> genres});
@@ -58,7 +58,7 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? avatarUrl = null,
+    Object? avatarUrl = freezed,
     Object? email = null,
     Object? lastUpdatedAt = null,
     Object? genres = null,
@@ -72,10 +72,10 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      avatarUrl: null == avatarUrl
+      avatarUrl: freezed == avatarUrl
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -103,7 +103,7 @@ abstract class _$$UserEntityImplCopyWith<$Res>
   $Res call(
       {int id,
       String name,
-      String avatarUrl,
+      String? avatarUrl,
       String email,
       DateTime lastUpdatedAt,
       List<String> genres});
@@ -122,7 +122,7 @@ class __$$UserEntityImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? avatarUrl = null,
+    Object? avatarUrl = freezed,
     Object? email = null,
     Object? lastUpdatedAt = null,
     Object? genres = null,
@@ -136,10 +136,10 @@ class __$$UserEntityImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      avatarUrl: null == avatarUrl
+      avatarUrl: freezed == avatarUrl
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -173,7 +173,7 @@ class _$UserEntityImpl implements _UserEntity {
   @override
   final String name;
   @override
-  final String avatarUrl;
+  final String? avatarUrl;
   @override
   final String email;
   @override
@@ -222,7 +222,7 @@ abstract class _UserEntity implements UserEntity {
   factory _UserEntity(
       {required final int id,
       required final String name,
-      required final String avatarUrl,
+      required final String? avatarUrl,
       required final String email,
       required final DateTime lastUpdatedAt,
       final List<String> genres}) = _$UserEntityImpl;
@@ -232,7 +232,7 @@ abstract class _UserEntity implements UserEntity {
   @override
   String get name;
   @override
-  String get avatarUrl;
+  String? get avatarUrl;
   @override
   String get email;
   @override
