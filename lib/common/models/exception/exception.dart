@@ -1,9 +1,9 @@
 sealed class AppException extends Error {}
 
 final class ApiException extends AppException {
-  ApiException({required this.error, required this.userMsg});
+  ApiException({required this.userMsg, this.error});
 
-  final Object error;
+  final Object? error;
   final String userMsg;
 }
 

@@ -1,46 +1,23 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:oauth2_client/spotify_oauth2_client.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:mumag/common/models/exception/exception.dart';
+import 'package:mumag/common/models/types/api_types.dart';
+import 'package:mumag/common/services/spotify_auth/domain/auth_repository.dart';
 import 'package:spotify/spotify.dart';
 
 final class SpotifyAuthController {
-  static const url = 'mumag.music.app://callback';
+  SpotifyAuthController(this._spotifyAuthRepository);
 
-  static final clientId = dotenv.env['SPOTIFY_CLIENT_ID']!;
-  static final clientSecret = dotenv.env['SPOTIFY_CLIENT_SECRET']!;
+  final SpotifyAuthRepository _spotifyAuthRepository;
 
-  static const scope =
-      'playlist-modify-public,playlist-modify-private,playlist-read-private,user-read-recently-played,user-top-read,user-library-read,user-library-modify,user-read-private';
+  ApiResult<SpotifyApiCredentials> authenticate() {
+    return TaskEither.tryCatch(
+      () async {
+        final credentials = await _spotifyAuthRepository.authenticate();
 
-  Future<SpotifyApiCredentials> authenticate() async {
-    try {
-      final client = SpotifyOAuth2Client(
-        customUriScheme: 'mumag.music.app',
-        redirectUri: 'mumag.music.app://callback',
-      );
-
-      final authResp = await client.requestAuthorization(
-        clientId: clientId,
-        customParams: {'show_dialog': 'true'},
-        scopes: scope.split(','),
-      );
-
-      final accessToken = await client.requestAccessToken(
-        code: authResp.code.toString(),
-        clientId: clientId,
-        clientSecret: clientSecret,
-        scopes: scope.split(','),
-      );
-
-      return SpotifyApiCredentials(
-        clientId,
-        clientSecret,
-        accessToken: accessToken.accessToken,
-        refreshToken: accessToken.refreshToken,
-        expiration: accessToken.expirationDate,
-        scopes: accessToken.scope,
-      );
-    } catch (e) {
-      rethrow;
-    }
+        return credentials;
+      },
+      (error, stackTrace) =>
+          ApiException(error: error, userMsg: 'You must accept persmissions'),
+    );
   }
 }

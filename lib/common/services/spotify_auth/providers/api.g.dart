@@ -6,11 +6,11 @@ part of 'api.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$spotifyAuthHash() => r'2050a44168fb415417ba937c77e206229f306712';
+String _$spotifyAuthHash() => r'56afb0e7a61ac41b7154da00781bc3a8151c9401';
 
 /// See also [spotifyAuth].
 @ProviderFor(spotifyAuth)
-final spotifyAuthProvider = AutoDisposeProvider<SpotifyAuthController>.internal(
+final spotifyAuthProvider = AutoDisposeProvider<SpotifyAuthRepository>.internal(
   spotifyAuth,
   name: r'spotifyAuthProvider',
   debugGetCreateSourceHash:
@@ -19,7 +19,25 @@ final spotifyAuthProvider = AutoDisposeProvider<SpotifyAuthController>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef SpotifyAuthRef = AutoDisposeProviderRef<SpotifyAuthController>;
+typedef SpotifyAuthRef = AutoDisposeProviderRef<SpotifyAuthRepository>;
+String _$spotifyAuthControllerHash() =>
+    r'ebfbddfc50953ba8aee4690a6d61b21d8c3dfd21';
+
+/// See also [spotifyAuthController].
+@ProviderFor(spotifyAuthController)
+final spotifyAuthControllerProvider =
+    AutoDisposeProvider<SpotifyAuthController>.internal(
+  spotifyAuthController,
+  name: r'spotifyAuthControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$spotifyAuthControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef SpotifyAuthControllerRef
+    = AutoDisposeProviderRef<SpotifyAuthController>;
 String _$spotifyApiHash() => r'bb72f0fa97a2a7b1ff91e2003c5029dfd0b09896';
 
 /// See also [spotifyApi].

@@ -8,7 +8,7 @@ final class CredentialsAdapter {
   static final clientSecret = dotenv.env['SPOTIFY_CLIENT_SECRET']!;
 
   static SpotifyApiCredentials fromJson(String key) {
-    final map = json.decode(key);
+    final map = json.decode(key) as Map<String, dynamic>;
 
     return SpotifyApiCredentials(
       clientId,

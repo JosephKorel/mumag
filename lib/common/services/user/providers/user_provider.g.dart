@@ -6,11 +6,11 @@ part of 'user_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userApiHash() => r'8cb7e6842b9c3797f2d0733580467bace42c01c8';
+String _$userApiHash() => r'94dae75a600ae289f1a9a418979af69bd72fe65d';
 
 /// See also [userApi].
 @ProviderFor(userApi)
-final userApiProvider = AutoDisposeProvider<UserApiUsecase>.internal(
+final userApiProvider = AutoDisposeProvider<UserApiUsecaseRepository>.internal(
   userApi,
   name: r'userApiProvider',
   debugGetCreateSourceHash:
@@ -19,7 +19,7 @@ final userApiProvider = AutoDisposeProvider<UserApiUsecase>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef UserApiRef = AutoDisposeProviderRef<UserApiUsecase>;
+typedef UserApiRef = AutoDisposeProviderRef<UserApiUsecaseRepository>;
 String _$userHash() => r'b209259c3c1fe12632384f52c3ea3c239adf3c0b';
 
 /// See also [user].
