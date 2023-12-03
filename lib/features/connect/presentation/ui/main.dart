@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/services/user/domain/database/user_db_events.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
-import 'package:mumag/features/home/presentation/providers/connect.dart';
+import 'package:mumag/features/connect/presentation/providers/connect.dart';
 
-class HomeView extends ConsumerWidget {
-  const HomeView({super.key});
+class ConnectToSpotifyView extends ConsumerWidget {
+  const ConnectToSpotifyView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

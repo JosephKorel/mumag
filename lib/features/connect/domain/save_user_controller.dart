@@ -3,7 +3,7 @@ import 'package:mumag/common/models/exception/exception.dart';
 import 'package:mumag/common/models/types/api_types.dart';
 import 'package:mumag/common/services/user/data/api_impl.dart';
 import 'package:mumag/common/services/user/domain/database/user_db_events.dart';
-import 'package:mumag/features/home/domain/save_user_repo.dart';
+import 'package:mumag/features/connect/domain/save_user_repo.dart';
 
 class SaveUserController {
   SaveUserController(this._saveUserRepo, this._userApi);

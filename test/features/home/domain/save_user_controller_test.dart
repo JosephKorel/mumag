@@ -6,8 +6,8 @@ import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/services/backend_api/domain/api_repository.dart';
 import 'package:mumag/common/services/user/data/api_impl.dart';
 import 'package:mumag/common/services/user/domain/database/user_db_events.dart';
-import 'package:mumag/features/home/domain/save_user_controller.dart';
-import 'package:mumag/features/home/domain/save_user_repo.dart';
+import 'package:mumag/features/connect/domain/save_user_controller.dart';
+import 'package:mumag/features/connect/domain/save_user_repo.dart';
 import 'package:spotify/spotify.dart';
 
 class MockApi extends Mock implements ApiRepository {}

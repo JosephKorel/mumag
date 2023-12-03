@@ -6,7 +6,7 @@ part of 'connect.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$saveUserRepoHash() => r'a3770aead84cdd6c6126ef7e53b10634107488ba';
+String _$saveUserRepoHash() => r'06bda50f1450a0a5ccfc5808f487e81e90c6c8a4';
 
 /// See also [saveUserRepo].
 @ProviderFor(saveUserRepo)
@@ -37,7 +37,21 @@ final saveUserControllerProvider =
 );
 
 typedef SaveUserControllerRef = AutoDisposeProviderRef<SaveUserController>;
-String _$handleConnectionHash() => r'f6e3c93abab6e87277dee5d51261ce5de9c56d05';
+String _$createUserHash() => r'6252dd3302f5f2e47b103b66e4c697187f453e4e';
+
+/// See also [createUser].
+@ProviderFor(createUser)
+final createUserProvider = AutoDisposeProvider<ApiResult<void>>.internal(
+  createUser,
+  name: r'createUserProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$createUserHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef CreateUserRef = AutoDisposeProviderRef<ApiResult<void>>;
+String _$handleConnectionHash() => r'25931793c10b8ec68088320be9d3034d92312605';
 
 /// See also [HandleConnection].
 @ProviderFor(HandleConnection)

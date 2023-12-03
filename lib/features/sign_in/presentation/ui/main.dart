@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:mumag/features/home/presentation/providers/connect.dart';
+import 'package:mumag/features/connect/presentation/providers/connect.dart';
 
 class SignInView extends ConsumerWidget {
   const SignInView({super.key});

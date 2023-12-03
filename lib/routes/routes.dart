@@ -1,7 +1,7 @@
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mumag/common/widgets/splash.dart';
-import 'package:mumag/features/home/presentation/ui/main.dart';
+import 'package:mumag/features/connect/presentation/ui/main.dart';
 import 'package:mumag/features/profile/presentation/ui/main.dart';
 import 'package:mumag/features/sign_in/presentation/ui/main.dart';
 
@@ -27,13 +27,13 @@ class SignInRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<HomeRoute>(path: '/home')
-class HomeRoute extends GoRouteData {
-  const HomeRoute();
+@TypedGoRoute<ConnectToSpotifyRoute>(path: '/connect')
+class ConnectToSpotifyRoute extends GoRouteData {
+  const ConnectToSpotifyRoute();
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const HomeView();
+    return const ConnectToSpotifyView();
   }
 }
 

@@ -9,7 +9,7 @@ part of 'routes.dart';
 List<RouteBase> get $appRoutes => [
       $splashRoute,
       $signInRoute,
-      $homeRoute,
+      $connectToSpotifyRoute,
       $profileRoute,
     ];
 
@@ -57,16 +57,17 @@ extension $SignInRouteExtension on SignInRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $homeRoute => GoRouteData.$route(
-      path: '/home',
-      factory: $HomeRouteExtension._fromState,
+RouteBase get $connectToSpotifyRoute => GoRouteData.$route(
+      path: '/connect',
+      factory: $ConnectToSpotifyRouteExtension._fromState,
     );
 
-extension $HomeRouteExtension on HomeRoute {
-  static HomeRoute _fromState(GoRouterState state) => const HomeRoute();
+extension $ConnectToSpotifyRouteExtension on ConnectToSpotifyRoute {
+  static ConnectToSpotifyRoute _fromState(GoRouterState state) =>
+      const ConnectToSpotifyRoute();
 
   String get location => GoRouteData.$location(
-        '/home',
+        '/connect',
       );
 
   void go(BuildContext context) => context.go(location);

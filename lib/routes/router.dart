@@ -57,7 +57,7 @@ GoRouter router(RouterRef ref) {
         unauthenticated: () => const SignInRoute().location,
         loading: () => const SplashRoute().location,
         authenticated: () {
-          return const HomeRoute().location;
+          return const ConnectToSpotifyRoute().location;
         },
         hasCredentials: () {
           return const ProfileRoute().location;

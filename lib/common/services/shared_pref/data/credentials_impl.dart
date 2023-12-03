@@ -18,11 +18,12 @@ final class SpotifyApiCredentialsImpl extends SpotifyApiCredentialsRepository {
   Future<bool> saveCredentials({
     required SpotifyApiCredentials credentials,
   }) async {
-    return await _sharedPref.setString(
-        credentialsKey,
-        CredentialsAdapter.toJson(
-          credentials: credentials,
-        ));
+    return _sharedPref.setString(
+      credentialsKey,
+      CredentialsAdapter.toJson(
+        credentials: credentials,
+      ),
+    );
   }
 
   @override

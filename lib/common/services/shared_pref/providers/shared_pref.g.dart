@@ -23,12 +23,12 @@ final sharedPreferencesProvider =
 
 typedef SharedPreferencesRef = AutoDisposeProviderRef<SharedPreferences>;
 String _$credentialsImplementationHash() =>
-    r'51409c150498ce950c29a989e9246275ba2f24c2';
+    r'927409b8804ead84367d9f75986d7e26da2acc91';
 
 /// See also [credentialsImplementation].
 @ProviderFor(credentialsImplementation)
 final credentialsImplementationProvider =
-    AutoDisposeProvider<SpotifyApiCredentialsImpl>.internal(
+    AutoDisposeProvider<SpotifyApiCredentialsRepository>.internal(
   credentialsImplementation,
   name: r'credentialsImplementationProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -39,6 +39,6 @@ final credentialsImplementationProvider =
 );
 
 typedef CredentialsImplementationRef
-    = AutoDisposeProviderRef<SpotifyApiCredentialsImpl>;
+    = AutoDisposeProviderRef<SpotifyApiCredentialsRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
