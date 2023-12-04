@@ -11,7 +11,14 @@ part 'user_provider.g.dart';
 @riverpod
 UserApiUsecaseRepository userApi(UserApiRef ref) {
   final api = ref.watch(apiProvider);
-  return UserApiUsecase(api);
+  return UserApiImpl(api);
+}
+
+@riverpod
+UserApiUsecase userApiUsecase(UserApiUsecaseRef ref) {
+  final apiUsecase = ref.watch(userApiProvider);
+
+  return UserApiUsecase(apiUsecase);
 }
 
 @riverpod
@@ -23,7 +30,7 @@ Future<UserEntity?> user(UserRef ref) async {
   }
 
   final user = await ref
-      .watch(userApiProvider)
+      .watch(userApiUsecaseProvider)
       .getUser(
         getParams: GetParams(
           email: firebaseUser.email!,

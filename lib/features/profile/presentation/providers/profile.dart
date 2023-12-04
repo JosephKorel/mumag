@@ -24,7 +24,7 @@ Future<List<String>> userGenres(UserGenresRef ref) async {
   if (currentUser.genres.isEmpty) {
     final genres = await ProfileInteractor(spotify: spotify).favoriteGenres();
     await ref
-        .read(userApiProvider)
+        .read(userApiUsecaseProvider)
         .updateGenres(
           updateGenresParam: UpdateGenresParam(
             userId: currentUser.id,

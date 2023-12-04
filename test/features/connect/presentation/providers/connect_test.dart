@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/services/shared_pref/domain/credentials_repo.dart';
 import 'package:mumag/common/services/shared_pref/providers/shared_pref.dart';
 import 'package:mumag/common/services/spotify_auth/data/auth.dart';
@@ -15,8 +16,6 @@ import 'package:mumag/features/connect/presentation/providers/connect.dart';
 import 'package:spotify/spotify.dart';
 
 class SpotifyAuthRepositoryMock extends Mock implements SpotifyAuthRepository {}
-
-class SaveUserRepositoryMock extends Mock implements SaveUserRepository {}
 
 class UserApiMock extends Mock implements UserApiUsecaseRepository {}
 
@@ -61,8 +60,6 @@ void main() {
   // Handles fetching params and inserting user
   final insertUserController = InsertUserController(insertParamsRepo, userApi);
 
-  final saveUserRepo = SaveUserRepositoryMock();
-  final saveUserController = SaveUserController(saveUserRepo, userApi);
   final saveUserImpl = SpotifyAuthRepositoryMock();
   final spotifyAuthController = SpotifyAuthController(saveUserImpl);
   final spotifyCredentials = SpotifyApiCredentials(
@@ -73,6 +70,14 @@ void main() {
   );
   final insertParams =
       InsertParams(email: '', name: '', genres: '', avatarUrl: '');
+  final userEntity = UserEntity(
+    id: 1,
+    name: insertParams.name,
+    email: insertParams.email,
+    genres: [],
+    avatarUrl: null,
+    lastUpdatedAt: DateTime.now(),
+  );
 
   setUpAll(() {
     registerFallbackValue(const AsyncLoading<void>());
@@ -292,8 +297,9 @@ void main() {
 
       verifyNoMoreInteractions(listener);
     });
+
     test(
-        'User grants permission, saves in storage, get params to insert user and insert user',
+        'User grants permission, saves in storage, get params to insert user and insert it',
         () async {
       const data = AsyncData<void>(null);
 
@@ -303,6 +309,8 @@ void main() {
         overrides: [
           credentialsImplementationProvider
               .overrideWith((ref) => spotifyApiCredentialsRepo),
+          createUserProvider
+              .overrideWith((ref) => insertUserController.newUser(email: '')),
           spotifyAuthControllerProvider
               .overrideWith((ref) => spotifyAuthController),
         ],
@@ -332,7 +340,7 @@ void main() {
       // Get params to insert user
       when(
         () => userApi.insertUser(insertParams: insertParams),
-      ).thenThrow(Exception());
+      ).thenAnswer((invocation) async => userEntity);
 
       final controller = container.read(handleConnectionProvider.notifier);
 
@@ -342,7 +350,7 @@ void main() {
         () => listener(data, any(that: isA<AsyncLoading<void>>())),
         () => listener(
               any(that: isA<AsyncLoading<void>>()),
-              any(that: isA<AsyncError<void>>()),
+              data,
             ),
       ]);
 

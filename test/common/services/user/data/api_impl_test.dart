@@ -3,15 +3,15 @@ import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mumag/common/models/exception/exception.dart';
 import 'package:mumag/common/models/user/user_entity.dart';
-import 'package:mumag/common/services/backend_api/domain/api_repository.dart';
 import 'package:mumag/common/services/user/data/api_impl.dart';
+import 'package:mumag/common/services/user/domain/api/api_repository.dart';
 import 'package:mumag/common/services/user/domain/database/user_db_events.dart';
 
-class MockApi extends Mock implements ApiRepository {}
+class UserApiMock extends Mock implements UserApiUsecaseRepository {}
 
 void main() {
-  final api = MockApi();
-  final userApiUsecase = UserApiUsecase(api);
+  final userApi = UserApiMock();
+  final userApiUsecase = UserApiUsecase(userApi);
   final insertParams = InsertParams(
     email: 'joseph@email.com',
     name: 'Joseph',
@@ -20,18 +20,22 @@ void main() {
   );
   final getParams = GetParams(email: 'joseph@email.com');
   final lastUpdatedAt = DateTime.now();
+  final insertedUser = UserEntity(
+    id: 1,
+    name: insertParams.name,
+    email: insertParams.email,
+    genres: [],
+    avatarUrl: null,
+    lastUpdatedAt: lastUpdatedAt,
+  );
 
   group('User Api usecase implementation tests', () {
     test('Should insert user and return a user entity', () async {
       // arrange
       when(
-        () => api.post(path: '/user', params: insertParams.toMap()),
+        () => userApi.insertUser(insertParams: insertParams),
       ).thenAnswer(
-        (invocation) async => {
-          ...insertParams.toMap(),
-          'id': 1,
-          'lastUpdatedAt': lastUpdatedAt.toIso8601String(),
-        },
+        (invocation) async => insertedUser,
       );
 
       // prepare
@@ -57,7 +61,7 @@ void main() {
     test('Should throw exception and return left', () async {
       // arrange
       when(
-        () => api.post(path: '/user', params: insertParams.toMap()),
+        () => userApi.insertUser(insertParams: insertParams),
       ).thenAnswer((_) => throw ApiException(error: Object, userMsg: ''));
 
       // prepare
@@ -75,7 +79,7 @@ void main() {
     test('Should return null from get request', () async {
       // arrange
       when(
-        () => api.get(path: '/user', query: getParams.toMap()),
+        () => userApi.getUser(getParams: getParams),
       ).thenAnswer((_) async => null);
 
       // prepare
@@ -91,13 +95,9 @@ void main() {
     test('Should return UserEntity from get request', () async {
       // arrange
       when(
-        () => api.get(path: '/user', query: getParams.toMap()),
+        () => userApi.getUser(getParams: getParams),
       ).thenAnswer(
-        (_) async => {
-          ...insertParams.toMap(),
-          'id': 1,
-          'lastUpdatedAt': lastUpdatedAt.toIso8601String(),
-        },
+        (_) async => insertedUser,
       );
 
       // prepare
@@ -130,14 +130,9 @@ void main() {
       );
 
       when(
-        () => api.put(path: '/user', params: userEntityToMap(initialUser)),
+        () => userApi.updateUser(userEntity: initialUser),
       ).thenAnswer(
-        (_) async => {
-          ...insertParams.toMap(),
-          'id': 1,
-          'lastUpdatedAt': lastUpdatedAt.toIso8601String(),
-          'name': 'John',
-        },
+        (_) async => initialUser.copyWith(name: 'John'),
       );
 
       // prepare

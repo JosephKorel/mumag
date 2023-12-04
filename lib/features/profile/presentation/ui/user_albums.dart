@@ -65,14 +65,6 @@ class ProfileTest extends ConsumerWidget {
     final user = ref.watch(userProvider).requireValue!;
     final userApi = ref.watch(userApiProvider);
 
-    void changeUser() {
-      final newDate = user.lastUpdatedAt.add(const Duration(days: 4));
-
-      userApi
-          .updateUser(userEntity: user.copyWith(lastUpdatedAt: newDate))
-          .run();
-    }
-
-    return ElevatedButton(onPressed: changeUser, child: const Text('Test'));
+    return ElevatedButton(onPressed: () {}, child: const Text('Test'));
   }
 }

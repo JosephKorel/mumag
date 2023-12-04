@@ -26,7 +26,7 @@ class SaveUserController extends ControllerRepository {
           avatarUrl: avatarUrl,
         );
 
-        await _userApi.insertUser(insertParams: insertParams).run();
+        await _userApi.insertUser(insertParams: insertParams);
       },
       (error, stackTrace) => ApiException(
         error: error,
@@ -48,7 +48,7 @@ class InsertUserController {
         final insertParams =
             await _insertParamsRepository.getUserParams(email: email);
 
-        await _userApi.insertUser(insertParams: insertParams).run();
+        await _userApi.insertUser(insertParams: insertParams);
       },
       (error, stackTrace) => ApiException(
         error: error,

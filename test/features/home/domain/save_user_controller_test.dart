@@ -3,23 +3,27 @@ import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mumag/common/models/exception/exception.dart';
 import 'package:mumag/common/models/user/user_entity.dart';
-import 'package:mumag/common/services/backend_api/domain/api_repository.dart';
-import 'package:mumag/common/services/user/data/api_impl.dart';
+import 'package:mumag/common/services/user/domain/api/api_repository.dart';
 import 'package:mumag/common/services/user/domain/database/user_db_events.dart';
+import 'package:mumag/features/connect/domain/insert_params_repo.dart';
 import 'package:mumag/features/connect/domain/save_user_controller.dart';
 import 'package:mumag/features/connect/domain/save_user_repo.dart';
 import 'package:spotify/spotify.dart';
 
-class MockApi extends Mock implements ApiRepository {}
+class UserApiMock extends Mock implements UserApiUsecaseRepository {}
 
 class MockSaveUserRepo extends Mock implements SaveUserRepository {}
 
+class InsertParamsRepositoryMock extends Mock
+    implements InsertParamsRepository {}
+
 void main() {
-  final api = MockApi();
   final saveControllerRepo = MockSaveUserRepo();
-  final userApiUsecase = UserApiUsecase(api);
-  final saveUserController =
-      SaveUserController(saveControllerRepo, userApiUsecase);
+  final userApi = UserApiMock();
+  final insertParamsMock = InsertParamsRepositoryMock();
+  final insertUserController = InsertUserController(insertParamsMock, userApi);
+
+  // Variables
   const genres = ['metal'];
   final lastUpdatedAt = DateTime.now();
 
@@ -51,42 +55,33 @@ void main() {
 
     test('Should insert new user', () async {
       // arrange
-
-      when(
-        saveControllerRepo.favoriteGenres,
-      ).thenAnswer((invocation) async => genres);
-
-      when(saveControllerRepo.spotifyUser).thenAnswer(
-        (invocation) async =>
-            User.fromJson({'display_name': 'John', 'images': null}),
-      );
-
-      final spotifyUser = await saveControllerRepo.spotifyUser();
-      final fetchedGenres = await saveControllerRepo.favoriteGenres();
-
       final insertParams = InsertParams(
         email: '',
-        name: spotifyUser.displayName!,
-        genres: fetchedGenres.join(','),
+        name: 'John Doe',
+        genres: '',
         avatarUrl: null,
       );
 
       when(
-        () => userApiUsecase.insertUser(insertParams: insertParams).run(),
+        () => insertParamsMock.getUserParams(email: ''),
+      ).thenAnswer((invocation) async => insertParams);
+
+      final params = await insertParamsMock.getUserParams(email: '');
+
+      when(
+        () => userApi.insertUser(insertParams: params),
       ).thenAnswer(
-        (invocation) async => Right<AppException, UserEntity>(
-          UserEntity(
-            id: 1,
-            name: insertParams.name,
-            avatarUrl: insertParams.avatarUrl,
-            email: insertParams.email,
-            lastUpdatedAt: lastUpdatedAt,
-          ),
+        (invocation) async => UserEntity(
+          id: 1,
+          name: insertParams.name,
+          avatarUrl: insertParams.avatarUrl,
+          email: insertParams.email,
+          lastUpdatedAt: lastUpdatedAt,
         ),
       );
 
       // Prepare
-      final request = await saveUserController.newUser(email: '').run();
+      final request = await insertUserController.newUser(email: '').run();
 
       // assert
       expect(request, isA<Right<AppException, void>>());
