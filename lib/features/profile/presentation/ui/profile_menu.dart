@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/theme/utils.dart';
+import 'package:mumag/common/widgets/bottom_sheet.dart';
+import 'package:mumag/features/profile/presentation/ui/change_background.dart';
 
 enum MenuEntry {
   background('Change Background');
@@ -19,13 +21,16 @@ class ProfileMenuButton extends ConsumerStatefulWidget {
 }
 
 class _ProfileMenuButtonState extends ConsumerState<ProfileMenuButton> {
+  void _openBackgroundBottomSheet() => showAppBottomSheet(
+        context,
+        child: const ChangeBackgroundBottomSheet(),
+      );
+
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<MenuEntry>(
       onSelected: (MenuEntry item) {
-        setState(() {
-          // selectedMenu = item;
-        });
+        _openBackgroundBottomSheet();
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       icon: const Icon(Icons.settings),
