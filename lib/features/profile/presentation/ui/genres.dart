@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mumag/features/profile/presentation/providers/profile.dart';
+import 'package:mumag/common/services/user/providers/user_provider.dart';
 
 class FavoriteGenresView extends ConsumerWidget {
   const FavoriteGenresView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final genres = ref.watch(userGenresProvider);
-    return genres.when(
-      data: (data) => Text(data.join(', ')),
-      error: (error, stackTrace) => const Text('Error'),
-      loading: CircularProgressIndicator.new,
+    final genres = ref.watch(
+      userProvider.select((value) => value.requireValue!.genres),
     );
+
+    return Text(genres.join(', '));
   }
 }
 

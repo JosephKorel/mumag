@@ -25,7 +25,7 @@ class SaveUserImpl extends SaveUserRepository {
       }
       final images = lastSavedAlbum.items!.first.images;
 
-      return images?[1].url;
+      return images?[0].url;
     } catch (e) {
       rethrow;
     }

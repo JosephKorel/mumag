@@ -16,7 +16,8 @@ void main() {
     email: 'joseph@email.com',
     name: 'Joseph',
     genres: '',
-    avatarUrl: null,
+    avatarUrl: '',
+    backgroundUrl: '',
   );
   final getParams = GetParams(email: 'joseph@email.com');
   final lastUpdatedAt = DateTime.now();

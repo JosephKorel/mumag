@@ -59,7 +59,8 @@ void main() {
         email: '',
         name: 'John Doe',
         genres: '',
-        avatarUrl: null,
+        avatarUrl: '',
+        backgroundUrl: '',
       );
 
       when(

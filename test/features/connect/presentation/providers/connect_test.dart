@@ -68,8 +68,13 @@ void main() {
     accessToken: '',
     refreshToken: '',
   );
-  final insertParams =
-      InsertParams(email: '', name: '', genres: '', avatarUrl: '');
+  final insertParams = InsertParams(
+    email: '',
+    name: '',
+    genres: '',
+    avatarUrl: '',
+    backgroundUrl: '',
+  );
   final userEntity = UserEntity(
     id: 1,
     name: insertParams.name,

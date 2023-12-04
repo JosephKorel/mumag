@@ -12,8 +12,8 @@ class InsertParams extends UserDatabaseEvents {
   final String email;
   final String name;
   final String genres;
-  final String? avatarUrl;
-  final String? backgroundUrl;
+  final String avatarUrl;
+  final String backgroundUrl;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
