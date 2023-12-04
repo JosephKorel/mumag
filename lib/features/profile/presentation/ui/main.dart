@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
 import 'package:mumag/features/profile/presentation/providers/theme.dart';
+import 'package:mumag/features/profile/presentation/ui/profile_menu.dart';
 import 'package:mumag/features/profile/presentation/ui/profile_view.dart';
 
 class ProfileView extends ConsumerWidget {
@@ -35,29 +36,30 @@ class UserProfileView extends ConsumerWidget {
     final colorScheme = ref.watch(profileColorSchemeProvider);
 
     return colorScheme.when(
-      data: (data) => Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-        ),
-        extendBodyBehindAppBar: true,
-        body: DecoratedBox(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: NetworkImage(user.backgroundUrl!),
-              fit: BoxFit.cover,
-            ),
+      data: (data) => Theme(
+        data: ThemeData(colorScheme: data.light),
+        child: Scaffold(
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            actions: const [ProfileMenuButton()],
           ),
-          child: Column(
-            children: [
-              const Expanded(flex: 2, child: SizedBox.expand()),
-              Expanded(
-                child: Theme(
-                  data: ThemeData(colorScheme: data.light),
-                  child: const ProfileMainView(),
-                ),
+          extendBodyBehindAppBar: true,
+          body: DecoratedBox(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(user.backgroundUrl!),
+                fit: BoxFit.cover,
               ),
-            ],
+            ),
+            child: const Column(
+              children: [
+                Expanded(flex: 2, child: SizedBox.expand()),
+                Expanded(
+                  child: ProfileMainView(),
+                ),
+              ],
+            ),
           ),
         ),
       ),

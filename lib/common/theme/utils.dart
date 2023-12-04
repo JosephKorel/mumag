@@ -14,5 +14,6 @@ extension ThemeHelper on BuildContext {
   Color get primary => Theme.of(this).colorScheme.primary;
   Color get onPrimary => Theme.of(this).colorScheme.onPrimary;
   Color get background => Theme.of(this).colorScheme.background;
+  Color get onBackground => Theme.of(this).colorScheme.onBackground;
   Color get onSurface => Theme.of(this).colorScheme.onSurface;
 }
