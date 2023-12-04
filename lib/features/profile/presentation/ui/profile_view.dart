@@ -3,9 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
+import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/features/connect/presentation/providers/connect.dart';
-import 'package:mumag/features/profile/presentation/ui/genres.dart';
-import 'package:mumag/features/profile/presentation/ui/user_albums.dart';
 
 class ProfileMainView extends ConsumerWidget {
   const ProfileMainView({super.key});
@@ -26,7 +25,7 @@ class ProfileMainView extends ConsumerWidget {
           topLeft: Radius.circular(32),
           topRight: Radius.circular(32),
         ),
-        color: Theme.of(context).colorScheme.background.withOpacity(0.8),
+        color: context.onSurface.withOpacity(0.8),
       ),
       child: ClipRRect(
         borderRadius: const BorderRadius.only(
@@ -34,23 +33,28 @@ class ProfileMainView extends ConsumerWidget {
           topRight: Radius.circular(32),
         ),
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+          filter: ImageFilter.blur(sigmaY: 8),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const ProfilePicture(),
-                Text(user.name),
-                ElevatedButton(
-                  onPressed: checkAlbum,
-                  child: const Text('Check it'),
+                Text(
+                  user.name,
+                  style: context.titleLarge.copyWith(
+                    color: context.onPrimary,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                ElevatedButton(
-                  onPressed: checkAlbum,
-                  child: const Text('Check genres'),
+                const SizedBox(
+                  height: 8,
                 ),
-                const FavoriteGenresView(),
-                const ProfileTest(),
+                const Expanded(child: FavoriteGenres()),
+                FilledButton(
+                  onPressed: () {},
+                  child: const Text('See Profile'),
+                ),
               ],
             ),
           ),
@@ -70,19 +74,64 @@ class ProfilePicture extends ConsumerWidget {
     );
 
     if (profileImg == null) {
-      return CircleAvatar(
-        radius: 42,
-        backgroundColor: Theme.of(context).colorScheme.background,
-        child: const Icon(
-          Icons.person,
-          size: 52,
+      return Center(
+        child: CircleAvatar(
+          radius: 32,
+          backgroundColor: Theme.of(context).colorScheme.background,
+          child: const Icon(
+            Icons.person,
+            size: 52,
+          ),
         ),
       );
     }
 
-    return CircleAvatar(
-      radius: 42,
-      backgroundImage: NetworkImage(profileImg),
+    return Center(
+      child: CircleAvatar(
+        radius: 32,
+        backgroundImage: NetworkImage(profileImg),
+      ),
+    );
+  }
+}
+
+class FavoriteGenres extends ConsumerWidget {
+  const FavoriteGenres({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final genres = ref.watch(
+      userProvider.select((value) => value.requireValue!.genres),
+    );
+
+    final genresBadges = genres
+        .map(
+          (e) => DecoratedBox(
+            decoration: BoxDecoration(
+              color: context.primary.withOpacity(0.8),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: context.primary.withOpacity(0.4),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              child: Text(
+                e.toUpperCase(),
+                style: context.bodyMedium.copyWith(
+                  color: context.onPrimary,
+                ),
+              ),
+            ),
+          ),
+        )
+        .toList();
+
+    return Wrap(
+      runSpacing: 8,
+      spacing: 8,
+      alignment: WrapAlignment.center,
+      children: genresBadges,
     );
   }
 }
