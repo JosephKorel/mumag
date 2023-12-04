@@ -36,6 +36,7 @@ final class SpotifyApiCredentialsImpl extends SpotifyApiCredentialsRepository {
     return null;
   }
 
+  @override
   void deleteCredentials() {
     _sharedPref.remove(credentialsKey);
   }

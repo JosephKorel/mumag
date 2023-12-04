@@ -20,23 +20,6 @@ final saveUserRepoProvider = AutoDisposeProvider<SaveUserRepository>.internal(
 );
 
 typedef SaveUserRepoRef = AutoDisposeProviderRef<SaveUserRepository>;
-String _$saveUserControllerHash() =>
-    r'049ab8291b65e0a2aef7d6e642a5caf121e42744';
-
-/// See also [saveUserController].
-@ProviderFor(saveUserController)
-final saveUserControllerProvider =
-    AutoDisposeProvider<SaveUserController>.internal(
-  saveUserController,
-  name: r'saveUserControllerProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$saveUserControllerHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef SaveUserControllerRef = AutoDisposeProviderRef<SaveUserController>;
 String _$insertParamsHash() => r'8ef26624381bfaacfe66a52811306b29ed2b79eb';
 
 /// See also [insertParams].

@@ -5,6 +5,8 @@ abstract class SaveUserRepository {
   Future<List<String>> favoriteGenres();
 
   Future<User> spotifyUser();
+
+  Future<String?> getProfileBackground();
 }
 
 abstract class ControllerRepository {

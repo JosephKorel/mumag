@@ -6,12 +6,14 @@ class InsertParams extends UserDatabaseEvents {
     required this.name,
     required this.genres,
     required this.avatarUrl,
+    required this.backgroundUrl,
   });
 
   final String email;
   final String name;
   final String genres;
   final String? avatarUrl;
+  final String? backgroundUrl;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -19,6 +21,7 @@ class InsertParams extends UserDatabaseEvents {
       'name': name,
       'genres': genres,
       'avatarUrl': avatarUrl,
+      'backgroundUrl': backgroundUrl,
     };
   }
 }

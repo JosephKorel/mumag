@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mumag/features/profile/presentation/providers/profile.dart';
+import 'package:mumag/common/services/shared_pref/providers/shared_pref.dart';
+import 'package:mumag/common/services/user/providers/user_provider.dart';
 import 'package:mumag/features/profile/presentation/ui/genres.dart';
 import 'package:mumag/features/profile/presentation/ui/user_albums.dart';
 
@@ -9,9 +10,14 @@ class UserProfileView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProfileProvider).requireValue;
+    final user = ref.watch(userProvider).requireValue!;
 
-    Future<void> checkAlbum() async {}
+    Future<void> checkAlbum() async {
+      ref.read(credentialsImplementationProvider).deleteCredentials();
+    }
+
+/*     log('USER AVATAR IS ${user.avatarUrl}');
+    log('USER AVATAR IS ${user.avatarUrl.runtimeType}'); */
 
     return Scaffold(
       appBar: AppBar(
@@ -22,8 +28,8 @@ class UserProfileView extends ConsumerWidget {
         child: Column(
           children: [
             /* const AlbumHeaderView(), */
-            Text(user.displayName!),
-            if (user.images != null) Image.network(user.images![0].url!),
+            Text(user.name),
+            /* if (user.avatarUrl != null) Image.network(user.avatarUrl!), */
             ElevatedButton(
               onPressed: checkAlbum,
               child: const Text('Check genres'),

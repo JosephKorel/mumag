@@ -4,4 +4,6 @@ abstract class SpotifyApiCredentialsRepository {
   Future<bool> saveCredentials({required SpotifyApiCredentials credentials});
 
   SpotifyApiCredentials? retrieveCredentials();
+
+  void deleteCredentials();
 }

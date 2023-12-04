@@ -17,6 +17,21 @@ class SaveUserImpl extends SaveUserRepository {
   }
 
   @override
+  Future<String?> getProfileBackground() async {
+    try {
+      final lastSavedAlbum = await _spotify.me.savedAlbums().first(1);
+      if (lastSavedAlbum.items == null) {
+        return null;
+      }
+      final images = lastSavedAlbum.items!.first.images;
+
+      return images?[1].url;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<List<String>> favoriteGenres() async {
     try {
       final topArtists = await _spotify.me.topArtists().all();

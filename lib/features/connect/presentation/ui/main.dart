@@ -7,6 +7,8 @@ class ConnectToSpotifyView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(handleConnectionProvider);
+
     Future<void> connect() async {
       await ref.read(handleConnectionProvider.notifier).connect();
     }

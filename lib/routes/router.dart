@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -40,7 +38,6 @@ GoRouter router(RouterRef ref) {
       }
     })
     ..listen(authStateControllerProvider, (prev, next) {
-      log('Changed from: $prev, next: $next');
       isAuth.value = next;
     });
 
@@ -65,31 +62,6 @@ GoRouter router(RouterRef ref) {
       );
     },
   );
-}
-
-Future<void> onAuth(
-  AsyncValue<User?>? prev,
-  AsyncValue<User?> next,
-  RouterRef ref,
-) async {
-  if (next.requireValue != null) {
-    final credentials =
-        ref.read(credentialsImplementationProvider).retrieveCredentials();
-
-    if (credentials != null) {
-      final user = await ref.read(userProvider.future);
-      ref
-          .read(authStateControllerProvider.notifier)
-          .updateState(user == null ? Authenticated() : HasCredentials());
-    } else {
-      ref
-          .read(authStateControllerProvider.notifier)
-          .updateState(Authenticated());
-    }
-    return;
-  }
-
-  ref.read(authStateControllerProvider.notifier).updateState(Unauthenticated());
 }
 
 Future<AuthState> handleAuthState(AsyncValue<User?> next, RouterRef ref) async {

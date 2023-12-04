@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:mumag/common/services/backend_api/data/api_impl.dart';
 import 'package:mumag/common/services/backend_api/domain/api_repository.dart';
@@ -16,6 +14,5 @@ Dio dioClient(DioClientRef ref) {
 @riverpod
 ApiRepository api(ApiRef ref) {
   final client = ref.watch(dioClientProvider);
-  log('CLIENT É ${client.options.baseUrl}');
   return ApiImplementation(client);
 }

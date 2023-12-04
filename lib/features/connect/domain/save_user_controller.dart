@@ -6,39 +6,6 @@ import 'package:mumag/common/services/user/domain/database/user_db_events.dart';
 import 'package:mumag/features/connect/domain/insert_params_repo.dart';
 import 'package:mumag/features/connect/domain/save_user_repo.dart';
 
-class SaveUserController extends ControllerRepository {
-  SaveUserController(this._saveUserRepo, this._userApi);
-
-  @override
-  ApiResult<void> newUser({required String email}) {
-    return TaskEither.tryCatch(
-      () async {
-        final genres = await _saveUserRepo.favoriteGenres();
-        final spotifyUser = await _saveUserRepo.spotifyUser();
-
-        final avatarUrl =
-            spotifyUser.images != null ? spotifyUser.images!.first.url : '';
-
-        final insertParams = InsertParams(
-          email: email,
-          name: spotifyUser.displayName!,
-          genres: genres.join(','),
-          avatarUrl: avatarUrl,
-        );
-
-        await _userApi.insertUser(insertParams: insertParams);
-      },
-      (error, stackTrace) => ApiException(
-        error: error,
-        userMsg: 'Could not save account, try again later',
-      ),
-    );
-  }
-
-  final SaveUserRepository _saveUserRepo;
-  final UserApiUsecaseRepository _userApi;
-}
-
 class InsertUserController {
   InsertUserController(this._insertParamsRepository, this._userApi);
 
@@ -69,6 +36,7 @@ class InsertParamsImpl extends InsertParamsRepository {
     try {
       final genres = await _saveUserRepo.favoriteGenres();
       final spotifyUser = await _saveUserRepo.spotifyUser();
+      final backgroundUrl = await _saveUserRepo.getProfileBackground();
 
       final avatarUrl =
           spotifyUser.images != null ? spotifyUser.images!.first.url : '';
@@ -78,6 +46,7 @@ class InsertParamsImpl extends InsertParamsRepository {
         name: spotifyUser.displayName!,
         genres: genres.join(','),
         avatarUrl: avatarUrl,
+        backgroundUrl: backgroundUrl,
       );
     } catch (e) {
       rethrow;

@@ -19,14 +19,6 @@ SaveUserRepository saveUserRepo(SaveUserRepoRef ref) {
 }
 
 @riverpod
-SaveUserController saveUserController(SaveUserControllerRef ref) {
-  return SaveUserController(
-    ref.watch(saveUserRepoProvider),
-    ref.watch(userApiProvider),
-  );
-}
-
-@riverpod
 InsertParamsRepository insertParams(InsertParamsRef ref) {
   return InsertParamsImpl(ref.watch(saveUserRepoProvider));
 }

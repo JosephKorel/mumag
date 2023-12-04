@@ -10,11 +10,13 @@ class UserEntity with _$UserEntity {
     required String? avatarUrl,
     required String email,
     required DateTime lastUpdatedAt,
+    @Default(null) String? backgroundUrl,
     @Default([]) List<String> genres,
   }) = _UserEntity;
 
   factory UserEntity.fromJson(Map<String, Object?> json) {
     final genresKey = json['genres']! as String;
+    final backgroundUrlKey = json['backgroundUrl']! as String;
     final lastUpdateKey = json['lastUpdatedAt']! as String;
 
     return UserEntity(
@@ -23,6 +25,7 @@ class UserEntity with _$UserEntity {
       email: json['email']! as String,
       avatarUrl: json['avatarUrl'] as String?,
       genres: genresKey.isEmpty ? <String>[] : genresKey.split(','),
+      backgroundUrl: backgroundUrlKey.isEmpty ? null : backgroundUrlKey,
       lastUpdatedAt: DateTime.parse(lastUpdateKey),
     );
   }
@@ -35,6 +38,7 @@ Map<String, dynamic> userEntityToMap(UserEntity userEntity) {
     'email': userEntity.email,
     'avatarUrl': userEntity.avatarUrl,
     'genres': userEntity.genres.join(','),
+    'backgroundUlr': userEntity.backgroundUrl,
     'lastUpdatedAt': userEntity.lastUpdatedAt.toIso8601String(),
   };
 }

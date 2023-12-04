@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mumag/features/profile/presentation/providers/profile.dart';
+import 'package:mumag/common/services/user/providers/user_provider.dart';
 import 'package:mumag/features/profile/presentation/ui/profile_view.dart';
 
 class ProfileView extends ConsumerWidget {
@@ -8,7 +8,7 @@ class ProfileView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProfileProvider);
+    final user = ref.watch(userProvider);
 
     return user.when(
       data: (data) => const UserProfileView(),
