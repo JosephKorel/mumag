@@ -13,4 +13,9 @@ abstract class ApiRepository {
     required String path,
     required Map<String, dynamic> params,
   });
+
+  Future<Map<String, dynamic>?> delete({
+    required String path,
+    required Map<String, dynamic> params,
+  });
 }

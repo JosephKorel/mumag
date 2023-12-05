@@ -23,6 +23,7 @@ mixin _$UserEntity {
   DateTime get lastUpdatedAt => throw _privateConstructorUsedError;
   String? get backgroundUrl => throw _privateConstructorUsedError;
   List<String> get genres => throw _privateConstructorUsedError;
+  List<RatingEntity> get ratings => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserEntityCopyWith<UserEntity> get copyWith =>
@@ -42,7 +43,8 @@ abstract class $UserEntityCopyWith<$Res> {
       String email,
       DateTime lastUpdatedAt,
       String? backgroundUrl,
-      List<String> genres});
+      List<String> genres,
+      List<RatingEntity> ratings});
 }
 
 /// @nodoc
@@ -65,6 +67,7 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
     Object? lastUpdatedAt = null,
     Object? backgroundUrl = freezed,
     Object? genres = null,
+    Object? ratings = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -95,6 +98,10 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
           ? _value.genres
           : genres // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      ratings: null == ratings
+          ? _value.ratings
+          : ratings // ignore: cast_nullable_to_non_nullable
+              as List<RatingEntity>,
     ) as $Val);
   }
 }
@@ -114,7 +121,8 @@ abstract class _$$UserEntityImplCopyWith<$Res>
       String email,
       DateTime lastUpdatedAt,
       String? backgroundUrl,
-      List<String> genres});
+      List<String> genres,
+      List<RatingEntity> ratings});
 }
 
 /// @nodoc
@@ -135,6 +143,7 @@ class __$$UserEntityImplCopyWithImpl<$Res>
     Object? lastUpdatedAt = null,
     Object? backgroundUrl = freezed,
     Object? genres = null,
+    Object? ratings = null,
   }) {
     return _then(_$UserEntityImpl(
       id: null == id
@@ -165,6 +174,10 @@ class __$$UserEntityImplCopyWithImpl<$Res>
           ? _value._genres
           : genres // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      ratings: null == ratings
+          ? _value._ratings
+          : ratings // ignore: cast_nullable_to_non_nullable
+              as List<RatingEntity>,
     ));
   }
 }
@@ -179,8 +192,10 @@ class _$UserEntityImpl implements _UserEntity {
       required this.email,
       required this.lastUpdatedAt,
       this.backgroundUrl = null,
-      final List<String> genres = const []})
-      : _genres = genres;
+      final List<String> genres = const [],
+      final List<RatingEntity> ratings = const []})
+      : _genres = genres,
+        _ratings = ratings;
 
   @override
   final int id;
@@ -204,9 +219,18 @@ class _$UserEntityImpl implements _UserEntity {
     return EqualUnmodifiableListView(_genres);
   }
 
+  final List<RatingEntity> _ratings;
+  @override
+  @JsonKey()
+  List<RatingEntity> get ratings {
+    if (_ratings is EqualUnmodifiableListView) return _ratings;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_ratings);
+  }
+
   @override
   String toString() {
-    return 'UserEntity(id: $id, name: $name, avatarUrl: $avatarUrl, email: $email, lastUpdatedAt: $lastUpdatedAt, backgroundUrl: $backgroundUrl, genres: $genres)';
+    return 'UserEntity(id: $id, name: $name, avatarUrl: $avatarUrl, email: $email, lastUpdatedAt: $lastUpdatedAt, backgroundUrl: $backgroundUrl, genres: $genres, ratings: $ratings)';
   }
 
   @override
@@ -223,7 +247,8 @@ class _$UserEntityImpl implements _UserEntity {
                 other.lastUpdatedAt == lastUpdatedAt) &&
             (identical(other.backgroundUrl, backgroundUrl) ||
                 other.backgroundUrl == backgroundUrl) &&
-            const DeepCollectionEquality().equals(other._genres, _genres));
+            const DeepCollectionEquality().equals(other._genres, _genres) &&
+            const DeepCollectionEquality().equals(other._ratings, _ratings));
   }
 
   @override
@@ -235,7 +260,8 @@ class _$UserEntityImpl implements _UserEntity {
       email,
       lastUpdatedAt,
       backgroundUrl,
-      const DeepCollectionEquality().hash(_genres));
+      const DeepCollectionEquality().hash(_genres),
+      const DeepCollectionEquality().hash(_ratings));
 
   @JsonKey(ignore: true)
   @override
@@ -252,7 +278,8 @@ abstract class _UserEntity implements UserEntity {
       required final String email,
       required final DateTime lastUpdatedAt,
       final String? backgroundUrl,
-      final List<String> genres}) = _$UserEntityImpl;
+      final List<String> genres,
+      final List<RatingEntity> ratings}) = _$UserEntityImpl;
 
   @override
   int get id;
@@ -268,6 +295,8 @@ abstract class _UserEntity implements UserEntity {
   String? get backgroundUrl;
   @override
   List<String> get genres;
+  @override
+  List<RatingEntity> get ratings;
   @override
   @JsonKey(ignore: true)
   _$$UserEntityImplCopyWith<_$UserEntityImpl> get copyWith =>

@@ -54,4 +54,21 @@ final class ApiImplementation extends ApiRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<Map<String, dynamic>?> delete({
+    required String path,
+    required Map<String, dynamic> params,
+  }) async {
+    try {
+      final result = await _client.delete<Map<String, dynamic>?>(
+        path,
+        queryParameters: params,
+      );
+
+      return result.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

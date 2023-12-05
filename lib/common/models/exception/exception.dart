@@ -16,3 +16,14 @@ final class CreateUserException extends AppException {
   final Object error;
   final String userMsg;
 }
+
+// Rating
+final class InsertRatingException extends AppException {
+  InsertRatingException({
+    required this.error,
+    this.userMsg = 'Something went wrong when adding rate.',
+  });
+
+  final Object error;
+  final String userMsg;
+}

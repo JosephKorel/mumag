@@ -29,6 +29,7 @@ void main() {
     avatarUrl: null,
     lastUpdatedAt: lastUpdatedAt,
   );
+  final updateUserParams = UpdateUserParam(userId: 1, userEntity: insertedUser);
 
   group('User Api usecase implementation tests', () {
     test('Should insert user and return a user entity', () async {
@@ -131,14 +132,14 @@ void main() {
       );
 
       when(
-        () => userApi.updateUser(userEntity: initialUser),
+        () => userApi.updateUser(updateParams: updateUserParams),
       ).thenAnswer(
         (_) async => initialUser.copyWith(name: 'John'),
       );
 
       // prepare
       final user =
-          await userApiUsecase.updateUser(userEntity: initialUser).run();
+          await userApiUsecase.updateUser(updateParams: updateUserParams).run();
 
       // assert
       expect(

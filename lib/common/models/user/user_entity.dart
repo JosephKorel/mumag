@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:mumag/common/models/rating/rating_entity.dart';
 
 part 'user_entity.freezed.dart';
 
@@ -12,12 +13,14 @@ class UserEntity with _$UserEntity {
     required DateTime lastUpdatedAt,
     @Default(null) String? backgroundUrl,
     @Default([]) List<String> genres,
+    @Default([]) List<RatingEntity> ratings,
   }) = _UserEntity;
 
   factory UserEntity.fromJson(Map<String, Object?> json) {
     final genresKey = json['genres']! as String;
     final backgroundUrlKey = json['backgroundUrl']! as String;
     final lastUpdateKey = json['lastUpdatedAt']! as String;
+    final ratingKey = json['ratings']! as List<Map<String, dynamic>>;
 
     return UserEntity(
       id: json['id']! as int,
@@ -27,6 +30,7 @@ class UserEntity with _$UserEntity {
       genres: genresKey.isEmpty ? <String>[] : genresKey.split(','),
       backgroundUrl: backgroundUrlKey.isEmpty ? null : backgroundUrlKey,
       lastUpdatedAt: DateTime.parse(lastUpdateKey),
+      ratings: ratingKey.map(RatingEntity.fromJson).toList(),
     );
   }
 }
