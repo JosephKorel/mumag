@@ -1,7 +1,4 @@
 import 'package:mumag/common/services/spotify_auth/providers/api.dart';
-import 'package:mumag/common/services/user/domain/database/user_db_events.dart';
-import 'package:mumag/common/services/user/providers/user_provider.dart';
-import 'package:mumag/features/profile/data/profile_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:spotify/spotify.dart';
 
@@ -15,26 +12,11 @@ FutureOr<User> userProfile(UserProfileRef ref) async {
 }
 
 @riverpod
-Future<List<String>> userGenres(UserGenresRef ref) async {
+Future<List<AlbumSimple>> savedAlbums(SavedAlbumsRef ref) async {
   final spotify = ref.watch(spotifyApiProvider);
-  final currentUser = ref.watch(userProvider).requireValue!;
+  final savedAlbums = await spotify.me.savedAlbums().getPage(5);
+  final userAlbums = savedAlbums.items?.length;
+  final firstAlbum = savedAlbums.items!.first;
 
-  // If the user has no genre yet, get favorite genres, save it
-  // And invalidade provider
-  if (currentUser.genres.isEmpty) {
-    final genres = await ProfileInteractor(spotify: spotify).favoriteGenres();
-    await ref
-        .read(userApiUsecaseProvider)
-        .updateGenres(
-          updateGenresParam: UpdateGenresParam(
-            userId: currentUser.id,
-            genres: genres.join(','),
-          ),
-        )
-        .run();
-
-    ref.invalidate(userProvider);
-  }
-
-  return currentUser.genres;
+  return [];
 }

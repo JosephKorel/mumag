@@ -20,19 +20,20 @@ final userProfileProvider = AutoDisposeFutureProvider<User>.internal(
 );
 
 typedef UserProfileRef = AutoDisposeFutureProviderRef<User>;
-String _$userGenresHash() => r'ac5da65c436ae078c6aae835b1ff3e0edbbe59e0';
+String _$savedAlbumsHash() => r'5ca4fb1cde2b4a36a15646f52fefd0784374ca0a';
 
-/// See also [userGenres].
-@ProviderFor(userGenres)
-final userGenresProvider = AutoDisposeFutureProvider<List<String>>.internal(
-  userGenres,
-  name: r'userGenresProvider',
+/// See also [savedAlbums].
+@ProviderFor(savedAlbums)
+final savedAlbumsProvider =
+    AutoDisposeFutureProvider<List<AlbumSimple>>.internal(
+  savedAlbums,
+  name: r'savedAlbumsProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$userGenresHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$savedAlbumsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef UserGenresRef = AutoDisposeFutureProviderRef<List<String>>;
+typedef SavedAlbumsRef = AutoDisposeFutureProviderRef<List<AlbumSimple>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
