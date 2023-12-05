@@ -32,10 +32,10 @@ final class UserApiUsecase {
   }
 
   ApiResult<UserEntity> updateUser({
-    required UserEntity userEntity,
+    required UpdateUserParam updateParams,
   }) {
     return TaskEither.tryCatch(() async {
-      final result = await _apiUseCase.updateUser(userEntity: userEntity);
+      final result = await _apiUseCase.updateUser(updateParams: updateParams);
 
       return result;
     }, (o, s) {
@@ -94,12 +94,12 @@ final class UserApiImpl extends UserApiUsecaseRepository {
 
   @override
   Future<UserEntity> updateUser({
-    required UserEntity userEntity,
+    required UpdateUserParam updateParams,
   }) async {
     try {
       final result = await _api.put(
         path: _path,
-        params: userEntityToMap(userEntity),
+        params: updateParams.toMap(),
       );
 
       return UserEntity.fromJson(result!);

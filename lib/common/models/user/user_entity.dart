@@ -38,7 +38,18 @@ Map<String, dynamic> userEntityToMap(UserEntity userEntity) {
     'email': userEntity.email,
     'avatarUrl': userEntity.avatarUrl,
     'genres': userEntity.genres.join(','),
-    'backgroundUlr': userEntity.backgroundUrl,
+    'backgroundUrl': userEntity.backgroundUrl,
+    'lastUpdatedAt': userEntity.lastUpdatedAt.toIso8601String(),
+  };
+}
+
+Map<String, dynamic> userEntityWithoutId(UserEntity userEntity) {
+  return {
+    'name': userEntity.name,
+    'email': userEntity.email,
+    'avatarUrl': userEntity.avatarUrl,
+    'genres': userEntity.genres.join(','),
+    'backgroundUrl': userEntity.backgroundUrl,
     'lastUpdatedAt': userEntity.lastUpdatedAt.toIso8601String(),
   };
 }

@@ -14,9 +14,17 @@ FutureOr<User> userProfile(UserProfileRef ref) async {
 @riverpod
 Future<List<AlbumSimple>> savedAlbums(SavedAlbumsRef ref) async {
   final spotify = ref.watch(spotifyApiProvider);
-  final savedAlbums = await spotify.me.savedAlbums().getPage(5);
-  final userAlbums = savedAlbums.items?.length;
-  final firstAlbum = savedAlbums.items!.first;
+  final savedAlbums = await spotify.me.savedAlbums().getPage(6);
 
-  return [];
+  return savedAlbums.items?.toList() ?? [];
+}
+
+@riverpod
+class SelectedAlbumCover extends _$SelectedAlbumCover {
+  @override
+  String? build() {
+    return null;
+  }
+
+  void update(String url) => state = url;
 }

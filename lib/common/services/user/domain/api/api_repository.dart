@@ -7,7 +7,7 @@ abstract class UserApiUsecaseRepository {
   Future<UserEntity?> getUser({required GetParams getParams});
 
   Future<UserEntity> updateUser({
-    required UserEntity userEntity,
+    required UpdateUserParam updateParams,
   });
 
   Future<String> updateGenres({

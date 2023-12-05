@@ -20,7 +20,7 @@ final userProfileProvider = AutoDisposeFutureProvider<User>.internal(
 );
 
 typedef UserProfileRef = AutoDisposeFutureProviderRef<User>;
-String _$savedAlbumsHash() => r'5ca4fb1cde2b4a36a15646f52fefd0784374ca0a';
+String _$savedAlbumsHash() => r'1377b1bdc59152d05b06b33d06c45e3d836f8d0f';
 
 /// See also [savedAlbums].
 @ProviderFor(savedAlbums)
@@ -35,5 +35,22 @@ final savedAlbumsProvider =
 );
 
 typedef SavedAlbumsRef = AutoDisposeFutureProviderRef<List<AlbumSimple>>;
+String _$selectedAlbumCoverHash() =>
+    r'dca2e30161460f09a24e44006af78a3991a478c0';
+
+/// See also [SelectedAlbumCover].
+@ProviderFor(SelectedAlbumCover)
+final selectedAlbumCoverProvider =
+    AutoDisposeNotifierProvider<SelectedAlbumCover, String?>.internal(
+  SelectedAlbumCover.new,
+  name: r'selectedAlbumCoverProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$selectedAlbumCoverHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$SelectedAlbumCover = AutoDisposeNotifier<String?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

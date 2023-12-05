@@ -1,3 +1,5 @@
+import 'package:mumag/common/models/user/user_entity.dart';
+
 sealed class UserDatabaseEvents {}
 
 class InsertParams extends UserDatabaseEvents {
@@ -33,6 +35,19 @@ class GetParams extends UserDatabaseEvents {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'email': email,
+    };
+  }
+}
+
+class UpdateUserParam extends UserDatabaseEvents {
+  UpdateUserParam({required this.userId, required this.userEntity});
+  final int userId;
+  final UserEntity userEntity;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': userId,
+      'params': userEntityWithoutId(userEntity),
     };
   }
 }
