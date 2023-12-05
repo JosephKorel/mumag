@@ -1,3 +1,4 @@
+import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/services/rating/domain/rating_events.dart';
 
 abstract class RatingRepository {
@@ -7,5 +8,7 @@ abstract class RatingRepository {
 
   Future<void> deleteRating({required DeleteRatingParams params});
 
-  Future<void> getRatings({required GetRatingParams params});
+  Future<List<RatingEntity>> getUserRatings({
+    required GetUserRatingParams params,
+  });
 }

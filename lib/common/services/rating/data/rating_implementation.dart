@@ -1,3 +1,4 @@
+import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/services/backend_api/domain/api_repository.dart';
 import 'package:mumag/common/services/rating/domain/rating_events.dart';
 import 'package:mumag/common/services/rating/domain/rating_repository.dart';
@@ -37,9 +38,13 @@ final class RatingRepositoryImpl extends RatingRepository {
   }
 
   @override
-  Future<void> getRatings({required GetRatingParams params}) async {
+  Future<List<RatingEntity>> getUserRatings({
+    required GetUserRatingParams params,
+  }) async {
     try {
-      await _repository.get(path: path, query: params.toMap());
+      final request = await _repository.get(path: path, query: params.toMap());
+      final ratings = request!['ratings']! as List<Map<String, dynamic>>;
+      return ratings.map(RatingEntity.fromJson).toList();
     } catch (e) {
       rethrow;
     }

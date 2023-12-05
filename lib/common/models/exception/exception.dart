@@ -27,3 +27,33 @@ final class InsertRatingException extends AppException {
   final Object error;
   final String userMsg;
 }
+
+final class UpdateRatingException extends AppException {
+  UpdateRatingException({
+    required this.error,
+    this.userMsg = 'Could not update rate.',
+  });
+
+  final Object error;
+  final String userMsg;
+}
+
+final class DeleteRatingException extends AppException {
+  DeleteRatingException({
+    required this.error,
+    this.userMsg = 'Something went wrong when deleting your rating.',
+  });
+
+  final Object error;
+  final String userMsg;
+}
+
+final class GetUserRatingsException extends AppException {
+  GetUserRatingsException({
+    required this.error,
+    this.userMsg = 'Could not get your ratings.',
+  });
+
+  final Object error;
+  final String userMsg;
+}

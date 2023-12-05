@@ -56,8 +56,8 @@ final class DeleteRatingParams extends RatingsDatabaseEvents {
       };
 }
 
-final class GetRatingParams extends RatingsDatabaseEvents {
-  GetRatingParams({required this.userId});
+final class GetUserRatingParams extends RatingsDatabaseEvents {
+  GetUserRatingParams({required this.userId});
 
   final int userId;
 
