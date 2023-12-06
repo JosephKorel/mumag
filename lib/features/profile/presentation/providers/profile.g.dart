@@ -52,5 +52,20 @@ final selectedAlbumCoverProvider =
 );
 
 typedef _$SelectedAlbumCover = AutoDisposeNotifier<String?>;
+String _$scrollOffsetHash() => r'dc9e3035962f1b0304b1f255c69fe3fc550a3745';
+
+/// See also [ScrollOffset].
+@ProviderFor(ScrollOffset)
+final scrollOffsetProvider =
+    AutoDisposeNotifierProvider<ScrollOffset, double>.internal(
+  ScrollOffset.new,
+  name: r'scrollOffsetProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$scrollOffsetHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$ScrollOffset = AutoDisposeNotifier<double>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

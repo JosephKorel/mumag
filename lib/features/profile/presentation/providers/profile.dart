@@ -28,3 +28,13 @@ class SelectedAlbumCover extends _$SelectedAlbumCover {
 
   void update(String url) => state = url;
 }
+
+@riverpod
+class ScrollOffset extends _$ScrollOffset {
+  @override
+  double build() {
+    return 0;
+  }
+
+  void onScroll(double offset) => state = offset;
+}

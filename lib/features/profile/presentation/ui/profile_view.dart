@@ -2,50 +2,99 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
 import 'package:mumag/common/theme/utils.dart';
-import 'package:mumag/features/connect/presentation/providers/connect.dart';
+import 'package:mumag/features/profile/presentation/providers/profile.dart';
 import 'package:mumag/features/profile/presentation/ui/user_albums.dart';
 
-class ProfileMainView extends ConsumerWidget {
+class ProfileMainView extends ConsumerStatefulWidget {
   const ProfileMainView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ProfileMainViewState();
+}
+
+class _ProfileMainViewState extends ConsumerState<ProfileMainView> {
+  final _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.hasClients) {
+        ref
+            .read(scrollOffsetProvider.notifier)
+            .onScroll(_scrollController.offset);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final user = ref.watch(userProvider).requireValue!;
 
-    Future<void> checkAlbum() async {
-      final spotifyUser = await ref.read(saveUserRepoProvider).spotifyUser();
-      final avatar = spotifyUser.images;
-      final img = avatar?.first;
-    }
-
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(32),
-          topRight: Radius.circular(32),
-        ),
-        color: context.background,
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(32),
+        topRight: Radius.circular(32),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const ProfilePicture(),
-            Text(
-              user.name,
-              style: context.titleLarge.copyWith(),
-              textAlign: TextAlign.center,
+      child: SingleChildScrollView(
+        controller: _scrollController,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(32),
+              topRight: Radius.circular(32),
             ),
-            const SizedBox(
-              height: 8,
+            color: context.background,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const ProfilePicture(),
+                Text(
+                  user.name,
+                  style: context.titleLarge.copyWith(),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                const FavoriteGenres(),
+                const SizedBox(
+                  height: 16,
+                ),
+                const SavedAlbumsView(),
+                const SizedBox(
+                  height: 16,
+                ),
+                const FavoriteGenres(),
+                const SizedBox(
+                  height: 16,
+                ),
+                const FavoriteGenres(),
+                const SizedBox(
+                  height: 16,
+                ),
+                const FavoriteGenres(),
+                const SizedBox(
+                  height: 16,
+                ),
+                const FavoriteGenres(),
+                const SizedBox(
+                  height: 16,
+                ),
+                const FavoriteGenres(),
+              ],
             ),
-            const FavoriteGenres(),
-            const SizedBox(
-              height: 16,
-            ),
-            const SavedAlbumsView(),
-          ],
+          ),
         ),
       ),
     );

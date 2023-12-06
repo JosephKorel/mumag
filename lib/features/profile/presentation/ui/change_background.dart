@@ -171,7 +171,10 @@ class ConfirmAlbumSelection extends ConsumerWidget {
           .updateUser(updateParams: updateParams)
           .run();
 
-      request.fold((l) => null, (r) => ref.invalidate(userProvider));
+      request.fold((l) => null, (r) {
+        context.pop();
+        ref.invalidate(userProvider);
+      });
     }
 
     return Row(

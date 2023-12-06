@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
+import 'package:mumag/features/profile/presentation/providers/profile.dart';
 import 'package:mumag/features/profile/presentation/providers/theme.dart';
 import 'package:mumag/features/profile/presentation/ui/profile_menu.dart';
 import 'package:mumag/features/profile/presentation/ui/profile_view.dart';
@@ -45,14 +46,14 @@ class UserProfileView extends ConsumerWidget {
             actions: const [ProfileMenuButton()],
           ),
           extendBodyBehindAppBar: true,
-          body: Stack(
+          body: const Stack(
             children: [
-              Image(image: NetworkImage(user.backgroundUrl!)),
-              const Column(
+              UserImageHeader(),
+              Column(
                 children: [
                   Expanded(child: SizedBox.expand()),
                   Expanded(
-                    flex: 4,
+                    flex: 3,
                     child: ProfileMainView(),
                   ),
                 ],
@@ -76,6 +77,24 @@ class ProfileLoadingScreen extends StatelessWidget {
       body: Center(
         child: CircularProgressIndicator(),
       ),
+    );
+  }
+}
+
+class UserImageHeader extends ConsumerWidget {
+  const UserImageHeader({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider).requireValue!;
+    final scrollOffset = ref.watch(scrollOffsetProvider) / 56;
+
+    return Image(
+      image: NetworkImage(user.backgroundUrl!),
+      alignment: Alignment(0, scrollOffset),
+      fit: BoxFit.cover,
+      width: double.infinity * 1.2,
+      height: MediaQuery.of(context).size.height / 2.5,
     );
   }
 }
