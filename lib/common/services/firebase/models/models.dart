@@ -12,4 +12,8 @@ final class FirebaseAuthService {
   Stream<User?> authenticatedUser() {
     return _instance.authStateChanges();
   }
+
+  Future<void> signOut() async {
+    await _instance.signOut();
+  }
 }

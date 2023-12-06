@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mumag/common/services/firebase/providers/auth.dart';
 import 'package:mumag/features/connect/presentation/providers/connect.dart';
 
 class ConnectToSpotifyView extends ConsumerWidget {
@@ -23,7 +24,7 @@ class ConnectToSpotifyView extends ConsumerWidget {
             child: const Text('CONNECT'),
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: ref.read(authServiceProvider).signOut,
             child: const Text('FETCH USER'),
           ),
         ],
