@@ -21,11 +21,13 @@ class SuggestionRepositoryImpl extends SuggestionRepository {
   }
 
   @override
-  Future<void> updateSuggestion({
+  Future<int> updateSuggestion({
     required UpdateSuggestionParams params,
   }) async {
     try {
-      await _api.post(path: _path, params: params.toMap());
+      final result = await _api.post(path: _path, params: params.toMap());
+
+      return result['rating'] as int;
     } catch (e) {
       rethrow;
     }

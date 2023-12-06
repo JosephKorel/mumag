@@ -16,7 +16,7 @@ class SuggestionUsecase {
     );
   }
 
-  ApiResult<void> updateSuggestion({required UpdateSuggestionParams params}) {
+  ApiResult<int> updateSuggestion({required UpdateSuggestionParams params}) {
     return TaskEither.tryCatch(
       () => _repository.updateSuggestion(params: params),
       (error, stackTrace) => UpdateSuggestionException(error: error),
@@ -28,5 +28,24 @@ class SuggestionUsecase {
       () => _repository.deleteSuggestion(params: params),
       (error, stackTrace) => DeleteSuggestionException(error: error),
     );
+  }
+}
+
+class SuggestionUsecaseController {
+  SuggestionUsecaseController(this._usecase);
+
+  final SuggestionUsecase _usecase;
+
+  void call({required SuggestionEvents event}) {
+    switch (event) {
+      case InsertSuggestionParams():
+        _usecase.insertSuggestion(params: event);
+
+      case UpdateSuggestionParams():
+        _usecase.updateSuggestion(params: event);
+
+      case DeleteSuggestionParams():
+        _usecase.deleteSuggestion(params: event);
+    }
   }
 }
