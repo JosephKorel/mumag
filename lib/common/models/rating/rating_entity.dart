@@ -17,7 +17,7 @@ enum RatingValue {
 enum RatingType {
   album('Album'),
   track('Track'),
-  artist('Artis');
+  artist('Artist');
 
   const RatingType(this.label);
 

@@ -57,3 +57,34 @@ final class GetUserRatingsException extends AppException {
   final Object error;
   final String userMsg;
 }
+
+// Suggestion
+final class InsertSuggestionException extends AppException {
+  InsertSuggestionException({
+    required this.error,
+    this.userMsg = 'Could not send your suggestion.',
+  });
+
+  final Object error;
+  final String userMsg;
+}
+
+final class UpdateSuggestionException extends AppException {
+  UpdateSuggestionException({
+    required this.error,
+    this.userMsg = 'Could not update your suggestion.',
+  });
+
+  final Object error;
+  final String userMsg;
+}
+
+final class DeleteSuggestionException extends AppException {
+  DeleteSuggestionException({
+    required this.error,
+    this.userMsg = 'Could not delete suggestion.',
+  });
+
+  final Object error;
+  final String userMsg;
+}
