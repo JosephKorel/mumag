@@ -20,7 +20,7 @@ class UserEntity with _$UserEntity {
     final genresKey = json['genres']! as String;
     final backgroundUrlKey = json['backgroundUrl']! as String;
     final lastUpdateKey = json['lastUpdatedAt']! as String;
-    final ratingKey = json['ratings']! as List<Map<String, dynamic>>;
+    final ratingKey = json['ratings']! as List<dynamic>;
 
     return UserEntity(
       id: json['id']! as int,
@@ -30,7 +30,11 @@ class UserEntity with _$UserEntity {
       genres: genresKey.isEmpty ? <String>[] : genresKey.split(','),
       backgroundUrl: backgroundUrlKey.isEmpty ? null : backgroundUrlKey,
       lastUpdatedAt: DateTime.parse(lastUpdateKey),
-      ratings: ratingKey.map(RatingEntity.fromJson).toList(),
+      ratings: ratingKey
+          .map(
+            (e) => RatingEntity.fromJson(e as Map<String, dynamic>),
+          )
+          .toList(),
     );
   }
 }

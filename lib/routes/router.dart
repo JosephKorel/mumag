@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Firebase;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mumag/common/services/authentication/domain/auth_entity.dart';
@@ -64,7 +64,8 @@ GoRouter router(RouterRef ref) {
   );
 }
 
-Future<AuthState> handleAuthState(AsyncValue<User?> next, RouterRef ref) async {
+Future<AuthState> handleAuthState(
+    AsyncValue<Firebase.User?> next, RouterRef ref) async {
   if (next.requireValue == null) {
     return Unauthenticated();
   }
@@ -74,7 +75,14 @@ Future<AuthState> handleAuthState(AsyncValue<User?> next, RouterRef ref) async {
 
   if (credentials != null) {
     final user = await ref.read(userProvider.future);
-    return user == null ? Authenticated() : HasCredentials();
+
+    if (user == null) {
+      return Authenticated();
+    }
+
+    // ref.read(userRatingsProvider.notifier).updateState(user.ratings);
+
+    return HasCredentials();
   } else {
     return Authenticated();
   }

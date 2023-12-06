@@ -1,3 +1,5 @@
+import 'package:mocktail/mocktail.dart';
+import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/services/backend_api/providers/api.dart';
 import 'package:mumag/common/services/firebase/providers/auth.dart';
@@ -22,21 +24,32 @@ UserApiUsecase userApiUsecase(UserApiUsecaseRef ref) {
 }
 
 @riverpod
-Future<UserEntity?> user(UserRef ref) async {
-  final firebaseUser = ref.watch(authServiceProvider).currentUser();
+class User extends _$User {
+  @override
+  Future<UserEntity?> build() async {
+    final firebaseUser = ref.watch(authServiceProvider).currentUser();
 
-  if (firebaseUser == null) {
-    return null;
+    if (firebaseUser == null) {
+      return null;
+    }
+
+    final user = await ref
+        .watch(userApiUsecaseProvider)
+        .getUser(
+          getParams: GetParams(
+            email: firebaseUser.email!,
+          ),
+        )
+        .run();
+
+    return user.fold((l) => null, (r) => r);
   }
 
-  final user = await ref
-      .watch(userApiUsecaseProvider)
-      .getUser(
-        getParams: GetParams(
-          email: firebaseUser.email!,
-        ),
-      )
-      .run();
-
-  return user.fold((l) => null, (r) => r);
+  void updateRatings(List<RatingEntity> ratings) {
+    final newState = state.requireValue!.copyWith(ratings: ratings);
+    state = AsyncData(newState);
+  }
 }
+
+// For mocking
+class UserProviderMock extends _$User with Mock implements User {}

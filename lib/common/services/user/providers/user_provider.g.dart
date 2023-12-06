@@ -35,12 +35,13 @@ final userApiUsecaseProvider = AutoDisposeProvider<UserApiUsecase>.internal(
 );
 
 typedef UserApiUsecaseRef = AutoDisposeProviderRef<UserApiUsecase>;
-String _$userHash() => r'f54d53d1a2992a27cd5e1e26b06c086d41567c92';
+String _$userHash() => r'14691aa13603cc0a483dc08552ae9acb853330b0';
 
-/// See also [user].
-@ProviderFor(user)
-final userProvider = AutoDisposeFutureProvider<UserEntity?>.internal(
-  user,
+/// See also [User].
+@ProviderFor(User)
+final userProvider =
+    AutoDisposeAsyncNotifierProvider<User, UserEntity?>.internal(
+  User.new,
   name: r'userProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product') ? null : _$userHash,
@@ -48,6 +49,6 @@ final userProvider = AutoDisposeFutureProvider<UserEntity?>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef UserRef = AutoDisposeFutureProviderRef<UserEntity?>;
+typedef _$User = AutoDisposeAsyncNotifier<UserEntity?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
