@@ -30,6 +30,17 @@ RatingUsecaseController ratingController(RatingControllerRef ref) {
 }
 
 @riverpod
+FutureOr<List<RatingEntity>> getUserRatings(GetUserRatingsRef ref) async {
+  final userId = ref.watch(userProvider).requireValue!.id;
+  final request = await ref
+      .read(ratingUsecaseProvider)
+      .getUserRatings(params: GetUserRatingParams(userId: userId))
+      .run();
+
+  return request.fold((l) => throw l, (r) => r);
+}
+
+@riverpod
 class UserRatings extends _$UserRatings {
   @override
   FutureOr<List<RatingEntity>> build() async {
@@ -54,7 +65,12 @@ class OnRate extends _$OnRate {
     state = const AsyncLoading();
 
     state = await AsyncValue.guard(() async {
-      await ref.read(ratingControllerProvider)(event: event).run();
+      final request =
+          await ref.read(ratingControllerProvider)(event: event).run();
+      await request.fold((l) => null, (r) async {
+        final ratings = await ref.read(getUserRatingsProvider.future);
+        ref.read(userProvider.notifier).updateRatings(ratings);
+      });
     });
   }
 }

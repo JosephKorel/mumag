@@ -41,25 +41,23 @@ class UserProfileView extends ConsumerWidget {
         child: Scaffold(
           appBar: AppBar(
             elevation: 0,
-            backgroundColor: Colors.transparent,
+            backgroundColor: data.light.primary.withOpacity(0.4),
             actions: const [ProfileMenuButton()],
           ),
           extendBodyBehindAppBar: true,
-          body: DecoratedBox(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(user.backgroundUrl!),
-                fit: BoxFit.cover,
+          body: Stack(
+            children: [
+              Image(image: NetworkImage(user.backgroundUrl!)),
+              const Column(
+                children: [
+                  Expanded(child: SizedBox.expand()),
+                  Expanded(
+                    flex: 4,
+                    child: ProfileMainView(),
+                  ),
+                ],
               ),
-            ),
-            child: const Column(
-              children: [
-                Expanded(flex: 2, child: SizedBox.expand()),
-                Expanded(
-                  child: ProfileMainView(),
-                ),
-              ],
-            ),
+            ],
           ),
         ),
       ),

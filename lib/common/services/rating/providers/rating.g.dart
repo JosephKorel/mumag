@@ -52,6 +52,22 @@ final ratingControllerProvider =
 );
 
 typedef RatingControllerRef = AutoDisposeProviderRef<RatingUsecaseController>;
+String _$getUserRatingsHash() => r'c5036d12e3e7e2cf736d8c3e1fafb22277e11217';
+
+/// See also [getUserRatings].
+@ProviderFor(getUserRatings)
+final getUserRatingsProvider =
+    AutoDisposeFutureProvider<List<RatingEntity>>.internal(
+  getUserRatings,
+  name: r'getUserRatingsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$getUserRatingsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef GetUserRatingsRef = AutoDisposeFutureProviderRef<List<RatingEntity>>;
 String _$userRatingsHash() => r'ddd2964ddc6cc59ce3bd1902c824052a26309320';
 
 /// See also [UserRatings].
@@ -67,7 +83,7 @@ final userRatingsProvider =
 );
 
 typedef _$UserRatings = AutoDisposeAsyncNotifier<List<RatingEntity>>;
-String _$onRateHash() => r'565898350ad116e4ca7c1cb5ca8fe308302e7b23';
+String _$onRateHash() => r'0790eb0e39a961521f3dab5c1de510792b8b9d0e';
 
 /// See also [OnRate].
 @ProviderFor(OnRate)

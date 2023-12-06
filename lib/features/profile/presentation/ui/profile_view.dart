@@ -1,10 +1,9 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/features/connect/presentation/providers/connect.dart';
+import 'package:mumag/features/profile/presentation/ui/user_albums.dart';
 
 class ProfileMainView extends ConsumerWidget {
   const ProfileMainView({super.key});
@@ -25,39 +24,28 @@ class ProfileMainView extends ConsumerWidget {
           topLeft: Radius.circular(32),
           topRight: Radius.circular(32),
         ),
-        color: context.onSurface.withOpacity(0.8),
+        color: context.background,
       ),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(32),
-          topRight: Radius.circular(32),
-        ),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaY: 8),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const ProfilePicture(),
-                Text(
-                  user.name,
-                  style: context.titleLarge.copyWith(
-                    color: context.onPrimary,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                const Expanded(child: FavoriteGenres()),
-                FilledButton(
-                  onPressed: () {},
-                  child: const Text('See Profile'),
-                ),
-              ],
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const ProfilePicture(),
+            Text(
+              user.name,
+              style: context.titleLarge.copyWith(),
+              textAlign: TextAlign.center,
             ),
-          ),
+            const SizedBox(
+              height: 8,
+            ),
+            const FavoriteGenres(),
+            const SizedBox(
+              height: 16,
+            ),
+            const SavedAlbumsView(),
+          ],
         ),
       ),
     );

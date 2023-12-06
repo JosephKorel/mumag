@@ -8,12 +8,12 @@ final class RatingRepositoryImpl extends RatingRepository {
 
   final ApiRepository _repository;
 
-  static const path = '/rating';
+  static const _path = '/rating';
 
   @override
   Future<void> insertRating({required InsertRatingParams params}) async {
     try {
-      await _repository.post(path: path, params: params.toMap());
+      await _repository.post(path: _path, params: params.toMap());
     } catch (e) {
       rethrow;
     }
@@ -22,7 +22,7 @@ final class RatingRepositoryImpl extends RatingRepository {
   @override
   Future<void> updateRating({required UpdateRatingParams params}) async {
     try {
-      await _repository.put(path: path, params: params.toMap());
+      await _repository.put(path: _path, params: params.toMap());
     } catch (e) {
       rethrow;
     }
@@ -31,7 +31,7 @@ final class RatingRepositoryImpl extends RatingRepository {
   @override
   Future<void> deleteRating({required DeleteRatingParams params}) async {
     try {
-      await _repository.delete(path: path, params: params.toMap());
+      await _repository.delete(path: _path, params: params.toMap());
     } catch (e) {
       rethrow;
     }
@@ -42,7 +42,10 @@ final class RatingRepositoryImpl extends RatingRepository {
     required GetUserRatingParams params,
   }) async {
     try {
-      final request = await _repository.get(path: path, query: params.toMap());
+      final request = await _repository.get(
+        path: '$_path/user-ratings',
+        query: params.toMap(),
+      );
       final ratings = request!['ratings']! as List<Map<String, dynamic>>;
       return ratings.map(RatingEntity.fromJson).toList();
     } catch (e) {

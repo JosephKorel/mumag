@@ -1,32 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mumag/common/services/user/providers/user_provider.dart';
+import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/features/profile/presentation/providers/user_albums.dart';
-
-class AlbumHeaderView extends ConsumerWidget {
-  const AlbumHeaderView({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final albums = ref.watch(userSavedAlbumsProvider);
-
-    return albums.when(
-      data: (data) {
-        if (data[0].images == null) {
-          return const SizedBox();
-        }
-
-        return SizedBox(
-          width: double.infinity,
-          height: 300,
-          child: Image.network(data[0].images![0].url!),
-        );
-      },
-      error: (error, stackTrace) => const Text('Some error'),
-      loading: CircularProgressIndicator.new,
-    );
-  }
-}
+import 'package:spotify/spotify.dart' as spotify;
 
 class SavedAlbumsView extends ConsumerWidget {
   const SavedAlbumsView({super.key});
@@ -34,37 +11,110 @@ class SavedAlbumsView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final albums = ref.watch(userSavedAlbumsProvider);
-    return albums.when(
-      data: (data) => ListView.builder(
-        shrinkWrap: true,
-        itemCount: data.length,
-        itemBuilder: (context, index) {
-          final album = data[index];
-          return Column(
-            children: [
-              Text(album.name!),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text('Open in New'),
-              ),
-            ],
-          );
-        },
-      ),
-      error: (error, stackTrace) => const Text('Some error'),
-      loading: CircularProgressIndicator.new,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          'Your Albums',
+          style: context.titleLarge,
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        SizedBox(
+          height: 120,
+          child: albums.when(
+            data: (data) => const AlbumGridItems(),
+            error: (error, stackTrace) => const Text('Some error'),
+            loading: SavedAlbumsLoading.new,
+          ),
+        ),
+      ],
     );
   }
 }
 
-class ProfileTest extends ConsumerWidget {
-  const ProfileTest({super.key});
+class SavedAlbumsLoading extends StatelessWidget {
+  const SavedAlbumsLoading({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    const numberOfItems = 4;
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 1,
+      ),
+      shrinkWrap: true,
+      itemCount: numberOfItems,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (context, index) => Padding(
+        padding:
+            EdgeInsets.only(left: index > 1 ? 8 : 0, right: index == 0 ? 8 : 0),
+        child: SizedBox(
+          width: 100,
+          height: 100,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: context.onSurface.withOpacity(0.4),
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        )
+            .animate(
+              onComplete: (controller) => controller.repeat(),
+            )
+            .shimmer(duration: 1.seconds),
+      ),
+    );
+  }
+}
+
+class AlbumGridItems extends ConsumerWidget {
+  const AlbumGridItems({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider).requireValue!;
-    final userApi = ref.watch(userApiProvider);
+    final albums = ref.watch(userSavedAlbumsProvider).requireValue;
 
-    return ElevatedButton(onPressed: () {}, child: const Text('Test'));
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 1,
+      ),
+      shrinkWrap: true,
+      itemCount: albums.length,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (context, index) => Padding(
+        padding:
+            EdgeInsets.only(left: index > 1 ? 8 : 0, right: index == 0 ? 8 : 0),
+        child: AlbumGridItem(album: albums[index]),
+      ),
+    );
+  }
+}
+
+class AlbumGridItem extends ConsumerWidget {
+  const AlbumGridItem({required this.album, super.key});
+
+  final spotify.AlbumSimple album;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final albumImage = album.images?[1];
+
+    return Container(
+      width: 100,
+      height: 100,
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: albumImage == null
+          ? const Icon(Icons.album)
+          : Image(
+              image: NetworkImage(albumImage.url!),
+              fit: BoxFit.cover,
+            ),
+    );
   }
 }

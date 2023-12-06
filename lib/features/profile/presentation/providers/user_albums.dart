@@ -7,6 +7,10 @@ part 'user_albums.g.dart';
 @riverpod
 Future<List<AlbumSimple>> userSavedAlbums(UserSavedAlbumsRef ref) async {
   final spotify = ref.watch(spotifyApiProvider);
-  final albums = await spotify.me.savedAlbums().all(10);
-  return albums.toList();
+  final page = await spotify.me.savedAlbums().getPage(5);
+  if (page.items == null) {
+    throw Exception();
+  }
+
+  return page.items!.toList();
 }
