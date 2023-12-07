@@ -36,16 +36,11 @@ class SuggestionUsecaseController {
 
   final SuggestionUsecase _usecase;
 
-  void call({required SuggestionEvents event}) {
-    switch (event) {
-      case InsertSuggestionParams():
-        _usecase.insertSuggestion(params: event);
-
-      case UpdateSuggestionParams():
-        _usecase.updateSuggestion(params: event);
-
-      case DeleteSuggestionParams():
-        _usecase.deleteSuggestion(params: event);
-    }
+  ApiResult<dynamic> call({required SuggestionEvents event}) {
+    return switch (event) {
+      InsertSuggestionParams() => _usecase.insertSuggestion(params: event),
+      UpdateSuggestionParams() => _usecase.updateSuggestion(params: event),
+      DeleteSuggestionParams() => _usecase.deleteSuggestion(params: event)
+    };
   }
 }
