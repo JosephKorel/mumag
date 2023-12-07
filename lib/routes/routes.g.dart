@@ -11,6 +11,7 @@ List<RouteBase> get $appRoutes => [
       $signInRoute,
       $connectToSpotifyRoute,
       $profileRoute,
+      $albumViewRoute,
     ];
 
 RouteBase get $splashRoute => GoRouteData.$route(
@@ -90,6 +91,29 @@ extension $ProfileRouteExtension on ProfileRoute {
 
   String get location => GoRouteData.$location(
         '/profile',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $albumViewRoute => GoRouteData.$route(
+      path: '/album',
+      factory: $AlbumViewRouteExtension._fromState,
+    );
+
+extension $AlbumViewRouteExtension on AlbumViewRoute {
+  static AlbumViewRoute _fromState(GoRouterState state) =>
+      const AlbumViewRoute();
+
+  String get location => GoRouteData.$location(
+        '/album',
       );
 
   void go(BuildContext context) => context.go(location);

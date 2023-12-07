@@ -1,6 +1,7 @@
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mumag/common/widgets/splash.dart';
+import 'package:mumag/features/album_view/presentation/ui/main.dart';
 import 'package:mumag/features/connect/presentation/ui/main.dart';
 import 'package:mumag/features/profile/presentation/ui/main.dart';
 import 'package:mumag/features/sign_in/presentation/ui/main.dart';
@@ -44,5 +45,15 @@ class ProfileRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const ProfileView();
+  }
+}
+
+@TypedGoRoute<AlbumViewRoute>(path: '/album')
+class AlbumViewRoute extends GoRouteData {
+  const AlbumViewRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AlbumMainView();
   }
 }

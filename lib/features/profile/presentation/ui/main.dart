@@ -33,7 +33,6 @@ class UserProfileView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider).requireValue!;
     final colorScheme = ref.watch(profileColorSchemeProvider);
 
     return colorScheme.when(
