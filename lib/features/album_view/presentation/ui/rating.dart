@@ -13,13 +13,37 @@ class AlbumRating extends ConsumerWidget {
     return rating.when(
       data: (data) {
         if (data == null) {
-          return const SizedBox.shrink();
+          return const AlbumRatingError();
         }
 
         return const AlbumRatingLoaded();
       },
-      error: (error, stackTrace) => const SizedBox.shrink(),
+      error: (error, stackTrace) => const AlbumRatingError(),
       loading: AlbumRatingLoading.new,
+    );
+  }
+}
+
+class AlbumRatingError extends StatelessWidget {
+  const AlbumRatingError({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Icon(
+          Icons.error_outline,
+          size: 36,
+          color: context.error,
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        Text(
+          'Could not get ratings',
+          style: context.titleLarge,
+        ),
+      ],
     );
   }
 }

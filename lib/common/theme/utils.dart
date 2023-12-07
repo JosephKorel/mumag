@@ -16,4 +16,6 @@ extension ThemeHelper on BuildContext {
   Color get background => Theme.of(this).colorScheme.background;
   Color get onBackground => Theme.of(this).colorScheme.onBackground;
   Color get onSurface => Theme.of(this).colorScheme.onSurface;
+  Color get error => Theme.of(this).colorScheme.error;
+  Color get onError => Theme.of(this).colorScheme.onError;
 }

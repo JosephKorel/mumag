@@ -37,6 +37,20 @@ final albumRatingProvider =
 );
 
 typedef AlbumRatingRef = AutoDisposeFutureProviderRef<List<RatingEntity>?>;
+String _$albumGenresHash() => r'402d5cc565aefc2a1ca0a658d432226ebcddd580';
+
+/// See also [albumGenres].
+@ProviderFor(albumGenres)
+final albumGenresProvider = AutoDisposeFutureProvider<List<String>>.internal(
+  albumGenres,
+  name: r'albumGenresProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$albumGenresHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef AlbumGenresRef = AutoDisposeFutureProviderRef<List<String>>;
 String _$viewingAlbumHash() => r'f0d5aaf888fce914081eff28fbc1b607c996cc09';
 
 /// See also [ViewingAlbum].
