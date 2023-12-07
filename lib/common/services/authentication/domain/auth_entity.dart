@@ -15,6 +15,8 @@ class AuthState with _$AuthState {
 
   factory AuthState.hasCredentials() = HasCredentials;
 
+  factory AuthState.connectedUser() = ConnectedUser;
+
   factory AuthState.fromJson(Map<String, dynamic> json) =>
       _$AuthStateFromJson(json);
 }

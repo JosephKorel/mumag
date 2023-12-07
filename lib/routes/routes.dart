@@ -48,7 +48,7 @@ class ProfileRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<AlbumViewRoute>(path: '/album')
+@TypedGoRoute<AlbumViewRoute>(path: '/album', name: 'albumView')
 class AlbumViewRoute extends GoRouteData {
   const AlbumViewRoute();
 

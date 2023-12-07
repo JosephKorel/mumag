@@ -17,13 +17,15 @@ Map<String, dynamic> _$$AuthStateImplToJson(_$AuthStateImpl instance) =>
     };
 
 _$UnauthenticatedImpl _$$UnauthenticatedImplFromJson(
-        Map<String, dynamic> json) =>
+  Map<String, dynamic> json,
+) =>
     _$UnauthenticatedImpl(
       $type: json['runtimeType'] as String?,
     );
 
 Map<String, dynamic> _$$UnauthenticatedImplToJson(
-        _$UnauthenticatedImpl instance) =>
+  _$UnauthenticatedImpl instance,
+) =>
     <String, dynamic>{
       'runtimeType': instance.$type,
     };
@@ -54,7 +56,18 @@ _$HasCredentialsImpl _$$HasCredentialsImplFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$$HasCredentialsImplToJson(
-        _$HasCredentialsImpl instance) =>
+  _$HasCredentialsImpl instance,
+) =>
+    <String, dynamic>{
+      'runtimeType': instance.$type,
+    };
+
+_$ConnectedUserImpl _$$ConnectedUserImplFromJson(Map<String, dynamic> json) =>
+    _$ConnectedUserImpl(
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$ConnectedUserImplToJson(_$ConnectedUserImpl instance) =>
     <String, dynamic>{
       'runtimeType': instance.$type,
     };

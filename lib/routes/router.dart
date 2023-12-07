@@ -47,6 +47,12 @@ GoRouter router(RouterRef ref) {
     routes: $appRoutes,
     refreshListenable: isAuth,
     redirect: (context, state) {
+      final shouldRedirectLocations = [
+        const SignInRoute().location,
+        const ConnectToSpotifyRoute().location,
+        const SplashRoute().location,
+      ];
+
       return isAuth.value.when(
         () {
           return null;
@@ -57,15 +63,21 @@ GoRouter router(RouterRef ref) {
           return const ConnectToSpotifyRoute().location;
         },
         hasCredentials: () {
-          return const ProfileRoute().location;
+          return shouldRedirectLocations.contains(state.fullPath) ||
+                  state.fullPath == null
+              ? const ProfileRoute().location
+              : null;
         },
+        connectedUser: () => null,
       );
     },
   );
 }
 
 Future<AuthState> handleAuthState(
-    AsyncValue<Firebase.User?> next, RouterRef ref) async {
+  AsyncValue<Firebase.User?> next,
+  RouterRef ref,
+) async {
   if (next.requireValue == null) {
     return Unauthenticated();
   }

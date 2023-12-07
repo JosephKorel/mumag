@@ -26,6 +26,8 @@ AuthState _$AuthStateFromJson(Map<String, dynamic> json) {
       return Authenticated.fromJson(json);
     case 'hasCredentials':
       return HasCredentials.fromJson(json);
+    case 'connectedUser':
+      return ConnectedUser.fromJson(json);
 
     default:
       throw CheckedFromJsonException(json, 'runtimeType', 'AuthState',
@@ -42,6 +44,7 @@ mixin _$AuthState {
     required TResult Function() loading,
     required TResult Function() authenticated,
     required TResult Function() hasCredentials,
+    required TResult Function() connectedUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,6 +54,7 @@ mixin _$AuthState {
     TResult? Function()? loading,
     TResult? Function()? authenticated,
     TResult? Function()? hasCredentials,
+    TResult? Function()? connectedUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,6 +64,7 @@ mixin _$AuthState {
     TResult Function()? loading,
     TResult Function()? authenticated,
     TResult Function()? hasCredentials,
+    TResult Function()? connectedUser,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -70,6 +75,7 @@ mixin _$AuthState {
     required TResult Function(Loading value) loading,
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(HasCredentials value) hasCredentials,
+    required TResult Function(ConnectedUser value) connectedUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -79,6 +85,7 @@ mixin _$AuthState {
     TResult? Function(Loading value)? loading,
     TResult? Function(Authenticated value)? authenticated,
     TResult? Function(HasCredentials value)? hasCredentials,
+    TResult? Function(ConnectedUser value)? connectedUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -88,6 +95,7 @@ mixin _$AuthState {
     TResult Function(Loading value)? loading,
     TResult Function(Authenticated value)? authenticated,
     TResult Function(HasCredentials value)? hasCredentials,
+    TResult Function(ConnectedUser value)? connectedUser,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -161,6 +169,7 @@ class _$AuthStateImpl implements _AuthState {
     required TResult Function() loading,
     required TResult Function() authenticated,
     required TResult Function() hasCredentials,
+    required TResult Function() connectedUser,
   }) {
     return $default();
   }
@@ -173,6 +182,7 @@ class _$AuthStateImpl implements _AuthState {
     TResult? Function()? loading,
     TResult? Function()? authenticated,
     TResult? Function()? hasCredentials,
+    TResult? Function()? connectedUser,
   }) {
     return $default?.call();
   }
@@ -185,6 +195,7 @@ class _$AuthStateImpl implements _AuthState {
     TResult Function()? loading,
     TResult Function()? authenticated,
     TResult Function()? hasCredentials,
+    TResult Function()? connectedUser,
     required TResult orElse(),
   }) {
     if ($default != null) {
@@ -201,6 +212,7 @@ class _$AuthStateImpl implements _AuthState {
     required TResult Function(Loading value) loading,
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(HasCredentials value) hasCredentials,
+    required TResult Function(ConnectedUser value) connectedUser,
   }) {
     return $default(this);
   }
@@ -213,6 +225,7 @@ class _$AuthStateImpl implements _AuthState {
     TResult? Function(Loading value)? loading,
     TResult? Function(Authenticated value)? authenticated,
     TResult? Function(HasCredentials value)? hasCredentials,
+    TResult? Function(ConnectedUser value)? connectedUser,
   }) {
     return $default?.call(this);
   }
@@ -225,6 +238,7 @@ class _$AuthStateImpl implements _AuthState {
     TResult Function(Loading value)? loading,
     TResult Function(Authenticated value)? authenticated,
     TResult Function(HasCredentials value)? hasCredentials,
+    TResult Function(ConnectedUser value)? connectedUser,
     required TResult orElse(),
   }) {
     if ($default != null) {
@@ -299,6 +313,7 @@ class _$UnauthenticatedImpl implements Unauthenticated {
     required TResult Function() loading,
     required TResult Function() authenticated,
     required TResult Function() hasCredentials,
+    required TResult Function() connectedUser,
   }) {
     return unauthenticated();
   }
@@ -311,6 +326,7 @@ class _$UnauthenticatedImpl implements Unauthenticated {
     TResult? Function()? loading,
     TResult? Function()? authenticated,
     TResult? Function()? hasCredentials,
+    TResult? Function()? connectedUser,
   }) {
     return unauthenticated?.call();
   }
@@ -323,6 +339,7 @@ class _$UnauthenticatedImpl implements Unauthenticated {
     TResult Function()? loading,
     TResult Function()? authenticated,
     TResult Function()? hasCredentials,
+    TResult Function()? connectedUser,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -339,6 +356,7 @@ class _$UnauthenticatedImpl implements Unauthenticated {
     required TResult Function(Loading value) loading,
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(HasCredentials value) hasCredentials,
+    required TResult Function(ConnectedUser value) connectedUser,
   }) {
     return unauthenticated(this);
   }
@@ -351,6 +369,7 @@ class _$UnauthenticatedImpl implements Unauthenticated {
     TResult? Function(Loading value)? loading,
     TResult? Function(Authenticated value)? authenticated,
     TResult? Function(HasCredentials value)? hasCredentials,
+    TResult? Function(ConnectedUser value)? connectedUser,
   }) {
     return unauthenticated?.call(this);
   }
@@ -363,6 +382,7 @@ class _$UnauthenticatedImpl implements Unauthenticated {
     TResult Function(Loading value)? loading,
     TResult Function(Authenticated value)? authenticated,
     TResult Function(HasCredentials value)? hasCredentials,
+    TResult Function(ConnectedUser value)? connectedUser,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -436,6 +456,7 @@ class _$LoadingImpl implements Loading {
     required TResult Function() loading,
     required TResult Function() authenticated,
     required TResult Function() hasCredentials,
+    required TResult Function() connectedUser,
   }) {
     return loading();
   }
@@ -448,6 +469,7 @@ class _$LoadingImpl implements Loading {
     TResult? Function()? loading,
     TResult? Function()? authenticated,
     TResult? Function()? hasCredentials,
+    TResult? Function()? connectedUser,
   }) {
     return loading?.call();
   }
@@ -460,6 +482,7 @@ class _$LoadingImpl implements Loading {
     TResult Function()? loading,
     TResult Function()? authenticated,
     TResult Function()? hasCredentials,
+    TResult Function()? connectedUser,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -476,6 +499,7 @@ class _$LoadingImpl implements Loading {
     required TResult Function(Loading value) loading,
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(HasCredentials value) hasCredentials,
+    required TResult Function(ConnectedUser value) connectedUser,
   }) {
     return loading(this);
   }
@@ -488,6 +512,7 @@ class _$LoadingImpl implements Loading {
     TResult? Function(Loading value)? loading,
     TResult? Function(Authenticated value)? authenticated,
     TResult? Function(HasCredentials value)? hasCredentials,
+    TResult? Function(ConnectedUser value)? connectedUser,
   }) {
     return loading?.call(this);
   }
@@ -500,6 +525,7 @@ class _$LoadingImpl implements Loading {
     TResult Function(Loading value)? loading,
     TResult Function(Authenticated value)? authenticated,
     TResult Function(HasCredentials value)? hasCredentials,
+    TResult Function(ConnectedUser value)? connectedUser,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -572,6 +598,7 @@ class _$AuthenticatedImpl implements Authenticated {
     required TResult Function() loading,
     required TResult Function() authenticated,
     required TResult Function() hasCredentials,
+    required TResult Function() connectedUser,
   }) {
     return authenticated();
   }
@@ -584,6 +611,7 @@ class _$AuthenticatedImpl implements Authenticated {
     TResult? Function()? loading,
     TResult? Function()? authenticated,
     TResult? Function()? hasCredentials,
+    TResult? Function()? connectedUser,
   }) {
     return authenticated?.call();
   }
@@ -596,6 +624,7 @@ class _$AuthenticatedImpl implements Authenticated {
     TResult Function()? loading,
     TResult Function()? authenticated,
     TResult Function()? hasCredentials,
+    TResult Function()? connectedUser,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -612,6 +641,7 @@ class _$AuthenticatedImpl implements Authenticated {
     required TResult Function(Loading value) loading,
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(HasCredentials value) hasCredentials,
+    required TResult Function(ConnectedUser value) connectedUser,
   }) {
     return authenticated(this);
   }
@@ -624,6 +654,7 @@ class _$AuthenticatedImpl implements Authenticated {
     TResult? Function(Loading value)? loading,
     TResult? Function(Authenticated value)? authenticated,
     TResult? Function(HasCredentials value)? hasCredentials,
+    TResult? Function(ConnectedUser value)? connectedUser,
   }) {
     return authenticated?.call(this);
   }
@@ -636,6 +667,7 @@ class _$AuthenticatedImpl implements Authenticated {
     TResult Function(Loading value)? loading,
     TResult Function(Authenticated value)? authenticated,
     TResult Function(HasCredentials value)? hasCredentials,
+    TResult Function(ConnectedUser value)? connectedUser,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -710,6 +742,7 @@ class _$HasCredentialsImpl implements HasCredentials {
     required TResult Function() loading,
     required TResult Function() authenticated,
     required TResult Function() hasCredentials,
+    required TResult Function() connectedUser,
   }) {
     return hasCredentials();
   }
@@ -722,6 +755,7 @@ class _$HasCredentialsImpl implements HasCredentials {
     TResult? Function()? loading,
     TResult? Function()? authenticated,
     TResult? Function()? hasCredentials,
+    TResult? Function()? connectedUser,
   }) {
     return hasCredentials?.call();
   }
@@ -734,6 +768,7 @@ class _$HasCredentialsImpl implements HasCredentials {
     TResult Function()? loading,
     TResult Function()? authenticated,
     TResult Function()? hasCredentials,
+    TResult Function()? connectedUser,
     required TResult orElse(),
   }) {
     if (hasCredentials != null) {
@@ -750,6 +785,7 @@ class _$HasCredentialsImpl implements HasCredentials {
     required TResult Function(Loading value) loading,
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(HasCredentials value) hasCredentials,
+    required TResult Function(ConnectedUser value) connectedUser,
   }) {
     return hasCredentials(this);
   }
@@ -762,6 +798,7 @@ class _$HasCredentialsImpl implements HasCredentials {
     TResult? Function(Loading value)? loading,
     TResult? Function(Authenticated value)? authenticated,
     TResult? Function(HasCredentials value)? hasCredentials,
+    TResult? Function(ConnectedUser value)? connectedUser,
   }) {
     return hasCredentials?.call(this);
   }
@@ -774,6 +811,7 @@ class _$HasCredentialsImpl implements HasCredentials {
     TResult Function(Loading value)? loading,
     TResult Function(Authenticated value)? authenticated,
     TResult Function(HasCredentials value)? hasCredentials,
+    TResult Function(ConnectedUser value)? connectedUser,
     required TResult orElse(),
   }) {
     if (hasCredentials != null) {
@@ -795,4 +833,147 @@ abstract class HasCredentials implements AuthState {
 
   factory HasCredentials.fromJson(Map<String, dynamic> json) =
       _$HasCredentialsImpl.fromJson;
+}
+
+/// @nodoc
+abstract class _$$ConnectedUserImplCopyWith<$Res> {
+  factory _$$ConnectedUserImplCopyWith(
+          _$ConnectedUserImpl value, $Res Function(_$ConnectedUserImpl) then) =
+      __$$ConnectedUserImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ConnectedUserImplCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$ConnectedUserImpl>
+    implements _$$ConnectedUserImplCopyWith<$Res> {
+  __$$ConnectedUserImplCopyWithImpl(
+      _$ConnectedUserImpl _value, $Res Function(_$ConnectedUserImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ConnectedUserImpl implements ConnectedUser {
+  _$ConnectedUserImpl({final String? $type}) : $type = $type ?? 'connectedUser';
+
+  factory _$ConnectedUserImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ConnectedUserImplFromJson(json);
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'AuthState.connectedUser()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$ConnectedUserImpl);
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function() $default, {
+    required TResult Function() unauthenticated,
+    required TResult Function() loading,
+    required TResult Function() authenticated,
+    required TResult Function() hasCredentials,
+    required TResult Function() connectedUser,
+  }) {
+    return connectedUser();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function()? $default, {
+    TResult? Function()? unauthenticated,
+    TResult? Function()? loading,
+    TResult? Function()? authenticated,
+    TResult? Function()? hasCredentials,
+    TResult? Function()? connectedUser,
+  }) {
+    return connectedUser?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function()? $default, {
+    TResult Function()? unauthenticated,
+    TResult Function()? loading,
+    TResult Function()? authenticated,
+    TResult Function()? hasCredentials,
+    TResult Function()? connectedUser,
+    required TResult orElse(),
+  }) {
+    if (connectedUser != null) {
+      return connectedUser();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_AuthState value) $default, {
+    required TResult Function(Unauthenticated value) unauthenticated,
+    required TResult Function(Loading value) loading,
+    required TResult Function(Authenticated value) authenticated,
+    required TResult Function(HasCredentials value) hasCredentials,
+    required TResult Function(ConnectedUser value) connectedUser,
+  }) {
+    return connectedUser(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_AuthState value)? $default, {
+    TResult? Function(Unauthenticated value)? unauthenticated,
+    TResult? Function(Loading value)? loading,
+    TResult? Function(Authenticated value)? authenticated,
+    TResult? Function(HasCredentials value)? hasCredentials,
+    TResult? Function(ConnectedUser value)? connectedUser,
+  }) {
+    return connectedUser?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_AuthState value)? $default, {
+    TResult Function(Unauthenticated value)? unauthenticated,
+    TResult Function(Loading value)? loading,
+    TResult Function(Authenticated value)? authenticated,
+    TResult Function(HasCredentials value)? hasCredentials,
+    TResult Function(ConnectedUser value)? connectedUser,
+    required TResult orElse(),
+  }) {
+    if (connectedUser != null) {
+      return connectedUser(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ConnectedUserImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class ConnectedUser implements AuthState {
+  factory ConnectedUser() = _$ConnectedUserImpl;
+
+  factory ConnectedUser.fromJson(Map<String, dynamic> json) =
+      _$ConnectedUserImpl.fromJson;
 }

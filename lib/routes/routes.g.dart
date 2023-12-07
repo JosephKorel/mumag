@@ -105,6 +105,7 @@ extension $ProfileRouteExtension on ProfileRoute {
 
 RouteBase get $albumViewRoute => GoRouteData.$route(
       path: '/album',
+      name: 'albumView',
       factory: $AlbumViewRouteExtension._fromState,
     );
 

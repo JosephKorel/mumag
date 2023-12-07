@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mumag/common/theme/utils.dart';
+import 'package:mumag/features/album_view/presentation/providers/album.dart';
 import 'package:mumag/features/profile/presentation/providers/user_albums.dart';
+import 'package:mumag/routes/routes.dart';
 import 'package:spotify/spotify.dart' as spotify;
 
 class SavedAlbumsView extends ConsumerWidget {
@@ -100,21 +103,36 @@ class AlbumGridItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(viewingAlbumProvider);
+
     final albumImage = album.images?[1];
 
-    return Container(
-      width: 100,
-      height: 100,
+    void onTap() {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        ref.read(viewingAlbumProvider.notifier).updateState(album: album);
+        context.push(const AlbumViewRoute().location);
+      });
+    }
+
+    return Material(
+      borderRadius: BorderRadius.circular(12),
       clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(
+      child: InkWell(
         borderRadius: BorderRadius.circular(12),
+        onTap: onTap,
+        child: SizedBox(
+          width: 100,
+          height: 100,
+          child: albumImage == null
+              ? const Icon(Icons.album)
+              : Ink.image(
+                  image: NetworkImage(albumImage.url!),
+                  fit: BoxFit.cover,
+                  width: 100,
+                  height: 100,
+                ),
+        ),
       ),
-      child: albumImage == null
-          ? const Icon(Icons.album)
-          : Image(
-              image: NetworkImage(albumImage.url!),
-              fit: BoxFit.cover,
-            ),
     );
   }
 }
