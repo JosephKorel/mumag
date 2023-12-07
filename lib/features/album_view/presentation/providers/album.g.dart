@@ -22,6 +22,21 @@ final albumColorSchemeProvider =
 );
 
 typedef AlbumColorSchemeRef = AutoDisposeFutureProviderRef<AppColorScheme>;
+String _$albumRatingHash() => r'c366071d2b734d59789696a7f3058e2e8982f80b';
+
+/// See also [albumRating].
+@ProviderFor(albumRating)
+final albumRatingProvider =
+    AutoDisposeFutureProvider<List<RatingEntity>?>.internal(
+  albumRating,
+  name: r'albumRatingProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$albumRatingHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef AlbumRatingRef = AutoDisposeFutureProviderRef<List<RatingEntity>?>;
 String _$viewingAlbumHash() => r'f0d5aaf888fce914081eff28fbc1b607c996cc09';
 
 /// See also [ViewingAlbum].

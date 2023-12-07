@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
+import 'package:mumag/features/album_view/presentation/ui/rating.dart';
 
 class AlbumContent extends ConsumerWidget {
   const AlbumContent({super.key});
@@ -13,6 +15,7 @@ class AlbumContent extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(album.name ?? ''),
+        backgroundColor: context.primary.withOpacity(0.6),
       ),
       body: const Stack(
         children: [
@@ -21,7 +24,7 @@ class AlbumContent extends ConsumerWidget {
             children: [
               Expanded(child: SizedBox.expand()),
               Expanded(
-                flex: 3,
+                flex: 2,
                 child: AlbumContentView(),
               ),
             ],
@@ -46,7 +49,7 @@ class AlbumHeader extends ConsumerWidget {
 
     return Image(
       image: NetworkImage(album.images!.first.url!),
-    );
+    ).animate().fadeIn();
   }
 }
 
@@ -64,7 +67,13 @@ class AlbumContentView extends ConsumerWidget {
         ),
         color: context.background,
       ),
-      child: SingleChildScrollView(child: Container()),
-    );
+      child: const SingleChildScrollView(
+        padding: EdgeInsetsDirectional.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [AlbumRating()],
+        ),
+      ),
+    ).animate().fadeIn();
   }
 }

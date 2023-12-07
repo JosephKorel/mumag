@@ -79,6 +79,7 @@ class AlbumGridItems extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final albums = ref.watch(userSavedAlbumsProvider).requireValue;
+    ref.watch(viewingAlbumProvider);
 
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -103,8 +104,6 @@ class AlbumGridItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(viewingAlbumProvider);
-
     final albumImage = album.images?[1];
 
     void onTap() {

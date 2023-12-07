@@ -46,8 +46,28 @@ final class RatingRepositoryImpl extends RatingRepository {
         path: '$_path/user-ratings',
         query: params.toMap(),
       );
-      final ratings = request!['ratings']! as List<Map<String, dynamic>>;
-      return ratings.map(RatingEntity.fromJson).toList();
+      final ratings = request!['ratings']! as List<dynamic>;
+      return ratings
+          .map((e) => RatingEntity.fromJson(e as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<RatingEntity>> getRatings({
+    required GetAllRatingParams params,
+  }) async {
+    try {
+      final request = await _repository.get(
+        path: _path,
+        query: params.toMap(),
+      );
+      final ratings = request!['ratings']! as List<dynamic>;
+      return ratings
+          .map((e) => RatingEntity.fromJson(e as Map<String, dynamic>))
+          .toList();
     } catch (e) {
       rethrow;
     }

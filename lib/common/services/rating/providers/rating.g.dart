@@ -83,19 +83,21 @@ final userRatingsProvider =
 );
 
 typedef _$UserRatings = AutoDisposeAsyncNotifier<List<RatingEntity>>;
-String _$onRateHash() => r'0790eb0e39a961521f3dab5c1de510792b8b9d0e';
+String _$ratingHandlerHash() => r'b12b40fb0091465795bb870f385dd40134a4e4eb';
 
-/// See also [OnRate].
-@ProviderFor(OnRate)
-final onRateProvider = AutoDisposeAsyncNotifierProvider<OnRate, void>.internal(
-  OnRate.new,
-  name: r'onRateProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$onRateHash,
+/// See also [RatingHandler].
+@ProviderFor(RatingHandler)
+final ratingHandlerProvider =
+    AutoDisposeAsyncNotifierProvider<RatingHandler, void>.internal(
+  RatingHandler.new,
+  name: r'ratingHandlerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$ratingHandlerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$OnRate = AutoDisposeAsyncNotifier<void>;
+typedef _$RatingHandler = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

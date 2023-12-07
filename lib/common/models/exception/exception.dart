@@ -58,6 +58,16 @@ final class GetUserRatingsException extends AppException {
   final String userMsg;
 }
 
+final class GetRatingsException extends AppException {
+  GetRatingsException({
+    required this.error,
+    this.userMsg = 'Could not get ratings.',
+  });
+
+  final Object error;
+  final String userMsg;
+}
+
 // Suggestion
 final class InsertSuggestionException extends AppException {
   InsertSuggestionException({

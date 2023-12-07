@@ -11,4 +11,8 @@ abstract class RatingRepository {
   Future<List<RatingEntity>> getUserRatings({
     required GetUserRatingParams params,
   });
+
+  Future<List<RatingEntity>> getRatings({
+    required GetAllRatingParams params,
+  });
 }

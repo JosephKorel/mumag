@@ -57,7 +57,7 @@ class UserRatings extends _$UserRatings {
 }
 
 @riverpod
-class OnRate extends _$OnRate {
+class RatingHandler extends _$RatingHandler {
   @override
   FutureOr<void> build() {}
 

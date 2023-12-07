@@ -39,6 +39,15 @@ final class RatingUsecase {
       (error, stackTrace) => GetUserRatingsException(error: error),
     );
   }
+
+  ApiResult<List<RatingEntity>> getAllRatings({
+    required GetAllRatingParams params,
+  }) {
+    return TaskEither.tryCatch(
+      () => _ratingRepository.getRatings(params: params),
+      (error, stackTrace) => GetRatingsException(error: error),
+    );
+  }
 }
 
 final class RatingUsecaseController {
@@ -51,7 +60,8 @@ final class RatingUsecaseController {
       InsertRatingParams() => _ratingUsecase.insertRating(params: event),
       GetUserRatingParams() => _ratingUsecase.getUserRatings(params: event),
       UpdateRatingParams() => _ratingUsecase.updateRating(params: event),
-      DeleteRatingParams() => _ratingUsecase.deleteRating(params: event)
+      DeleteRatingParams() => _ratingUsecase.deleteRating(params: event),
+      GetAllRatingParams() => _ratingUsecase.getAllRatings(params: event),
     };
   }
 }

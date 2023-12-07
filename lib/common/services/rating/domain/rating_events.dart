@@ -65,3 +65,13 @@ final class GetUserRatingParams extends RatingsDatabaseEvents {
         'userId': userId,
       };
 }
+
+final class GetAllRatingParams extends RatingsDatabaseEvents {
+  GetAllRatingParams({required this.spotifyId});
+
+  final String spotifyId;
+
+  Map<String, dynamic> toMap() => {
+        'spotifyId': spotifyId,
+      };
+}
