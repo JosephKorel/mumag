@@ -52,6 +52,7 @@ dependencies:
   fpdart: ^1.1.0
   very_good_analysis: ^5.1.0
   flutter_animate: ^4.3.0
+  phosphor_flutter: ^2.0.1
 
 dev_dependencies:
   flutter_test:
