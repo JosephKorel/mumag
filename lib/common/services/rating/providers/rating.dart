@@ -67,10 +67,9 @@ class RatingHandler extends _$RatingHandler {
     state = await AsyncValue.guard(() async {
       final request =
           await ref.read(ratingControllerProvider)(event: event).run();
-      await request.fold((l) => null, (r) async {
-        final ratings = await ref.read(getUserRatingsProvider.future);
-        ref.read(userProvider.notifier).updateRatings(ratings);
-      });
+
+      return request.fold(
+          (l) => throw AsyncError(l, StackTrace.current), (r) {});
     });
   }
 }

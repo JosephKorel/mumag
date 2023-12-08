@@ -33,6 +33,7 @@ class AlbumContent extends ConsumerWidget {
           ),
         ],
       ),
+      floatingActionButton: const RatingFloatingActionButton(),
       extendBodyBehindAppBar: true,
     );
   }
@@ -78,7 +79,7 @@ class AlbumContentView extends ConsumerWidget {
             SizedBox(
               height: 16,
             ),
-            AlbumGenreList()
+            AlbumGenreList(),
           ],
         ),
       ),

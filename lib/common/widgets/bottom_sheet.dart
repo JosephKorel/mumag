@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
-void showAppBottomSheet(BuildContext context, {required Widget child}) {
+void showAppBottomSheet(
+  BuildContext context, {
+  required Widget child,
+  double? height,
+}) {
   showModalBottomSheet<void>(
     context: context,
     shape: const RoundedRectangleBorder(
@@ -10,23 +14,30 @@ void showAppBottomSheet(BuildContext context, {required Widget child}) {
       ),
     ),
     showDragHandle: true,
-    builder: (context) => AppBottomSheet(child: child),
+    builder: (context) => AppBottomSheet(
+      height: height,
+      child: child,
+    ),
   );
 }
 
 class AppBottomSheet extends StatelessWidget {
-  const AppBottomSheet({required this.child, super.key});
+  const AppBottomSheet({required this.child, super.key, this.height});
 
   final Widget child;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
-      child: Column(
-        children: [
-          Expanded(child: child),
-        ],
+    return SizedBox(
+      height: height,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
+        child: Column(
+          children: [
+            Expanded(child: child),
+          ],
+        ),
       ),
     );
   }
