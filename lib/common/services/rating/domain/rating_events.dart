@@ -15,7 +15,7 @@ class RatingBaseParams {
     return <String, dynamic>{
       'type': type.name,
       'spotifyId': spotifyId,
-      'rati': rating,
+      'rating': rating,
     };
   }
 }

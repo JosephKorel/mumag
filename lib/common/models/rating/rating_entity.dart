@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 part 'rating_entity.freezed.dart';
 part 'rating_entity.g.dart';
@@ -28,10 +29,10 @@ enum RatingType {
 extension RatingLabel on RatingValue {
   String get label => ['Bad', 'Good', 'Great', 'Masterpiece'][index];
   IconData get icon => [
-        Icons.thumb_down_rounded,
-        Icons.thumb_up_rounded,
-        Icons.handshake,
-        Icons.diamond_rounded,
+        PhosphorIconsDuotone.thumbsDown,
+        PhosphorIconsDuotone.thumbsUp,
+        PhosphorIconsDuotone.handsClapping,
+        PhosphorIconsDuotone.sketchLogo,
       ][index];
 }
 
