@@ -7,11 +7,9 @@ part of 'suggestion_entity.dart';
 // **************************************************************************
 
 _$SuggestionEntityImpl _$$SuggestionEntityImplFromJson(
-  Map<String, dynamic> json,
-) =>
+        Map<String, dynamic> json) =>
     _$SuggestionEntityImpl();
 
 Map<String, dynamic> _$$SuggestionEntityImplToJson(
-  _$SuggestionEntityImpl instance,
-) =>
+        _$SuggestionEntityImpl instance) =>
     <String, dynamic>{};

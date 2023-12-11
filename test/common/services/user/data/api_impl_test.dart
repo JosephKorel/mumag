@@ -64,7 +64,7 @@ void main() {
       // arrange
       when(
         () => userApi.insertUser(insertParams: insertParams),
-      ).thenAnswer((_) => throw ApiException(error: Object, userMsg: ''));
+      ).thenAnswer((_) => throw ApiException(error: Object, errorMsg: ''));
 
       // prepare
       final user =

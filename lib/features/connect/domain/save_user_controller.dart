@@ -19,7 +19,7 @@ class InsertUserController {
       },
       (error, stackTrace) => ApiException(
         error: error,
-        userMsg: 'Could not save account, try again later',
+        errorMsg: 'Could not save account, try again later',
       ),
     );
   }

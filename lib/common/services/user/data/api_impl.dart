@@ -17,7 +17,7 @@ final class UserApiUsecase {
 
       return result;
     }, (o, s) {
-      return ApiException(error: o, userMsg: 'Failed to insert user');
+      return ApiException(error: o, errorMsg: 'Failed to insert user');
     });
   }
 
@@ -27,7 +27,7 @@ final class UserApiUsecase {
 
       return result;
     }, (o, s) {
-      return ApiException(error: o, userMsg: 'Failed to get user');
+      return ApiException(error: o, errorMsg: 'Failed to get user');
     });
   }
 
@@ -39,7 +39,7 @@ final class UserApiUsecase {
 
       return result;
     }, (o, s) {
-      return ApiException(error: o, userMsg: 'Failed to update user');
+      return ApiException(error: o, errorMsg: 'Failed to update user');
     });
   }
 
@@ -52,7 +52,7 @@ final class UserApiUsecase {
 
       return result;
     }, (o, s) {
-      return ApiException(error: o, userMsg: '');
+      return ApiException(error: o, errorMsg: '');
     });
   }
 }

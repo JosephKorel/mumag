@@ -17,7 +17,7 @@ final class SpotifyAuthController {
         return credentials;
       },
       (error, stackTrace) =>
-          ApiException(error: error, userMsg: 'You must accept persmissions'),
+          ApiException(error: error, errorMsg: 'You must accept persmissions'),
     );
   }
 }

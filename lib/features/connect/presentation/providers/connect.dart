@@ -59,7 +59,7 @@ class HandleConnection extends _$HandleConnection {
                 );
 
         if (!saveCredentials) {
-          throw ApiException(userMsg: 'Failed to save credentials');
+          throw ApiException(errorMsg: 'Failed to save credentials');
         }
 
         ref.invalidate(spotifyApiProvider);

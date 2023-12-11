@@ -83,7 +83,7 @@ final userRatingsProvider =
 );
 
 typedef _$UserRatings = AutoDisposeAsyncNotifier<List<RatingEntity>>;
-String _$ratingHandlerHash() => r'b12b40fb0091465795bb870f385dd40134a4e4eb';
+String _$ratingHandlerHash() => r'57cc30bdcadcd2935485cfd2f85f4cbaba55cabd';
 
 /// See also [RatingHandler].
 @ProviderFor(RatingHandler)
