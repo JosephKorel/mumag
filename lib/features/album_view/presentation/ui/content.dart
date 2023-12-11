@@ -103,7 +103,7 @@ class AlbumGenreList extends ConsumerWidget {
         return ContentGenres(
           genres: data,
           backgroundColor: context.background,
-          borderColor: context.onSurface,
+          borderColor: context.onSurface.withOpacity(0.2),
           textColor: context.onSurface,
         );
       },

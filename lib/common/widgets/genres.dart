@@ -25,8 +25,7 @@ class ContentGenres extends StatelessWidget {
                   context.primary.withOpacity(0.8),
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
-                color: borderColor?.withOpacity(0.4) ??
-                    context.primary.withOpacity(0.4),
+                color: borderColor ?? context.primary.withOpacity(0.4),
               ),
             ),
             child: Padding(

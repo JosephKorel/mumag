@@ -99,7 +99,18 @@ class AlbumRatingLoaded extends ConsumerWidget {
             height: 8,
           ),
           FilledButton(
-            onPressed: () {},
+            onPressed: () => showAppBottomSheet(
+              context,
+              child: const RatingBottomSheet(),
+              height: 360,
+            ),
+            style: FilledButton.styleFrom(
+              backgroundColor: context.primaryContainer,
+              foregroundColor: context.primary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
             child: const Text('How about being the first?'),
           ),
         ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/features/profile/presentation/providers/profile.dart';
@@ -69,29 +70,13 @@ class _ProfileMainViewState extends ConsumerState<ProfileMainView> {
                 ),
                 const FavoriteGenres(),
                 const SizedBox(
+                  height: 8,
+                ),
+                const UserRatingStats(),
+                const SizedBox(
                   height: 16,
                 ),
                 const SavedAlbumsView(),
-                const SizedBox(
-                  height: 16,
-                ),
-                const FavoriteGenres(),
-                const SizedBox(
-                  height: 16,
-                ),
-                const FavoriteGenres(),
-                const SizedBox(
-                  height: 16,
-                ),
-                const FavoriteGenres(),
-                const SizedBox(
-                  height: 16,
-                ),
-                const FavoriteGenres(),
-                const SizedBox(
-                  height: 16,
-                ),
-                const FavoriteGenres(),
               ],
             ),
           ),
@@ -128,6 +113,79 @@ class ProfilePicture extends ConsumerWidget {
         radius: 32,
         backgroundImage: NetworkImage(profileImg),
       ),
+    );
+  }
+}
+
+class UserRatingStats extends ConsumerWidget {
+  const UserRatingStats({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ratings = ref.watch(
+      userProvider.select((value) => value.requireValue!.ratings),
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          'Ratings',
+          style: context.titleLarge,
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                Text(
+                  '${ratings.where((element) => element.type == RatingType.artist).length}',
+                  style: context.titleLarge.copyWith(color: context.primary),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Text(
+                  RatingType.artist.label,
+                  style: context.titleMedium,
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                Text(
+                  '${ratings.where((element) => element.type == RatingType.album).length}',
+                  style: context.titleLarge.copyWith(color: context.primary),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Text(
+                  RatingType.album.label,
+                  style: context.titleMedium,
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                Text(
+                  '${ratings.where((element) => element.type == RatingType.track).length}',
+                  style: context.titleLarge.copyWith(color: context.primary),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Text(
+                  RatingType.track.label,
+                  style: context.titleMedium,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
