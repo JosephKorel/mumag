@@ -5,11 +5,21 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 part 'rating_entity.freezed.dart';
 part 'rating_entity.g.dart';
 
+final labels = RatingValue.values.map((e) => e.label).toList();
+
+String ratingLabel(double rating) {
+  if (rating == 5) {
+    return labels.last;
+  }
+  return labels[rating.floor()];
+}
+
 enum RatingValue {
   bad(1),
-  good(2),
-  great(3),
-  masterpiece(4);
+  average(2),
+  good(3),
+  great(4),
+  masterpiece(5);
 
   const RatingValue(this.score);
 
@@ -27,12 +37,13 @@ enum RatingType {
 }
 
 extension RatingLabel on RatingValue {
-  String get label => ['Bad', 'Good', 'Great', 'Masterpiece'][index];
+  String get label => ['Bad', 'Average', 'Good', 'Great', 'Masterpiece'][index];
   IconData get icon => [
-        PhosphorIconsDuotone.thumbsDown,
-        PhosphorIconsDuotone.thumbsUp,
-        PhosphorIconsDuotone.handsClapping,
-        PhosphorIconsDuotone.sketchLogo,
+        PhosphorIconsLight.thumbsDown,
+        PhosphorIconsLight.smileyMeh,
+        PhosphorIconsLight.thumbsUp,
+        PhosphorIconsLight.handsClapping,
+        PhosphorIconsLight.sketchLogo,
       ][index];
 }
 

@@ -114,21 +114,52 @@ class AlbumRatingLoaded extends ConsumerWidget {
 
     return Column(
       children: [
-        Text('$value'),
-        const SizedBox(
-          height: 16,
+        Text(
+          '$value',
+          style:
+              context.titleLarge.copyWith(color: context.primary, fontSize: 28),
         ),
-        const Text('Masterpiece'),
+        Text(
+          ratingLabel(value),
+          style: context.titleLarge.copyWith(color: context.primary),
+        ),
       ],
     );
   }
 }
 
-class RatingFloatingActionButton extends StatelessWidget {
+class RatingFloatingActionButton extends ConsumerWidget {
   const RatingFloatingActionButton({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final album = ref.watch(viewingAlbumProvider)!;
+    final user = ref.watch(userProvider).requireValue!;
+    final hasRated =
+        user.ratings.any((element) => element.spotifyId == album.id);
+
+    if (hasRated) {
+      final rating = user.ratings
+          .firstWhere((element) => element.spotifyId == album.id)
+          .rating;
+
+      return FloatingActionButton(
+        onPressed: () => showAppBottomSheet(
+          context,
+          child: const RatingBottomSheet(),
+          height: 360,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        backgroundColor: context.primary,
+        child: Text(
+          rating.toString(),
+          style: context.titleLarge.copyWith(color: context.onPrimary),
+        ),
+      );
+    }
+
     return FloatingActionButton(
       onPressed: () => showAppBottomSheet(
         context,
@@ -174,7 +205,7 @@ class _RatingBottomSheetState extends ConsumerState<RatingBottomSheet> {
 
     await ref
         .read(ratingHandlerProvider.notifier)
-        .call(event: insertRatingParams);
+        .call(event: insertRatingParams, shouldUpdateUser: true);
 
     if (ref.read(ratingHandlerProvider).hasError) {
       return;

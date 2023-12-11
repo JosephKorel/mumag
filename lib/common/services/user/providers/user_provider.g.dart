@@ -35,7 +35,7 @@ final userApiUsecaseProvider = AutoDisposeProvider<UserApiUsecase>.internal(
 );
 
 typedef UserApiUsecaseRef = AutoDisposeProviderRef<UserApiUsecase>;
-String _$userHash() => r'14691aa13603cc0a483dc08552ae9acb853330b0';
+String _$userHash() => r'd2b1155a3877a555f763f5488ab4ed60c2771438';
 
 /// See also [User].
 @ProviderFor(User)

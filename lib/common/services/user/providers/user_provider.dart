@@ -1,8 +1,8 @@
 import 'package:mocktail/mocktail.dart';
-import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/services/backend_api/providers/api.dart';
 import 'package:mumag/common/services/firebase/providers/auth.dart';
+import 'package:mumag/common/services/rating/providers/rating.dart';
 import 'package:mumag/common/services/user/data/api_impl.dart';
 import 'package:mumag/common/services/user/domain/api/api_repository.dart';
 import 'package:mumag/common/services/user/domain/database/user_db_events.dart';
@@ -45,9 +45,11 @@ class User extends _$User {
     return user.fold((l) => null, (r) => r);
   }
 
-  void updateRatings(List<RatingEntity> ratings) {
-    final newState = state.requireValue!.copyWith(ratings: ratings);
-    state = AsyncData(newState);
+  Future<void> updateRatings() async {
+    state = await AsyncValue.guard(() async {
+      final ratings = await ref.read(userRatingsProvider.future);
+      return state.requireValue!.copyWith(ratings: ratings);
+    });
   }
 }
 

@@ -68,13 +68,13 @@ final getUserRatingsProvider =
 );
 
 typedef GetUserRatingsRef = AutoDisposeFutureProviderRef<List<RatingEntity>>;
-String _$userRatingsHash() => r'ddd2964ddc6cc59ce3bd1902c824052a26309320';
+String _$userRatingsHash() => r'495180916b7b765ed52dd0f0e4b27c38119766b5';
 
-/// See also [UserRatings].
-@ProviderFor(UserRatings)
+/// See also [userRatings].
+@ProviderFor(userRatings)
 final userRatingsProvider =
-    AutoDisposeAsyncNotifierProvider<UserRatings, List<RatingEntity>>.internal(
-  UserRatings.new,
+    AutoDisposeFutureProvider<List<RatingEntity>>.internal(
+  userRatings,
   name: r'userRatingsProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product') ? null : _$userRatingsHash,
@@ -82,8 +82,8 @@ final userRatingsProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$UserRatings = AutoDisposeAsyncNotifier<List<RatingEntity>>;
-String _$ratingHandlerHash() => r'07b4f7c44ced127dbf69c0ac88ff376198478ae7';
+typedef UserRatingsRef = AutoDisposeFutureProviderRef<List<RatingEntity>>;
+String _$ratingHandlerHash() => r'223ea4b1fbcc8a413b40964f67dbba348b4fd55d';
 
 /// See also [RatingHandler].
 @ProviderFor(RatingHandler)

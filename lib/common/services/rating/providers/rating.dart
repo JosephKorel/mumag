@@ -42,19 +42,14 @@ FutureOr<List<RatingEntity>> getUserRatings(GetUserRatingsRef ref) async {
 }
 
 @riverpod
-class UserRatings extends _$UserRatings {
-  @override
-  FutureOr<List<RatingEntity>> build() async {
-    final userId = ref.watch(userProvider).requireValue!.id;
-    final request = await ref
-        .read(ratingUsecaseProvider)
-        .getUserRatings(params: GetUserRatingParams(userId: userId))
-        .run();
+FutureOr<List<RatingEntity>> userRatings(UserRatingsRef ref) async {
+  final userId = ref.watch(userProvider).requireValue!.id;
+  final request = await ref
+      .read(ratingUsecaseProvider)
+      .getUserRatings(params: GetUserRatingParams(userId: userId))
+      .run();
 
-    return request.fold((l) => throw l, (r) => r);
-  }
-
-  void updateState(List<RatingEntity> newState) => state = AsyncData(newState);
+  return request.fold((l) => [], (r) => r);
 }
 
 @riverpod
@@ -62,7 +57,10 @@ class RatingHandler extends _$RatingHandler {
   @override
   FutureOr<void> build() {}
 
-  Future<void> call({required RatingsDatabaseEvents event}) async {
+  Future<void> call({
+    required RatingsDatabaseEvents event,
+    required bool shouldUpdateUser,
+  }) async {
     state = const AsyncLoading();
 
     state = await AsyncValue.guard(() async {
@@ -74,7 +72,11 @@ class RatingHandler extends _$RatingHandler {
           ref.read(toastMessageProvider.notifier).onException(exception: l);
           throw l;
         },
-        (r) {},
+        (r) {
+          if (shouldUpdateUser) {
+            ref.read(userProvider.notifier).updateRatings();
+          }
+        },
       );
     });
   }
