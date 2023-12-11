@@ -5,6 +5,7 @@ import 'package:mumag/common/services/rating/domain/rating_events.dart';
 import 'package:mumag/common/services/rating/domain/rating_repository.dart';
 import 'package:mumag/common/services/rating/usecase/rating_usecase.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
+import 'package:mumag/common/toast/toast_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'rating.g.dart';
@@ -69,7 +70,12 @@ class RatingHandler extends _$RatingHandler {
           await ref.read(ratingControllerProvider)(event: event).run();
 
       return request.fold(
-          (l) => throw AsyncError(l, StackTrace.current), (r) {});
+        (l) {
+          ref.read(toastMessageProvider.notifier).onException(exception: l);
+          throw l;
+        },
+        (r) {},
+      );
     });
   }
 }

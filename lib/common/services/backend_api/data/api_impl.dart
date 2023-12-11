@@ -7,15 +7,15 @@ final class ApiImplementation extends ApiRepository {
   final Dio _client;
 
   @override
-  Future<Map<String, dynamic>> post({
+  Future<Map<String, dynamic>?> post({
     required String path,
     required Map<String, dynamic> params,
   }) async {
     try {
       final result =
-          await _client.post<Map<String, dynamic>>(path, data: params);
+          await _client.post<Map<String, dynamic>?>(path, data: params);
 
-      return result.data!;
+      return result.data;
     } catch (e) {
       rethrow;
     }

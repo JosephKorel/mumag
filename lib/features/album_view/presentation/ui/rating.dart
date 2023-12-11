@@ -1,14 +1,14 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
+import 'package:mumag/common/models/success_events/success_events.dart';
 import 'package:mumag/common/services/rating/domain/rating_events.dart';
 import 'package:mumag/common/services/rating/providers/rating.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
 import 'package:mumag/common/theme/utils.dart';
+import 'package:mumag/common/toast/toast_provider.dart';
 import 'package:mumag/common/widgets/bottom_sheet.dart';
 import 'package:mumag/common/widgets/loading.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
@@ -108,7 +108,7 @@ class AlbumRatingLoaded extends ConsumerWidget {
 
     final value = rating.fold(
           0,
-          (previousValue, element) => previousValue += element.score,
+          (previousValue, element) => previousValue += element.rating,
         ) /
         rating.length;
 
@@ -180,16 +180,18 @@ class _RatingBottomSheetState extends ConsumerState<RatingBottomSheet> {
       return;
     } else {
       ref.invalidate(albumRatingProvider);
-      context.pop();
+
+      if (mounted) {
+        context.pop();
+        ref
+            .read(toastMessageProvider.notifier)
+            .onSuccessEvent(successEvent: InsertRatingSuccess());
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(ratingHandlerProvider, (previous, next) {
-      log('HAS ERROR: ${next.hasError}');
-    });
-
     final ratingHandler = ref.watch(ratingHandlerProvider);
     final ratingButtons = RatingValue.values
         .map(
@@ -343,7 +345,7 @@ class _SelectedRatingState extends State<SelectedRating>
             widget.rating!.label,
             style: context.titleLarge
                 .copyWith(fontSize: 26, color: context.primary),
-          ).animate().fadeIn(duration: .2.seconds).shimmer(delay: 1.seconds),
+          ).animate().fadeIn(duration: .2.seconds),
         ],
       ),
     );

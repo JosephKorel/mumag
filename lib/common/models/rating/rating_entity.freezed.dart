@@ -23,7 +23,7 @@ mixin _$RatingEntity {
   int get id => throw _privateConstructorUsedError;
   RatingType get type => throw _privateConstructorUsedError;
   String get spotifyId => throw _privateConstructorUsedError;
-  int get score => throw _privateConstructorUsedError;
+  int get rating => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,7 +37,7 @@ abstract class $RatingEntityCopyWith<$Res> {
           RatingEntity value, $Res Function(RatingEntity) then) =
       _$RatingEntityCopyWithImpl<$Res, RatingEntity>;
   @useResult
-  $Res call({int id, RatingType type, String spotifyId, int score});
+  $Res call({int id, RatingType type, String spotifyId, int rating});
 }
 
 /// @nodoc
@@ -56,7 +56,7 @@ class _$RatingEntityCopyWithImpl<$Res, $Val extends RatingEntity>
     Object? id = null,
     Object? type = null,
     Object? spotifyId = null,
-    Object? score = null,
+    Object? rating = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -71,9 +71,9 @@ class _$RatingEntityCopyWithImpl<$Res, $Val extends RatingEntity>
           ? _value.spotifyId
           : spotifyId // ignore: cast_nullable_to_non_nullable
               as String,
-      score: null == score
-          ? _value.score
-          : score // ignore: cast_nullable_to_non_nullable
+      rating: null == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
               as int,
     ) as $Val);
   }
@@ -87,7 +87,7 @@ abstract class _$$RatingEntityImplCopyWith<$Res>
       __$$RatingEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, RatingType type, String spotifyId, int score});
+  $Res call({int id, RatingType type, String spotifyId, int rating});
 }
 
 /// @nodoc
@@ -104,7 +104,7 @@ class __$$RatingEntityImplCopyWithImpl<$Res>
     Object? id = null,
     Object? type = null,
     Object? spotifyId = null,
-    Object? score = null,
+    Object? rating = null,
   }) {
     return _then(_$RatingEntityImpl(
       id: null == id
@@ -119,9 +119,9 @@ class __$$RatingEntityImplCopyWithImpl<$Res>
           ? _value.spotifyId
           : spotifyId // ignore: cast_nullable_to_non_nullable
               as String,
-      score: null == score
-          ? _value.score
-          : score // ignore: cast_nullable_to_non_nullable
+      rating: null == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -134,7 +134,7 @@ class _$RatingEntityImpl implements _RatingEntity {
       {required this.id,
       required this.type,
       required this.spotifyId,
-      required this.score});
+      required this.rating});
 
   factory _$RatingEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$RatingEntityImplFromJson(json);
@@ -146,11 +146,11 @@ class _$RatingEntityImpl implements _RatingEntity {
   @override
   final String spotifyId;
   @override
-  final int score;
+  final int rating;
 
   @override
   String toString() {
-    return 'RatingEntity(id: $id, type: $type, spotifyId: $spotifyId, score: $score)';
+    return 'RatingEntity(id: $id, type: $type, spotifyId: $spotifyId, rating: $rating)';
   }
 
   @override
@@ -162,12 +162,12 @@ class _$RatingEntityImpl implements _RatingEntity {
             (identical(other.type, type) || other.type == type) &&
             (identical(other.spotifyId, spotifyId) ||
                 other.spotifyId == spotifyId) &&
-            (identical(other.score, score) || other.score == score));
+            (identical(other.rating, rating) || other.rating == rating));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, type, spotifyId, score);
+  int get hashCode => Object.hash(runtimeType, id, type, spotifyId, rating);
 
   @JsonKey(ignore: true)
   @override
@@ -188,7 +188,7 @@ abstract class _RatingEntity implements RatingEntity {
       {required final int id,
       required final RatingType type,
       required final String spotifyId,
-      required final int score}) = _$RatingEntityImpl;
+      required final int rating}) = _$RatingEntityImpl;
 
   factory _RatingEntity.fromJson(Map<String, dynamic> json) =
       _$RatingEntityImpl.fromJson;
@@ -200,7 +200,7 @@ abstract class _RatingEntity implements RatingEntity {
   @override
   String get spotifyId;
   @override
-  int get score;
+  int get rating;
   @override
   @JsonKey(ignore: true)
   _$$RatingEntityImplCopyWith<_$RatingEntityImpl> get copyWith =>

@@ -12,8 +12,13 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'router.g.dart';
 
 @riverpod
+GlobalKey<NavigatorState> globalKey(GlobalKeyRef ref) {
+  return GlobalKey<NavigatorState>(debugLabel: 'routerKey');
+}
+
+@riverpod
 GoRouter router(RouterRef ref) {
-  final routerKey = GlobalKey<NavigatorState>(debugLabel: 'routerKey');
+  final routerKey = ref.watch(globalKeyProvider);
   final isAuth = ValueNotifier<AuthState>(Loading());
 
   ref

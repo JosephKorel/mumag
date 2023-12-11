@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/provider_observer/observer.dart';
 import 'package:mumag/common/services/shared_pref/providers/shared_pref.dart';
+import 'package:mumag/common/toast/toast_provider.dart';
 import 'package:mumag/firebase_options.dart';
 import 'package:mumag/routes/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,6 +37,16 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
+    final globalKey = ref.watch(globalKeyProvider);
+
+    ref.listen(toastMessageProvider, (previous, next) {
+      log('Coming here and the type is ${next.exception} or ${next.successEvent}');
+
+      next
+          .showToast(globalKey.currentState!.context)
+          .show(globalKey.currentState!.context);
+    });
+
     return MaterialApp.router(
       title: 'Mumag',
       theme: ThemeData(

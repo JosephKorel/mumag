@@ -11,15 +11,15 @@ _$RatingEntityImpl _$$RatingEntityImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int,
       type: $enumDecode(_$RatingTypeEnumMap, json['type']),
       spotifyId: json['spotifyId'] as String,
-      score: json['score'] as int,
+      rating: json['rating'] as int,
     );
 
 Map<String, dynamic> _$$RatingEntityImplToJson(_$RatingEntityImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'type': _$RatingTypeEnumMap[instance.type]!,
+      'type': _$RatingTypeEnumMap[instance.type],
       'spotifyId': instance.spotifyId,
-      'score': instance.score,
+      'rating': instance.rating,
     };
 
 const _$RatingTypeEnumMap = {

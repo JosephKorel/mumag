@@ -29,8 +29,8 @@ final class InsertRatingParams extends RatingsDatabaseEvents {
   final RatingBaseParams insertParams;
 
   Map<String, dynamic> toMap() => {
-        'userId': userId,
-        'insertParams': insertParams,
+        'authorId': userId,
+        ...insertParams.toMap(),
       };
 }
 

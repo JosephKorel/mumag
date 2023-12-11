@@ -42,7 +42,7 @@ class RatingEntity with _$RatingEntity {
     required int id,
     required RatingType type,
     required String spotifyId,
-    required int score,
+    required int rating,
   }) = _RatingEntity;
 
   factory RatingEntity.fromJson(Map<String, dynamic> json) =>

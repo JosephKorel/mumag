@@ -72,7 +72,7 @@ final class UserApiImpl extends UserApiUsecaseRepository {
         params: insertParams.toMap(),
       );
 
-      return UserEntity.fromJson(result);
+      return UserEntity.fromJson(result!);
     } catch (e) {
       rethrow;
     }

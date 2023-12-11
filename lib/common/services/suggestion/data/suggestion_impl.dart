@@ -27,7 +27,7 @@ class SuggestionRepositoryImpl extends SuggestionRepository {
     try {
       final result = await _api.post(path: _path, params: params.toMap());
 
-      return result['rating'] as int;
+      return result!['rating'] as int;
     } catch (e) {
       rethrow;
     }
