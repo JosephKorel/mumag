@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/services/rating/domain/rating_events.dart';
 import 'package:mumag/common/services/rating/providers/rating.dart';
@@ -42,16 +40,9 @@ Future<List<RatingEntity>?> albumRating(
   final album = ref.watch(viewingAlbumProvider)!;
   final ratingController = ref.watch(ratingControllerProvider);
 
-  log('Albums name ID is ${album.id}');
-
   final albumRating =
       await ratingController(event: GetAllRatingParams(spotifyId: album.id!))
           .run();
-
-  log('The rating is ${albumRating.fold(
-    (l) => null,
-    (r) => r.length,
-  )}');
 
   return albumRating.fold(
     (l) => null,

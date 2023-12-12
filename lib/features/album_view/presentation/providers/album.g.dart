@@ -22,7 +22,7 @@ final albumColorSchemeProvider =
 );
 
 typedef AlbumColorSchemeRef = AutoDisposeFutureProviderRef<AppColorScheme>;
-String _$albumRatingHash() => r'e923e8dfb08272d7c1ab238fe757dff643654b63';
+String _$albumRatingHash() => r'c366071d2b734d59789696a7f3058e2e8982f80b';
 
 /// See also [albumRating].
 @ProviderFor(albumRating)

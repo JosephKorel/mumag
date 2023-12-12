@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/genres.dart';
 import 'package:mumag/common/widgets/loading.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
 import 'package:mumag/features/album_view/presentation/ui/rating.dart';
+import 'package:mumag/features/artist_view/providers/artist.dart';
+import 'package:mumag/routes/routes.dart';
 
 class AlbumContent extends ConsumerWidget {
   const AlbumContent({super.key});
@@ -13,21 +16,33 @@ class AlbumContent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final album = ref.watch(viewingAlbumProvider)!;
+    ref.watch(selectedArtistProvider);
+
+    void goToArtist() {
+      ref
+          .read(selectedArtistProvider.notifier)
+          .updateState(artist: album.artists!.first);
+      context.push(const ArtistViewRoute().location);
+    }
 
     return Scaffold(
       appBar: AppBar(
         title: Text(album.name ?? ''),
         backgroundColor: context.primary.withOpacity(0.6),
       ),
-      body: const Stack(
+      body: Stack(
         children: [
-          AlbumHeader(),
+          const AlbumHeader(),
           Column(
             children: [
-              Expanded(child: SizedBox.expand()),
-              Expanded(
+              const Expanded(child: SizedBox.expand()),
+              const Expanded(
                 flex: 2,
                 child: AlbumContentView(),
+              ),
+              TextButton(
+                onPressed: goToArtist,
+                child: const Text('Go to artist'),
               ),
             ],
           ),

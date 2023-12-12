@@ -11,6 +11,7 @@ List<RouteBase> get $appRoutes => [
       $signInRoute,
       $connectToSpotifyRoute,
       $profileRoute,
+      $artistViewRoute,
       $albumViewRoute,
     ];
 
@@ -91,6 +92,30 @@ extension $ProfileRouteExtension on ProfileRoute {
 
   String get location => GoRouteData.$location(
         '/profile',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $artistViewRoute => GoRouteData.$route(
+      path: '/artist',
+      name: 'artistView',
+      factory: $ArtistViewRouteExtension._fromState,
+    );
+
+extension $ArtistViewRouteExtension on ArtistViewRoute {
+  static ArtistViewRoute _fromState(GoRouterState state) =>
+      const ArtistViewRoute();
+
+  String get location => GoRouteData.$location(
+        '/artist',
       );
 
   void go(BuildContext context) => context.go(location);
