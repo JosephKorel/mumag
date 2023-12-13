@@ -68,3 +68,13 @@ Future<List<String>> albumGenres(AlbumGenresRef ref) async {
       .expand((element) => element)
       .toList();
 }
+
+@riverpod
+class ViewingRating extends _$ViewingRating {
+  @override
+  bool build() {
+    return false;
+  }
+
+  void updateState({required bool viewingRating}) => state = viewingRating;
+}

@@ -15,7 +15,7 @@ class RatingBottomSheet extends StatefulWidget {
 
   final RatingType type;
   final bool loading;
-  final void Function(int rateValue) onConfirm;
+  final Future<void> Function(int rateValue) onConfirm;
 
   @override
   State<RatingBottomSheet> createState() => _RatingBottomSheetState();
@@ -30,8 +30,15 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
     });
   }
 
-  void _onConfirm() {
-    widget.onConfirm(rating!.score);
+  Future<void> _onConfirm() async {
+    try {
+      await widget.onConfirm(rating!.score);
+      if (mounted) {
+        context.pop();
+      }
+    } catch (e) {
+      return;
+    }
   }
 
   @override

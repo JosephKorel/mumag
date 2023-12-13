@@ -9,44 +9,68 @@ import 'package:mumag/features/album_view/presentation/providers/album.dart';
 import 'package:mumag/features/artist_view/providers/artist.dart';
 import 'package:mumag/routes/routes.dart';
 
-class AlbumTabView extends ConsumerWidget {
+class AlbumTabView extends ConsumerStatefulWidget {
   const AlbumTabView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return DefaultTabController(
-      length: 3,
-      child: Column(
-        children: [
-          TabBar(
-            indicatorColor: context.primary,
-            labelColor: context.primary,
-            unselectedLabelColor: context.onSurface.withOpacity(0.6),
-            tabs: AlbumTabs.values
-                .map(
-                  (e) => Tab(
-                    icon: Icon(e.icon),
-                    text: e.label,
-                  ),
-                )
-                .toList(),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          const Expanded(
-            child: Material(
-              child: TabBarView(
-                children: [
-                  AlbumAboutTabContent(),
-                  AlbumTracksTabContent(),
-                  AlbumRatingTabContent(),
-                ],
-              ),
+  ConsumerState<ConsumerStatefulWidget> createState() => _AlbumTabViewState();
+}
+
+class _AlbumTabViewState extends ConsumerState<AlbumTabView>
+    with SingleTickerProviderStateMixin {
+  late final TabController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TabController(length: AlbumTabs.values.length, vsync: this);
+    _controller.addListener(() {
+      ref.read(viewingRatingProvider.notifier).updateState(
+            viewingRating: _controller.index == _controller.length - 1,
+          );
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TabBar(
+          controller: _controller,
+          indicatorColor: context.primary,
+          labelColor: context.primary,
+          unselectedLabelColor: context.onSurface.withOpacity(0.6),
+          tabs: AlbumTabs.values
+              .map(
+                (e) => Tab(
+                  icon: Icon(e.icon),
+                  text: e.label,
+                ),
+              )
+              .toList(),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        Expanded(
+          child: Material(
+            child: TabBarView(
+              controller: _controller,
+              children: const [
+                AlbumAboutTabContent(),
+                AlbumTracksTabContent(),
+                AlbumRatingTabContent(),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

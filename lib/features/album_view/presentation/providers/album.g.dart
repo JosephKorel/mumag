@@ -6,7 +6,7 @@ part of 'album.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$albumColorSchemeHash() => r'4dafbd3728680daeeb5e2a392c12cb883305b72e';
+String _$albumColorSchemeHash() => r'05e07eb77bae0e3722e643bdcc6582442d246147';
 
 /// See also [albumColorScheme].
 @ProviderFor(albumColorScheme)
@@ -66,5 +66,21 @@ final viewingAlbumProvider =
 );
 
 typedef _$ViewingAlbum = AutoDisposeNotifier<AlbumSimple?>;
+String _$viewingRatingHash() => r'5ec83334324d0f10a59f6ff8f2d8d37f79b21229';
+
+/// See also [ViewingRating].
+@ProviderFor(ViewingRating)
+final viewingRatingProvider =
+    AutoDisposeNotifierProvider<ViewingRating, bool>.internal(
+  ViewingRating.new,
+  name: r'viewingRatingProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$viewingRatingHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$ViewingRating = AutoDisposeNotifier<bool>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
