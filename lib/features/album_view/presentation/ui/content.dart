@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/genres.dart';
 import 'package:mumag/common/widgets/loading.dart';
@@ -9,7 +8,6 @@ import 'package:mumag/features/album_view/presentation/providers/album.dart';
 import 'package:mumag/features/album_view/presentation/ui/rating.dart';
 import 'package:mumag/features/album_view/presentation/ui/tab_content.dart';
 import 'package:mumag/features/artist_view/providers/artist.dart';
-import 'package:mumag/routes/routes.dart';
 
 class AlbumContent extends ConsumerWidget {
   const AlbumContent({super.key});
@@ -18,13 +16,6 @@ class AlbumContent extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final album = ref.watch(viewingAlbumProvider)!;
     ref.watch(selectedArtistProvider);
-
-    void goToArtist() {
-      ref
-          .read(selectedArtistProvider.notifier)
-          .updateState(artist: album.artists!.first);
-      context.push(const ArtistViewRoute().location);
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -73,8 +64,7 @@ class AlbumContentView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      clipBehavior: Clip.hardEdge,
+    return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(32),
@@ -82,10 +72,9 @@ class AlbumContentView extends ConsumerWidget {
         ),
         color: context.background,
       ),
-      child: const SingleChildScrollView(
-        padding: EdgeInsetsDirectional.all(16),
+      child: const Padding(
+        padding: EdgeInsets.all(16),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             AlbumRating(),
@@ -96,7 +85,7 @@ class AlbumContentView extends ConsumerWidget {
             SizedBox(
               height: 16,
             ),
-            AlbumTabView(),
+            Expanded(child: AlbumTabView()),
           ],
         ),
       ),

@@ -91,27 +91,25 @@ class AlbumRatingLoaded extends ConsumerWidget {
     if (rating.isEmpty) {
       return Column(
         children: [
-          Text(
-            'This album has no ratings yet',
-            style: context.titleLarge,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(5, (index) => index)
+                .map(
+                  (e) => Icon(
+                    Icons.star_outline,
+                    size: 34,
+                    color: context.onSurface.withOpacity(0.6),
+                  ),
+                )
+                .toList(),
           ),
           const SizedBox(
             height: 8,
           ),
-          FilledButton(
-            onPressed: () => showAppBottomSheet(
-              context,
-              child: const RatingBottomSheet(),
-              height: 360,
-            ),
-            style: FilledButton.styleFrom(
-              backgroundColor: context.primaryContainer,
-              foregroundColor: context.primary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            child: const Text('How about being the first?'),
+          Text(
+            'This album has no ratings yet',
+            style: context.bodyMedium
+                .copyWith(color: context.onSurface.withOpacity(0.6)),
           ),
         ],
       );

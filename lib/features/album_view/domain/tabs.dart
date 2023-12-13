@@ -14,6 +14,6 @@ extension AlbumTabIcons on AlbumTabs {
   IconData get icon => [
         Icons.info_outline,
         Icons.library_music_outlined,
-        Icons.star,
+        Icons.star_outline,
       ][index];
 }
