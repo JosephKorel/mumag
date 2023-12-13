@@ -28,7 +28,7 @@ Future<AppColorScheme> albumColorScheme(AlbumColorSchemeRef ref) async {
     return colorScheme;
   }
 
-  final albumColors = await colorScheme.getColors(imgUrl: images[1].url!);
+  final albumColors = await colorScheme.getColors(imgUrl: images[0].url!);
 
   return albumColors;
 }

@@ -7,6 +7,7 @@ import 'package:mumag/common/widgets/genres.dart';
 import 'package:mumag/common/widgets/loading.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
 import 'package:mumag/features/album_view/presentation/ui/rating.dart';
+import 'package:mumag/features/album_view/presentation/ui/tab_content.dart';
 import 'package:mumag/features/artist_view/providers/artist.dart';
 import 'package:mumag/routes/routes.dart';
 
@@ -30,19 +31,15 @@ class AlbumContent extends ConsumerWidget {
         title: Text(album.name ?? ''),
         backgroundColor: context.primary.withOpacity(0.6),
       ),
-      body: Stack(
+      body: const Stack(
         children: [
-          const AlbumHeader(),
+          AlbumHeader(),
           Column(
             children: [
-              const Expanded(child: SizedBox.expand()),
-              const Expanded(
+              Expanded(child: SizedBox.expand()),
+              Expanded(
                 flex: 2,
                 child: AlbumContentView(),
-              ),
-              TextButton(
-                onPressed: goToArtist,
-                child: const Text('Go to artist'),
               ),
             ],
           ),
@@ -88,6 +85,7 @@ class AlbumContentView extends ConsumerWidget {
       child: const SingleChildScrollView(
         padding: EdgeInsetsDirectional.all(16),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             AlbumRating(),
@@ -95,6 +93,10 @@ class AlbumContentView extends ConsumerWidget {
               height: 16,
             ),
             AlbumGenreList(),
+            SizedBox(
+              height: 16,
+            ),
+            AlbumTabView(),
           ],
         ),
       ),
