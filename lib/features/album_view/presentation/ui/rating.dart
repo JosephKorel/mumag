@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/models/success_events/success_events.dart';
@@ -9,6 +8,7 @@ import 'package:mumag/common/services/user/providers/user_provider.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/toast/toast_provider.dart';
 import 'package:mumag/common/widgets/bottom_sheet.dart';
+import 'package:mumag/common/widgets/fab.dart';
 import 'package:mumag/common/widgets/loading.dart';
 import 'package:mumag/common/widgets/rating_bottom_sheet.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
@@ -147,23 +147,12 @@ class RatingFloatingActionButton extends ConsumerWidget {
     final hasRated =
         user.ratings.any((element) => element.spotifyId == album.id);
     final ratingHandler = ref.watch(ratingHandlerProvider);
-    final buttonAnimations = viewingRating
-        ? [
-            SlideEffect(
-              end: const Offset(0, 8),
-              duration: 2.seconds,
-              curve: Curves.easeInCirc,
-            ),
-          ]
-        : [
-            SlideEffect(
-              begin: const Offset(0, 8),
-              duration: 2.seconds,
-              curve: Curves.easeOutCirc,
-            ),
-          ];
 
-    Future<void> onConfirm(int value) async {
+    void showToast() => ref
+        .read(toastMessageProvider.notifier)
+        .onSuccessEvent(successEvent: InsertRatingSuccess());
+
+    Future<bool> onConfirm(int value) async {
       final user = ref.read(userProvider).requireValue!;
       final album = ref.read(viewingAlbumProvider)!;
       final ratingBaseParams = RatingBaseParams(
@@ -178,15 +167,12 @@ class RatingFloatingActionButton extends ConsumerWidget {
           .read(ratingHandlerProvider.notifier)
           .call(event: insertRatingParams, shouldUpdateUser: true);
 
-      if (ref.read(ratingHandlerProvider).hasError) {
-        throw Error();
-      } else {
-        ref.invalidate(albumRatingProvider);
-
-        ref
-            .read(toastMessageProvider.notifier)
-            .onSuccessEvent(successEvent: InsertRatingSuccess());
+      if (ratingHandler.hasError) {
+        return false;
       }
+      ref.invalidate(albumRatingProvider);
+
+      return true;
     }
 
     if (hasRated) {
@@ -194,44 +180,39 @@ class RatingFloatingActionButton extends ConsumerWidget {
           .firstWhere((element) => element.spotifyId == album.id)
           .rating;
 
-      return Animate(
-        effects: buttonAnimations,
-        child: FloatingActionButton(
-          onPressed: () => showAppBottomSheet(
-            context,
-            child: RatingBottomSheet(
-              loading: ratingHandler.isLoading,
-              onConfirm: onConfirm,
-              type: RatingType.album,
-            ),
-            height: 360,
+      return AnimatedFAB(
+        show: !viewingRating,
+        onPressed: () => showAppBottomSheet(
+          context,
+          child: RatingBottomSheet(
+            loading: ratingHandler.isLoading,
+            onConfirm: onConfirm,
+            type: RatingType.album,
+            showToast: showToast,
           ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          backgroundColor: context.primary,
-          child: Text(
-            rating.toString(),
-            style: context.titleLarge.copyWith(color: context.onPrimary),
-          ),
+          height: 360,
+        ),
+        loading: false,
+        child: Text(
+          rating.toString(),
+          style: context.titleLarge.copyWith(color: context.onPrimary),
         ),
       );
     }
 
-    return FloatingActionButton(
+    return AnimatedFAB(
       onPressed: () => showAppBottomSheet(
         context,
         child: RatingBottomSheet(
           loading: ratingHandler.isLoading,
           onConfirm: onConfirm,
           type: RatingType.album,
+          showToast: showToast,
         ),
         height: 360,
       ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      backgroundColor: context.primary,
+      show: !viewingRating,
+      loading: false,
       child: const Icon(Icons.star),
     );
   }

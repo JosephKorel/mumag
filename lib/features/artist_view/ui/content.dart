@@ -74,8 +74,9 @@ class ArtistRatingFloatingActionButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Future<void> onConfirm(int rateValue) async {
+    Future<bool> onConfirm(int rateValue) async {
       log('This was the value $rateValue');
+      return true;
     }
 
     return FloatingActionButton(

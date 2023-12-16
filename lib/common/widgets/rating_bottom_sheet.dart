@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
@@ -10,12 +11,14 @@ class RatingBottomSheet extends StatefulWidget {
     required this.type,
     required this.onConfirm,
     required this.loading,
+    this.showToast,
     super.key,
   });
 
   final RatingType type;
   final bool loading;
-  final Future<void> Function(int rateValue) onConfirm;
+  final Future<bool> Function(int rateValue) onConfirm;
+  final VoidCallback? showToast;
 
   @override
   State<RatingBottomSheet> createState() => _RatingBottomSheetState();
@@ -31,13 +34,13 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
   }
 
   Future<void> _onConfirm() async {
-    try {
-      await widget.onConfirm(rating!.score);
-      if (mounted) {
-        context.pop();
-      }
-    } catch (e) {
-      return;
+    final shouldClose = await widget.onConfirm(rating!.score);
+    if (shouldClose) {
+      context.pop();
+
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        widget.showToast?.call();
+      });
     }
   }
 
