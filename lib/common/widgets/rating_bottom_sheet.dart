@@ -10,13 +10,11 @@ class RatingBottomSheet extends StatefulWidget {
   const RatingBottomSheet({
     required this.type,
     required this.onConfirm,
-    required this.loading,
     this.showToast,
     super.key,
   });
 
   final RatingType type;
-  final bool loading;
   final Future<bool> Function(int rateValue) onConfirm;
   final VoidCallback? showToast;
 
@@ -26,6 +24,7 @@ class RatingBottomSheet extends StatefulWidget {
 
 class _RatingBottomSheetState extends State<RatingBottomSheet> {
   RatingValue? rating;
+  bool loading = false;
 
   void onTap(RatingValue value) {
     setState(() {
@@ -34,9 +33,20 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
   }
 
   Future<void> _onConfirm() async {
+    setState(() {
+      loading = true;
+    });
+
     final shouldClose = await widget.onConfirm(rating!.score);
+
+    setState(() {
+      loading = false;
+    });
+
     if (shouldClose) {
-      context.pop();
+      if (mounted) {
+        context.pop();
+      }
 
       SchedulerBinding.instance.addPostFrameCallback((_) {
         widget.showToast?.call();
@@ -80,7 +90,7 @@ class _RatingBottomSheetState extends State<RatingBottomSheet> {
               child: const Text('Cancel'),
             ),
             FilledButton(
-              onPressed: rating == null || widget.loading ? null : _onConfirm,
+              onPressed: rating == null || loading ? null : _onConfirm,
               child: const Text('Confirm'),
             ),
           ],
@@ -148,8 +158,8 @@ class _SelectedRatingState extends State<SelectedRating>
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override

@@ -84,7 +84,6 @@ class ArtistRatingFloatingActionButton extends ConsumerWidget {
         context,
         child: RatingBottomSheet(
           type: RatingType.artist,
-          loading: false,
           onConfirm: onConfirm,
         ),
         height: 360,

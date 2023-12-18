@@ -21,6 +21,7 @@ class AlbumContent extends ConsumerWidget {
       appBar: AppBar(
         title: Text(album.name ?? ''),
         backgroundColor: context.primary.withOpacity(0.6),
+        foregroundColor: context.onPrimary,
       ),
       body: const Stack(
         children: [

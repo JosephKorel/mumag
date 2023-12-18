@@ -12,6 +12,7 @@ import 'package:mumag/common/widgets/fab.dart';
 import 'package:mumag/common/widgets/loading.dart';
 import 'package:mumag/common/widgets/rating_bottom_sheet.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
+import 'package:mumag/features/album_view/presentation/providers/rating.dart';
 
 class AlbumRating extends ConsumerWidget {
   const AlbumRating({super.key});
@@ -153,6 +154,8 @@ class RatingFloatingActionButton extends ConsumerWidget {
         .onSuccessEvent(successEvent: InsertRatingSuccess());
 
     Future<bool> onConfirm(int value) async {
+      final result = await ref.read(rateAlbumProvider(rateValue: value).future);
+      return result.fold((l) => false, (r) => true);
       final user = ref.read(userProvider).requireValue!;
       final album = ref.read(viewingAlbumProvider)!;
       final ratingBaseParams = RatingBaseParams(
@@ -185,7 +188,6 @@ class RatingFloatingActionButton extends ConsumerWidget {
         onPressed: () => showAppBottomSheet(
           context,
           child: RatingBottomSheet(
-            loading: ratingHandler.isLoading,
             onConfirm: onConfirm,
             type: RatingType.album,
             showToast: showToast,
@@ -204,7 +206,6 @@ class RatingFloatingActionButton extends ConsumerWidget {
       onPressed: () => showAppBottomSheet(
         context,
         child: RatingBottomSheet(
-          loading: ratingHandler.isLoading,
           onConfirm: onConfirm,
           type: RatingType.album,
           showToast: showToast,
