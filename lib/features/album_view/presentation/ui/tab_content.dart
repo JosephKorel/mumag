@@ -3,16 +3,11 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:mumag/common/models/rating/rating_entity.dart';
-import 'package:mumag/common/models/success_events/success_events.dart';
 import 'package:mumag/common/theme/utils.dart';
-import 'package:mumag/common/toast/toast_provider.dart';
-import 'package:mumag/common/widgets/bottom_sheet.dart';
 import 'package:mumag/common/widgets/rating_bars.dart';
 import 'package:mumag/common/widgets/rating_bottom_sheet.dart';
 import 'package:mumag/features/album_view/domain/tabs.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
-import 'package:mumag/features/album_view/presentation/providers/rating.dart';
 import 'package:mumag/features/artist_view/providers/artist.dart';
 import 'package:mumag/routes/routes.dart';
 
@@ -300,15 +295,6 @@ class FirstRateButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Future<bool> onConfirm(int value) async {
-      final result = await ref.read(rateAlbumProvider(rateValue: value).future);
-      return result.fold((l) => false, (r) => true);
-    }
-
-    void showToast() => ref
-        .read(toastMessageProvider.notifier)
-        .onSuccessEvent(successEvent: InsertRatingSuccess());
-
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -320,20 +306,24 @@ class FirstRateButton extends ConsumerWidget {
           const SizedBox(
             height: 16,
           ),
-          FilledButton(
-            onPressed: () => showAppBottomSheet(
-              context,
-              child: RatingBottomSheet(
-                onConfirm: onConfirm,
-                type: RatingType.album,
-                showToast: showToast,
-              ),
-              height: 360,
-            ),
-            child: const Text('Be the first one to rate it!'),
-          ),
+          const RatingButtonContainer(child: FirstTimeRating()),
         ],
       ),
+    );
+  }
+}
+
+class FirstTimeRating extends ConsumerWidget {
+  const FirstTimeRating({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ancestorWidget =
+        context.findAncestorWidgetOfExactType<RatingButtonContainer>();
+
+    return FilledButton(
+      onPressed: () => ancestorWidget?.onPressed(context, ref),
+      child: const Text('Be the first one to rate it!'),
     );
   }
 }

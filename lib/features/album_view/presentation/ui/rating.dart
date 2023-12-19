@@ -125,8 +125,11 @@ class AlbumRatingLoaded extends ConsumerWidget {
       children: [
         Text(
           '$value',
-          style:
-              context.titleLarge.copyWith(color: context.primary, fontSize: 28),
+          style: context.titleLarge.copyWith(
+            color: context.primary,
+            fontSize: 28,
+            fontWeight: FontWeight.w800,
+          ),
         ),
         Text(
           ratingLabel(value),

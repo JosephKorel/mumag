@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
+import 'package:mumag/common/models/success_events/success_events.dart';
 import 'package:mumag/common/theme/utils.dart';
+import 'package:mumag/common/toast/toast_provider.dart';
+import 'package:mumag/common/widgets/bottom_sheet.dart';
+import 'package:mumag/features/album_view/presentation/providers/rating.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class RatingBottomSheet extends StatefulWidget {
@@ -211,5 +216,37 @@ class _SelectedRatingState extends State<SelectedRating>
         ],
       ),
     );
+  }
+}
+
+class RatingButtonContainer extends ConsumerWidget {
+  const RatingButtonContainer({required this.child, super.key});
+
+  final Widget child;
+
+  Future<bool> onConfirm(int value, WidgetRef ref) async {
+    final result = await ref.read(rateAlbumProvider(rateValue: value).future);
+    return result.fold((l) => false, (r) => true);
+  }
+
+  void showToast(WidgetRef ref) => ref
+      .read(toastMessageProvider.notifier)
+      .onSuccessEvent(successEvent: InsertRatingSuccess());
+
+  void onPressed(BuildContext context, WidgetRef ref) {
+    showAppBottomSheet(
+      context,
+      child: RatingBottomSheet(
+        onConfirm: (val) => onConfirm(val, ref),
+        type: RatingType.album,
+        showToast: () => showToast(ref),
+      ),
+      height: 360,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return child;
   }
 }

@@ -11,7 +11,7 @@ String ratingLabel(double rating) {
   if (rating == 5) {
     return labels.last;
   }
-  return labels[rating.floor()];
+  return labels[rating.floor() - 1];
 }
 
 enum RatingValue {
