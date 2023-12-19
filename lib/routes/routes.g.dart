@@ -13,6 +13,7 @@ List<RouteBase> get $appRoutes => [
       $profileRoute,
       $artistViewRoute,
       $albumViewRoute,
+      $trackViewRoute,
     ];
 
 RouteBase get $splashRoute => GoRouteData.$route(
@@ -140,6 +141,30 @@ extension $AlbumViewRouteExtension on AlbumViewRoute {
 
   String get location => GoRouteData.$location(
         '/album',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $trackViewRoute => GoRouteData.$route(
+      path: '/track',
+      name: 'trackView',
+      factory: $TrackViewRouteExtension._fromState,
+    );
+
+extension $TrackViewRouteExtension on TrackViewRoute {
+  static TrackViewRoute _fromState(GoRouterState state) =>
+      const TrackViewRoute();
+
+  String get location => GoRouteData.$location(
+        '/track',
       );
 
   void go(BuildContext context) => context.go(location);

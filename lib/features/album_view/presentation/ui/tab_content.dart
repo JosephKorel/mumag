@@ -9,7 +9,9 @@ import 'package:mumag/common/widgets/rating_bottom_sheet.dart';
 import 'package:mumag/features/album_view/domain/tabs.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
 import 'package:mumag/features/artist_view/providers/artist.dart';
+import 'package:mumag/features/track_view/presentation/providers/track.dart';
 import 'package:mumag/routes/routes.dart';
+import 'package:spotify/spotify.dart';
 
 class AlbumTabView extends ConsumerStatefulWidget {
   const AlbumTabView({super.key});
@@ -210,11 +212,17 @@ class AlbumTracksTabContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(viewingTrackProvider);
     final album = ref.watch(viewingAlbumProvider)!;
     final tracks = album.tracks?.toList();
 
     if (tracks == null) {
       return const Text('This album has no tracks');
+    }
+
+    void onTap(TrackSimple track) {
+      ref.read(viewingTrackProvider.notifier).updateState(track: track);
+      const TrackViewRoute().push<void>(context);
     }
 
     return ListView.builder(
@@ -224,7 +232,7 @@ class AlbumTracksTabContent extends ConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: InkWell(
-            onTap: () {},
+            onTap: () => onTap(tracks[index]),
             borderRadius: BorderRadius.circular(8),
             child: Ink(
               decoration: BoxDecoration(

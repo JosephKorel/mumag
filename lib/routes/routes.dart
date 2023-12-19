@@ -6,6 +6,7 @@ import 'package:mumag/features/artist_view/ui/main.dart';
 import 'package:mumag/features/connect/presentation/ui/main.dart';
 import 'package:mumag/features/profile/presentation/ui/main.dart';
 import 'package:mumag/features/sign_in/presentation/ui/main.dart';
+import 'package:mumag/features/track_view/presentation/ui/main.dart';
 
 part 'routes.g.dart';
 
@@ -66,5 +67,15 @@ class AlbumViewRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const AlbumMainView();
+  }
+}
+
+@TypedGoRoute<TrackViewRoute>(path: '/track', name: 'trackView')
+class TrackViewRoute extends GoRouteData {
+  const TrackViewRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const TrackMainView();
   }
 }
