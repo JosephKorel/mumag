@@ -7,7 +7,6 @@ class AnimatedFAB extends StatefulWidget {
     required this.child,
     required this.show,
     required this.onPressed,
-    required this.loading,
     this.shape,
     this.backgroundColor,
     super.key,
@@ -16,7 +15,6 @@ class AnimatedFAB extends StatefulWidget {
   final Widget child;
   final bool show;
   final VoidCallback onPressed;
-  final bool loading;
   final ShapeBorder? shape;
   final Color? backgroundColor;
 

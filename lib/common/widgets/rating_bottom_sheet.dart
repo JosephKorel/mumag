@@ -224,12 +224,12 @@ class RatingButtonContainer extends ConsumerWidget {
 
   final Widget child;
 
-  Future<bool> onConfirm(int value, WidgetRef ref) async {
+  Future<bool> _onConfirm(int value, WidgetRef ref) async {
     final result = await ref.read(rateAlbumProvider(rateValue: value).future);
     return result.fold((l) => false, (r) => true);
   }
 
-  void showToast(WidgetRef ref) => ref
+  void _showToast(WidgetRef ref) => ref
       .read(toastMessageProvider.notifier)
       .onSuccessEvent(successEvent: InsertRatingSuccess());
 
@@ -237,9 +237,9 @@ class RatingButtonContainer extends ConsumerWidget {
     showAppBottomSheet(
       context,
       child: RatingBottomSheet(
-        onConfirm: (val) => onConfirm(val, ref),
+        onConfirm: (val) => _onConfirm(val, ref),
         type: RatingType.album,
-        showToast: () => showToast(ref),
+        showToast: () => _showToast(ref),
       ),
       height: 360,
     );

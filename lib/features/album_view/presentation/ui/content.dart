@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/genres.dart';
 import 'package:mumag/common/widgets/loading.dart';
+import 'package:mumag/common/widgets/rating_bottom_sheet.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
 import 'package:mumag/features/album_view/presentation/ui/rating.dart';
 import 'package:mumag/features/album_view/presentation/ui/tab_content.dart';
@@ -37,7 +38,8 @@ class AlbumContent extends ConsumerWidget {
           ),
         ],
       ),
-      floatingActionButton: const RatingFloatingActionButton(),
+      floatingActionButton:
+          const RatingButtonContainer(child: RatingAlbumFAB()),
       extendBodyBehindAppBar: true,
     );
   }
