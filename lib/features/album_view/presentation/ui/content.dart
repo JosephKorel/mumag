@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/genres.dart';
 import 'package:mumag/common/widgets/loading.dart';
+import 'package:mumag/common/widgets/media_view.dart';
 import 'package:mumag/common/widgets/rating_bottom_sheet.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
 import 'package:mumag/features/album_view/presentation/ui/rating.dart';
@@ -18,47 +19,12 @@ class AlbumContent extends ConsumerWidget {
     final album = ref.watch(viewingAlbumProvider)!;
     ref.watch(selectedArtistProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(album.name ?? ''),
-        backgroundColor: context.primary.withOpacity(0.6),
-        foregroundColor: context.onPrimary,
-      ),
-      body: const Stack(
-        children: [
-          AlbumHeader(),
-          Column(
-            children: [
-              Expanded(child: SizedBox.expand()),
-              Expanded(
-                flex: 2,
-                child: AlbumContentView(),
-              ),
-            ],
-          ),
-        ],
-      ),
-      floatingActionButton:
-          const RatingButtonContainer(child: RatingAlbumFAB()),
-      extendBodyBehindAppBar: true,
+    return MediaContentContainer(
+      appBarTitle: album.name ?? '',
+      headerImageUrl: album.images?.first.url,
+      mainContent: const AlbumContentView(),
+      fab: const RatingButtonContainer(child: RatingAlbumFAB()),
     );
-  }
-}
-
-class AlbumHeader extends ConsumerWidget {
-  const AlbumHeader({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final album = ref.watch(viewingAlbumProvider)!;
-
-    if (album.images == null) {
-      return const SizedBox.shrink();
-    }
-
-    return Image(
-      image: NetworkImage(album.images!.first.url!),
-    ).animate().fadeIn();
   }
 }
 
@@ -67,32 +33,22 @@ class AlbumContentView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(32),
-          topRight: Radius.circular(32),
+    final rating = ref.watch(albumRatingProvider);
+
+    return MediaContentChild(
+      asyncRating: rating,
+      type: RatingType.album,
+      children: const [
+        SizedBox(
+          height: 16,
         ),
-        color: context.background,
-      ),
-      child: const Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            AlbumRating(),
-            SizedBox(
-              height: 16,
-            ),
-            AlbumGenreList(),
-            SizedBox(
-              height: 16,
-            ),
-            Expanded(child: AlbumTabView()),
-          ],
+        AlbumGenreList(),
+        SizedBox(
+          height: 16,
         ),
-      ),
-    ).animate().fadeIn();
+        Expanded(child: AlbumTabView()),
+      ],
+    );
   }
 }
 

@@ -17,7 +17,7 @@ _$RatingEntityImpl _$$RatingEntityImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$RatingEntityImplToJson(_$RatingEntityImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'type': _$RatingTypeEnumMap[instance.type],
+      'type': _$RatingTypeEnumMap[instance.type]!,
       'spotifyId': instance.spotifyId,
       'rating': instance.rating,
     };

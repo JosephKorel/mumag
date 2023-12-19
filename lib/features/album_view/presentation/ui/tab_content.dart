@@ -243,9 +243,6 @@ class AlbumTracksTabContent extends ConsumerWidget {
                             tracks[index].name!,
                             style: context.titleMedium,
                           ),
-                          const SizedBox(
-                            height: 8,
-                          ),
                           Text(
                             getTrackDuration(tracks[index].duration),
                             style: context.bodyMedium.copyWith(
