@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mumag/common/theme/utils.dart';
+import 'package:mumag/common/widgets/image.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
 import 'package:mumag/features/profile/presentation/providers/user_albums.dart';
 import 'package:mumag/routes/routes.dart';
@@ -124,8 +125,8 @@ class AlbumGridItem extends ConsumerWidget {
           height: 100,
           child: albumImage == null
               ? const Icon(Icons.album)
-              : Ink.image(
-                  image: NetworkImage(albumImage.url!),
+              : CachedImage(
+                  url: albumImage.url!,
                   fit: BoxFit.cover,
                   width: 100,
                   height: 100,

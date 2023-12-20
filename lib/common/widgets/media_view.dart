@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
+import 'package:mumag/common/widgets/image.dart';
 import 'package:mumag/common/widgets/loading.dart';
 
 /// Main Container that renders the page
@@ -60,9 +60,7 @@ class MediaContentHeader extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    return Image(
-      image: NetworkImage(url!),
-    ).animate().fadeIn();
+    return CachedImage(url: url!);
   }
 }
 
@@ -98,7 +96,7 @@ class MediaContentChild extends StatelessWidget {
           ],
         ),
       ),
-    ).animate().fadeIn();
+    );
   }
 }
 
