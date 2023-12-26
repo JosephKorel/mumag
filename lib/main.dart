@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/provider_observer/observer.dart';
@@ -22,6 +21,8 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  Animate.restartOnHotReload = true;
+
   runApp(
     ProviderScope(
       observers: [ProviderStateObserver()],
@@ -40,8 +41,6 @@ class MyApp extends ConsumerWidget {
     final globalKey = ref.watch(globalKeyProvider);
 
     ref.listen(toastMessageProvider, (previous, next) {
-      log('Coming here and the type is ${next.exception} or ${next.successEvent}');
-
       next
           .showToast(globalKey.currentState!.context)
           .show(globalKey.currentState!.context);

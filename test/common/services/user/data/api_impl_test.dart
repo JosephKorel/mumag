@@ -29,7 +29,7 @@ void main() {
     avatarUrl: null,
     lastUpdatedAt: lastUpdatedAt,
   );
-  final updateUserParams = UpdateUserParam(userId: 1, userEntity: insertedUser);
+  final updateUserParams = UpdateUserParam(userEntity: insertedUser);
 
   group('User Api usecase implementation tests', () {
     test('Should insert user and return a user entity', () async {

@@ -58,6 +58,6 @@ Map<String, dynamic> userEntityWithoutId(UserEntity userEntity) {
     'avatarUrl': userEntity.avatarUrl,
     'genres': userEntity.genres.join(','),
     'backgroundUrl': userEntity.backgroundUrl,
-    'lastUpdatedAt': userEntity.lastUpdatedAt.toIso8601String(),
+    'lastUpdatedAt': userEntity.lastUpdatedAt.toString(),
   };
 }

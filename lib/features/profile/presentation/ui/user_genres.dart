@@ -26,6 +26,7 @@ class _UserProfileGenresState extends ConsumerState<UserProfileGenres> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      // Update user genres every 7 days
       _updateGenres();
     });
   }
@@ -33,7 +34,7 @@ class _UserProfileGenresState extends ConsumerState<UserProfileGenres> {
   @override
   Widget build(BuildContext context) {
     final genres = ref.watch(
-      userProvider.select((value) => value.requireValue!.genres),
+      userProvider.select((value) => value.requireValue!.genres.sublist(0, 5)),
     );
 
     final genresBadges = genres

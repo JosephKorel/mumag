@@ -162,7 +162,6 @@ class ConfirmAlbumSelection extends ConsumerWidget {
 
     Future<void> onConfirm() async {
       final updateParams = UpdateUserParam(
-        userId: user.id,
         userEntity: user.copyWith(backgroundUrl: selectedAlbum),
       );
 

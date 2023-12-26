@@ -11,15 +11,12 @@ import 'package:mumag/common/services/user/domain/api/api_repository.dart';
 import 'package:mumag/common/services/user/domain/database/user_db_events.dart';
 import 'package:mumag/features/connect/domain/insert_params_repo.dart';
 import 'package:mumag/features/connect/domain/save_user_controller.dart';
-import 'package:mumag/features/connect/domain/save_user_repo.dart';
 import 'package:mumag/features/connect/presentation/providers/connect.dart';
 import 'package:spotify/spotify.dart';
 
 class SpotifyAuthRepositoryMock extends Mock implements SpotifyAuthRepository {}
 
 class UserApiMock extends Mock implements UserApiUsecaseRepository {}
-
-class ControllerRepositoryMock extends Mock implements ControllerRepository {}
 
 class InsertParamsRepositoryMock extends Mock
     implements InsertParamsRepository {}

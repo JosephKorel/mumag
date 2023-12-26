@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:mocktail/mocktail.dart';
 import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/services/backend_api/providers/api.dart';
@@ -56,7 +58,19 @@ class User extends _$User {
   Future<void> updateGenres() async {
     state = await AsyncValue.guard(() async {
       final genres = await ref.read(saveUserRepoProvider).favoriteGenres();
-      return state.requireValue!.copyWith(genres: genres);
+      final updatedUser = state.requireValue!
+          .copyWith(genres: genres, lastUpdatedAt: DateTime.now());
+
+      final newUser = await ref
+          .read(userApiUsecaseProvider)
+          .updateUser(
+            updateParams: UpdateUserParam(
+              userEntity: updatedUser,
+            ),
+          )
+          .run();
+
+      return newUser.fold((l) => state.requireValue, (r) => r);
     });
   }
 }

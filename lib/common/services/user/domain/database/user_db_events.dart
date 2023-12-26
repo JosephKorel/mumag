@@ -40,13 +40,12 @@ class GetParams extends UserDatabaseEvents {
 }
 
 class UpdateUserParam extends UserDatabaseEvents {
-  UpdateUserParam({required this.userId, required this.userEntity});
-  final int userId;
+  UpdateUserParam({required this.userEntity});
   final UserEntity userEntity;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': userId,
+      'id': userEntity.id,
       'params': userEntityWithoutId(userEntity),
     };
   }

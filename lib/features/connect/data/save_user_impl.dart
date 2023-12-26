@@ -68,5 +68,5 @@ List<String> mostCommonGenres(List<String> allGenres) {
       ),
   ).keys.toList();
 
-  return validGenres.sublist(0, 5);
+  return validGenres;
 }

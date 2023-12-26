@@ -52,14 +52,7 @@ class _RatingBarsState extends State<RatingBars> {
                 (i, e) => Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
-                      '$e',
-                      style: context.titleMedium
-                          .copyWith(fontWeight: FontWeight.w600),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
+                    RatingQuantity(quantity: e),
                     TweenAnimationBuilder(
                       tween: Tween(
                         begin: 0,
@@ -160,8 +153,35 @@ class RatingBarsError extends StatelessWidget {
   }
 }
 
+class RatingQuantity extends StatelessWidget {
+  const RatingQuantity({required this.quantity, super.key});
+
+  final int quantity;
+
+  @override
+  Widget build(BuildContext context) {
+    return Chip(
+      backgroundColor: context.primaryContainer,
+      labelStyle: context.titleMedium.copyWith(
+        fontWeight: FontWeight.w600,
+        color: context.onPrimaryContainer,
+      ),
+      label: Text(
+        '$quantity',
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+    ).animate().fadeIn().slideY(
+          begin: -4,
+          duration: .8.seconds,
+          curve: Curves.bounceOut,
+        );
+  }
+}
+
 double _barHeight(double maxHeight, int greatestScore, int scoreCount) {
-  final percentage = (scoreCount * maxHeight * .74) / greatestScore;
+  final percentage = (scoreCount * maxHeight * .68) / greatestScore;
   return percentage == 0 ? 10 : percentage;
 }
 
