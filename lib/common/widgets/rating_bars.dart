@@ -172,6 +172,7 @@ class RatingQuantity extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
       ),
+      side: BorderSide.none,
     ).animate().fadeIn().slideY(
           begin: -4,
           duration: .8.seconds,
