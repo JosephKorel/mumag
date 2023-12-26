@@ -52,10 +52,26 @@ extension RatingLabel on RatingValue {
               ? PhosphorIconsStyle.fill
               : PhosphorIconsStyle.light,
         ),
-        PhosphorIconsLight.smileyMeh,
-        PhosphorIconsLight.thumbsUp,
-        PhosphorIconsLight.handsClapping,
-        PhosphorIconsLight.sketchLogo,
+        PhosphorIcons.smileyMeh(
+          ratingValue >= score
+              ? PhosphorIconsStyle.fill
+              : PhosphorIconsStyle.light,
+        ),
+        PhosphorIcons.thumbsUp(
+          ratingValue >= score
+              ? PhosphorIconsStyle.fill
+              : PhosphorIconsStyle.light,
+        ),
+        PhosphorIcons.handsClapping(
+          ratingValue >= score
+              ? PhosphorIconsStyle.fill
+              : PhosphorIconsStyle.light,
+        ),
+        PhosphorIcons.sketchLogo(
+          ratingValue >= score
+              ? PhosphorIconsStyle.fill
+              : PhosphorIconsStyle.light,
+        ),
       ][index];
 }
 

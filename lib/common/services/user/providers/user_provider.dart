@@ -6,6 +6,7 @@ import 'package:mumag/common/services/rating/providers/rating.dart';
 import 'package:mumag/common/services/user/data/api_impl.dart';
 import 'package:mumag/common/services/user/domain/api/api_repository.dart';
 import 'package:mumag/common/services/user/domain/database/user_db_events.dart';
+import 'package:mumag/features/connect/presentation/providers/connect.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'user_provider.g.dart';
@@ -49,6 +50,13 @@ class User extends _$User {
     state = await AsyncValue.guard(() async {
       final ratings = await ref.read(userRatingsProvider.future);
       return state.requireValue!.copyWith(ratings: ratings);
+    });
+  }
+
+  Future<void> updateGenres() async {
+    state = await AsyncValue.guard(() async {
+      final genres = await ref.read(saveUserRepoProvider).favoriteGenres();
+      return state.requireValue!.copyWith(genres: genres);
     });
   }
 }

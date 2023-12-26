@@ -1,5 +1,9 @@
+import 'dart:developer';
+
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
+import 'package:mumag/common/theme/utils.dart';
 
 class RatingHeader extends StatelessWidget {
   const RatingHeader({
@@ -13,10 +17,18 @@ class RatingHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log('$rating');
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children:
-          RatingValue.values.map((e) => Icon(e.rateIcon(rating))).toList(),
+      children: RatingValue.values
+          .mapIndexed(
+            (i, e) => Icon(
+              rating.floor() >= i + 1 ? Icons.star : Icons.star_outline,
+              color: context.primary,
+              size: 28,
+            ),
+          )
+          .toList(),
     );
   }
 }

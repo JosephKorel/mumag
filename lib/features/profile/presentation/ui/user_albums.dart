@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mumag/common/theme/utils.dart';
+import 'package:mumag/common/widgets/background_icon.dart';
 import 'package:mumag/common/widgets/image.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
 import 'package:mumag/features/profile/presentation/providers/user_albums.dart';
@@ -19,9 +20,17 @@ class SavedAlbumsView extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          'Your Albums',
-          style: context.titleLarge,
+        Row(
+          children: [
+            const BackgroundIcon(icon: Icons.album),
+            const SizedBox(
+              width: 8,
+            ),
+            Text(
+              'Your Albums',
+              style: context.titleLarge,
+            ),
+          ],
         ),
         const SizedBox(
           height: 16,

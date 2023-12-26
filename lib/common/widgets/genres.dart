@@ -1,5 +1,4 @@
-import 'package:flutter/widgets.dart';
-import 'package:mumag/common/theme/utils.dart';
+import 'package:flutter/material.dart';
 
 class ContentGenres extends StatelessWidget {
   const ContentGenres({
@@ -19,31 +18,11 @@ class ContentGenres extends StatelessWidget {
   Widget build(BuildContext context) {
     final genresBadges = genres
         .map(
-          (e) => DecoratedBox(
-            decoration: BoxDecoration(
-              color: backgroundColor?.withOpacity(0.8) ??
-                  context.primary.withOpacity(0.8),
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: borderColor ?? context.primary.withOpacity(0.4),
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Text(
-                e.toUpperCase(),
-                style: context.bodyMedium.copyWith(
-                  color: textColor ?? context.onPrimary,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ),
+          (e) => Chip(label: Text(e)),
         )
         .toList();
 
     return Wrap(
-      runSpacing: 8,
       spacing: 8,
       alignment: WrapAlignment.center,
       children: genresBadges,

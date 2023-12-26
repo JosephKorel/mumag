@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/features/profile/presentation/providers/profile.dart';
 import 'package:mumag/features/profile/presentation/ui/user_albums.dart';
+import 'package:mumag/features/profile/presentation/ui/user_genres.dart';
+import 'package:mumag/features/profile/presentation/ui/user_ratings.dart';
 
 class ProfileMainView extends ConsumerStatefulWidget {
   const ProfileMainView({super.key});
@@ -68,11 +69,14 @@ class _ProfileMainViewState extends ConsumerState<ProfileMainView> {
                 const SizedBox(
                   height: 8,
                 ),
-                const FavoriteGenres(),
+                const UserProfileGenres(),
                 const SizedBox(
                   height: 8,
                 ),
-                const UserRatingStats(),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 2.5,
+                  child: const UserRatingsWidget(),
+                ),
                 const SizedBox(
                   height: 16,
                 ),
@@ -113,120 +117,6 @@ class ProfilePicture extends ConsumerWidget {
         radius: 32,
         backgroundImage: NetworkImage(profileImg),
       ),
-    );
-  }
-}
-
-class UserRatingStats extends ConsumerWidget {
-  const UserRatingStats({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final ratings = ref.watch(
-      userProvider.select((value) => value.requireValue!.ratings),
-    );
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          'Ratings',
-          style: context.titleLarge,
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                Text(
-                  '${ratings.where((element) => element.type == RatingType.artist).length}',
-                  style: context.titleLarge.copyWith(color: context.primary),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Text(
-                  RatingType.artist.label,
-                  style: context.titleMedium,
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Text(
-                  '${ratings.where((element) => element.type == RatingType.album).length}',
-                  style: context.titleLarge.copyWith(color: context.primary),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Text(
-                  RatingType.album.label,
-                  style: context.titleMedium,
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Text(
-                  '${ratings.where((element) => element.type == RatingType.track).length}',
-                  style: context.titleLarge.copyWith(color: context.primary),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Text(
-                  RatingType.track.label,
-                  style: context.titleMedium,
-                ),
-              ],
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class FavoriteGenres extends ConsumerWidget {
-  const FavoriteGenres({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final genres = ref.watch(
-      userProvider.select((value) => value.requireValue!.genres),
-    );
-
-    final genresBadges = genres
-        .map(
-          (e) => DecoratedBox(
-            decoration: BoxDecoration(
-              color: context.primary.withOpacity(0.8),
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: context.primary.withOpacity(0.4),
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              child: Text(
-                e.toUpperCase(),
-                style: context.bodyMedium.copyWith(
-                  color: context.onPrimary,
-                ),
-              ),
-            ),
-          ),
-        )
-        .toList();
-
-    return Wrap(
-      runSpacing: 8,
-      spacing: 8,
-      alignment: WrapAlignment.center,
-      children: genresBadges,
     );
   }
 }

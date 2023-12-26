@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fpdart/fpdart.dart';
 import 'package:mumag/common/models/exception/exception.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
@@ -33,6 +35,8 @@ Future<Either<AppException, dynamic>> rateAlbum(
 
   if (result.isRight()) {
     ref.invalidate(albumRatingProvider);
+
+    unawaited(ref.read(userProvider.notifier).updateRatings());
   }
 
   return result;

@@ -202,7 +202,7 @@ class MediaContentRatingLoaded extends ConsumerWidget {
                 .map(
                   (e) => Icon(
                     Icons.star_outline,
-                    size: 34,
+                    size: 28,
                     color: context.onSurface.withOpacity(0.6),
                   ),
                 )
@@ -228,31 +228,21 @@ class MediaContentRatingLoaded extends ConsumerWidget {
 
     return Column(
       children: [
-        const RatingHeader(rating: 4, numberOfRatings: 8),
+        RatingHeader(rating: value, numberOfRatings: 8),
         Row(
           children: [
-            Icon(
-              Icons.star,
-              size: 28,
-              color: context.primary,
+            Text(
+              '$value',
+              style: context.titleLarge.copyWith(fontWeight: FontWeight.w700),
             ),
             const SizedBox(
               width: 8,
             ),
             Text(
-              '$value',
-              style: context.titleLarge.copyWith(
-                fontSize: 28,
-                fontWeight: FontWeight.w800,
-              ),
+              ratingLabel(value),
+              style: context.titleLarge.copyWith(fontWeight: FontWeight.w700),
             ),
           ],
-        ),
-        Chip(
-          label: Text(ratingLabel(value)),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
         ),
       ],
     );
