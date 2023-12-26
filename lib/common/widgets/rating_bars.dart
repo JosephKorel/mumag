@@ -63,7 +63,7 @@ class _RatingBarsState extends State<RatingBars> {
                     TweenAnimationBuilder(
                       tween: Tween(
                         begin: 0,
-                        end: barHeight(height, greatestValue, e),
+                        end: _barHeight(height, greatestValue, e),
                       ),
                       curve: Curves.easeOutCirc,
                       duration: 2.seconds,
@@ -91,7 +91,78 @@ class _RatingBarsState extends State<RatingBars> {
   }
 }
 
-double barHeight(double maxHeight, int greatestScore, int scoreCount) {
+class RatingBarsLoading extends StatelessWidget {
+  const RatingBarsLoading({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    _barLoadingHeightValues.shuffle();
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final height = constraints.maxHeight;
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(
+            5,
+            (index) => Container(
+              height: height * _barLoadingHeightValues[index],
+              width: 40,
+              decoration: BoxDecoration(
+                color: context.onSurface.withOpacity(0.2),
+              ),
+            )
+                .animate(
+                  onComplete: (controller) => controller.repeat(),
+                )
+                .shimmer(duration: 1.seconds),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class RatingBarsError extends StatelessWidget {
+  const RatingBarsError({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox.expand(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: context.onSurface.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.warning_amber,
+                size: 48,
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Text(
+                'Something went wrong when loading ratings',
+                style:
+                    context.titleMedium.copyWith(fontWeight: FontWeight.w400),
+              ),
+            ],
+          ).animate().fadeIn(),
+        ),
+      ),
+    );
+  }
+}
+
+double _barHeight(double maxHeight, int greatestScore, int scoreCount) {
   final percentage = (scoreCount * maxHeight * .74) / greatestScore;
   return percentage == 0 ? 10 : percentage;
 }
+
+final _barLoadingHeightValues = [.6, .8, .4, .2, .5];

@@ -6,7 +6,7 @@ part of 'rating.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$rateTrackHash() => r'b75b60ea928c233c276f4207a35a2b7e3293513c';
+String _$rateTrackHash() => r'25d94fa73a9fb9d83ab649cd6f58b7ad38a32946';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -34,8 +34,7 @@ class _SystemHash {
 const rateTrackProvider = RateTrackFamily();
 
 /// See also [rateTrack].
-class RateTrackFamily
-    extends Family<AsyncValue<Either<AppException, dynamic>>> {
+class RateTrackFamily extends Family<ApiResult<void>> {
   /// See also [rateTrack].
   const RateTrackFamily();
 
@@ -73,8 +72,7 @@ class RateTrackFamily
 }
 
 /// See also [rateTrack].
-class RateTrackProvider
-    extends AutoDisposeFutureProvider<Either<AppException, dynamic>> {
+class RateTrackProvider extends AutoDisposeProvider<ApiResult<void>> {
   /// See also [rateTrack].
   RateTrackProvider({
     required int rateValue,
@@ -108,8 +106,7 @@ class RateTrackProvider
 
   @override
   Override overrideWith(
-    FutureOr<Either<AppException, dynamic>> Function(RateTrackRef provider)
-        create,
+    ApiResult<void> Function(RateTrackRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -126,8 +123,7 @@ class RateTrackProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<Either<AppException, dynamic>>
-      createElement() {
+  AutoDisposeProviderElement<ApiResult<void>> createElement() {
     return _RateTrackProviderElement(this);
   }
 
@@ -145,15 +141,13 @@ class RateTrackProvider
   }
 }
 
-mixin RateTrackRef
-    on AutoDisposeFutureProviderRef<Either<AppException, dynamic>> {
+mixin RateTrackRef on AutoDisposeProviderRef<ApiResult<void>> {
   /// The parameter `rateValue` of this provider.
   int get rateValue;
 }
 
 class _RateTrackProviderElement
-    extends AutoDisposeFutureProviderElement<Either<AppException, dynamic>>
-    with RateTrackRef {
+    extends AutoDisposeProviderElement<ApiResult<void>> with RateTrackRef {
   _RateTrackProviderElement(super.provider);
 
   @override

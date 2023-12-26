@@ -5,6 +5,7 @@ import 'package:mumag/common/theme/theme_provider.dart';
 import 'package:mumag/common/widgets/media_view.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
 import 'package:mumag/features/track_view/presentation/providers/track.dart';
+import 'package:mumag/features/track_view/presentation/ui/rating.dart';
 import 'package:mumag/features/track_view/presentation/ui/track_artist.dart';
 
 class TrackMainView extends ConsumerWidget {
@@ -41,7 +42,11 @@ class TrackContentView extends ConsumerWidget {
         SizedBox(
           height: 16,
         ),
-        TrackArtists(),
+        Expanded(child: TrackArtists()),
+        Expanded(
+          flex: 2,
+          child: TrackRatingContainer(),
+        ),
       ],
     );
   }

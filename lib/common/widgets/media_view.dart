@@ -4,6 +4,7 @@ import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/image.dart';
 import 'package:mumag/common/widgets/loading.dart';
+import 'package:mumag/common/widgets/rating_header.dart';
 
 /// Main Container that renders the page
 class MediaContentContainer extends StatelessWidget {
@@ -60,7 +61,11 @@ class MediaContentHeader extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    return CachedImage(url: url!);
+    return CachedImage(
+      url: url!,
+      height: MediaQuery.of(context).size.height / 2.4,
+      width: double.infinity,
+    );
   }
 }
 
@@ -223,17 +228,31 @@ class MediaContentRatingLoaded extends ConsumerWidget {
 
     return Column(
       children: [
-        Text(
-          '$value',
-          style: context.titleLarge.copyWith(
-            color: context.primary,
-            fontSize: 28,
-            fontWeight: FontWeight.w800,
-          ),
+        const RatingHeader(rating: 4, numberOfRatings: 8),
+        Row(
+          children: [
+            Icon(
+              Icons.star,
+              size: 28,
+              color: context.primary,
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+            Text(
+              '$value',
+              style: context.titleLarge.copyWith(
+                fontSize: 28,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ],
         ),
-        Text(
-          ratingLabel(value),
-          style: context.titleLarge.copyWith(color: context.primary),
+        Chip(
+          label: Text(ratingLabel(value)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
         ),
       ],
     );

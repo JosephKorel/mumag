@@ -1,7 +1,7 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/theme/utils.dart';
+import 'package:mumag/common/widgets/background_icon.dart';
 import 'package:mumag/features/track_view/presentation/providers/track.dart';
 
 class TrackArtists extends ConsumerWidget {
@@ -16,19 +16,13 @@ class TrackArtists extends ConsumerWidget {
     }
 
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: context.onSurface.withOpacity(0.1),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(8),
-                child: Icon(Icons.people),
-              ),
+            BackgroundIcon(
+              icon: artists.length == 1 ? Icons.person : Icons.people,
             ),
             const SizedBox(
               width: 8,
@@ -39,23 +33,7 @@ class TrackArtists extends ConsumerWidget {
             ),
           ],
         ),
-        if (artists.length == 1)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                artists.first.name!,
-                style: context.titleMedium
-                    .copyWith(color: context.onSurface.withOpacity(0.8)),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.arrow_outward),
-              ),
-            ],
-          )
-        else
-          const TrackArtistsList(),
+        const Flexible(child: TrackArtistsList()),
       ],
     );
   }
@@ -68,19 +46,35 @@ class TrackArtistsList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final artists = ref.watch(viewingTrackProvider)!.artists!;
 
-    return Row(
-      children: [
-        ...artists.slice(0, 2).map(
-              (element) => TextButton(
-                onPressed: () {},
-                child: Text(element.name!),
+    return ListView.builder(
+      shrinkWrap: true,
+      padding: EdgeInsets.zero,
+      itemCount: artists.length,
+      itemBuilder: (context, index) => Padding(
+        padding: const EdgeInsets.all(4),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                artists[index].name!,
+                style: context.titleMedium.copyWith(
+                  color: context.onSurface.withOpacity(0.8),
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.remove_red_eye),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.arrow_outward),
+              style: IconButton.styleFrom(
+                backgroundColor: context.primaryContainer,
+                foregroundColor: context.primary,
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

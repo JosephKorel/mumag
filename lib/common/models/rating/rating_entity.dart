@@ -45,6 +45,18 @@ extension RatingLabel on RatingValue {
         PhosphorIconsLight.handsClapping,
         PhosphorIconsLight.sketchLogo,
       ][index];
+
+  IconData rateIcon(double ratingValue) => [
+        PhosphorIcons.thumbsDown(
+          ratingValue >= score
+              ? PhosphorIconsStyle.fill
+              : PhosphorIconsStyle.light,
+        ),
+        PhosphorIconsLight.smileyMeh,
+        PhosphorIconsLight.thumbsUp,
+        PhosphorIconsLight.handsClapping,
+        PhosphorIconsLight.sketchLogo,
+      ][index];
 }
 
 @freezed
