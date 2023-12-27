@@ -47,6 +47,8 @@ class _UserProfileGenresState extends ConsumerState<UserProfileGenres> {
               color: context.onPrimaryContainer,
             ),
             backgroundColor: context.primaryContainer,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           ),
         )
         .toList();
