@@ -1,7 +1,9 @@
-sealed class SocialRelationsEvents {}
+sealed class SocialRelationsEvents {
+  const SocialRelationsEvents();
+}
 
 final class FollowUserEvent extends SocialRelationsEvents {
-  FollowUserEvent({
+  const FollowUserEvent({
     required this.currentUserId,
     required this.followingUserId,
   });
@@ -18,7 +20,7 @@ final class FollowUserEvent extends SocialRelationsEvents {
 }
 
 final class GetSocialRelationsEvent extends SocialRelationsEvents {
-  GetSocialRelationsEvent({
+  const GetSocialRelationsEvent({
     required this.currentUserId,
   });
 
@@ -32,7 +34,7 @@ final class GetSocialRelationsEvent extends SocialRelationsEvents {
 }
 
 final class UnfollowUserEvent extends SocialRelationsEvents {
-  UnfollowUserEvent({
+  const UnfollowUserEvent({
     required this.currentUserId,
     required this.followingUserId,
   });
