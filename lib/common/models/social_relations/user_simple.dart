@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_simple.freezed.dart';
@@ -25,4 +26,19 @@ final class UserSocialRelations {
 
   final List<SocialUserSimple> following;
   final List<SocialUserSimple> followers;
+
+  factory UserSocialRelations.fromMap(Map<String, dynamic> map) {
+    return UserSocialRelations(
+      following: List<SocialUserSimple>.from(
+        (map['following'] as List<dynamic>).map<SocialUserSimple>(
+          (x) => SocialUserSimple.fromJson(x as Map<String, dynamic>),
+        ),
+      ),
+      followers: List<SocialUserSimple>.from(
+        (map['followers'] as List<dynamic>).map<SocialUserSimple>(
+          (x) => SocialUserSimple.fromJson(x as Map<String, dynamic>),
+        ),
+      ),
+    );
+  }
 }

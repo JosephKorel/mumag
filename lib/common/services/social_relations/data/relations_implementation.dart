@@ -1,3 +1,4 @@
+import 'package:mumag/common/models/social_relations/user_simple.dart';
 import 'package:mumag/common/services/backend_api/domain/api_repository.dart';
 import 'package:mumag/common/services/social_relations/domain/relations_events.dart';
 import 'package:mumag/common/services/social_relations/domain/relations_repository.dart';
@@ -19,12 +20,16 @@ class SocialRelationsImplementation extends SocialRelationsRepository {
   }
 
   @override
-  Future<void> getSocialRelations({
+  Future<UserSocialRelations> getSocialRelations({
     required GetSocialRelationsEvent socialRelationParams,
   }) async {
     try {
-      await _api.get(
-          path: '$_path/relations', query: socialRelationParams.toMap());
+      final result = await _api.get(
+        path: '$_path/relations',
+        query: socialRelationParams.toMap(),
+      );
+
+      return UserSocialRelations.fromMap(result!);
     } catch (e) {
       rethrow;
     }
@@ -34,7 +39,9 @@ class SocialRelationsImplementation extends SocialRelationsRepository {
   Future<void> unfollowUser({required UnfollowUserEvent unfollowParams}) async {
     try {
       await _api.delete(
-          path: '$_path/unfollow', params: unfollowParams.toMap());
+        path: '$_path/unfollow',
+        params: unfollowParams.toMap(),
+      );
     } catch (e) {
       rethrow;
     }
