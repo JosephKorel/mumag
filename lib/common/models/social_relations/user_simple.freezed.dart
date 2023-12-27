@@ -20,7 +20,7 @@ SocialUserSimple _$SocialUserSimpleFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SocialUserSimple {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get avatarUrl => throw _privateConstructorUsedError;
 
@@ -36,7 +36,7 @@ abstract class $SocialUserSimpleCopyWith<$Res> {
           SocialUserSimple value, $Res Function(SocialUserSimple) then) =
       _$SocialUserSimpleCopyWithImpl<$Res, SocialUserSimple>;
   @useResult
-  $Res call({String id, String name, String avatarUrl});
+  $Res call({int id, String name, String avatarUrl});
 }
 
 /// @nodoc
@@ -60,7 +60,7 @@ class _$SocialUserSimpleCopyWithImpl<$Res, $Val extends SocialUserSimple>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -81,7 +81,7 @@ abstract class _$$SocialUserSimpleImplCopyWith<$Res>
       __$$SocialUserSimpleImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String avatarUrl});
+  $Res call({int id, String name, String avatarUrl});
 }
 
 /// @nodoc
@@ -103,7 +103,7 @@ class __$$SocialUserSimpleImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -126,7 +126,7 @@ class _$SocialUserSimpleImpl implements _SocialUserSimple {
       _$$SocialUserSimpleImplFromJson(json);
 
   @override
-  final String id;
+  final int id;
   @override
   final String name;
   @override
@@ -169,7 +169,7 @@ class _$SocialUserSimpleImpl implements _SocialUserSimple {
 
 abstract class _SocialUserSimple implements SocialUserSimple {
   factory _SocialUserSimple(
-      {required final String id,
+      {required final int id,
       required final String name,
       required final String avatarUrl}) = _$SocialUserSimpleImpl;
 
@@ -177,7 +177,7 @@ abstract class _SocialUserSimple implements SocialUserSimple {
       _$SocialUserSimpleImpl.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
   String get name;
   @override

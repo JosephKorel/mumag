@@ -8,7 +8,7 @@ part 'user_simple.g.dart';
 @freezed
 class SocialUserSimple with _$SocialUserSimple {
   factory SocialUserSimple({
-    required String id,
+    required int id,
     required String name,
     required String avatarUrl,
   }) = _SocialUserSimple;
