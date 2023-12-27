@@ -17,7 +17,7 @@ final class SocialRelationsUsecase {
             followParams: followParams,
           );
         },
-        (error, stackTrace) => ApiException(errorMsg: ''),
+        (error, stackTrace) => FollowUserException(error: error),
       );
 
   ApiResult<UserSocialRelations> getSocialRelations({
@@ -31,7 +31,7 @@ final class SocialRelationsUsecase {
 
           return relations;
         },
-        (error, stackTrace) => ApiException(errorMsg: ''),
+        (error, stackTrace) => GetSocialRelationsException(error: error),
       );
 
   ApiResult<void> unfollowUser({
@@ -43,7 +43,7 @@ final class SocialRelationsUsecase {
             unfollowParams: unfollowParams,
           );
         },
-        (error, stackTrace) => ApiException(errorMsg: ''),
+        (error, stackTrace) => UnfollowException(error: error),
       );
 }
 

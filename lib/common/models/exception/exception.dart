@@ -92,3 +92,31 @@ final class DeleteSuggestionException extends AppException {
 
   final Object error;
 }
+
+// Social Relations
+final class FollowUserException extends AppException {
+  FollowUserException({
+    required this.error,
+    super.errorMsg = 'Failed to follow user.',
+  });
+
+  final Object error;
+}
+
+final class GetSocialRelationsException extends AppException {
+  GetSocialRelationsException({
+    required this.error,
+    super.errorMsg = 'Could not load your social circle.',
+  });
+
+  final Object error;
+}
+
+final class UnfollowException extends AppException {
+  UnfollowException({
+    required this.error,
+    super.errorMsg = 'Failed to unfollow user.',
+  });
+
+  final Object error;
+}
