@@ -23,6 +23,7 @@ mixin _$SocialUserSimple {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get avatarUrl => throw _privateConstructorUsedError;
+  List<String> get genres => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +37,7 @@ abstract class $SocialUserSimpleCopyWith<$Res> {
           SocialUserSimple value, $Res Function(SocialUserSimple) then) =
       _$SocialUserSimpleCopyWithImpl<$Res, SocialUserSimple>;
   @useResult
-  $Res call({int id, String name, String avatarUrl});
+  $Res call({int id, String name, String avatarUrl, List<String> genres});
 }
 
 /// @nodoc
@@ -55,6 +56,7 @@ class _$SocialUserSimpleCopyWithImpl<$Res, $Val extends SocialUserSimple>
     Object? id = null,
     Object? name = null,
     Object? avatarUrl = null,
+    Object? genres = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -69,6 +71,10 @@ class _$SocialUserSimpleCopyWithImpl<$Res, $Val extends SocialUserSimple>
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      genres: null == genres
+          ? _value.genres
+          : genres // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -81,7 +87,7 @@ abstract class _$$SocialUserSimpleImplCopyWith<$Res>
       __$$SocialUserSimpleImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, String avatarUrl});
+  $Res call({int id, String name, String avatarUrl, List<String> genres});
 }
 
 /// @nodoc
@@ -98,6 +104,7 @@ class __$$SocialUserSimpleImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? avatarUrl = null,
+    Object? genres = null,
   }) {
     return _then(_$SocialUserSimpleImpl(
       id: null == id
@@ -112,6 +119,10 @@ class __$$SocialUserSimpleImplCopyWithImpl<$Res>
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      genres: null == genres
+          ? _value._genres
+          : genres // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -120,7 +131,11 @@ class __$$SocialUserSimpleImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SocialUserSimpleImpl implements _SocialUserSimple {
   _$SocialUserSimpleImpl(
-      {required this.id, required this.name, required this.avatarUrl});
+      {required this.id,
+      required this.name,
+      required this.avatarUrl,
+      required final List<String> genres})
+      : _genres = genres;
 
   factory _$SocialUserSimpleImpl.fromJson(Map<String, dynamic> json) =>
       _$$SocialUserSimpleImplFromJson(json);
@@ -131,10 +146,17 @@ class _$SocialUserSimpleImpl implements _SocialUserSimple {
   final String name;
   @override
   final String avatarUrl;
+  final List<String> _genres;
+  @override
+  List<String> get genres {
+    if (_genres is EqualUnmodifiableListView) return _genres;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_genres);
+  }
 
   @override
   String toString() {
-    return 'SocialUserSimple(id: $id, name: $name, avatarUrl: $avatarUrl)';
+    return 'SocialUserSimple(id: $id, name: $name, avatarUrl: $avatarUrl, genres: $genres)';
   }
 
   @override
@@ -145,12 +167,14 @@ class _$SocialUserSimpleImpl implements _SocialUserSimple {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl));
+                other.avatarUrl == avatarUrl) &&
+            const DeepCollectionEquality().equals(other._genres, _genres));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, avatarUrl);
+  int get hashCode => Object.hash(runtimeType, id, name, avatarUrl,
+      const DeepCollectionEquality().hash(_genres));
 
   @JsonKey(ignore: true)
   @override
@@ -171,7 +195,8 @@ abstract class _SocialUserSimple implements SocialUserSimple {
   factory _SocialUserSimple(
       {required final int id,
       required final String name,
-      required final String avatarUrl}) = _$SocialUserSimpleImpl;
+      required final String avatarUrl,
+      required final List<String> genres}) = _$SocialUserSimpleImpl;
 
   factory _SocialUserSimple.fromJson(Map<String, dynamic> json) =
       _$SocialUserSimpleImpl.fromJson;
@@ -182,6 +207,8 @@ abstract class _SocialUserSimple implements SocialUserSimple {
   String get name;
   @override
   String get avatarUrl;
+  @override
+  List<String> get genres;
   @override
   @JsonKey(ignore: true)
   _$$SocialUserSimpleImplCopyWith<_$SocialUserSimpleImpl> get copyWith =>

@@ -53,9 +53,6 @@ void main() {
     spotifyId: '',
     type: SuggestionType.album,
   );
-  final updateSuggestionParams =
-      UpdateSuggestionParams(suggestionId: 1, rating: 1);
-  final deleteSuggestionParams = DeleteSuggestionParams(suggestionId: 1);
 
   setUpAll(() {
     registerFallbackValue(InsertSuggestionParamsMock());
@@ -177,7 +174,7 @@ void main() {
         () async {
       final listener = Listener<AsyncValue<void>>();
 
-      final container = createContainer(
+      createContainer(
         overrides: [
           suggestionRepositoryProvider
               .overrideWith((ref) => suggestionRepository),
@@ -185,13 +182,11 @@ void main() {
           suggestionControllerProvider
               .overrideWith((ref) => suggestionController),
         ],
-      )..listen(
-          suggestionHandlerProvider,
-          listener.call,
-          fireImmediately: true,
-        );
-
-      final notifier = container.read(suggestionHandlerProvider.notifier);
+      ).listen(
+        suggestionHandlerProvider,
+        listener.call,
+        fireImmediately: true,
+      );
 
       verify(() => listener(null, const AsyncData<void>(null)));
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/models/social_relations/user_simple.dart';
 import 'package:mumag/common/services/search_users/providers/search.dart';
+import 'package:mumag/features/search/search_user/card.dart';
 
 class SearchForUserView extends StatelessWidget {
   const SearchForUserView({super.key});
@@ -47,15 +48,15 @@ class SearchResultsContainer extends ConsumerWidget {
         return const Text('Something went wrong');
       }
 
-      final widgetList = data
-          .map(
-            (e) => Text(e.name),
-          )
-          .toList();
-
       return SearchResults<SocialUserSimple>(
         data: data,
-        widgetList: widgetList,
+        widgetList: data
+            .map(
+              (e) => FoundUserCard(
+                user: e,
+              ),
+            )
+            .toList(),
       );
     }
 
@@ -76,8 +77,15 @@ class SearchResults<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      padding: const EdgeInsets.all(16),
       itemCount: data.length,
-      itemBuilder: (context, index) => widgetList[index],
+      itemBuilder: (context, index) => Padding(
+        padding: EdgeInsets.only(
+          top: index == 0 ? 0 : 8,
+          bottom: index == data.length - 1 ? 0 : 8,
+        ),
+        child: widgetList[index],
+      ),
     );
   }
 }

@@ -11,6 +11,7 @@ class SocialUserSimple with _$SocialUserSimple {
     required int id,
     required String name,
     required String avatarUrl,
+    required List<String> genres,
   }) = _SocialUserSimple;
 
   factory SocialUserSimple.fromJson(Map<String, dynamic> json) =>

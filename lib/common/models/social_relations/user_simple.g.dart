@@ -12,6 +12,8 @@ _$SocialUserSimpleImpl _$$SocialUserSimpleImplFromJson(
       id: json['id'] as int,
       name: json['name'] as String,
       avatarUrl: json['avatarUrl'] as String,
+      genres:
+          (json['genres'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$$SocialUserSimpleImplToJson(
@@ -20,4 +22,5 @@ Map<String, dynamic> _$$SocialUserSimpleImplToJson(
       'id': instance.id,
       'name': instance.name,
       'avatarUrl': instance.avatarUrl,
+      'genres': instance.genres,
     };
