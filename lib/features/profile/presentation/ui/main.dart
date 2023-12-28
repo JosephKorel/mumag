@@ -7,8 +7,6 @@ import 'package:mumag/common/widgets/profile/main.dart';
 import 'package:mumag/features/profile/presentation/providers/profile.dart';
 import 'package:mumag/features/profile/presentation/ui/profile_menu.dart';
 import 'package:mumag/features/profile/presentation/ui/user_albums.dart';
-import 'package:mumag/features/profile/presentation/ui/user_genres.dart';
-import 'package:mumag/features/profile/presentation/ui/user_ratings.dart';
 
 class ProfileView extends ConsumerWidget {
   const ProfileView({super.key});
@@ -21,6 +19,15 @@ class ProfileView extends ConsumerWidget {
     void onScroll(double offset) =>
         ref.read(scrollOffsetProvider.notifier).onScroll(offset);
 
+    void updateGenres() {
+      final user = ref.read(userProvider).requireValue!;
+      final lastUpdateDifference =
+          DateTime.now().difference(user.lastUpdatedAt).inDays;
+      if (lastUpdateDifference >= 7) {
+        ref.read(userProvider.notifier).updateGenres();
+      }
+    }
+
     return ProfileContainer(
       appBar: AppBar(
         elevation: 0,
@@ -30,21 +37,15 @@ class ProfileView extends ConsumerWidget {
       user: user,
       offset: offset,
       child: ProfileMainView(
+        currentUserProfile: true,
+        updateGenres: updateGenres,
         user: user.requireValue!,
         onScroll: onScroll,
-        children: [
-          const UserProfileGenres(),
-          const SizedBox(
-            height: 8,
-          ),
+        children: const [
           SizedBox(
-            height: MediaQuery.of(context).size.height / 2.5,
-            child: const UserRatingsWidget(),
-          ),
-          const SizedBox(
             height: 16,
           ),
-          const SavedAlbumsView(),
+          SavedAlbumsView(),
         ],
       ),
     );

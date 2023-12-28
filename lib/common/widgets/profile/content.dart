@@ -2,18 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
+import 'package:mumag/common/utils/media_query.dart';
+import 'package:mumag/common/widgets/profile/profile_rating_stats.dart';
 
 class ProfileMainView extends ConsumerStatefulWidget {
   const ProfileMainView({
     required this.user,
     required this.onScroll,
     required this.children,
+    required this.currentUserProfile,
+    this.updateGenres,
     super.key,
   });
 
   final List<Widget> children;
   final UserEntity user;
   final void Function(double offset) onScroll;
+  final bool currentUserProfile;
+  final void Function()? updateGenres;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -34,10 +40,6 @@ class _ProfileMainViewState extends ConsumerState<ProfileMainView> {
     super.initState();
     _scrollController.addListener(() {
       if (_scrollController.hasClients) {
-        /* ref
-            .read(scrollOffsetProvider.notifier)
-            .onScroll(_scrollController.offset); */
-
         widget.onScroll(_scrollController.offset);
       }
     });
@@ -76,6 +78,18 @@ class _ProfileMainViewState extends ConsumerState<ProfileMainView> {
                 const SizedBox(
                   height: 8,
                 ),
+                _ProfileGenres(
+                  genres: user.genres.sublist(0, 5),
+                  currentUserProfile: widget.currentUserProfile,
+                  updateGenres: widget.updateGenres,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                SizedBox(
+                  height: context.deviceHeight / 2.5,
+                  child: ProfileRatings(ratings: user.ratings),
+                ),
                 ...widget.children,
               ],
             ),
@@ -111,6 +125,61 @@ class _ProfilePicture extends StatelessWidget {
         radius: 32,
         backgroundImage: NetworkImage(avatarUrl!),
       ),
+    );
+  }
+}
+
+class _ProfileGenres extends StatefulWidget {
+  const _ProfileGenres({
+    required this.genres,
+    required this.currentUserProfile,
+    this.updateGenres,
+  });
+
+  final bool currentUserProfile;
+  final List<String> genres;
+  final void Function()? updateGenres;
+
+  @override
+  State<_ProfileGenres> createState() => __ProfileGenresState();
+}
+
+class __ProfileGenresState extends State<_ProfileGenres> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      // Only runs if its currentUserProfile
+      if (widget.currentUserProfile) {
+        // Update user genres every 7 days
+        widget.updateGenres!();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final genresBadges = widget.genres
+        .map(
+          (e) => Chip(
+            label: Text(e.toUpperCase()),
+            padding: EdgeInsets.zero,
+            labelStyle: context.bodySmall.copyWith(
+              fontWeight: FontWeight.w600,
+              color: context.onPrimaryContainer,
+            ),
+            backgroundColor: context.primaryContainer,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          ),
+        )
+        .toList();
+
+    return Wrap(
+      spacing: 2,
+      alignment: WrapAlignment.center,
+      children: genresBadges,
     );
   }
 }

@@ -4,7 +4,6 @@ import 'package:mumag/common/services/user/providers/user_provider.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/features/profile/presentation/providers/profile.dart';
 import 'package:mumag/features/profile/presentation/ui/user_albums.dart';
-import 'package:mumag/features/profile/presentation/ui/user_genres.dart';
 import 'package:mumag/features/profile/presentation/ui/user_ratings.dart';
 
 class ProfileMainView extends ConsumerStatefulWidget {
@@ -69,7 +68,6 @@ class _ProfileMainViewState extends ConsumerState<ProfileMainView> {
                 const SizedBox(
                   height: 8,
                 ),
-                const UserProfileGenres(),
                 const SizedBox(
                   height: 8,
                 ),

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/background_icon.dart';
-import 'package:mumag/common/widgets/profile_rating_stats.dart';
 import 'package:mumag/common/widgets/rating_bars.dart';
 
 class UserRatingsWidget extends ConsumerWidget {
@@ -33,7 +32,6 @@ class UserRatingsWidget extends ConsumerWidget {
         const SizedBox(
           height: 16,
         ),
-        ProfileRatingStatsContainer(ratings: ratings),
         const SizedBox(
           height: 8,
         ),
