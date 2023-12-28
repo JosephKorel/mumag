@@ -10,7 +10,9 @@ List<RouteBase> get $appRoutes => [
       $splashRoute,
       $signInRoute,
       $connectToSpotifyRoute,
+      $homeRoute,
       $profileRoute,
+      $searchRoute,
       $artistViewRoute,
       $albumViewRoute,
       $trackViewRoute,
@@ -83,6 +85,28 @@ extension $ConnectToSpotifyRouteExtension on ConnectToSpotifyRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
+RouteBase get $homeRoute => GoRouteData.$route(
+      path: '/home',
+      factory: $HomeRouteExtension._fromState,
+    );
+
+extension $HomeRouteExtension on HomeRoute {
+  static HomeRoute _fromState(GoRouterState state) => const HomeRoute();
+
+  String get location => GoRouteData.$location(
+        '/home',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
 RouteBase get $profileRoute => GoRouteData.$route(
       path: '/profile',
       factory: $ProfileRouteExtension._fromState,
@@ -93,6 +117,28 @@ extension $ProfileRouteExtension on ProfileRoute {
 
   String get location => GoRouteData.$location(
         '/profile',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $searchRoute => GoRouteData.$route(
+      path: '/search',
+      factory: $SearchRouteExtension._fromState,
+    );
+
+extension $SearchRouteExtension on SearchRoute {
+  static SearchRoute _fromState(GoRouterState state) => const SearchRoute();
+
+  String get location => GoRouteData.$location(
+        '/search',
       );
 
   void go(BuildContext context) => context.go(location);

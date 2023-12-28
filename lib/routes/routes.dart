@@ -4,7 +4,9 @@ import 'package:mumag/common/widgets/splash.dart';
 import 'package:mumag/features/album_view/presentation/ui/main.dart';
 import 'package:mumag/features/artist_view/ui/main.dart';
 import 'package:mumag/features/connect/presentation/ui/main.dart';
+import 'package:mumag/features/home/main.dart';
 import 'package:mumag/features/profile/presentation/ui/main.dart';
+import 'package:mumag/features/search/presentation/ui/main.dart';
 import 'package:mumag/features/sign_in/presentation/ui/main.dart';
 import 'package:mumag/features/track_view/presentation/ui/main.dart';
 
@@ -40,6 +42,16 @@ class ConnectToSpotifyRoute extends GoRouteData {
   }
 }
 
+@TypedGoRoute<HomeRoute>(path: '/home')
+class HomeRoute extends GoRouteData {
+  const HomeRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const HomeView();
+  }
+}
+
 @TypedGoRoute<ProfileRoute>(path: '/profile')
 class ProfileRoute extends GoRouteData {
   const ProfileRoute();
@@ -47,6 +59,16 @@ class ProfileRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const ProfileView();
+  }
+}
+
+@TypedGoRoute<SearchRoute>(path: '/search')
+class SearchRoute extends GoRouteData {
+  const SearchRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const SearchView();
   }
 }
 

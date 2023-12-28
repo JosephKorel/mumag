@@ -70,7 +70,7 @@ GoRouter router(RouterRef ref) {
         hasCredentials: () {
           return shouldRedirectLocations.contains(state.fullPath) ||
                   state.fullPath == null
-              ? const ProfileRoute().location
+              ? const HomeRoute().location
               : null;
         },
         connectedUser: () => null,
@@ -96,8 +96,6 @@ Future<AuthState> handleAuthState(
     if (user == null) {
       return Authenticated();
     }
-
-    // ref.read(userRatingsProvider.notifier).updateState(user.ratings);
 
     return HasCredentials();
   } else {
