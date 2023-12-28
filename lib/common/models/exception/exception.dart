@@ -120,3 +120,13 @@ final class UnfollowException extends AppException {
 
   final Object error;
 }
+
+// Search Users
+final class SearchUsersException extends AppException {
+  SearchUsersException({
+    required this.error,
+    super.errorMsg = 'Something went wrong when searching for users.',
+  });
+
+  final Object error;
+}
