@@ -40,9 +40,6 @@ class FoundUserCard extends StatelessWidget {
                     user.name,
                     style: context.titleMedium,
                   ),
-                  /* const SizedBox(
-                    height: 8,
-                  ), */
                   Text(
                     user.genres.sublist(0, 3).join(', ').toUpperCase(),
                     maxLines: 1,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mumag/features/profile/domain/theme.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'theme_provider.g.dart';
@@ -16,4 +17,20 @@ ThemeData appTheme(AppThemeRef ref) {
       ),
     ),
   );
+}
+
+@riverpod
+Future<AppColorScheme> dynamicColorScheme(
+  DynamicColorSchemeRef ref, {
+  required String? imageUrl,
+}) async {
+  const colorScheme = AppColorScheme();
+
+  if (imageUrl == null) {
+    return colorScheme;
+  }
+
+  final dynamicScheme = await colorScheme.getColors(imgUrl: imageUrl);
+
+  return dynamicScheme;
 }
