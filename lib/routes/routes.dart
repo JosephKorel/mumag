@@ -7,6 +7,7 @@ import 'package:mumag/features/connect/presentation/ui/main.dart';
 import 'package:mumag/features/home/main.dart';
 import 'package:mumag/features/profile/presentation/ui/main.dart';
 import 'package:mumag/features/search/presentation/ui/main.dart';
+import 'package:mumag/features/search/search_user/main.dart';
 import 'package:mumag/features/sign_in/presentation/ui/main.dart';
 import 'package:mumag/features/track_view/presentation/ui/main.dart';
 
@@ -69,6 +70,16 @@ class SearchRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const SearchView();
+  }
+}
+
+@TypedGoRoute<SearchUserRoute>(path: '/searchUser')
+class SearchUserRoute extends GoRouteData {
+  const SearchUserRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const SearchForUserView();
   }
 }
 

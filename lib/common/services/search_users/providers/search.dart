@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fpdart/fpdart.dart';
 import 'package:mumag/common/models/exception/exception.dart';
 import 'package:mumag/common/models/social_relations/user_simple.dart';
@@ -36,11 +38,17 @@ Future<Either<AppException, List<SocialUserSimple>>> searchResult(
 ) async {
   final value = ref.watch(searchValueProvider);
 
+  log('THE VALUE IS $value');
+
   var disposed = false;
 
   ref.onDispose(() {
     disposed = true;
   });
+
+  if (value.isEmpty) {
+    return const Right([]);
+  }
 
   await Future<void>.delayed(const Duration(milliseconds: 500));
 

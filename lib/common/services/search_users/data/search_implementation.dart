@@ -5,7 +5,7 @@ final class SearchUsersImplementation {
   SearchUsersImplementation(this._api);
 
   final ApiRepository _api;
-  static const _path = 'search';
+  static const _path = '/search';
 
   Future<List<SocialUserSimple>> search({
     required String name,
@@ -15,9 +15,12 @@ final class SearchUsersImplementation {
       final result =
           await _api.get(path: _path, query: {'name': name, 'limit': limit});
 
-      return List<SocialUserSimple>.from(result! as List<dynamic>)
+      final resultList = result!['data'] as List<dynamic>;
+      final users = resultList
           .map((e) => SocialUserSimple.fromJson(e as Map<String, dynamic>))
           .toList();
+
+      return users;
     } catch (e) {
       rethrow;
     }

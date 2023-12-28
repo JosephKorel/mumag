@@ -13,6 +13,7 @@ List<RouteBase> get $appRoutes => [
       $homeRoute,
       $profileRoute,
       $searchRoute,
+      $searchUserRoute,
       $artistViewRoute,
       $albumViewRoute,
       $trackViewRoute,
@@ -139,6 +140,29 @@ extension $SearchRouteExtension on SearchRoute {
 
   String get location => GoRouteData.$location(
         '/search',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $searchUserRoute => GoRouteData.$route(
+      path: '/searchUser',
+      factory: $SearchUserRouteExtension._fromState,
+    );
+
+extension $SearchUserRouteExtension on SearchUserRoute {
+  static SearchUserRoute _fromState(GoRouterState state) =>
+      const SearchUserRoute();
+
+  String get location => GoRouteData.$location(
+        '/searchUser',
       );
 
   void go(BuildContext context) => context.go(location);
