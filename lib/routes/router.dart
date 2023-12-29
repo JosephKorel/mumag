@@ -91,7 +91,9 @@ Future<AuthState> handleAuthState(
       ref.read(credentialsImplementationProvider).retrieveCredentials();
 
   if (credentials != null) {
-    final user = await ref.read(userProvider.future);
+    final user = await ref.read(userExistsProvider.future);
+
+    return user ? HasCredentials() : Authenticated();
 
     if (user == null) {
       return Authenticated();

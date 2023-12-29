@@ -39,7 +39,7 @@ class ProfileView extends ConsumerWidget {
       child: ProfileMainView(
         currentUserProfile: true,
         updateGenres: updateGenres,
-        user: user.requireValue!,
+        user: user,
         onScroll: onScroll,
         children: const [
           SizedBox(

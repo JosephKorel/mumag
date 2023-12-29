@@ -27,6 +27,26 @@ UserApiUsecase userApiUsecase(UserApiUsecaseRef ref) {
 }
 
 @riverpod
+Future<bool> userExists(UserExistsRef ref) async {
+  final firebaseUser = ref.watch(authServiceProvider).currentUser();
+
+  if (firebaseUser == null) {
+    return false;
+  }
+
+  final user = await ref
+      .watch(userApiUsecaseProvider)
+      .getUser(
+        getParams: GetParams(
+          email: firebaseUser.email!,
+        ),
+      )
+      .run();
+
+  return user.fold((l) => false, (r) => true);
+}
+
+@riverpod
 class User extends _$User {
   @override
   Future<UserEntity?> build() async {

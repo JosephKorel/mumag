@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/models/social_relations/user_simple.dart';
 import 'package:mumag/common/services/search_users/providers/search.dart';
 import 'package:mumag/features/search/search_user/card.dart';
+import 'package:mumag/features/view_profile/presentation/providers/view_user.dart';
 
 class SearchForUserView extends StatelessWidget {
   const SearchForUserView({super.key});
@@ -64,7 +65,7 @@ class SearchResultsContainer extends ConsumerWidget {
   }
 }
 
-class SearchResults<T> extends StatelessWidget {
+class SearchResults<T> extends ConsumerWidget {
   const SearchResults({
     required this.data,
     required this.widgetList,
@@ -75,7 +76,9 @@ class SearchResults<T> extends StatelessWidget {
   final List<Widget> widgetList;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(viewingUserIdProvider);
+
     return ListView.builder(
       padding: const EdgeInsets.all(16),
       itemCount: data.length,

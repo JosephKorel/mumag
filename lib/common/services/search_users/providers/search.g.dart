@@ -39,7 +39,7 @@ final searchUsersUsecaseProvider =
 );
 
 typedef SearchUsersUsecaseRef = AutoDisposeProviderRef<SearchUsersUsecase>;
-String _$searchResultHash() => r'08dbf921b7937691c3242ab40bacf87027dad338';
+String _$searchResultHash() => r'97d35a46f63220c54ee5cc9a79c24126f046aac7';
 
 /// See also [searchResult].
 @ProviderFor(searchResult)

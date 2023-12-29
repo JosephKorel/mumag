@@ -16,7 +16,7 @@ class ProfileMainView extends ConsumerStatefulWidget {
   });
 
   final List<Widget> children;
-  final UserEntity user;
+  final AsyncValue<UserEntity?> user;
   final void Function(double offset) onScroll;
   final bool currentUserProfile;
   final void Function()? updateGenres;
@@ -47,7 +47,11 @@ class _ProfileMainViewState extends ConsumerState<ProfileMainView> {
 
   @override
   Widget build(BuildContext context) {
-    final user = widget.user;
+    if (!widget.user.hasValue) {
+      return const SizedBox.shrink();
+    }
+
+    final user = widget.user.requireValue!;
 
     return ClipRRect(
       borderRadius: const BorderRadius.only(

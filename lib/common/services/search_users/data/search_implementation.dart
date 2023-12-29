@@ -1,4 +1,5 @@
 import 'package:mumag/common/models/social_relations/user_simple.dart';
+import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/services/backend_api/domain/api_repository.dart';
 
 final class SearchUsersImplementation {
@@ -21,6 +22,18 @@ final class SearchUsersImplementation {
           .toList();
 
       return users;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<UserEntity> fetchUser({
+    required int id,
+  }) async {
+    try {
+      final result = await _api.get(path: '$_path/user', query: {'id': id});
+
+      return UserEntity.fromJson(result!);
     } catch (e) {
       rethrow;
     }

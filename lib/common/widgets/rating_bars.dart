@@ -32,6 +32,10 @@ class _RatingBarsState extends State<RatingBars> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.scoreList.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
     final greatestValue = Map<String, int>.fromEntries(
       _scoreCount.entries.toList()
         ..sort(
