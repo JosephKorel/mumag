@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mumag/common/theme/utils.dart';
@@ -58,10 +59,13 @@ class SignInView extends ConsumerWidget {
                       ),
                       icon: const Icon(PhosphorIconsBold.googleLogo),
                       label: const Text('Sign In With Google'),
-                    ),
+                    )
+                        .animate()
+                        .fadeIn()
+                        .slideY(begin: 8, curve: Curves.easeOutCirc),
                     const Divider(
                       height: 80,
-                    ),
+                    ).animate().fadeIn(delay: .1.seconds),
                     OutlinedButton.icon(
                       onPressed: () {},
                       style: OutlinedButton.styleFrom(
@@ -75,7 +79,11 @@ class SignInView extends ConsumerWidget {
                       ),
                       icon: const Icon(PhosphorIconsBold.appleLogo),
                       label: const Text('Sign In With Apple ID'),
-                    ),
+                    ).animate().fadeIn().slideY(
+                          begin: 8,
+                          curve: Curves.easeOutCirc,
+                          delay: .1.seconds,
+                        ),
                   ],
                 ),
               ),
