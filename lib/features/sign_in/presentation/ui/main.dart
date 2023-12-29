@@ -58,7 +58,7 @@ class SignInView extends ConsumerWidget {
                         padding: const EdgeInsets.all(12),
                       ),
                       icon: const Icon(PhosphorIconsBold.googleLogo),
-                      label: const Text('Sign In With Google'),
+                      label: const Text('SIGN IN WITH GOOGLE'),
                     )
                         .animate()
                         .fadeIn()
@@ -78,7 +78,7 @@ class SignInView extends ConsumerWidget {
                         padding: const EdgeInsets.all(12),
                       ),
                       icon: const Icon(PhosphorIconsBold.appleLogo),
-                      label: const Text('Sign In With Apple ID'),
+                      label: const Text('SIGN IN WITH APPLE ID'),
                     ).animate().fadeIn().slideY(
                           begin: 8,
                           curve: Curves.easeOutCirc,
