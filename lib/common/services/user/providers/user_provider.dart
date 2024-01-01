@@ -43,7 +43,7 @@ Future<bool> userExists(UserExistsRef ref) async {
       )
       .run();
 
-  return user.fold((l) => false, (r) => true);
+  return user.fold((l) => false, (r) => r != null);
 }
 
 @riverpod
@@ -65,7 +65,7 @@ class User extends _$User {
         )
         .run();
 
-    return user.fold((l) => null, (r) => r);
+    return user.fold((l) => throw l, (r) => r);
   }
 
   Future<void> updateRatings() async {

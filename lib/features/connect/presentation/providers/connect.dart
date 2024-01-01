@@ -64,6 +64,13 @@ class HandleConnection extends _$HandleConnection {
 
         ref.invalidate(spotifyApiProvider);
 
+        final userAlreadyExists = await ref.read(userExistsProvider.future);
+
+        if (userAlreadyExists) {
+          ref.invalidate(userProvider);
+          return;
+        }
+
         final result = await ref.read(createUserProvider).run();
 
         return result.fold(

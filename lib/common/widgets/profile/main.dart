@@ -11,19 +11,19 @@ class ProfileContainer extends StatelessWidget {
     required this.child,
     required this.offset,
     super.key,
-    this.appBar,
+    this.appBarActions,
   });
 
   final AsyncValue<UserEntity?> user;
   final Widget child;
   final double offset;
-  final AppBar? appBar;
+  final List<Widget>? appBarActions;
 
   @override
   Widget build(BuildContext context) {
     return user.when(
       data: (data) => _UserProfileView(
-        appBar: appBar,
+        appBarActions: appBarActions,
         headerImgUrl: data!.backgroundUrl,
         offset: offset,
         child: child,
@@ -99,13 +99,13 @@ class _UserProfileView extends ConsumerWidget {
     required this.child,
     required this.offset,
     this.headerImgUrl,
-    this.appBar,
+    this.appBarActions,
   });
 
   final Widget child;
   final double offset;
   final String? headerImgUrl;
-  final AppBar? appBar;
+  final List<Widget>? appBarActions;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -117,7 +117,11 @@ class _UserProfileView extends ConsumerWidget {
       data: (data) => Theme(
         data: ThemeData(colorScheme: data.light),
         child: Scaffold(
-          appBar: appBar,
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: data.light.primary.withOpacity(0.4),
+            actions: appBarActions,
+          ),
           extendBodyBehindAppBar: true,
           body: Stack(
             children: [

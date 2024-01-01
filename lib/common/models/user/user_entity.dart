@@ -20,7 +20,7 @@ class UserEntity with _$UserEntity {
     final genresKey = json['genres']! as String;
     final backgroundUrlKey = json['backgroundUrl']! as String;
     final lastUpdateKey = json['lastUpdatedAt']! as String;
-    final ratingKey = json['ratings']! as List<dynamic>;
+    final ratingKey = (json['ratings'] as List<dynamic>?) ?? [];
 
     return UserEntity(
       id: json['id']! as int,

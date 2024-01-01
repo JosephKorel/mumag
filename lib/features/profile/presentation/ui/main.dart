@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
-import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/profile/content.dart';
 import 'package:mumag/common/widgets/profile/main.dart';
 import 'package:mumag/features/profile/presentation/providers/profile.dart';
@@ -29,11 +28,7 @@ class ProfileView extends ConsumerWidget {
     }
 
     return ProfileContainer(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: context.primary.withOpacity(0.4),
-        actions: const [ProfileMenuButton()],
-      ),
+      appBarActions: const [ProfileMenuButton()],
       user: user,
       offset: offset,
       child: ProfileMainView(

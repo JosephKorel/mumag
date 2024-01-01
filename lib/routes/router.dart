@@ -94,12 +94,6 @@ Future<AuthState> handleAuthState(
     final user = await ref.read(userExistsProvider.future);
 
     return user ? HasCredentials() : Authenticated();
-
-    if (user == null) {
-      return Authenticated();
-    }
-
-    return HasCredentials();
   } else {
     return Authenticated();
   }

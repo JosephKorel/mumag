@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/profile/content.dart';
 import 'package:mumag/common/widgets/profile/main.dart';
 import 'package:mumag/features/profile/presentation/providers/profile.dart';
@@ -18,9 +17,6 @@ class ViewUserProfileView extends ConsumerWidget {
         ref.read(scrollOffsetProvider.notifier).onScroll(offset);
 
     return ProfileContainer(
-      appBar: AppBar(
-        backgroundColor: context.primary.withOpacity(0.6),
-      ),
       user: user,
       offset: offset,
       child: ProfileMainView(
