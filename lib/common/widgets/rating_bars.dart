@@ -14,24 +14,16 @@ class RatingBars extends StatefulWidget {
 }
 
 class _RatingBarsState extends State<RatingBars> {
-  final _scoreCount = {for (final e in RatingValue.values) e.name: 0};
+  Map<String, int> _feedScores() {
+    final scoreCount = {for (final e in RatingValue.values) e.name: 0};
 
-  void _feedScores() {
     for (final score in widget.scoreList) {
       final scoreLabel =
           RatingValue.values.singleWhere((element) => element.score == score);
-      _scoreCount[scoreLabel.name] = _scoreCount[scoreLabel.name]! + 1;
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.scoreList.isEmpty) {
-      return;
+      scoreCount[scoreLabel.name] = scoreCount[scoreLabel.name]! + 1;
     }
 
-    _feedScores();
+    return scoreCount;
   }
 
   @override
@@ -40,14 +32,16 @@ class _RatingBarsState extends State<RatingBars> {
       return const SizedBox.shrink();
     }
 
+    final scoreCount = _feedScores();
+
     final greatestValue = Map<String, int>.fromEntries(
-      _scoreCount.entries.toList()
+      scoreCount.entries.toList()
         ..sort(
           (a, b) => b.value.compareTo(a.value),
         ),
     ).values.first;
 
-    final scores = _scoreCount.values.toList();
+    final scores = scoreCount.values.toList();
 
     return LayoutBuilder(
       builder: (context, constraints) {
