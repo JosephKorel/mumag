@@ -15,6 +15,7 @@ class ProfileRatings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Row(
           children: [
@@ -32,14 +33,16 @@ class ProfileRatings extends StatelessWidget {
           height: 16,
         ),
         _ProfileRatingStatsContainer(ratings: ratings),
-        const SizedBox(
-          height: 8,
-        ),
-        Expanded(
-          child: RatingBars(
-            scoreList: ratings.map((e) => e.rating).toList(),
+        if (ratings.isNotEmpty) ...[
+          const SizedBox(
+            height: 8,
           ),
-        ),
+          Expanded(
+            child: RatingBars(
+              scoreList: ratings.map((e) => e.rating).toList(),
+            ),
+          ),
+        ],
       ],
     );
   }

@@ -91,7 +91,9 @@ class _ProfileMainViewState extends ConsumerState<ProfileMainView> {
                   height: 8,
                 ),
                 SizedBox(
-                  height: context.deviceHeight / 2.5,
+                  height:
+                      user.ratings.isEmpty ? null : context.deviceHeight / 2.5,
+                  width: double.infinity,
                   child: ProfileRatings(ratings: user.ratings),
                 ),
                 ...widget.children,

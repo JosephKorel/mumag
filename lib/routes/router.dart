@@ -26,7 +26,7 @@ GoRouter router(RouterRef ref) {
     ..listen(
       authStreamProvider.select((value) => value.whenData((value) => value)),
       (prev, next) async {
-        final state = await handleAuthState(next, ref);
+        final state = await _handleAuthState(next, ref);
         ref.read(authStateControllerProvider.notifier).updateState(state);
       },
     )
@@ -79,7 +79,7 @@ GoRouter router(RouterRef ref) {
   );
 }
 
-Future<AuthState> handleAuthState(
+Future<AuthState> _handleAuthState(
   AsyncValue<Firebase.User?> next,
   RouterRef ref,
 ) async {

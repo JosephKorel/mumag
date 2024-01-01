@@ -27,6 +27,10 @@ class _RatingBarsState extends State<RatingBars> {
   @override
   void initState() {
     super.initState();
+    if (widget.scoreList.isEmpty) {
+      return;
+    }
+
     _feedScores();
   }
 
