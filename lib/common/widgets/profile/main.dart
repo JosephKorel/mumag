@@ -143,7 +143,7 @@ class _UserProfileView extends ConsumerWidget {
         ),
       ),
       error: (error, stackTrace) => const Scaffold(),
-      loading: Scaffold.new,
+      loading: _ProfileLoadingScreen.new,
     );
   }
 }

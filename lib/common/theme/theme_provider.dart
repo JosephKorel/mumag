@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:mumag/features/profile/domain/theme.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -27,8 +25,6 @@ Future<AppColorScheme> dynamicColorScheme(
   required String? imageUrl,
 }) async {
   const colorScheme = AppColorScheme();
-
-  log('THE IMAGE URL IS: $imageUrl');
 
   if (imageUrl == null) {
     return colorScheme;

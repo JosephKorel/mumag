@@ -1,9 +1,11 @@
 import 'package:mumag/common/models/exception/exception.dart';
+import 'package:mumag/common/models/success_events/success_events.dart';
 import 'package:mumag/common/models/types/api_types.dart';
 import 'package:mumag/common/services/firebase/providers/auth.dart';
 import 'package:mumag/common/services/shared_pref/providers/shared_pref.dart';
 import 'package:mumag/common/services/spotify_auth/providers/api.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
+import 'package:mumag/common/toast/toast_provider.dart';
 import 'package:mumag/features/connect/data/save_user_impl.dart';
 import 'package:mumag/features/connect/domain/insert_params_repo.dart';
 import 'package:mumag/features/connect/domain/save_user_controller.dart';
@@ -50,34 +52,61 @@ class HandleConnection extends _$HandleConnection {
       final credentialsRequest =
           await ref.read(spotifyAuthControllerProvider).authenticate().run();
 
-      final credentials = credentialsRequest.fold((l) => null, (r) => r);
+      final credentials = credentialsRequest.fold((l) => null, (r) {
+        ref.read(toastMessageProvider.notifier).onSuccessEvent(
+              successEvent: SuccessMessage(successMsg: 'Got Credentials'),
+            );
+        return r;
+      });
 
-      if (credentials != null && credentials.accessToken != null) {
-        final saveCredentials =
-            await ref.read(credentialsImplementationProvider).saveCredentials(
-                  credentials: credentials,
-                );
-
-        if (!saveCredentials) {
-          throw ApiException(errorMsg: 'Failed to save credentials');
-        }
-
-        ref.invalidate(spotifyApiProvider);
-
-        final userAlreadyExists = await ref.read(userExistsProvider.future);
-
-        if (userAlreadyExists) {
-          ref.invalidate(userProvider);
-          return;
-        }
-
-        final result = await ref.read(createUserProvider).run();
-
-        return result.fold(
-          (l) => AsyncError<void>(l, StackTrace.current),
-          (r) => ref.invalidate(userProvider),
-        );
+      if (credentials == null && credentials?.accessToken == null) {
+        ref.read(toastMessageProvider.notifier).onException(
+              exception: ApiException(
+                errorMsg:
+                    'You must grant permission to access your spotify account',
+              ),
+            );
+        return;
       }
+
+      final saveCredentials =
+          await ref.read(credentialsImplementationProvider).saveCredentials(
+                credentials: credentials!,
+              );
+
+      if (!saveCredentials) {
+        ref.read(toastMessageProvider.notifier).onException(
+              exception: ApiException(errorMsg: 'Failed to save credentials'),
+            );
+        return;
+      }
+
+      ref.read(toastMessageProvider.notifier).onSuccessEvent(
+            successEvent: SuccessMessage(
+                successMsg: 'Saved Credentials in Local Storage'),
+          );
+
+      ref.invalidate(spotifyApiProvider);
+
+      final userAlreadyExists = await ref.read(userExistsProvider.future);
+
+      if (userAlreadyExists) {
+        ref.invalidate(userProvider);
+        return;
+      }
+
+      final result = await ref.read(createUserProvider).run();
+
+      return result.fold(
+        (l) {
+          ref.read(toastMessageProvider.notifier).onException(
+                exception: ApiException(
+                  errorMsg: 'Failed to create user: ${l.errorMsg}',
+                ),
+              );
+        },
+        (r) => ref.invalidate(userProvider),
+      );
     });
   }
 }

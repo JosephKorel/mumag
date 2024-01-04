@@ -8,7 +8,7 @@ class SocialRelationsImplementation extends SocialRelationsRepository {
 
   final ApiRepository _api;
 
-  static const _path = 'social';
+  static const _path = '/social';
 
   @override
   Future<void> followUser({required FollowUserEvent followParams}) async {

@@ -4,6 +4,7 @@ import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/utils/media_query.dart';
 import 'package:mumag/common/widgets/profile/profile_rating_stats.dart';
+import 'package:mumag/common/widgets/profile/social.dart';
 
 class ProfileMainView extends ConsumerStatefulWidget {
   const ProfileMainView({
@@ -11,6 +12,7 @@ class ProfileMainView extends ConsumerStatefulWidget {
     required this.onScroll,
     required this.children,
     required this.currentUserProfile,
+    required this.socialAsyncValue,
     this.updateGenres,
     super.key,
   });
@@ -18,6 +20,7 @@ class ProfileMainView extends ConsumerStatefulWidget {
   final List<Widget> children;
   final AsyncValue<UserEntity?> user;
   final void Function(double offset) onScroll;
+  final SocialAsyncValue socialAsyncValue;
   final bool currentUserProfile;
   final void Function()? updateGenres;
 
@@ -82,13 +85,19 @@ class _ProfileMainViewState extends ConsumerState<ProfileMainView> {
                 const SizedBox(
                   height: 8,
                 ),
+                UserSocialRelationsWidget(
+                  socialAsyncValue: widget.socialAsyncValue,
+                ),
+                const SizedBox(
+                  height: 6,
+                ),
                 _ProfileGenres(
                   genres: user.genres.sublist(0, 5),
                   currentUserProfile: widget.currentUserProfile,
                   updateGenres: widget.updateGenres,
                 ),
                 const SizedBox(
-                  height: 8,
+                  height: 16,
                 ),
                 SizedBox(
                   height:

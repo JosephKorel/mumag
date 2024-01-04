@@ -66,7 +66,7 @@ final createUserProvider = AutoDisposeProvider<ApiResult<void>>.internal(
 );
 
 typedef CreateUserRef = AutoDisposeProviderRef<ApiResult<void>>;
-String _$handleConnectionHash() => r'd86ee99ccf77e1c2ece193d341eddb0ac2885ab6';
+String _$handleConnectionHash() => r'17c8b6eef19f6e89d3594668f766683d121c4815';
 
 /// See also [HandleConnection].
 @ProviderFor(HandleConnection)

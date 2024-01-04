@@ -11,7 +11,7 @@ class ConnectToSpotifyView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(handleConnectionProvider);
+    final connectController = ref.watch(handleConnectionProvider);
 
     Future<void> connect() async {
       await ref.read(handleConnectionProvider.notifier).connect();
@@ -38,18 +38,28 @@ class ConnectToSpotifyView extends ConsumerWidget {
                   child: SizedBox(
                     width: double.infinity,
                     child: OutlinedButton.icon(
-                      onPressed: connect,
+                      onPressed: connectController.isLoading ? null : connect,
                       style: OutlinedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
+                        disabledForegroundColor: Colors.grey[600],
                         foregroundColor: Colors.white,
                         textStyle: context.titleMedium,
-                        side: const BorderSide(width: 1.6, color: Colors.white),
+                        side: BorderSide(
+                          width: 1.6,
+                          color: connectController.isLoading
+                              ? Colors.grey[600]!
+                              : Colors.white,
+                        ),
                         padding: const EdgeInsets.all(12),
                       ),
                       icon: const Icon(PhosphorIconsBold.spotifyLogo),
-                      label: const Text('CONNECT SPOTIFY'),
+                      label: Text(
+                        connectController.isLoading
+                            ? 'CREATING ACCOUNT'
+                            : 'CONNECT SPOTIFY',
+                      ),
                     )
                         .animate()
                         .fadeIn()

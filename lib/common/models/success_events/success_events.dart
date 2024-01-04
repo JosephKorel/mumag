@@ -5,6 +5,13 @@ sealed class SuccessEvent {
 }
 
 // Rating
+final class SuccessMessage extends SuccessEvent {
+  SuccessMessage({
+    required super.successMsg,
+  });
+}
+
+// Rating
 final class InsertRatingSuccess extends SuccessEvent {
   InsertRatingSuccess({
     super.successMsg = 'Thanks for rating!',
