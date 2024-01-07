@@ -28,7 +28,7 @@ final class GetSocialRelationsEvent extends SocialRelationsEvents {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'followerId': currentUserId,
+      'userId': currentUserId,
     };
   }
 }

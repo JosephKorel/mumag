@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mumag/common/models/exception/exception.dart';
+import 'package:mumag/common/models/social_relations/user_simple.dart';
 import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/services/user/data/api_impl.dart';
 import 'package:mumag/common/services/user/domain/api/api_repository.dart';
@@ -28,6 +29,7 @@ void main() {
     genres: [],
     avatarUrl: null,
     lastUpdatedAt: lastUpdatedAt,
+    socialRelations: UserSocialRelations.defaultValue(),
   );
   final updateUserParams = UpdateUserParam(userEntity: insertedUser);
 
@@ -55,6 +57,7 @@ void main() {
             genres: [],
             avatarUrl: null,
             lastUpdatedAt: lastUpdatedAt,
+            socialRelations: UserSocialRelations.defaultValue(),
           ),
         ),
       );
@@ -116,6 +119,7 @@ void main() {
             genres: [],
             avatarUrl: null,
             lastUpdatedAt: lastUpdatedAt,
+            socialRelations: UserSocialRelations.defaultValue(),
           ),
         ),
       );
@@ -128,6 +132,7 @@ void main() {
         email: insertParams.email,
         genres: [],
         avatarUrl: null,
+        socialRelations: UserSocialRelations.defaultValue(),
         lastUpdatedAt: lastUpdatedAt,
       );
 

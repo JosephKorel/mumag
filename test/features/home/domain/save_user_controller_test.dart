@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mumag/common/models/exception/exception.dart';
+import 'package:mumag/common/models/social_relations/user_simple.dart';
 import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/services/user/domain/api/api_repository.dart';
 import 'package:mumag/common/services/user/domain/database/user_db_events.dart';
@@ -78,6 +79,7 @@ void main() {
           avatarUrl: insertParams.avatarUrl,
           email: insertParams.email,
           lastUpdatedAt: lastUpdatedAt,
+          socialRelations: UserSocialRelations.defaultValue(),
         ),
       );
 

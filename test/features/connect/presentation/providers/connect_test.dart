@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:mumag/common/models/social_relations/user_simple.dart';
 import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/services/shared_pref/domain/credentials_repo.dart';
 import 'package:mumag/common/services/shared_pref/providers/shared_pref.dart';
@@ -79,6 +80,7 @@ void main() {
     genres: [],
     avatarUrl: null,
     lastUpdatedAt: DateTime.now(),
+    socialRelations: UserSocialRelations.defaultValue(),
   );
 
   setUpAll(() {

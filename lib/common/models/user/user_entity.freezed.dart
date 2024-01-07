@@ -21,6 +21,7 @@ mixin _$UserEntity {
   String? get avatarUrl => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   DateTime get lastUpdatedAt => throw _privateConstructorUsedError;
+  UserSocialRelations get socialRelations => throw _privateConstructorUsedError;
   String? get backgroundUrl => throw _privateConstructorUsedError;
   List<String> get genres => throw _privateConstructorUsedError;
   List<RatingEntity> get ratings => throw _privateConstructorUsedError;
@@ -42,6 +43,7 @@ abstract class $UserEntityCopyWith<$Res> {
       String? avatarUrl,
       String email,
       DateTime lastUpdatedAt,
+      UserSocialRelations socialRelations,
       String? backgroundUrl,
       List<String> genres,
       List<RatingEntity> ratings});
@@ -65,6 +67,7 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
     Object? avatarUrl = freezed,
     Object? email = null,
     Object? lastUpdatedAt = null,
+    Object? socialRelations = null,
     Object? backgroundUrl = freezed,
     Object? genres = null,
     Object? ratings = null,
@@ -90,6 +93,10 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
           ? _value.lastUpdatedAt
           : lastUpdatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      socialRelations: null == socialRelations
+          ? _value.socialRelations
+          : socialRelations // ignore: cast_nullable_to_non_nullable
+              as UserSocialRelations,
       backgroundUrl: freezed == backgroundUrl
           ? _value.backgroundUrl
           : backgroundUrl // ignore: cast_nullable_to_non_nullable
@@ -120,6 +127,7 @@ abstract class _$$UserEntityImplCopyWith<$Res>
       String? avatarUrl,
       String email,
       DateTime lastUpdatedAt,
+      UserSocialRelations socialRelations,
       String? backgroundUrl,
       List<String> genres,
       List<RatingEntity> ratings});
@@ -141,6 +149,7 @@ class __$$UserEntityImplCopyWithImpl<$Res>
     Object? avatarUrl = freezed,
     Object? email = null,
     Object? lastUpdatedAt = null,
+    Object? socialRelations = null,
     Object? backgroundUrl = freezed,
     Object? genres = null,
     Object? ratings = null,
@@ -166,6 +175,10 @@ class __$$UserEntityImplCopyWithImpl<$Res>
           ? _value.lastUpdatedAt
           : lastUpdatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      socialRelations: null == socialRelations
+          ? _value.socialRelations
+          : socialRelations // ignore: cast_nullable_to_non_nullable
+              as UserSocialRelations,
       backgroundUrl: freezed == backgroundUrl
           ? _value.backgroundUrl
           : backgroundUrl // ignore: cast_nullable_to_non_nullable
@@ -191,6 +204,7 @@ class _$UserEntityImpl implements _UserEntity {
       required this.avatarUrl,
       required this.email,
       required this.lastUpdatedAt,
+      required this.socialRelations,
       this.backgroundUrl = null,
       final List<String> genres = const [],
       final List<RatingEntity> ratings = const []})
@@ -207,6 +221,8 @@ class _$UserEntityImpl implements _UserEntity {
   final String email;
   @override
   final DateTime lastUpdatedAt;
+  @override
+  final UserSocialRelations socialRelations;
   @override
   @JsonKey()
   final String? backgroundUrl;
@@ -230,7 +246,7 @@ class _$UserEntityImpl implements _UserEntity {
 
   @override
   String toString() {
-    return 'UserEntity(id: $id, name: $name, avatarUrl: $avatarUrl, email: $email, lastUpdatedAt: $lastUpdatedAt, backgroundUrl: $backgroundUrl, genres: $genres, ratings: $ratings)';
+    return 'UserEntity(id: $id, name: $name, avatarUrl: $avatarUrl, email: $email, lastUpdatedAt: $lastUpdatedAt, socialRelations: $socialRelations, backgroundUrl: $backgroundUrl, genres: $genres, ratings: $ratings)';
   }
 
   @override
@@ -245,6 +261,8 @@ class _$UserEntityImpl implements _UserEntity {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.lastUpdatedAt, lastUpdatedAt) ||
                 other.lastUpdatedAt == lastUpdatedAt) &&
+            (identical(other.socialRelations, socialRelations) ||
+                other.socialRelations == socialRelations) &&
             (identical(other.backgroundUrl, backgroundUrl) ||
                 other.backgroundUrl == backgroundUrl) &&
             const DeepCollectionEquality().equals(other._genres, _genres) &&
@@ -259,6 +277,7 @@ class _$UserEntityImpl implements _UserEntity {
       avatarUrl,
       email,
       lastUpdatedAt,
+      socialRelations,
       backgroundUrl,
       const DeepCollectionEquality().hash(_genres),
       const DeepCollectionEquality().hash(_ratings));
@@ -277,6 +296,7 @@ abstract class _UserEntity implements UserEntity {
       required final String? avatarUrl,
       required final String email,
       required final DateTime lastUpdatedAt,
+      required final UserSocialRelations socialRelations,
       final String? backgroundUrl,
       final List<String> genres,
       final List<RatingEntity> ratings}) = _$UserEntityImpl;
@@ -291,6 +311,8 @@ abstract class _UserEntity implements UserEntity {
   String get email;
   @override
   DateTime get lastUpdatedAt;
+  @override
+  UserSocialRelations get socialRelations;
   @override
   String? get backgroundUrl;
   @override

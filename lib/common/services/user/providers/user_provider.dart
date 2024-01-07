@@ -9,6 +9,7 @@ import 'package:mumag/common/services/user/data/api_impl.dart';
 import 'package:mumag/common/services/user/domain/api/api_repository.dart';
 import 'package:mumag/common/services/user/domain/database/user_db_events.dart';
 import 'package:mumag/features/connect/presentation/providers/connect.dart';
+import 'package:mumag/features/profile/presentation/providers/social.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'user_provider.g.dart';
@@ -91,6 +92,19 @@ class User extends _$User {
           .run();
 
       return newUser.fold((l) => state.requireValue, (r) => r);
+    });
+  }
+
+  /* void updateUserRelations({required UserSocialRelations relations}) => state =
+      AsyncData(state.requireValue!.copyWith(socialRelations: relations)); */
+
+  Future<void> getSocialRelations() async {
+    state = await AsyncValue.guard(() async {
+      final socialRelations = await ref.read(mySocialRelationsProvider.future);
+      return socialRelations.fold(
+        (l) => state.requireValue,
+        (r) => state.requireValue!.copyWith(socialRelations: r),
+      );
     });
   }
 }

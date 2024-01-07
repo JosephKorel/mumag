@@ -2,27 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
-import 'package:mumag/common/utils/media_query.dart';
-import 'package:mumag/common/widgets/profile/profile_rating_stats.dart';
-import 'package:mumag/common/widgets/profile/social.dart';
 
 class ProfileMainView extends ConsumerStatefulWidget {
   const ProfileMainView({
     required this.user,
     required this.onScroll,
     required this.children,
-    required this.currentUserProfile,
-    required this.socialAsyncValue,
-    this.updateGenres,
     super.key,
   });
 
   final List<Widget> children;
   final AsyncValue<UserEntity?> user;
   final void Function(double offset) onScroll;
-  final SocialAsyncValue socialAsyncValue;
-  final bool currentUserProfile;
-  final void Function()? updateGenres;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -85,26 +76,6 @@ class _ProfileMainViewState extends ConsumerState<ProfileMainView> {
                 const SizedBox(
                   height: 8,
                 ),
-                UserSocialRelationsWidget(
-                  socialAsyncValue: widget.socialAsyncValue,
-                ),
-                const SizedBox(
-                  height: 6,
-                ),
-                _ProfileGenres(
-                  genres: user.genres.sublist(0, 5),
-                  currentUserProfile: widget.currentUserProfile,
-                  updateGenres: widget.updateGenres,
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                SizedBox(
-                  height:
-                      user.ratings.isEmpty ? null : context.deviceHeight / 2.5,
-                  width: double.infinity,
-                  child: ProfileRatings(ratings: user.ratings),
-                ),
                 ...widget.children,
               ],
             ),
@@ -144,32 +115,28 @@ class _ProfilePicture extends StatelessWidget {
   }
 }
 
-class _ProfileGenres extends StatefulWidget {
-  const _ProfileGenres({
+class ProfileGenres extends StatefulWidget {
+  const ProfileGenres({
     required this.genres,
-    required this.currentUserProfile,
+    super.key,
     this.updateGenres,
   });
 
-  final bool currentUserProfile;
   final List<String> genres;
   final void Function()? updateGenres;
 
   @override
-  State<_ProfileGenres> createState() => __ProfileGenresState();
+  State<ProfileGenres> createState() => ProfileGenresState();
 }
 
-class __ProfileGenresState extends State<_ProfileGenres> {
+class ProfileGenresState extends State<ProfileGenres> {
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // Only runs if its currentUserProfile
-      if (widget.currentUserProfile) {
-        // Update user genres every 7 days
-        widget.updateGenres!();
-      }
+      // Update user genres every 7 days
+      widget.updateGenres?.call();
     });
   }
 

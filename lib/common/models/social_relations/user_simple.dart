@@ -28,6 +28,9 @@ final class UserSocialRelations {
   final List<SocialUserSimple> following;
   final List<SocialUserSimple> followers;
 
+  factory UserSocialRelations.defaultValue() =>
+      UserSocialRelations(following: [], followers: []);
+
   factory UserSocialRelations.fromMap(Map<String, dynamic> map) {
     return UserSocialRelations(
       following: List<SocialUserSimple>.from(
