@@ -12,12 +12,14 @@ class ProfileContainer extends StatelessWidget {
     required this.offset,
     super.key,
     this.appBarActions,
+    this.floatingActionButton,
   });
 
   final AsyncValue<UserEntity?> user;
   final Widget child;
   final double offset;
   final List<Widget>? appBarActions;
+  final Widget? floatingActionButton;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class ProfileContainer extends StatelessWidget {
         appBarActions: appBarActions,
         headerImgUrl: data!.backgroundUrl,
         offset: offset,
+        floatingActionButton: floatingActionButton,
         child: child,
       ),
       error: (error, stackTrace) => Scaffold(
@@ -100,12 +103,14 @@ class _UserProfileView extends ConsumerWidget {
     required this.offset,
     this.headerImgUrl,
     this.appBarActions,
+    this.floatingActionButton,
   });
 
   final Widget child;
   final double offset;
   final String? headerImgUrl;
   final List<Widget>? appBarActions;
+  final Widget? floatingActionButton;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -123,6 +128,7 @@ class _UserProfileView extends ConsumerWidget {
             actions: appBarActions,
           ),
           extendBodyBehindAppBar: true,
+          floatingActionButton: floatingActionButton,
           body: Stack(
             children: [
               _UserImageHeader(

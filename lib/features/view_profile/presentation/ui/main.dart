@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mumag/common/widgets/bottom_sheet.dart';
+import 'package:mumag/common/widgets/fab.dart';
 import 'package:mumag/common/widgets/profile/content.dart';
 import 'package:mumag/common/widgets/profile/main.dart';
+import 'package:mumag/common/widgets/suggestion/main.dart';
 import 'package:mumag/features/profile/presentation/providers/profile.dart';
 import 'package:mumag/features/view_profile/presentation/providers/view_user.dart';
 import 'package:mumag/features/view_profile/presentation/ui/social.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class ViewUserProfileView extends ConsumerWidget {
   const ViewUserProfileView({super.key});
@@ -20,6 +24,18 @@ class ViewUserProfileView extends ConsumerWidget {
     return ProfileContainer(
       user: user,
       offset: offset,
+      floatingActionButton: user.isLoading
+          ? null
+          : AnimatedFAB(
+              show: true,
+              onPressed: () => showAppBottomSheet(
+                context,
+                child: const SuggestionContainer(),
+              ),
+              child: Icon(
+                PhosphorIcons.paperPlaneTilt(PhosphorIconsStyle.bold),
+              ),
+            ),
       child: ProfileMainView(
         user: user,
         onScroll: onScroll,
