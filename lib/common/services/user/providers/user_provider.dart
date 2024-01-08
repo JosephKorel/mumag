@@ -95,15 +95,17 @@ class User extends _$User {
     });
   }
 
-  /* void updateUserRelations({required UserSocialRelations relations}) => state =
-      AsyncData(state.requireValue!.copyWith(socialRelations: relations)); */
-
   Future<void> getSocialRelations() async {
     state = await AsyncValue.guard(() async {
+      ref.invalidate(mySocialRelationsProvider);
       final socialRelations = await ref.read(mySocialRelationsProvider.future);
       return socialRelations.fold(
         (l) => state.requireValue,
-        (r) => state.requireValue!.copyWith(socialRelations: r),
+        (r) {
+          final updatedUser = state.requireValue!.copyWith(socialRelations: r);
+
+          return updatedUser;
+        },
       );
     });
   }

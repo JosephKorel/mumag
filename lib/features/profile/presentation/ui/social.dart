@@ -27,21 +27,21 @@ class _UserSocialRelationsWidgetState
   @override
   void initState() {
     super.initState();
-    ref.read(userProvider.notifier).getSocialRelations();
   }
 
   @override
   Widget build(BuildContext context) {
     final socialAsyncValue = ref.watch(mySocialRelationsProvider);
 
-    return socialAsyncValue.when(
-      data: (data) => data.fold(
-        (l) => const _ErrorState(),
-        (r) => _LoadedState(relations: r),
-      ),
-      error: (error, stackTrace) => const _ErrorState(),
-      loading: _LoadingState.new,
-    );
+    if (socialAsyncValue.isLoading) {
+      return const _LoadingState();
+    }
+
+    if (socialAsyncValue.hasError) {
+      return const _ErrorState();
+    }
+
+    return const _LoadedState();
   }
 }
 
@@ -53,33 +53,11 @@ class _LoadingState extends StatelessWidget {
     return const Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Chip(
-          label: Row(
-            children: [
-              Text('Followers: '),
-              LoadingSkeleton(
-                height: 16,
-                width: 16,
-                borderRadius: 4,
-              ),
-            ],
-          ),
-        ),
+        SocialRelationsBadge(label: 'Followers: ', loading: true),
         SizedBox(
           width: 16,
         ),
-        Chip(
-          label: Row(
-            children: [
-              Text('Following: '),
-              LoadingSkeleton(
-                height: 16,
-                width: 16,
-                borderRadius: 4,
-              ),
-            ],
-          ),
-        ),
+        SocialRelationsBadge(label: 'Following: ', loading: true),
       ],
     );
   }
@@ -93,80 +71,101 @@ class _ErrorState extends StatelessWidget {
     return const Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Chip(label: Text('Followers: !')),
+        SocialRelationsBadge(label: 'Followers: !', loading: false),
         SizedBox(
           width: 16,
         ),
-        Chip(label: Text('Following: !')),
+        SocialRelationsBadge(label: 'Following: !', loading: false),
       ],
     );
   }
 }
 
-class _LoadedState extends StatelessWidget {
-  const _LoadedState({required this.relations});
-
-  final UserSocialRelations relations;
+class _LoadedState extends ConsumerWidget {
+  const _LoadedState();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final relations = ref.watch(userProvider).requireValue!.socialRelations;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Material(
-          child: Container(
-            width: 120,
-            height: 38,
-            decoration: BoxDecoration(
-              color: context.onSurface.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(48),
-            ),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(48),
-              onTap: () => showAppBottomSheet(
-                context,
-                child: const FollowersList(),
-                height: context.deviceHeight / 2,
-              ),
-              child: Center(
-                child: Text(
-                  'Followers: ${relations.followers.length}',
-                  style:
-                      context.bodyMedium.copyWith(fontWeight: FontWeight.w600),
-                ),
-              ),
-            ),
+        SocialRelationsBadge(
+          loading: false,
+          label: 'Followers: ${relations.followers.length}',
+          onTap: () => showAppBottomSheet(
+            context,
+            child: const FollowersList(),
+            height: context.deviceHeight / 2,
           ),
         ),
         const SizedBox(
           width: 16,
         ),
-        Material(
-          child: Container(
-            width: 120,
-            height: 38,
-            decoration: BoxDecoration(
-              color: context.onSurface.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(48),
-            ),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(48),
-              onTap: () => showAppBottomSheet(
-                context,
-                child: const FollowingList(),
-                height: context.deviceHeight / 2,
-              ),
-              child: Center(
-                child: Text(
-                  'Following: ${relations.following.length}',
-                  style:
-                      context.bodyMedium.copyWith(fontWeight: FontWeight.w600),
-                ),
-              ),
-            ),
+        SocialRelationsBadge(
+          loading: false,
+          label: 'Following: ${relations.following.length}',
+          onTap: () => showAppBottomSheet(
+            context,
+            child: const FollowingList(),
+            height: context.deviceHeight / 2,
           ),
         ),
       ],
+    );
+  }
+}
+
+class SocialRelationsBadge extends StatelessWidget {
+  const SocialRelationsBadge({
+    required this.label,
+    required this.loading,
+    this.onTap,
+    super.key,
+  });
+
+  final String label;
+  final bool loading;
+  final void Function()? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: Container(
+        width: 120,
+        height: 38,
+        decoration: BoxDecoration(
+          color: context.onSurface.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(48),
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(48),
+          onTap: onTap,
+          child: Center(
+            child: loading
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        label,
+                        style: context.bodyMedium
+                            .copyWith(fontWeight: FontWeight.w600),
+                      ),
+                      const LoadingSkeleton(
+                        height: 16,
+                        width: 16,
+                        borderRadius: 4,
+                      ),
+                    ],
+                  )
+                : Text(
+                    label,
+                    style: context.bodyMedium
+                        .copyWith(fontWeight: FontWeight.w600),
+                  ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -231,10 +230,12 @@ class FollowingList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(viewingUserIdProvider);
 
-    final following = ref.watch(
-      userProvider
-          .select((value) => value.requireValue!.socialRelations.following),
-    );
+    final user = ref
+        .watch(
+          userProvider,
+        )
+        .requireValue!;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -245,7 +246,7 @@ class FollowingList extends ConsumerWidget {
         const SizedBox(
           height: 16,
         ),
-        if (following.isEmpty)
+        if (user.socialRelations.following.isEmpty)
           Text(
             'You are not following anyone yet',
             textAlign: TextAlign.center,
@@ -254,9 +255,10 @@ class FollowingList extends ConsumerWidget {
         else
           Expanded(
             child: ListView.builder(
-              itemCount: following.length,
-              itemBuilder: (context, index) =>
-                  _FollowingUserTile(user: following[index]),
+              itemCount: user.socialRelations.following.length,
+              itemBuilder: (context, index) => _FollowingUserTile(
+                user: user.socialRelations.following[index],
+              ),
             ),
           ),
       ],
@@ -271,8 +273,9 @@ class _FollowingUserTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final socialHandler = ref.watch(socialHandlerProvider);
     final currentUserId = ref.watch(userProvider).requireValue!.id;
-    void unfollow() {
-      ref.read(socialHandlerProvider.notifier).onAction(
+
+    Future<void> unfollow() async {
+      await ref.read(socialHandlerProvider.notifier).onAction(
             UnfollowUserEvent(
               currentUserId: currentUserId,
               followingUserId: user.id,
