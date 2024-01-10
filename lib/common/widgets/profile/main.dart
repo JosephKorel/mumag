@@ -122,6 +122,7 @@ class _UserProfileView extends ConsumerWidget {
       data: (data) => Theme(
         data: ThemeData(colorScheme: data.light),
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             elevation: 0,
             backgroundColor: data.light.primary.withOpacity(0.4),

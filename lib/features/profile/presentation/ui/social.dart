@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -27,6 +29,8 @@ class _UserSocialRelationsWidgetState
   @override
   void initState() {
     super.initState();
+    log('Im coming here');
+    ref.read(userProvider.notifier).getSocialRelations();
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mumag/common/utils/media_query.dart';
 import 'package:mumag/common/widgets/bottom_sheet.dart';
 import 'package:mumag/common/widgets/fab.dart';
 import 'package:mumag/common/widgets/profile/content.dart';
@@ -31,6 +32,7 @@ class ViewUserProfileView extends ConsumerWidget {
               onPressed: () => showAppBottomSheet(
                 context,
                 child: const SuggestionContainer(),
+                height: context.deviceHeight / 2,
               ),
               child: Icon(
                 PhosphorIcons.paperPlaneTilt(PhosphorIconsStyle.bold),

@@ -6,6 +6,7 @@ void showAppBottomSheet(
   double? height,
 }) {
   showModalBottomSheet<void>(
+    isScrollControlled: true,
     context: context,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
@@ -29,14 +30,18 @@ class AppBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: height,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
-        child: Column(
-          children: [
-            Expanded(child: child),
-          ],
+    return Padding(
+      padding: MediaQuery.of(context).viewInsets,
+      child: SizedBox(
+        height: height,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(child: child),
+            ],
+          ),
         ),
       ),
     );
