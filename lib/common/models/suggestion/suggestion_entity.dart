@@ -17,7 +17,13 @@ enum SuggestionType {
 
 @freezed
 class SuggestionEntity with _$SuggestionEntity {
-  factory SuggestionEntity() = _SuggestionEntity;
+  factory SuggestionEntity({
+    required int id,
+    required SuggestionType type,
+    required int rating,
+    required int sentTo,
+    required String spotifyId,
+  }) = _SuggestionEntity;
 
   factory SuggestionEntity.fromJson(Map<String, dynamic> json) =>
       _$SuggestionEntityFromJson(json);

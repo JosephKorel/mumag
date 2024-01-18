@@ -1,13 +1,19 @@
+import 'package:mumag/common/models/success_events/success_events.dart';
 import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
 
-sealed class SuggestionEvents {}
+sealed class SuggestionEvents {
+  const SuggestionEvents({this.successMsg});
+
+  final SuccessEvent? successMsg;
+}
 
 class InsertSuggestionParams extends SuggestionEvents {
-  InsertSuggestionParams({
+  const InsertSuggestionParams({
     required this.suggestedBy,
     required this.suggestedTo,
     required this.spotifyId,
     required this.type,
+    super.successMsg = const InsertSuggestionSuccess(),
   });
 
   final int suggestedBy;
@@ -26,9 +32,10 @@ class InsertSuggestionParams extends SuggestionEvents {
 }
 
 class UpdateSuggestionParams extends SuggestionEvents {
-  UpdateSuggestionParams({
+  const UpdateSuggestionParams({
     required this.suggestionId,
     required this.rating,
+    super.successMsg = const InsertSuggestionSuccess(),
   });
 
   final int suggestionId;
@@ -43,8 +50,9 @@ class UpdateSuggestionParams extends SuggestionEvents {
 }
 
 class DeleteSuggestionParams extends SuggestionEvents {
-  DeleteSuggestionParams({
+  const DeleteSuggestionParams({
     required this.suggestionId,
+    super.successMsg = const InsertSuggestionSuccess(),
   });
 
   final int suggestionId;
@@ -52,6 +60,20 @@ class DeleteSuggestionParams extends SuggestionEvents {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'suggestionId': suggestionId,
+    };
+  }
+}
+
+class GetUserSuggestionParams extends SuggestionEvents {
+  GetUserSuggestionParams({
+    required this.userId,
+  });
+
+  final int userId;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'userId': userId,
     };
   }
 }

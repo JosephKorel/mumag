@@ -1,5 +1,5 @@
 sealed class SuccessEvent {
-  SuccessEvent({required this.successMsg});
+  const SuccessEvent({required this.successMsg});
 
   final String successMsg;
 }
@@ -27,5 +27,12 @@ final class UpdateRatingSuccess extends SuccessEvent {
 final class DeleteRatingSuccess extends SuccessEvent {
   DeleteRatingSuccess({
     super.successMsg = 'Rating removed.',
+  });
+}
+
+// Suggestion
+final class InsertSuggestionSuccess extends SuccessEvent {
+  const InsertSuggestionSuccess({
+    super.successMsg = 'Your suggestion was sent!',
   });
 }

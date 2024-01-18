@@ -20,7 +20,16 @@ SuggestionEntity _$SuggestionEntityFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SuggestionEntity {
+  int get id => throw _privateConstructorUsedError;
+  SuggestionType get type => throw _privateConstructorUsedError;
+  int get rating => throw _privateConstructorUsedError;
+  int get sentTo => throw _privateConstructorUsedError;
+  String get spotifyId => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $SuggestionEntityCopyWith<SuggestionEntity> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -28,6 +37,9 @@ abstract class $SuggestionEntityCopyWith<$Res> {
   factory $SuggestionEntityCopyWith(
           SuggestionEntity value, $Res Function(SuggestionEntity) then) =
       _$SuggestionEntityCopyWithImpl<$Res, SuggestionEntity>;
+  @useResult
+  $Res call(
+      {int id, SuggestionType type, int rating, int sentTo, String spotifyId});
 }
 
 /// @nodoc
@@ -39,13 +51,51 @@ class _$SuggestionEntityCopyWithImpl<$Res, $Val extends SuggestionEntity>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? type = null,
+    Object? rating = null,
+    Object? sentTo = null,
+    Object? spotifyId = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as SuggestionType,
+      rating: null == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as int,
+      sentTo: null == sentTo
+          ? _value.sentTo
+          : sentTo // ignore: cast_nullable_to_non_nullable
+              as int,
+      spotifyId: null == spotifyId
+          ? _value.spotifyId
+          : spotifyId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$SuggestionEntityImplCopyWith<$Res> {
+abstract class _$$SuggestionEntityImplCopyWith<$Res>
+    implements $SuggestionEntityCopyWith<$Res> {
   factory _$$SuggestionEntityImplCopyWith(_$SuggestionEntityImpl value,
           $Res Function(_$SuggestionEntityImpl) then) =
       __$$SuggestionEntityImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int id, SuggestionType type, int rating, int sentTo, String spotifyId});
 }
 
 /// @nodoc
@@ -55,30 +105,94 @@ class __$$SuggestionEntityImplCopyWithImpl<$Res>
   __$$SuggestionEntityImplCopyWithImpl(_$SuggestionEntityImpl _value,
       $Res Function(_$SuggestionEntityImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? type = null,
+    Object? rating = null,
+    Object? sentTo = null,
+    Object? spotifyId = null,
+  }) {
+    return _then(_$SuggestionEntityImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as SuggestionType,
+      rating: null == rating
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as int,
+      sentTo: null == sentTo
+          ? _value.sentTo
+          : sentTo // ignore: cast_nullable_to_non_nullable
+              as int,
+      spotifyId: null == spotifyId
+          ? _value.spotifyId
+          : spotifyId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$SuggestionEntityImpl implements _SuggestionEntity {
-  _$SuggestionEntityImpl();
+  _$SuggestionEntityImpl(
+      {required this.id,
+      required this.type,
+      required this.rating,
+      required this.sentTo,
+      required this.spotifyId});
 
   factory _$SuggestionEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$SuggestionEntityImplFromJson(json);
 
   @override
+  final int id;
+  @override
+  final SuggestionType type;
+  @override
+  final int rating;
+  @override
+  final int sentTo;
+  @override
+  final String spotifyId;
+
+  @override
   String toString() {
-    return 'SuggestionEntity()';
+    return 'SuggestionEntity(id: $id, type: $type, rating: $rating, sentTo: $sentTo, spotifyId: $spotifyId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SuggestionEntityImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$SuggestionEntityImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.rating, rating) || other.rating == rating) &&
+            (identical(other.sentTo, sentTo) || other.sentTo == sentTo) &&
+            (identical(other.spotifyId, spotifyId) ||
+                other.spotifyId == spotifyId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, id, type, rating, sentTo, spotifyId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SuggestionEntityImplCopyWith<_$SuggestionEntityImpl> get copyWith =>
+      __$$SuggestionEntityImplCopyWithImpl<_$SuggestionEntityImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -89,8 +203,28 @@ class _$SuggestionEntityImpl implements _SuggestionEntity {
 }
 
 abstract class _SuggestionEntity implements SuggestionEntity {
-  factory _SuggestionEntity() = _$SuggestionEntityImpl;
+  factory _SuggestionEntity(
+      {required final int id,
+      required final SuggestionType type,
+      required final int rating,
+      required final int sentTo,
+      required final String spotifyId}) = _$SuggestionEntityImpl;
 
   factory _SuggestionEntity.fromJson(Map<String, dynamic> json) =
       _$SuggestionEntityImpl.fromJson;
+
+  @override
+  int get id;
+  @override
+  SuggestionType get type;
+  @override
+  int get rating;
+  @override
+  int get sentTo;
+  @override
+  String get spotifyId;
+  @override
+  @JsonKey(ignore: true)
+  _$$SuggestionEntityImplCopyWith<_$SuggestionEntityImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -64,3 +64,17 @@ Map<String, dynamic> userEntityWithoutId(UserEntity userEntity) {
     'lastUpdatedAt': userEntity.lastUpdatedAt.toString(),
   };
 }
+
+Map<String, dynamic> userEntityToJson(UserEntity userEntity) {
+  return {
+    'id': userEntity.id,
+    'name': userEntity.name,
+    'email': userEntity.email,
+    'avatarUrl': userEntity.avatarUrl,
+    'genres': userEntity.genres.join(','),
+    'backgroundUrl': userEntity.backgroundUrl,
+    'lastUpdatedAt': userEntity.lastUpdatedAt.toIso8601String(),
+    'socialRelations': userEntity.socialRelations.toJson(),
+    'ratings': userEntity.ratings.map((e) => e.toJson()),
+  };
+}

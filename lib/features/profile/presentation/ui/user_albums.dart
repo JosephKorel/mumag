@@ -15,7 +15,6 @@ class SavedAlbumsView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final albums = ref.watch(userSavedAlbumsProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -35,13 +34,9 @@ class SavedAlbumsView extends ConsumerWidget {
         const SizedBox(
           height: 16,
         ),
-        SizedBox(
+        const SizedBox(
           height: 120,
-          child: albums.when(
-            data: (data) => const AlbumGridItems(),
-            error: (error, stackTrace) => const Text('Some error'),
-            loading: SavedAlbumsLoading.new,
-          ),
+          child: AlbumGridItems(),
         ),
       ],
     );
@@ -88,7 +83,19 @@ class AlbumGridItems extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final albums = ref.watch(userSavedAlbumsProvider).requireValue;
+    final albumsProvider = ref.watch(userSavedAlbumsProvider);
+    final albums = ref.watch(albumListProvider);
+
+    if (albumsProvider.hasError) {
+      return const Center(
+        child: Icon(Icons.warning),
+      );
+    }
+
+    if (albums.isEmpty && albumsProvider.isLoading) {
+      return const SavedAlbumsLoading();
+    }
+
     ref.watch(viewingAlbumProvider);
 
     return GridView.builder(

@@ -1,3 +1,4 @@
+import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
 import 'package:mumag/common/services/backend_api/domain/api_repository.dart';
 import 'package:mumag/common/services/suggestion/domain/suggestion_events.dart';
 import 'package:mumag/common/services/suggestion/domain/suggestion_repo.dart';
@@ -39,6 +40,24 @@ class SuggestionRepositoryImpl extends SuggestionRepository {
   }) async {
     try {
       await _api.post(path: _path, params: params.toMap());
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<SuggestionEntity>> getUserSuggestions({
+    required GetUserSuggestionParams params,
+  }) async {
+    try {
+      final result = await _api.get(
+        path: '$_path/user-suggestions',
+        query: params.toMap(),
+      );
+
+      return List<SuggestionEntity>.from(result!['data'] as List<dynamic>)
+          .map((e) => SuggestionEntity.fromJson(e as Map<String, dynamic>))
+          .toList();
     } catch (e) {
       rethrow;
     }

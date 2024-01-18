@@ -15,30 +15,65 @@ class SearchMedia extends _$SearchMedia {
 }
 
 @riverpod
-FutureOr<String> spotifySearch(
-  SpotifySearchRef ref, {
-  required SearchType type,
-}) async {
-  final search = ref.watch(searchMediaProvider);
-  final spotify = ref.watch(spotifyApiProvider);
+class SpotifySearch extends _$SpotifySearch {
+  @override
+  FutureOr<List<dynamic>> build({
+    required SearchType type,
+  }) async {
+    final search = ref.watch(searchMediaProvider);
+    final spotify = ref.watch(spotifyApiProvider);
 
-  var disposed = false;
+    if (search.isEmpty) {
+      return [];
+    }
 
-  ref.onDispose(() {
-    disposed = true;
-  });
+    var disposed = false;
 
-  await Future<void>.delayed(const Duration(milliseconds: 500));
+    ref.onDispose(() {
+      disposed = true;
+    });
 
-  if (disposed) {
-    throw Exception();
+    await Future<void>.delayed(const Duration(milliseconds: 500));
+
+    if (disposed) {
+      throw Exception();
+    }
+
+    final result = await spotify.search.get(search, types: [type]).getPage(
+      8,
+    );
+
+    final items = result.first.items;
+
+    if (items == null) {
+      return [];
+    }
+
+    return items.toList();
   }
 
-  final result = await spotify.search.get(search, types: [type]).getPage(
-    8,
-  );
+  Future<void> onScrollEnd({
+    required SearchType type,
+    required int offset,
+  }) async {
+    final search = ref.read(searchMediaProvider);
+    final spotify = ref.read(spotifyApiProvider);
 
-  final resultItems = result.first;
+    state = const AsyncLoading();
 
-  return '';
+    state = await AsyncValue.guard(() async {
+      final result = await spotify.search.get(search, types: [type]).getPage(
+        8,
+        offset,
+      );
+
+      final items = result.first.items;
+
+      if (items == null) {
+        return state.requireValue;
+      }
+
+      return [...state.requireValue, ...items];
+    });
+  }
 }

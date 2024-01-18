@@ -40,5 +40,19 @@ final credentialsImplementationProvider =
 
 typedef CredentialsImplementationRef
     = AutoDisposeProviderRef<SpotifyApiCredentialsRepository>;
+String _$localDataHash() => r'06665254ef11992ba361c018dd4515e3b682b6dd';
+
+/// See also [localData].
+@ProviderFor(localData)
+final localDataProvider = AutoDisposeProvider<LocalStorageUsecase>.internal(
+  localData,
+  name: r'localDataProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$localDataHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef LocalDataRef = AutoDisposeProviderRef<LocalStorageUsecase>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

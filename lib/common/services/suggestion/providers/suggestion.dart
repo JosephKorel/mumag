@@ -3,6 +3,7 @@ import 'package:mumag/common/services/suggestion/data/suggestion_impl.dart';
 import 'package:mumag/common/services/suggestion/domain/suggestion_events.dart';
 import 'package:mumag/common/services/suggestion/domain/suggestion_repo.dart';
 import 'package:mumag/common/services/suggestion/usecase/suggestion_usecase.dart';
+import 'package:mumag/common/toast/toast_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'suggestion.g.dart';
@@ -37,14 +38,18 @@ class SuggestionHandler extends _$SuggestionHandler {
       final request =
           await ref.read(suggestionControllerProvider)(event: event).run();
 
-      final result = request.fold(
-        (l) => l,
-        (r) => null,
+      request.fold(
+        (l) =>
+            ref.read(toastMessageProvider.notifier).onException(exception: l),
+        (r) {
+          if (event.successMsg == null) {
+            return;
+          }
+          ref
+              .read(toastMessageProvider.notifier)
+              .onSuccessEvent(successEvent: event.successMsg!);
+        },
       );
-
-      if (request.isLeft()) {
-        throw result!;
-      }
     });
   }
 }

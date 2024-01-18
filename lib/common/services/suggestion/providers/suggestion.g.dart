@@ -57,7 +57,7 @@ final suggestionControllerProvider =
 
 typedef SuggestionControllerRef
     = AutoDisposeProviderRef<SuggestionUsecaseController>;
-String _$suggestionHandlerHash() => r'b53c36fc79ef188632b89754fb81a6f8697a68bb';
+String _$suggestionHandlerHash() => r'd29be8b27b7b5c503ad1f5c8728afa43419ea1b5';
 
 /// See also [SuggestionHandler].
 @ProviderFor(SuggestionHandler)

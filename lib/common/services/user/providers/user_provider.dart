@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:mocktail/mocktail.dart';
 import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/services/backend_api/providers/api.dart';
 import 'package:mumag/common/services/firebase/providers/auth.dart';
 import 'package:mumag/common/services/rating/providers/rating.dart';
+import 'package:mumag/common/services/shared_pref/providers/shared_pref.dart';
 import 'package:mumag/common/services/user/data/api_impl.dart';
 import 'package:mumag/common/services/user/domain/api/api_repository.dart';
 import 'package:mumag/common/services/user/domain/database/user_db_events.dart';
@@ -13,6 +15,8 @@ import 'package:mumag/features/profile/presentation/providers/social.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'user_provider.g.dart';
+
+const _userKey = 'user';
 
 @riverpod
 UserApiUsecaseRepository userApi(UserApiRef ref) {
@@ -51,6 +55,7 @@ Future<bool> userExists(UserExistsRef ref) async {
 class User extends _$User {
   @override
   Future<UserEntity?> build() async {
+    final localData = ref.watch(localDataProvider);
     final firebaseUser = ref.watch(authServiceProvider).currentUser();
 
     if (firebaseUser == null) {
@@ -66,13 +71,30 @@ class User extends _$User {
         )
         .run();
 
-    return user.fold((l) => throw l, (r) => r);
+    return user.fold((l) => throw l, (r) {
+      localData.setString(
+        key: _userKey,
+        value: jsonEncode(userEntityToJson(r!)),
+      );
+      return r;
+    });
   }
 
   Future<void> updateRatings() async {
     state = await AsyncValue.guard(() async {
       final ratings = await ref.read(userRatingsProvider.future);
-      return state.requireValue!.copyWith(ratings: ratings);
+      final updatedUser = state.requireValue!.copyWith(ratings: ratings);
+
+      // Update user cache
+      ref.read(localDataProvider).setString(
+            key: _userKey,
+            value: jsonEncode(userEntityToJson(updatedUser)),
+          );
+
+      // Update user provider
+      ref.invalidate(localUserProvider);
+
+      return updatedUser;
     });
   }
 
@@ -91,7 +113,18 @@ class User extends _$User {
           )
           .run();
 
-      return newUser.fold((l) => state.requireValue, (r) => r);
+      return newUser.fold((l) => state.requireValue, (r) {
+        // Update user cache
+        ref.read(localDataProvider).setString(
+              key: _userKey,
+              value: jsonEncode(userEntityToJson(updatedUser)),
+            );
+
+        // Update user provider
+        ref.invalidate(localUserProvider);
+
+        return r;
+      });
     });
   }
 
@@ -104,11 +137,32 @@ class User extends _$User {
         (r) {
           final updatedUser = state.requireValue!.copyWith(socialRelations: r);
 
+          // Update user cache
+          ref.read(localDataProvider).setString(
+                key: _userKey,
+                value: jsonEncode(userEntityToJson(updatedUser)),
+              );
+
+          // Update user provider
+          ref.invalidate(localUserProvider);
+
           return updatedUser;
         },
       );
     });
   }
+}
+
+@riverpod
+UserEntity? localUser(LocalUserRef ref) {
+  final localData = ref.watch(localDataProvider);
+  final user = localData.getString<Map<String, dynamic>>(key: _userKey);
+
+  if (user == null) {
+    return null;
+  }
+
+  return UserEntity.fromJson(user);
 }
 
 // For mocking

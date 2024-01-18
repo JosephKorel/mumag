@@ -49,7 +49,21 @@ final userExistsProvider = AutoDisposeFutureProvider<bool>.internal(
 );
 
 typedef UserExistsRef = AutoDisposeFutureProviderRef<bool>;
-String _$userHash() => r'21071238f7eb75682d26bf7bae904389dc69d5ef';
+String _$localUserHash() => r'0b8b6e2943d18347273c438037a62b8a8b35923f';
+
+/// See also [localUser].
+@ProviderFor(localUser)
+final localUserProvider = AutoDisposeProvider<UserEntity?>.internal(
+  localUser,
+  name: r'localUserProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$localUserHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef LocalUserRef = AutoDisposeProviderRef<UserEntity?>;
+String _$userHash() => r'c775c830aa243fb4af1e0eb14ca8496f48ce2c6e';
 
 /// See also [User].
 @ProviderFor(User)

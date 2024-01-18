@@ -4,7 +4,7 @@ import 'package:mumag/common/services/spotify_auth/domain/credentials.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spotify/spotify.dart';
 
-const credentialsKey = 'credentials';
+const _credentialsKey = 'credentials';
 
 final class SpotifyApiCredentialsImpl extends SpotifyApiCredentialsRepository {
   SpotifyApiCredentialsImpl(this._sharedPref);
@@ -19,7 +19,7 @@ final class SpotifyApiCredentialsImpl extends SpotifyApiCredentialsRepository {
     required SpotifyApiCredentials credentials,
   }) async {
     return _sharedPref.setString(
-      credentialsKey,
+      _credentialsKey,
       CredentialsAdapter.toJson(
         credentials: credentials,
       ),
@@ -28,7 +28,7 @@ final class SpotifyApiCredentialsImpl extends SpotifyApiCredentialsRepository {
 
   @override
   SpotifyApiCredentials? retrieveCredentials() {
-    final retrievedKey = _sharedPref.getString(credentialsKey);
+    final retrievedKey = _sharedPref.getString(_credentialsKey);
 
     if (retrievedKey != null) {
       return CredentialsAdapter.fromJson(retrievedKey);
@@ -38,6 +38,6 @@ final class SpotifyApiCredentialsImpl extends SpotifyApiCredentialsRepository {
 
   @override
   void deleteCredentials() {
-    _sharedPref.remove(credentialsKey);
+    _sharedPref.remove(_credentialsKey);
   }
 }

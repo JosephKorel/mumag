@@ -6,7 +6,22 @@ part of 'search.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$spotifySearchHash() => r'ad1dfc77fb3f823f3dca87fd20d5c0d698c5f4a6';
+String _$searchMediaHash() => r'ef00a1428b54277e45e211f2528c3a39eff46e49';
+
+/// See also [SearchMedia].
+@ProviderFor(SearchMedia)
+final searchMediaProvider =
+    AutoDisposeNotifierProvider<SearchMedia, String>.internal(
+  SearchMedia.new,
+  name: r'searchMediaProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$searchMediaHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$SearchMedia = AutoDisposeNotifier<String>;
+String _$spotifySearchHash() => r'a94e2594605420475ac72d741bab2ea4aec98304';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,16 +44,25 @@ class _SystemHash {
   }
 }
 
-/// See also [spotifySearch].
-@ProviderFor(spotifySearch)
+abstract class _$SpotifySearch
+    extends BuildlessAutoDisposeAsyncNotifier<List<dynamic>> {
+  late final SearchType type;
+
+  FutureOr<List<dynamic>> build({
+    required SearchType type,
+  });
+}
+
+/// See also [SpotifySearch].
+@ProviderFor(SpotifySearch)
 const spotifySearchProvider = SpotifySearchFamily();
 
-/// See also [spotifySearch].
-class SpotifySearchFamily extends Family<AsyncValue<String>> {
-  /// See also [spotifySearch].
+/// See also [SpotifySearch].
+class SpotifySearchFamily extends Family<AsyncValue<List<dynamic>>> {
+  /// See also [SpotifySearch].
   const SpotifySearchFamily();
 
-  /// See also [spotifySearch].
+  /// See also [SpotifySearch].
   SpotifySearchProvider call({
     required SearchType type,
   }) {
@@ -71,16 +95,14 @@ class SpotifySearchFamily extends Family<AsyncValue<String>> {
   String? get name => r'spotifySearchProvider';
 }
 
-/// See also [spotifySearch].
-class SpotifySearchProvider extends AutoDisposeFutureProvider<String> {
-  /// See also [spotifySearch].
+/// See also [SpotifySearch].
+class SpotifySearchProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<SpotifySearch, List<dynamic>> {
+  /// See also [SpotifySearch].
   SpotifySearchProvider({
     required SearchType type,
   }) : this._internal(
-          (ref) => spotifySearch(
-            ref as SpotifySearchRef,
-            type: type,
-          ),
+          () => SpotifySearch()..type = type,
           from: spotifySearchProvider,
           name: r'spotifySearchProvider',
           debugGetCreateSourceHash:
@@ -106,13 +128,20 @@ class SpotifySearchProvider extends AutoDisposeFutureProvider<String> {
   final SearchType type;
 
   @override
-  Override overrideWith(
-    FutureOr<String> Function(SpotifySearchRef provider) create,
+  FutureOr<List<dynamic>> runNotifierBuild(
+    covariant SpotifySearch notifier,
   ) {
+    return notifier.build(
+      type: type,
+    );
+  }
+
+  @override
+  Override overrideWith(SpotifySearch Function() create) {
     return ProviderOverride(
       origin: this,
       override: SpotifySearchProvider._internal(
-        (ref) => create(ref as SpotifySearchRef),
+        () => create()..type = type,
         from: from,
         name: null,
         dependencies: null,
@@ -124,7 +153,8 @@ class SpotifySearchProvider extends AutoDisposeFutureProvider<String> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<String> createElement() {
+  AutoDisposeAsyncNotifierProviderElement<SpotifySearch, List<dynamic>>
+      createElement() {
     return _SpotifySearchProviderElement(this);
   }
 
@@ -142,33 +172,18 @@ class SpotifySearchProvider extends AutoDisposeFutureProvider<String> {
   }
 }
 
-mixin SpotifySearchRef on AutoDisposeFutureProviderRef<String> {
+mixin SpotifySearchRef on AutoDisposeAsyncNotifierProviderRef<List<dynamic>> {
   /// The parameter `type` of this provider.
   SearchType get type;
 }
 
 class _SpotifySearchProviderElement
-    extends AutoDisposeFutureProviderElement<String> with SpotifySearchRef {
+    extends AutoDisposeAsyncNotifierProviderElement<SpotifySearch,
+        List<dynamic>> with SpotifySearchRef {
   _SpotifySearchProviderElement(super.provider);
 
   @override
   SearchType get type => (origin as SpotifySearchProvider).type;
 }
-
-String _$searchMediaHash() => r'ef00a1428b54277e45e211f2528c3a39eff46e49';
-
-/// See also [SearchMedia].
-@ProviderFor(SearchMedia)
-final searchMediaProvider =
-    AutoDisposeNotifierProvider<SearchMedia, String>.internal(
-  SearchMedia.new,
-  name: r'searchMediaProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$searchMediaHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$SearchMedia = AutoDisposeNotifier<String>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

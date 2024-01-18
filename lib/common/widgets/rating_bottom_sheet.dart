@@ -8,6 +8,7 @@ import 'package:mumag/common/models/success_events/success_events.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/toast/toast_provider.dart';
 import 'package:mumag/common/widgets/bottom_sheet.dart';
+import 'package:mumag/features/album_view/presentation/providers/album.dart';
 import 'package:mumag/features/album_view/presentation/providers/rating.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
@@ -226,7 +227,11 @@ class RatingButtonContainer extends ConsumerWidget {
 
   Future<bool> _onConfirm(int value, WidgetRef ref) async {
     final result = await ref.read(rateAlbumProvider(rateValue: value).future);
-    return result.fold((l) => false, (r) => true);
+    return result.fold((l) => false, (r) {
+      // Update current album rating
+      ref.invalidate(albumRatingProvider);
+      return true;
+    });
   }
 
   void _showToast(WidgetRef ref) => ref

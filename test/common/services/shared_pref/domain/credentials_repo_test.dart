@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:mumag/common/services/shared_pref/data/credentials_impl.dart';
 import 'package:mumag/common/services/shared_pref/domain/credentials_repo.dart';
+import 'package:mumag/common/services/shared_pref/usecase/credentials_impl.dart';
 import 'package:mumag/common/services/spotify_auth/domain/credentials.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spotify/spotify.dart';
@@ -31,7 +31,8 @@ void main() async {
 
       await credentialsImpl.saveCredentials(credentials: fakeCredentials);
       final insertedCredentials = CredentialsAdapter.fromJson(
-          sharedPreferences.getString('credentials')!);
+        sharedPreferences.getString('credentials')!,
+      );
 
       expect(insertedCredentials.accessToken, '123');
     });

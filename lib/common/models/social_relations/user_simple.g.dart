@@ -7,8 +7,7 @@ part of 'user_simple.dart';
 // **************************************************************************
 
 _$SocialUserSimpleImpl _$$SocialUserSimpleImplFromJson(
-  Map<String, dynamic> json,
-) =>
+        Map<String, dynamic> json) =>
     _$SocialUserSimpleImpl(
       id: json['id'] as int,
       name: json['name'] as String,
@@ -18,8 +17,7 @@ _$SocialUserSimpleImpl _$$SocialUserSimpleImplFromJson(
     );
 
 Map<String, dynamic> _$$SocialUserSimpleImplToJson(
-  _$SocialUserSimpleImpl instance,
-) =>
+        _$SocialUserSimpleImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
