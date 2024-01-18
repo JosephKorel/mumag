@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/services/social_relations/domain/relations_events.dart';
+import 'package:mumag/common/services/social_relations/providers/local_data.dart';
 import 'package:mumag/common/services/social_relations/providers/social.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
+import 'package:mumag/features/profile/presentation/providers/social.dart';
 import 'package:mumag/features/view_profile/presentation/providers/view_user.dart';
 
 class ViewingProfileSocial extends ConsumerWidget {
@@ -11,9 +13,10 @@ class ViewingProfileSocial extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final visitingUser = ref.watch(viewingUserProfileProvider).requireValue;
-    final currentUser = ref.watch(userProvider).requireValue!;
+    final currentUser = ref.watch(localUserProvider)!;
+    final followingUsers = ref.watch(userRelationsProvider).following;
 
-    final isFollowing = currentUser.socialRelations.following.any(
+    final isFollowing = followingUsers.any(
       (element) => element.id == visitingUser.id,
     );
 
@@ -23,14 +26,17 @@ class ViewingProfileSocial extends ConsumerWidget {
 
     final socialHandler = ref.watch(socialHandlerProvider);
 
-    void onFollow() {
-      ref.read(socialHandlerProvider.notifier).onAction(
-          FollowUserEvent(
-            currentUserId: currentUser.id,
-            followingUserId: visitingUser.id,
-          ), () async {
-        await ref.read(userProvider.notifier).getSocialRelations();
-      });
+    Future<void> onFollow() async {
+      await ref.read(socialHandlerProvider.notifier).onAction(
+            FollowUserEvent(
+              currentUserId: currentUser.id,
+              followingUserId: visitingUser.id,
+            ),
+            null,
+          );
+
+      ref.invalidate(mySocialRelationsProvider);
+      await ref.read(mySocialRelationsProvider.future);
     }
 
     return TextButton.icon(

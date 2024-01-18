@@ -49,7 +49,7 @@ final userExistsProvider = AutoDisposeFutureProvider<bool>.internal(
 );
 
 typedef UserExistsRef = AutoDisposeFutureProviderRef<bool>;
-String _$userHash() => r'414b1089c4bb4c2919b8565caae86d7e8eec0df3';
+String _$userHash() => r'046ff93e724357cbef25d1426f09d7e57c378025';
 
 /// See also [User].
 @ProviderFor(User)
@@ -64,7 +64,7 @@ final userProvider =
 );
 
 typedef _$User = AutoDisposeAsyncNotifier<UserEntity?>;
-String _$localUserHash() => r'bee807e19782547b5b811a393ea9cb3a6fe6c3da';
+String _$localUserHash() => r'094fafaad8c2f23605150aaebfd0b8ddb78d172d';
 
 /// See also [LocalUser].
 @ProviderFor(LocalUser)

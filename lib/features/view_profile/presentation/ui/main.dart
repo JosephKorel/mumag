@@ -22,33 +22,34 @@ class ViewUserProfileView extends ConsumerWidget {
     void onScroll(double offset) =>
         ref.read(scrollOffsetProvider.notifier).onScroll(offset);
 
-    return ProfileContainer(
-      asyncUser: user,
-      user: user.value,
-      offset: offset,
-      onScroll: onScroll,
-      floatingActionButton: user.isLoading
-          ? null
-          : AnimatedFAB(
-              show: true,
-              onPressed: () => showAppBottomSheet(
-                context,
-                child: const SuggestionContainer(),
-                height: context.deviceHeight / 2,
+    return user.when(
+      data: (data) => UserProfileView(
+        user: data,
+        offset: offset,
+        onScroll: onScroll,
+        floatingActionButton: user.isLoading
+            ? null
+            : AnimatedFAB(
+                show: true,
+                onPressed: () => showAppBottomSheet(
+                  context,
+                  child: const SuggestionContainer(),
+                  height: context.deviceHeight / 2,
+                ),
+                child: Icon(
+                  PhosphorIcons.paperPlaneTilt(PhosphorIconsStyle.bold),
+                ),
               ),
-              child: Icon(
-                PhosphorIcons.paperPlaneTilt(PhosphorIconsStyle.bold),
-              ),
-            ),
-      children: user.isLoading
-          ? []
-          : [
-              const ViewingProfileSocial(),
-              ProfileGenres(genres: user.requireValue.genres.sublist(0, 5)),
-              const SizedBox(
-                height: 8,
-              ),
-            ],
+        children: [
+          const ViewingProfileSocial(),
+          ProfileGenres(genres: user.requireValue.genres.sublist(0, 5)),
+          const SizedBox(
+            height: 8,
+          ),
+        ],
+      ),
+      error: (error, stackTrace) => const Scaffold(),
+      loading: ProfileLoadingScreen.new,
     );
   }
 }

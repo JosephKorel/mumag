@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:mocktail/mocktail.dart';
 import 'package:mumag/common/models/user/user_entity.dart';
@@ -13,7 +12,6 @@ import 'package:mumag/common/services/user/domain/api/api_repository.dart';
 import 'package:mumag/common/services/user/domain/database/user_db_events.dart';
 import 'package:mumag/common/toast/toast_provider.dart';
 import 'package:mumag/features/connect/presentation/providers/connect.dart';
-import 'package:mumag/features/profile/presentation/providers/social.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'user_provider.g.dart';
@@ -147,42 +145,12 @@ class User extends _$User {
       });
     });
   }
-
-  Future<void> getSocialRelations() async {
-    state = await AsyncValue.guard(() async {
-      ref.invalidate(mySocialRelationsProvider);
-
-      final socialRelations = await ref.read(mySocialRelationsProvider.future);
-
-      return socialRelations.fold(
-        (l) => state.requireValue,
-        (r) async {
-          final updatedUser = state.requireValue!.copyWith(socialRelations: r);
-
-          // Update user cache
-          /*        await ref
-              .read(localDataProvider)
-              .setString(
-                key: _userKey,
-                value: jsonEncode(userEntityToJson(updatedUser)),
-              )
-              .run();
-
-          // Update user provider
-          ref.invalidate(localUserProvider); */
-
-          return updatedUser;
-        },
-      );
-    });
-  }
 }
 
 @riverpod
 class LocalUser extends _$LocalUser {
   @override
   UserEntity? build() {
-    log('IM REBUILDING');
     final localData = ref.watch(localDataProvider);
     final user = localData.getString<Map<String, dynamic>>(key: _userKey);
 

@@ -19,8 +19,50 @@ class ProfileView extends ConsumerWidget {
     final cachedUser = ref.watch(localUserProvider);
     final offset = ref.watch(scrollOffsetProvider);
 
+    if (cachedUser == null && asyncUser.isLoading) {
+      return const ProfileLoadingScreen();
+    }
+
+    if (asyncUser.hasError) {
+      return const Scaffold();
+    }
+
     void onScroll(double offset) =>
         ref.read(scrollOffsetProvider.notifier).onScroll(offset);
+
+    return UserProfileView(
+      user: cachedUser!,
+      offset: offset,
+      onScroll: onScroll,
+      appBarActions: const [ProfileMenuButton()],
+      children: [
+        const SizedBox(
+          height: 8,
+        ),
+        const UserSocialRelationsWidget(),
+        const SizedBox(
+          height: 8,
+        ),
+        const UserProfileGenres(),
+        const SizedBox(
+          height: 16,
+        ),
+        SizedBox(
+          height:
+              cachedUser.ratings.isEmpty ? null : context.deviceHeight / 2.5,
+          width: double.infinity,
+          child: ProfileRatings(ratings: cachedUser.ratings),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        const SavedAlbumsView(),
+      ],
+    );
+
+    /*   void onScroll(double offset) =>
+        ref.read(scrollOffsetProvider.notifier).onScroll(offset);
+
 
     return ProfileContainer(
       appBarActions: const [ProfileMenuButton()],
@@ -54,6 +96,6 @@ class ProfileView extends ConsumerWidget {
               ),
               const SavedAlbumsView(),
             ],
-    );
+    ); */
   }
 }

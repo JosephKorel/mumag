@@ -27,27 +27,20 @@ class ProfileContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (user == null && asyncUser.isLoading) {
-      return const _ProfileLoadingScreen();
-    }
+    return const Scaffold();
 
-    if (asyncUser.hasError) {
-      return const Scaffold();
-    }
-
-    return _UserProfileView(
+    /* return _UserProfileView(
       appBarActions: appBarActions,
-      user: user!,
       offset: offset,
       floatingActionButton: floatingActionButton,
       onScroll: onScroll,
       children: children,
-    );
+    ); */
   }
 }
 
-class _ProfileLoadingScreen extends StatelessWidget {
-  const _ProfileLoadingScreen({super.key});
+class ProfileLoadingScreen extends StatelessWidget {
+  const ProfileLoadingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -99,19 +92,20 @@ class _ProfileLoadingScreen extends StatelessWidget {
   }
 }
 
-class _UserProfileView extends ConsumerWidget {
-  const _UserProfileView({
+class UserProfileView extends ConsumerWidget {
+  const UserProfileView({
     required this.children,
     required this.offset,
-    required this.user,
     required this.onScroll,
+    required this.user,
+    super.key,
     this.appBarActions,
     this.floatingActionButton,
   });
 
+  final UserEntity user;
   final List<Widget> children;
   final double offset;
-  final UserEntity user;
   final List<Widget>? appBarActions;
   final Widget? floatingActionButton;
   final void Function(double offset) onScroll;
@@ -142,7 +136,7 @@ class _UserProfileView extends ConsumerWidget {
               ),
               Column(
                 children: [
-                  const Expanded(child: SizedBox.expand()),
+                  const Spacer(),
                   Expanded(
                     flex: 3,
                     child: ProfileMainView(
@@ -158,7 +152,7 @@ class _UserProfileView extends ConsumerWidget {
         ),
       ),
       error: (error, stackTrace) => const Scaffold(),
-      loading: _ProfileLoadingScreen.new,
+      loading: ProfileLoadingScreen.new,
     );
   }
 }

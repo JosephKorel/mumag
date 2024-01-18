@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mumag/common/models/social_relations/user_simple.dart';
 import 'package:mumag/common/services/social_relations/domain/relations_events.dart';
+import 'package:mumag/common/services/social_relations/providers/local_data.dart';
 import 'package:mumag/common/services/social_relations/providers/social.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
 import 'package:mumag/common/theme/utils.dart';
@@ -27,7 +30,6 @@ class _UserSocialRelationsWidgetState
   @override
   void initState() {
     super.initState();
-    ref.read(userProvider.notifier).getSocialRelations();
   }
 
   @override
@@ -66,7 +68,7 @@ class _LoadedState extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final socialAsyncValue = ref.watch(mySocialRelationsProvider);
-    final relations = ref.watch(localUserProvider)!.socialRelations;
+    final relations = ref.watch(userRelationsProvider);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -148,10 +150,12 @@ class FollowersList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final followers = ref.watch(
-      userProvider
-          .select((value) => value.requireValue!.socialRelations.followers),
-    );
+    final followers = ref
+        .watch(
+          userRelationsProvider,
+        )
+        .followers;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -203,11 +207,11 @@ class FollowingList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(viewingUserIdProvider);
 
-    final user = ref
+    final following = ref
         .watch(
-          userProvider,
+          userRelationsProvider,
         )
-        .requireValue!;
+        .following;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -219,7 +223,7 @@ class FollowingList extends ConsumerWidget {
         const SizedBox(
           height: 16,
         ),
-        if (user.socialRelations.following.isEmpty)
+        if (following.isEmpty)
           Text(
             'You are not following anyone yet',
             textAlign: TextAlign.center,
@@ -228,9 +232,9 @@ class FollowingList extends ConsumerWidget {
         else
           Expanded(
             child: ListView.builder(
-              itemCount: user.socialRelations.following.length,
+              itemCount: following.length,
               itemBuilder: (context, index) => _FollowingUserTile(
-                user: user.socialRelations.following[index],
+                user: following[index],
               ),
             ),
           ),
@@ -245,16 +249,19 @@ class _FollowingUserTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final socialHandler = ref.watch(socialHandlerProvider);
-    final currentUserId = ref.watch(userProvider).requireValue!.id;
+    final currentUserId = ref.watch(localUserProvider)!.id;
 
     Future<void> unfollow() async {
       await ref.read(socialHandlerProvider.notifier).onAction(
-            UnfollowUserEvent(
-              currentUserId: currentUserId,
-              followingUserId: user.id,
-            ),
-            ref.read(userProvider.notifier).getSocialRelations,
-          );
+        UnfollowUserEvent(
+          currentUserId: currentUserId,
+          followingUserId: user.id,
+        ),
+        () async {
+          await Future.value(ref.refresh(mySocialRelationsProvider));
+          log('CAME RIGHT INTO HERE');
+        },
+      );
     }
 
     return InkWell(
