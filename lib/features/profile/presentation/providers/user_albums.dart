@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:mumag/common/models/media/album.dart';
 import 'package:mumag/common/services/shared_pref/providers/shared_pref.dart';
@@ -44,15 +43,5 @@ List<AlbumEntity> albumList(AlbumListRef ref) {
     return [];
   }
 
-  try {
-    final value = data.map((e) => jsonDecode(e.toString())).toList();
-    final albums = value
-        .map((e) => AlbumEntity.fromMap(e as Map<String, dynamic>))
-        .toList();
-
-    return albums;
-  } catch (e) {
-    log('THE ERROR WAS $e');
-    return [];
-  }
+  return data.map((e) => AlbumEntity.fromJson(e.toString())).toList();
 }

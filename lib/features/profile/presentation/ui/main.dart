@@ -15,7 +15,8 @@ class ProfileView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider);
+    final asyncUser = ref.watch(userProvider);
+    final cachedUser = ref.watch(localUserProvider);
     final offset = ref.watch(scrollOffsetProvider);
 
     void onScroll(double offset) =>
@@ -32,12 +33,13 @@ class ProfileView extends ConsumerWidget {
 
     return ProfileContainer(
       appBarActions: const [ProfileMenuButton()],
-      user: user,
+      asyncUser: asyncUser,
+      user: cachedUser,
       offset: offset,
       child: ProfileMainView(
-        user: user,
+        user: cachedUser,
         onScroll: onScroll,
-        children: user.isLoading
+        children: cachedUser == null
             ? []
             : [
                 const SizedBox(
@@ -48,18 +50,18 @@ class ProfileView extends ConsumerWidget {
                   height: 8,
                 ),
                 ProfileGenres(
-                  genres: user.requireValue!.genres.sublist(0, 5),
+                  genres: cachedUser.genres.sublist(0, 5),
                   updateGenres: updateGenres,
                 ),
                 const SizedBox(
                   height: 16,
                 ),
                 SizedBox(
-                  height: user.requireValue!.ratings.isEmpty
+                  height: cachedUser.ratings.isEmpty
                       ? null
                       : context.deviceHeight / 2.5,
                   width: double.infinity,
-                  child: ProfileRatings(ratings: user.requireValue!.ratings),
+                  child: ProfileRatings(ratings: cachedUser.ratings),
                 ),
                 const SizedBox(
                   height: 16,

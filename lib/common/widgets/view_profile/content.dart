@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
 
-class ProfileMainView extends ConsumerStatefulWidget {
-  const ProfileMainView({
+class ViewProfileMainView extends ConsumerStatefulWidget {
+  const ViewProfileMainView({
     required this.user,
     required this.onScroll,
     required this.children,
@@ -17,10 +17,10 @@ class ProfileMainView extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _ProfileMainViewState();
+      _ViewProfileMainViewState();
 }
 
-class _ProfileMainViewState extends ConsumerState<ProfileMainView> {
+class _ViewProfileMainViewState extends ConsumerState<ViewProfileMainView> {
   final _scrollController = ScrollController();
 
   @override
@@ -113,34 +113,17 @@ class _ProfilePicture extends StatelessWidget {
   }
 }
 
-class ProfileGenres extends StatefulWidget {
-  const ProfileGenres({
+class ViewProfileGenres extends StatelessWidget {
+  const ViewProfileGenres({
     required this.genres,
     super.key,
-    this.updateGenres,
   });
 
   final List<String> genres;
-  final void Function()? updateGenres;
-
-  @override
-  State<ProfileGenres> createState() => ProfileGenresState();
-}
-
-class ProfileGenresState extends State<ProfileGenres> {
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // Update user genres every 7 days
-      widget.updateGenres?.call();
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    final genresBadges = widget.genres
+    final genresBadges = genres
         .map(
           (e) => Chip(
             label: Text(e.toUpperCase()),

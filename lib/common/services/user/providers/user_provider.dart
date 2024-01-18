@@ -10,6 +10,7 @@ import 'package:mumag/common/services/shared_pref/providers/shared_pref.dart';
 import 'package:mumag/common/services/user/data/api_impl.dart';
 import 'package:mumag/common/services/user/domain/api/api_repository.dart';
 import 'package:mumag/common/services/user/domain/database/user_db_events.dart';
+import 'package:mumag/common/toast/toast_provider.dart';
 import 'package:mumag/features/connect/presentation/providers/connect.dart';
 import 'package:mumag/features/profile/presentation/providers/social.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -48,7 +49,13 @@ Future<bool> userExists(UserExistsRef ref) async {
       )
       .run();
 
-  return user.fold((l) => false, (r) => r != null);
+  return user.fold(
+    (l) {
+      ref.read(toastMessageProvider.notifier).onException(exception: l);
+      return false;
+    },
+    (r) => r != null,
+  );
 }
 
 @riverpod
@@ -72,10 +79,13 @@ class User extends _$User {
         .run();
 
     return user.fold((l) => throw l, (r) {
-      localData.setString(
-        key: _userKey,
-        value: jsonEncode(userEntityToJson(r!)),
-      );
+      localData
+          .setString(
+            key: _userKey,
+            value: jsonEncode(userEntityToJson(r!)),
+          )
+          .run();
+
       return r;
     });
   }
@@ -86,10 +96,13 @@ class User extends _$User {
       final updatedUser = state.requireValue!.copyWith(ratings: ratings);
 
       // Update user cache
-      ref.read(localDataProvider).setString(
+      await ref
+          .read(localDataProvider)
+          .setString(
             key: _userKey,
             value: jsonEncode(userEntityToJson(updatedUser)),
-          );
+          )
+          .run();
 
       // Update user provider
       ref.invalidate(localUserProvider);
@@ -115,10 +128,13 @@ class User extends _$User {
 
       return newUser.fold((l) => state.requireValue, (r) {
         // Update user cache
-        ref.read(localDataProvider).setString(
+        ref
+            .read(localDataProvider)
+            .setString(
               key: _userKey,
               value: jsonEncode(userEntityToJson(updatedUser)),
-            );
+            )
+            .run();
 
         // Update user provider
         ref.invalidate(localUserProvider);
@@ -138,10 +154,13 @@ class User extends _$User {
           final updatedUser = state.requireValue!.copyWith(socialRelations: r);
 
           // Update user cache
-          ref.read(localDataProvider).setString(
+          ref
+              .read(localDataProvider)
+              .setString(
                 key: _userKey,
                 value: jsonEncode(userEntityToJson(updatedUser)),
-              );
+              )
+              .run();
 
           // Update user provider
           ref.invalidate(localUserProvider);

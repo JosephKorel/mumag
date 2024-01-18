@@ -35,7 +35,7 @@ final userApiUsecaseProvider = AutoDisposeProvider<UserApiUsecase>.internal(
 );
 
 typedef UserApiUsecaseRef = AutoDisposeProviderRef<UserApiUsecase>;
-String _$userExistsHash() => r'8663b33e4e4b94b3379413b2550c48db3d0e42e4';
+String _$userExistsHash() => r'ef94a1c1c7ffa6fdff0fd643569ab9ed10a99cc4';
 
 /// See also [userExists].
 @ProviderFor(userExists)
@@ -63,7 +63,7 @@ final localUserProvider = AutoDisposeProvider<UserEntity?>.internal(
 );
 
 typedef LocalUserRef = AutoDisposeProviderRef<UserEntity?>;
-String _$userHash() => r'c775c830aa243fb4af1e0eb14ca8496f48ce2c6e';
+String _$userHash() => r'ebf827c84ffcfccb12e0329a5212a94e19153a92';
 
 /// See also [User].
 @ProviderFor(User)

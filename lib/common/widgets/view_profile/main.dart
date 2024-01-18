@@ -5,9 +5,8 @@ import 'package:mumag/common/theme/theme_provider.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/loading.dart';
 
-class ProfileContainer extends StatelessWidget {
-  const ProfileContainer({
-    required this.asyncUser,
+class ViewProfileContainer extends StatelessWidget {
+  const ViewProfileContainer({
     required this.user,
     required this.child,
     required this.offset,
@@ -16,8 +15,7 @@ class ProfileContainer extends StatelessWidget {
     this.floatingActionButton,
   });
 
-  final AsyncValue<UserEntity?> asyncUser;
-  final UserEntity? user;
+  final AsyncValue<UserEntity?> user;
   final Widget child;
   final double offset;
   final List<Widget>? appBarActions;
@@ -25,20 +23,16 @@ class ProfileContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (user == null && asyncUser.isLoading) {
-      return const _ProfileLoadingScreen();
-    }
-
-    if (asyncUser.hasError) {
-      return const Scaffold();
-    }
-
-    return _UserProfileView(
-      appBarActions: appBarActions,
-      headerImgUrl: user!.backgroundUrl,
-      offset: offset,
-      floatingActionButton: floatingActionButton,
-      child: child,
+    return user.when(
+      data: (data) => _UserProfileView(
+        appBarActions: appBarActions,
+        headerImgUrl: data!.backgroundUrl,
+        offset: offset,
+        floatingActionButton: floatingActionButton,
+        child: child,
+      ),
+      error: (_, __) => const Scaffold(),
+      loading: _ProfileLoadingScreen.new,
     );
   }
 }

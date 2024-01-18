@@ -22,7 +22,7 @@ final userSavedAlbumsProvider =
 );
 
 typedef UserSavedAlbumsRef = AutoDisposeFutureProviderRef<List<AlbumSimple>>;
-String _$albumListHash() => r'02d0045e8dcd0ea3040b0f7138ee602501e090a7';
+String _$albumListHash() => r'8bc3e1a569310eb99f5d2955bf4c1c88889bfb91';
 
 /// See also [albumList].
 @ProviderFor(albumList)
