@@ -3,9 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/utils/media_query.dart';
 import 'package:mumag/common/widgets/bottom_sheet.dart';
 import 'package:mumag/common/widgets/fab.dart';
+import 'package:mumag/common/widgets/profile/content.dart';
+import 'package:mumag/common/widgets/profile/main.dart';
 import 'package:mumag/common/widgets/suggestion/main.dart';
 import 'package:mumag/common/widgets/view_profile/content.dart';
-import 'package:mumag/common/widgets/view_profile/main.dart';
 import 'package:mumag/features/profile/presentation/providers/profile.dart';
 import 'package:mumag/features/view_profile/presentation/providers/view_user.dart';
 import 'package:mumag/features/view_profile/presentation/ui/social.dart';
@@ -22,9 +23,11 @@ class ViewUserProfileView extends ConsumerWidget {
     void onScroll(double offset) =>
         ref.read(scrollOffsetProvider.notifier).onScroll(offset);
 
-    return ViewProfileContainer(
-      user: user,
+    return ProfileContainer(
+      asyncUser: user,
+      user: user.requireValue,
       offset: offset,
+      onScroll: onScroll,
       floatingActionButton: user.isLoading
           ? null
           : AnimatedFAB(
@@ -38,21 +41,18 @@ class ViewUserProfileView extends ConsumerWidget {
                 PhosphorIcons.paperPlaneTilt(PhosphorIconsStyle.bold),
               ),
             ),
-      child: ViewProfileMainView(
-        user: user.requireValue,
-        onScroll: onScroll,
-        children: user.isLoading
-            ? []
-            : [
-                const ViewingProfileSocial(),
-                const SizedBox(
-                  height: 8,
-                ),
-                ViewProfileGenres(
-                  genres: user.requireValue.genres.sublist(0, 5),
-                ),
-              ],
-      ),
+      children: user.isLoading
+          ? []
+          : [
+              ProfileGenres(genres: user.requireValue.genres.sublist(0, 5)),
+              const ViewingProfileSocial(),
+              const SizedBox(
+                height: 8,
+              ),
+              ViewProfileGenres(
+                genres: user.requireValue.genres.sublist(0, 5),
+              ),
+            ],
     );
   }
 }

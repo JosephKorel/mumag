@@ -63,7 +63,7 @@ final localUserProvider = AutoDisposeProvider<UserEntity?>.internal(
 );
 
 typedef LocalUserRef = AutoDisposeProviderRef<UserEntity?>;
-String _$userHash() => r'ebf827c84ffcfccb12e0329a5212a94e19153a92';
+String _$userHash() => r'bdee55255349178f3ac5c4bf7edea128c3e0a644';
 
 /// See also [User].
 @ProviderFor(User)

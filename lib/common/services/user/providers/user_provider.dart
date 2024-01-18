@@ -78,13 +78,16 @@ class User extends _$User {
         )
         .run();
 
-    return user.fold((l) => throw l, (r) {
-      localData
-          .setString(
-            key: _userKey,
-            value: jsonEncode(userEntityToJson(r!)),
-          )
-          .run();
+    return user.fold((l) => null, (r) async {
+      // If user is already cached, skip it
+      if (localData.getString<Map<String, dynamic>>(key: _userKey) == null) {
+        await localData
+            .setString(
+              key: _userKey,
+              value: jsonEncode(userEntityToJson(r!)),
+            )
+            .run();
+      }
 
       return r;
     });
@@ -147,14 +150,16 @@ class User extends _$User {
   Future<void> getSocialRelations() async {
     state = await AsyncValue.guard(() async {
       ref.invalidate(mySocialRelationsProvider);
+
       final socialRelations = await ref.read(mySocialRelationsProvider.future);
+
       return socialRelations.fold(
         (l) => state.requireValue,
-        (r) {
+        (r) async {
           final updatedUser = state.requireValue!.copyWith(socialRelations: r);
 
           // Update user cache
-          ref
+          await ref
               .read(localDataProvider)
               .setString(
                 key: _userKey,

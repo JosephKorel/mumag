@@ -37,7 +37,11 @@ class UserEntity with _$UserEntity {
             (e) => RatingEntity.fromJson(e as Map<String, dynamic>),
           )
           .toList(),
-      socialRelations: UserSocialRelations.defaultValue(),
+      socialRelations: json['socialRelations'] == null
+          ? UserSocialRelations.defaultValue()
+          : UserSocialRelations.fromMap(
+              json['socialRelations']! as Map<String, dynamic>,
+            ),
     );
   }
 }
@@ -75,7 +79,6 @@ Map<String, dynamic> userEntityToJson(UserEntity userEntity) {
     'backgroundUrl': userEntity.backgroundUrl,
     'lastUpdatedAt': userEntity.lastUpdatedAt.toIso8601String(),
     'socialRelations': userEntity.socialRelations.toJson(),
-    // 'socialRelations': [],
     'ratings': userEntity.ratings.map((e) => e.toJson()).toList(),
   };
 }

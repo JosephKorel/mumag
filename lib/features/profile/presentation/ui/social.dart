@@ -34,35 +34,13 @@ class _UserSocialRelationsWidgetState
 
   @override
   Widget build(BuildContext context) {
-    // final socialAsyncValue = ref.watch(mySocialRelationsProvider);
+    final socialAsyncValue = ref.watch(mySocialRelationsProvider);
 
-    /*  if (socialAsyncValue.isLoading) {
-      return const _LoadingState();
-    } */
-
-    /*  if (socialAsyncValue.hasError) {
+    if (socialAsyncValue.hasError) {
       return const _ErrorState();
-    } */
+    }
 
     return const _LoadedState();
-  }
-}
-
-class _LoadingState extends StatelessWidget {
-  const _LoadingState();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SocialRelationsBadge(label: 'Followers: ', loading: true),
-        SizedBox(
-          width: 16,
-        ),
-        SocialRelationsBadge(label: 'Following: ', loading: true),
-      ],
-    );
   }
 }
 
@@ -107,15 +85,15 @@ class _LoadedState extends ConsumerWidget {
         const SizedBox(
           width: 16,
         ),
-        /* SocialRelationsBadge(
-          loading: false,
+        SocialRelationsBadge(
+          loading: socialAsyncValue.isLoading,
           label: 'Following: ${relations.following.length}',
           onTap: () => showAppBottomSheet(
             context,
             child: const FollowingList(),
             height: context.deviceHeight / 2,
           ),
-        ), */
+        ),
       ],
     );
   }
