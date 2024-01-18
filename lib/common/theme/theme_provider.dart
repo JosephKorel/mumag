@@ -25,12 +25,15 @@ Future<AppColorScheme> dynamicColorScheme(
   required String? imageUrl,
 }) async {
   const colorScheme = AppColorScheme();
+  try {
+    if (imageUrl == null) {
+      return colorScheme;
+    }
 
-  if (imageUrl == null) {
+    final dynamicScheme = await colorScheme.getColors(imgUrl: imageUrl);
+
+    return dynamicScheme;
+  } catch (e) {
     return colorScheme;
   }
-
-  final dynamicScheme = await colorScheme.getColors(imgUrl: imageUrl);
-
-  return dynamicScheme;
 }

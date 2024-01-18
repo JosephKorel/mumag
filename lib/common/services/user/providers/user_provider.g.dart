@@ -49,21 +49,7 @@ final userExistsProvider = AutoDisposeFutureProvider<bool>.internal(
 );
 
 typedef UserExistsRef = AutoDisposeFutureProviderRef<bool>;
-String _$localUserHash() => r'0b8b6e2943d18347273c438037a62b8a8b35923f';
-
-/// See also [localUser].
-@ProviderFor(localUser)
-final localUserProvider = AutoDisposeProvider<UserEntity?>.internal(
-  localUser,
-  name: r'localUserProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$localUserHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef LocalUserRef = AutoDisposeProviderRef<UserEntity?>;
-String _$userHash() => r'bdee55255349178f3ac5c4bf7edea128c3e0a644';
+String _$userHash() => r'414b1089c4bb4c2919b8565caae86d7e8eec0df3';
 
 /// See also [User].
 @ProviderFor(User)
@@ -78,5 +64,20 @@ final userProvider =
 );
 
 typedef _$User = AutoDisposeAsyncNotifier<UserEntity?>;
+String _$localUserHash() => r'bee807e19782547b5b811a393ea9cb3a6fe6c3da';
+
+/// See also [LocalUser].
+@ProviderFor(LocalUser)
+final localUserProvider =
+    AutoDisposeNotifierProvider<LocalUser, UserEntity?>.internal(
+  LocalUser.new,
+  name: r'localUserProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$localUserHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$LocalUser = AutoDisposeNotifier<UserEntity?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

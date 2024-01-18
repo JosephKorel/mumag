@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/services/firebase/providers/auth.dart';
 import 'package:mumag/common/services/shared_pref/providers/shared_pref.dart';
 import 'package:mumag/common/theme/utils.dart';
+import 'package:mumag/common/utils/media_query.dart';
 import 'package:mumag/common/widgets/bottom_sheet.dart';
 import 'package:mumag/features/profile/presentation/ui/change_background.dart';
 
@@ -21,6 +22,7 @@ class ProfileMenuButton extends ConsumerWidget {
   void _openBackgroundBottomSheet(BuildContext context) => showAppBottomSheet(
         context,
         child: const ChangeBackgroundBottomSheet(),
+        height: context.deviceHeight / 2,
       );
 
   Future<void> _onSignOut(WidgetRef ref) async {

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:mocktail/mocktail.dart';
 import 'package:mumag/common/models/user/user_entity.dart';
@@ -159,7 +160,7 @@ class User extends _$User {
           final updatedUser = state.requireValue!.copyWith(socialRelations: r);
 
           // Update user cache
-          await ref
+          /*        await ref
               .read(localDataProvider)
               .setString(
                 key: _userKey,
@@ -168,7 +169,7 @@ class User extends _$User {
               .run();
 
           // Update user provider
-          ref.invalidate(localUserProvider);
+          ref.invalidate(localUserProvider); */
 
           return updatedUser;
         },
@@ -178,15 +179,21 @@ class User extends _$User {
 }
 
 @riverpod
-UserEntity? localUser(LocalUserRef ref) {
-  final localData = ref.watch(localDataProvider);
-  final user = localData.getString<Map<String, dynamic>>(key: _userKey);
+class LocalUser extends _$LocalUser {
+  @override
+  UserEntity? build() {
+    log('IM REBUILDING');
+    final localData = ref.watch(localDataProvider);
+    final user = localData.getString<Map<String, dynamic>>(key: _userKey);
 
-  if (user == null) {
-    return null;
+    if (user == null) {
+      return null;
+    }
+
+    return UserEntity.fromJson(user);
   }
 
-  return UserEntity.fromJson(user);
+  void updateState(UserEntity user) => state = user;
 }
 
 // For mocking

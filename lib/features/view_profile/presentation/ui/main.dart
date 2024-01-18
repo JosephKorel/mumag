@@ -6,7 +6,6 @@ import 'package:mumag/common/widgets/fab.dart';
 import 'package:mumag/common/widgets/profile/content.dart';
 import 'package:mumag/common/widgets/profile/main.dart';
 import 'package:mumag/common/widgets/suggestion/main.dart';
-import 'package:mumag/common/widgets/view_profile/content.dart';
 import 'package:mumag/features/profile/presentation/providers/profile.dart';
 import 'package:mumag/features/view_profile/presentation/providers/view_user.dart';
 import 'package:mumag/features/view_profile/presentation/ui/social.dart';
@@ -25,7 +24,7 @@ class ViewUserProfileView extends ConsumerWidget {
 
     return ProfileContainer(
       asyncUser: user,
-      user: user.requireValue,
+      user: user.value,
       offset: offset,
       onScroll: onScroll,
       floatingActionButton: user.isLoading
@@ -44,13 +43,10 @@ class ViewUserProfileView extends ConsumerWidget {
       children: user.isLoading
           ? []
           : [
-              ProfileGenres(genres: user.requireValue.genres.sublist(0, 5)),
               const ViewingProfileSocial(),
+              ProfileGenres(genres: user.requireValue.genres.sublist(0, 5)),
               const SizedBox(
                 height: 8,
-              ),
-              ViewProfileGenres(
-                genres: user.requireValue.genres.sublist(0, 5),
               ),
             ],
     );
