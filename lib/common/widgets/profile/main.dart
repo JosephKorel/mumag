@@ -4,27 +4,29 @@ import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/theme/theme_provider.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/loading.dart';
+import 'package:mumag/common/widgets/profile/content.dart';
 
-class ProfileContainer extends StatelessWidget {
+class ProfileContainer extends ConsumerWidget {
   const ProfileContainer({
     required this.asyncUser,
     required this.user,
-    required this.child,
+    required this.children,
     required this.offset,
+    required this.onScroll,
     super.key,
     this.appBarActions,
     this.floatingActionButton,
   });
-
   final AsyncValue<UserEntity?> asyncUser;
   final UserEntity? user;
-  final Widget child;
+  final List<Widget> children;
   final double offset;
   final List<Widget>? appBarActions;
   final Widget? floatingActionButton;
+  final void Function(double offset) onScroll;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (user == null && asyncUser.isLoading) {
       return const _ProfileLoadingScreen();
     }
@@ -35,10 +37,11 @@ class ProfileContainer extends StatelessWidget {
 
     return _UserProfileView(
       appBarActions: appBarActions,
-      headerImgUrl: user!.backgroundUrl,
+      user: user!,
       offset: offset,
       floatingActionButton: floatingActionButton,
-      child: child,
+      onScroll: onScroll,
+      children: children,
     );
   }
 }
@@ -98,23 +101,25 @@ class _ProfileLoadingScreen extends StatelessWidget {
 
 class _UserProfileView extends ConsumerWidget {
   const _UserProfileView({
-    required this.child,
+    required this.children,
     required this.offset,
-    this.headerImgUrl,
+    required this.user,
+    required this.onScroll,
     this.appBarActions,
     this.floatingActionButton,
   });
 
-  final Widget child;
+  final List<Widget> children;
   final double offset;
-  final String? headerImgUrl;
+  final UserEntity user;
   final List<Widget>? appBarActions;
   final Widget? floatingActionButton;
+  final void Function(double offset) onScroll;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colorScheme = ref.watch(
-      dynamicColorSchemeProvider(imageUrl: headerImgUrl),
+      dynamicColorSchemeProvider(imageUrl: user.backgroundUrl),
     );
 
     return colorScheme.when(
@@ -132,7 +137,7 @@ class _UserProfileView extends ConsumerWidget {
           body: Stack(
             children: [
               _UserImageHeader(
-                backgroundUrl: headerImgUrl,
+                backgroundUrl: user.backgroundUrl,
                 offset: offset,
               ),
               Column(
@@ -140,7 +145,11 @@ class _UserProfileView extends ConsumerWidget {
                   const Expanded(child: SizedBox.expand()),
                   Expanded(
                     flex: 3,
-                    child: child,
+                    child: ProfileMainView(
+                      user: user,
+                      onScroll: onScroll,
+                      children: children,
+                    ),
                   ),
                 ],
               ),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
-import 'package:mumag/common/theme/utils.dart';
+import 'package:mumag/common/widgets/profile/content.dart';
 
 class UserProfileGenres extends ConsumerStatefulWidget {
-  const UserProfileGenres({super.key});
+  const UserProfileGenres({
+    super.key,
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -33,30 +35,8 @@ class _UserProfileGenresState extends ConsumerState<UserProfileGenres> {
 
   @override
   Widget build(BuildContext context) {
-    final genres = ref.watch(
-      userProvider.select((value) => value.requireValue!.genres.sublist(0, 5)),
-    );
-
-    final genresBadges = genres
-        .map(
-          (e) => Chip(
-            label: Text(e.toUpperCase()),
-            padding: EdgeInsets.zero,
-            labelStyle: context.bodySmall.copyWith(
-              fontWeight: FontWeight.w600,
-              color: context.onPrimaryContainer,
-            ),
-            backgroundColor: context.primaryContainer,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          ),
-        )
-        .toList();
-
-    return Wrap(
-      spacing: 2,
-      alignment: WrapAlignment.center,
-      children: genresBadges,
-    );
+    final genres =
+        ref.watch(localUserProvider.select((value) => value!.genres));
+    return ProfileBadgeGenres(genres: genres.sublist(0, 5));
   }
 }

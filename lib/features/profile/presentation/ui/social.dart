@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mumag/common/models/social_relations/user_simple.dart';
@@ -11,7 +12,6 @@ import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/utils/media_query.dart';
 import 'package:mumag/common/widgets/bottom_sheet.dart';
 import 'package:mumag/common/widgets/image.dart';
-import 'package:mumag/common/widgets/loading.dart';
 import 'package:mumag/features/profile/presentation/providers/social.dart';
 import 'package:mumag/features/view_profile/presentation/providers/view_user.dart';
 import 'package:mumag/routes/routes.dart';
@@ -29,21 +29,20 @@ class _UserSocialRelationsWidgetState
   @override
   void initState() {
     super.initState();
-    log('Im coming here');
     ref.read(userProvider.notifier).getSocialRelations();
   }
 
   @override
   Widget build(BuildContext context) {
-    final socialAsyncValue = ref.watch(mySocialRelationsProvider);
+    // final socialAsyncValue = ref.watch(mySocialRelationsProvider);
 
-    if (socialAsyncValue.isLoading) {
+    /*  if (socialAsyncValue.isLoading) {
       return const _LoadingState();
-    }
+    } */
 
-    if (socialAsyncValue.hasError) {
+    /*  if (socialAsyncValue.hasError) {
       return const _ErrorState();
-    }
+    } */
 
     return const _LoadedState();
   }
@@ -90,12 +89,14 @@ class _LoadedState extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final relations = ref.watch(userProvider).requireValue!.socialRelations;
+    final socialAsyncValue = ref.watch(mySocialRelationsProvider);
+    final relations = ref.watch(localUserProvider)!.socialRelations;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SocialRelationsBadge(
-          loading: false,
+          loading: socialAsyncValue.isLoading,
           label: 'Followers: ${relations.followers.length}',
           onTap: () => showAppBottomSheet(
             context,
@@ -106,7 +107,7 @@ class _LoadedState extends ConsumerWidget {
         const SizedBox(
           width: 16,
         ),
-        SocialRelationsBadge(
+        /* SocialRelationsBadge(
           loading: false,
           label: 'Following: ${relations.following.length}',
           onTap: () => showAppBottomSheet(
@@ -114,7 +115,7 @@ class _LoadedState extends ConsumerWidget {
             child: const FollowingList(),
             height: context.deviceHeight / 2,
           ),
-        ),
+        ), */
       ],
     );
   }
@@ -134,6 +135,7 @@ class SocialRelationsBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log('LOADING IS $loading');
     return Material(
       child: Container(
         width: 120,
@@ -145,32 +147,24 @@ class SocialRelationsBadge extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(48),
           onTap: onTap,
-          child: Center(
-            child: loading
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        label,
-                        style: context.bodyMedium
-                            .copyWith(fontWeight: FontWeight.w600),
-                      ),
-                      const LoadingSkeleton(
-                        height: 16,
-                        width: 16,
-                        borderRadius: 4,
-                      ),
-                    ],
-                  )
-                : Text(
-                    label,
-                    style: context.bodyMedium
-                        .copyWith(fontWeight: FontWeight.w600),
-                  ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                label,
+                style: context.bodyMedium.copyWith(fontWeight: FontWeight.w600),
+              ),
+            ],
           ),
         ),
       ),
-    );
+    )
+        .animate(
+          target: loading ? 1 : 0,
+          onComplete: (controller) =>
+              loading ? controller.repeat() : controller.stop(),
+        )
+        .shimmer(duration: 1.seconds);
   }
 }
 

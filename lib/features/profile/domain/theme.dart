@@ -20,6 +20,10 @@ final class AppColorScheme {
     return AppColorScheme(light: lightScheme, dark: darkScheme);
   }
 
+  /*  Map<String, dynamic> toMap(){
+    return {'light': light.toString()}
+  } */
+
   final ColorScheme light;
   final ColorScheme dark;
 }

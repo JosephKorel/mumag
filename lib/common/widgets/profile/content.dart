@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
 
-class ProfileMainView extends ConsumerStatefulWidget {
+class ProfileMainView extends StatefulWidget {
   const ProfileMainView({
     required this.user,
     required this.onScroll,
@@ -12,15 +11,14 @@ class ProfileMainView extends ConsumerStatefulWidget {
   });
 
   final List<Widget> children;
-  final UserEntity? user;
+  final UserEntity user;
   final void Function(double offset) onScroll;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _ProfileMainViewState();
+  State<ProfileMainView> createState() => _ProfileMainViewState();
 }
 
-class _ProfileMainViewState extends ConsumerState<ProfileMainView> {
+class _ProfileMainViewState extends State<ProfileMainView> {
   final _scrollController = ScrollController();
 
   @override
@@ -41,10 +39,6 @@ class _ProfileMainViewState extends ConsumerState<ProfileMainView> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.user == null) {
-      return const SizedBox.shrink();
-    }
-
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(32),
@@ -65,9 +59,9 @@ class _ProfileMainViewState extends ConsumerState<ProfileMainView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _ProfilePicture(widget.user!.avatarUrl),
+                _ProfilePicture(widget.user.avatarUrl),
                 Text(
-                  widget.user!.name,
+                  widget.user.name,
                   style: context.titleLarge.copyWith(),
                   textAlign: TextAlign.center,
                 ),
@@ -109,6 +103,37 @@ class _ProfilePicture extends StatelessWidget {
         radius: 32,
         backgroundImage: NetworkImage(avatarUrl!),
       ),
+    );
+  }
+}
+
+class ProfileBadgeGenres extends StatelessWidget {
+  const ProfileBadgeGenres({required this.genres, super.key});
+
+  final List<String> genres;
+
+  @override
+  Widget build(BuildContext context) {
+    final genresBadges = genres
+        .map(
+          (e) => Chip(
+            label: Text(e.toUpperCase()),
+            padding: EdgeInsets.zero,
+            labelStyle: context.bodySmall.copyWith(
+              fontWeight: FontWeight.w600,
+              color: context.onPrimaryContainer,
+            ),
+            backgroundColor: context.primaryContainer,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          ),
+        )
+        .toList();
+
+    return Wrap(
+      spacing: 2,
+      alignment: WrapAlignment.center,
+      children: genresBadges,
     );
   }
 }
