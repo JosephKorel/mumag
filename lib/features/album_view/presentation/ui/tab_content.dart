@@ -85,7 +85,7 @@ class AlbumAboutTabContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final album = ref.watch(viewingAlbumProvider)!;
+    final album = ref.watch(viewingAlbumProvider).requireValue!;
     final dateFormat = DateFormat('dd/MM/yyyy');
     final releaseDate = album.releaseDate == null
         ? ''
@@ -213,7 +213,7 @@ class AlbumTracksTabContent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(viewingTrackProvider);
-    final album = ref.watch(viewingAlbumProvider)!;
+    final album = ref.watch(viewingAlbumProvider).requireValue!;
     final tracks = album.tracks?.toList();
 
     if (tracks == null) {

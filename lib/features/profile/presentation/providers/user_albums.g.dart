@@ -6,7 +6,7 @@ part of 'user_albums.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userSavedAlbumsHash() => r'a2ad778aecbb67c5168c96f427073f53b6c5a624';
+String _$userSavedAlbumsHash() => r'02a0d2543cd93671840737f4c911410c9333ecfb';
 
 /// See also [userSavedAlbums].
 @ProviderFor(userSavedAlbums)
@@ -22,7 +22,7 @@ final userSavedAlbumsProvider =
 );
 
 typedef UserSavedAlbumsRef = AutoDisposeFutureProviderRef<List<AlbumSimple>>;
-String _$albumListHash() => r'd6fc5d52675f76f1a9b797dd1a40397db97116d6';
+String _$albumListHash() => r'02d0045e8dcd0ea3040b0f7138ee602501e090a7';
 
 /// See also [albumList].
 @ProviderFor(albumList)

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:fpdart/fpdart.dart';
 import 'package:mumag/common/models/exception/exception.dart';
@@ -14,6 +15,8 @@ final class LocalStorageUsecase {
     return TaskEither.tryCatch(
       () async {
         final result = await _sharedPref.setString(key, value);
+
+        log('FOR THE KEY $key THIS WAS THE RESULT $result');
 
         if (!result) {
           throw Exception();

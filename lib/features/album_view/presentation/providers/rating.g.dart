@@ -6,7 +6,7 @@ part of 'rating.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$rateAlbumHash() => r'cd40a24726d323184e2d3401005e3b0f2e76ae2c';
+String _$rateAlbumHash() => r'9bfa4ced6de6bfb50e1067bbf5a1b0d12166884a';
 
 /// Copied from Dart SDK
 class _SystemHash {

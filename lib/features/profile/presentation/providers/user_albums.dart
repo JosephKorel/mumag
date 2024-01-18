@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:mumag/common/models/media/album.dart';
 import 'package:mumag/common/services/shared_pref/providers/shared_pref.dart';
 import 'package:mumag/common/services/spotify_auth/providers/api.dart';
@@ -18,13 +21,16 @@ Future<List<AlbumSimple>> userSavedAlbums(UserSavedAlbumsRef ref) async {
   }
 
   // Cache albums
-  localData.setString(
-    key: _albumKey,
-    value: page.items!
-        .map((e) => AlbumEntity.fromAlbumSimple(e).toJson())
-        .toList()
-        .toString(),
-  );
+  await localData
+      .setString(
+        key: _albumKey,
+        value: jsonEncode(
+          page.items!
+              .map((e) => AlbumEntity.fromAlbumSimple(e).toJson())
+              .toList(),
+        ),
+      )
+      .run();
 
   return page.items!.toList();
 }
@@ -38,7 +44,15 @@ List<AlbumEntity> albumList(AlbumListRef ref) {
     return [];
   }
 
-  return data
-      .map((e) => AlbumEntity.fromMap(e as Map<String, dynamic>))
-      .toList();
+  try {
+    final value = data.map((e) => jsonDecode(e.toString())).toList();
+    final albums = value
+        .map((e) => AlbumEntity.fromMap(e as Map<String, dynamic>))
+        .toList();
+
+    return albums;
+  } catch (e) {
+    log('THE ERROR WAS $e');
+    return [];
+  }
 }

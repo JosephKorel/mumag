@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -85,6 +87,8 @@ class AlbumGridItems extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final albumsProvider = ref.watch(userSavedAlbumsProvider);
     final albums = ref.watch(albumListProvider);
+
+    log('THIS IS THE ALBUM ${albums.firstOrNull}');
 
     if (albumsProvider.hasError) {
       return const Center(

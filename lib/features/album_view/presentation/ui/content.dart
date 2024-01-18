@@ -16,7 +16,7 @@ class AlbumContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final album = ref.watch(viewingAlbumProvider)!;
+    final album = ref.watch(viewingAlbumProvider).requireValue!;
     ref.watch(selectedArtistProvider);
 
     return MediaContentContainer(

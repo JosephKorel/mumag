@@ -17,7 +17,7 @@ Future<Either<AppException, dynamic>> rateAlbum(
   required int rateValue,
 }) async {
   final user = ref.watch(userProvider).requireValue!;
-  final album = ref.watch(viewingAlbumProvider)!;
+  final album = ref.watch(viewingAlbumProvider).requireValue!;
 
   final ratingBaseParams = RatingBaseParams(
     type: RatingType.album,

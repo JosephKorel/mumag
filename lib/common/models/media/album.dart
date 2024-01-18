@@ -29,12 +29,13 @@ class AlbumEntity {
     return AlbumEntity(
       spotifyId: map['spotifyId'] as String,
       name: map['name'] as String,
-      images: List<String>.from(map['images'] as List<String>),
-      tracks: (map['tracks'] as List<dynamic>)
-          .map((e) => TrackEntity.fromMap(e as Map<String, dynamic>))
+      images:
+          (map['images'] as List<dynamic>).map((e) => e.toString()).toList(),
+      tracks: ((map['tracks']) as List<dynamic>)
+          .map((e) => TrackEntity.fromJson(e.toString()))
           .toList(),
       artists: (map['artists'] as List<dynamic>)
-          .map((e) => ArtistEntity.fromMap(e as Map<String, dynamic>))
+          .map((e) => ArtistEntity.fromJson(e.toString()))
           .toList(),
     );
   }

@@ -14,7 +14,7 @@ class RatingAlbumFAB extends ConsumerWidget {
     final ancestorWidget =
         context.findAncestorWidgetOfExactType<RatingButtonContainer>();
     final viewingRating = ref.watch(viewingRatingProvider);
-    final album = ref.watch(viewingAlbumProvider)!;
+    final album = ref.watch(viewingAlbumProvider).requireValue!;
     final user = ref.watch(userProvider).requireValue!;
     final hasRated =
         user.ratings.any((element) => element.spotifyId == album.id);

@@ -20,7 +20,7 @@ class TrackEntity {
     return TrackEntity(
       name: map['name'] as String,
       artists: List<ArtistEntity>.from(
-        (map['artists'] as List<int>).map<ArtistEntity>(
+        (map['artists'] as List<dynamic>).map<ArtistEntity>(
           (x) => ArtistEntity.fromMap(x as Map<String, dynamic>),
         ),
       ),
