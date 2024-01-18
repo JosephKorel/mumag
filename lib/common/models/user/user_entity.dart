@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
-import 'package:mumag/common/models/social_relations/user_simple.dart';
 
 part 'user_entity.freezed.dart';
 
@@ -12,7 +11,6 @@ class UserEntity with _$UserEntity {
     required String? avatarUrl,
     required String email,
     required DateTime lastUpdatedAt,
-    required UserSocialRelations socialRelations,
     @Default(null) String? backgroundUrl,
     @Default([]) List<String> genres,
     @Default([]) List<RatingEntity> ratings,
@@ -37,11 +35,6 @@ class UserEntity with _$UserEntity {
             (e) => RatingEntity.fromJson(e as Map<String, dynamic>),
           )
           .toList(),
-      socialRelations: json['socialRelations'] == null
-          ? UserSocialRelations.defaultValue()
-          : UserSocialRelations.fromMap(
-              json['socialRelations']! as Map<String, dynamic>,
-            ),
     );
   }
 }
@@ -78,7 +71,6 @@ Map<String, dynamic> userEntityToJson(UserEntity userEntity) {
     'genres': userEntity.genres.join(','),
     'backgroundUrl': userEntity.backgroundUrl,
     'lastUpdatedAt': userEntity.lastUpdatedAt.toIso8601String(),
-    'socialRelations': userEntity.socialRelations.toJson(),
     'ratings': userEntity.ratings.map((e) => e.toJson()).toList(),
   };
 }
