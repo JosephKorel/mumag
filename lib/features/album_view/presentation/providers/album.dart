@@ -11,14 +11,21 @@ part 'album.g.dart';
 @riverpod
 class ViewingAlbum extends _$ViewingAlbum {
   @override
-  AlbumSimple? build() => null;
+  Future<Album?> build() async => null;
 
-  void updateState({required AlbumSimple album}) => state = album;
+  Future<void> updateState({required String albumId}) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      final album = await ref.read(spotifyApiProvider).albums.get(albumId);
+
+      return album;
+    });
+  }
 }
 
 @riverpod
 Future<AppColorScheme> albumColorScheme(AlbumColorSchemeRef ref) async {
-  final album = ref.watch(viewingAlbumProvider)!;
+  final album = ref.watch(viewingAlbumProvider).requireValue!;
 
   final images = album.images;
 
@@ -37,7 +44,7 @@ Future<AppColorScheme> albumColorScheme(AlbumColorSchemeRef ref) async {
 Future<List<RatingEntity>?> albumRating(
   AlbumRatingRef ref,
 ) async {
-  final album = ref.watch(viewingAlbumProvider)!;
+  final album = ref.watch(viewingAlbumProvider).requireValue!;
   final ratingController = ref.watch(ratingControllerProvider);
 
   final albumRating =
@@ -52,7 +59,7 @@ Future<List<RatingEntity>?> albumRating(
 
 @riverpod
 Future<List<String>> albumGenres(AlbumGenresRef ref) async {
-  final album = ref.watch(viewingAlbumProvider)!;
+  final album = ref.watch(viewingAlbumProvider).requireValue!;
   final spotify = ref.watch(spotifyApiProvider);
   final request = await spotify.albums.get(album.id!);
 
@@ -60,13 +67,15 @@ Future<List<String>> albumGenres(AlbumGenresRef ref) async {
     return request.genres!;
   }
 
-  final artistRequest = await spotify.artists
-      .list(album.artists?.map((e) => e.id!).toList() ?? []);
+  return album.genres ?? [];
+
+  /*  final artistRequest = await spotify.artists
+      .list(album.artists?.map((e) => e.id).toList() ?? []);
 
   return artistRequest
       .map((e) => e.genres ?? [])
       .expand((element) => element)
-      .toList();
+      .toList(); */
 }
 
 @riverpod

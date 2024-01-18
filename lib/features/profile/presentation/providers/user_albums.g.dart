@@ -6,7 +6,7 @@ part of 'user_albums.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userSavedAlbumsHash() => r'5384ce62f864571853f65fc4c3d1fc19ed49cee4';
+String _$userSavedAlbumsHash() => r'a2ad778aecbb67c5168c96f427073f53b6c5a624';
 
 /// See also [userSavedAlbums].
 @ProviderFor(userSavedAlbums)
@@ -22,11 +22,11 @@ final userSavedAlbumsProvider =
 );
 
 typedef UserSavedAlbumsRef = AutoDisposeFutureProviderRef<List<AlbumSimple>>;
-String _$albumListHash() => r'28fa3b11a79518826a0d09f269afe6e6d8d748a4';
+String _$albumListHash() => r'd6fc5d52675f76f1a9b797dd1a40397db97116d6';
 
 /// See also [albumList].
 @ProviderFor(albumList)
-final albumListProvider = AutoDisposeProvider<List<AlbumSimple>>.internal(
+final albumListProvider = AutoDisposeProvider<List<AlbumEntity>>.internal(
   albumList,
   name: r'albumListProvider',
   debugGetCreateSourceHash:
@@ -35,6 +35,6 @@ final albumListProvider = AutoDisposeProvider<List<AlbumSimple>>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef AlbumListRef = AutoDisposeProviderRef<List<AlbumSimple>>;
+typedef AlbumListRef = AutoDisposeProviderRef<List<AlbumEntity>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

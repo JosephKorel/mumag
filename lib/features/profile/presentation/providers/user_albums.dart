@@ -1,3 +1,4 @@
+import 'package:mumag/common/models/media/album.dart';
 import 'package:mumag/common/services/shared_pref/providers/shared_pref.dart';
 import 'package:mumag/common/services/spotify_auth/providers/api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -19,23 +20,25 @@ Future<List<AlbumSimple>> userSavedAlbums(UserSavedAlbumsRef ref) async {
   // Cache albums
   localData.setString(
     key: _albumKey,
-    value: page.items!.map((e) => e.toString()).toString(),
+    value: page.items!
+        .map((e) => AlbumEntity.fromAlbumSimple(e).toJson())
+        .toList()
+        .toString(),
   );
 
   return page.items!.toList();
 }
 
 @riverpod
-List<AlbumSimple> albumList(AlbumListRef ref) {
-  const albumKey = 'userAlbums';
+List<AlbumEntity> albumList(AlbumListRef ref) {
   final localData = ref.watch(localDataProvider);
 
-  final data = localData.getString<List<dynamic>>(key: albumKey);
+  final data = localData.getString<List<dynamic>>(key: _albumKey);
   if (data == null) {
     return [];
   }
 
   return data
-      .map((e) => AlbumSimple.fromJson(e as Map<String, dynamic>))
+      .map((e) => AlbumEntity.fromMap(e as Map<String, dynamic>))
       .toList();
 }

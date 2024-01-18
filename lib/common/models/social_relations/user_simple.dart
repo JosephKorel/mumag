@@ -48,8 +48,8 @@ final class UserSocialRelations {
 
   Map<String, dynamic> toJson() {
     return {
-      'followers': followers.map((e) => e.toJson()),
-      'following': following.map((e) => e.toJson()),
+      'followers': followers.map((e) => e.toJson()).toList(),
+      'following': following.map((e) => e.toJson()).toList(),
     };
   }
 }

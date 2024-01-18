@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mumag/common/models/media/album.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/background_icon.dart';
 import 'package:mumag/common/widgets/image.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
 import 'package:mumag/features/profile/presentation/providers/user_albums.dart';
 import 'package:mumag/routes/routes.dart';
-import 'package:spotify/spotify.dart' as spotify;
 
 class SavedAlbumsView extends ConsumerWidget {
   const SavedAlbumsView({super.key});
@@ -117,15 +117,16 @@ class AlbumGridItems extends ConsumerWidget {
 class AlbumGridItem extends ConsumerWidget {
   const AlbumGridItem({required this.album, super.key});
 
-  final spotify.AlbumSimple album;
+  final AlbumEntity album;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final albumImage = album.images?[1];
+    Future<void> onTap() async {
+      await ref
+          .read(viewingAlbumProvider.notifier)
+          .updateState(albumId: album.spotifyId);
 
-    void onTap() {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        ref.read(viewingAlbumProvider.notifier).updateState(album: album);
         context.push(const AlbumViewRoute().location);
       });
     }
@@ -139,10 +140,10 @@ class AlbumGridItem extends ConsumerWidget {
         child: SizedBox(
           width: 100,
           height: 100,
-          child: albumImage == null
+          child: album.images[1].isEmpty
               ? const Icon(Icons.album)
               : CachedImage(
-                  url: albumImage.url!,
+                  url: album.images[1],
                   fit: BoxFit.cover,
                   width: 100,
                   height: 100,

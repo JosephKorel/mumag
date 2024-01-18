@@ -9,7 +9,7 @@ class AlbumMainView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(viewingAlbumProvider)!;
+    ref.watch(viewingAlbumProvider);
     final albumColors = ref.watch(albumColorSchemeProvider);
     final appTheme = ref.watch(appThemeProvider);
 

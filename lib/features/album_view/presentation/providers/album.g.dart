@@ -6,7 +6,7 @@ part of 'album.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$albumColorSchemeHash() => r'05e07eb77bae0e3722e643bdcc6582442d246147';
+String _$albumColorSchemeHash() => r'27a9ce4de034d4e8e6a747fed99e206d22f4a76b';
 
 /// See also [albumColorScheme].
 @ProviderFor(albumColorScheme)
@@ -22,7 +22,7 @@ final albumColorSchemeProvider =
 );
 
 typedef AlbumColorSchemeRef = AutoDisposeFutureProviderRef<AppColorScheme>;
-String _$albumRatingHash() => r'c366071d2b734d59789696a7f3058e2e8982f80b';
+String _$albumRatingHash() => r'2820b2c604c1481fc5ae0a9f6caefa922cb410a1';
 
 /// See also [albumRating].
 @ProviderFor(albumRating)
@@ -37,7 +37,7 @@ final albumRatingProvider =
 );
 
 typedef AlbumRatingRef = AutoDisposeFutureProviderRef<List<RatingEntity>?>;
-String _$albumGenresHash() => r'402d5cc565aefc2a1ca0a658d432226ebcddd580';
+String _$albumGenresHash() => r'ab658d7c429839b149adb71350f929473563fcf0';
 
 /// See also [albumGenres].
 @ProviderFor(albumGenres)
@@ -51,12 +51,12 @@ final albumGenresProvider = AutoDisposeFutureProvider<List<String>>.internal(
 );
 
 typedef AlbumGenresRef = AutoDisposeFutureProviderRef<List<String>>;
-String _$viewingAlbumHash() => r'f0d5aaf888fce914081eff28fbc1b607c996cc09';
+String _$viewingAlbumHash() => r'7a64066f4e860ac09dad478cc9476c7b7a915adf';
 
 /// See also [ViewingAlbum].
 @ProviderFor(ViewingAlbum)
 final viewingAlbumProvider =
-    AutoDisposeNotifierProvider<ViewingAlbum, AlbumSimple?>.internal(
+    AutoDisposeAsyncNotifierProvider<ViewingAlbum, Album?>.internal(
   ViewingAlbum.new,
   name: r'viewingAlbumProvider',
   debugGetCreateSourceHash:
@@ -65,7 +65,7 @@ final viewingAlbumProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$ViewingAlbum = AutoDisposeNotifier<AlbumSimple?>;
+typedef _$ViewingAlbum = AutoDisposeAsyncNotifier<Album?>;
 String _$viewingRatingHash() => r'5ec83334324d0f10a59f6ff8f2d8d37f79b21229';
 
 /// See also [ViewingRating].

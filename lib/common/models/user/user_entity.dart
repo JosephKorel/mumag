@@ -75,6 +75,7 @@ Map<String, dynamic> userEntityToJson(UserEntity userEntity) {
     'backgroundUrl': userEntity.backgroundUrl,
     'lastUpdatedAt': userEntity.lastUpdatedAt.toIso8601String(),
     'socialRelations': userEntity.socialRelations.toJson(),
-    'ratings': userEntity.ratings.map((e) => e.toJson()),
+    // 'socialRelations': [],
+    'ratings': userEntity.ratings.map((e) => e.toJson()).toList(),
   };
 }

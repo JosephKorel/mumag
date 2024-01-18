@@ -14,7 +14,7 @@ class TrackMainView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final track = ref.watch(viewingTrackProvider)!;
-    final album = ref.watch(viewingAlbumProvider)!;
+    final album = ref.watch(viewingAlbumProvider).requireValue!;
     final albumColors = ref.watch(albumColorSchemeProvider).requireValue;
     final appTheme = ref.watch(appThemeProvider);
 
