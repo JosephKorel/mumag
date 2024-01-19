@@ -8,7 +8,7 @@ class SuggestionRepositoryImpl extends SuggestionRepository {
 
   final ApiRepository _api;
 
-  static const _path = 'suggestion';
+  static const _path = '/suggestion';
 
   @override
   Future<void> insertSuggestion({

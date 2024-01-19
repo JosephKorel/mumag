@@ -44,7 +44,10 @@ class ProfileMenuButton extends ConsumerWidget {
     return PopupMenuButton<MenuEntry>(
       onSelected: onSelected,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      icon: const Icon(Icons.settings),
+      icon: Icon(
+        Icons.settings,
+        color: context.onPrimary,
+      ),
       splashRadius: Material.defaultSplashRadius / 1.5,
       itemBuilder: (BuildContext context) => <PopupMenuEntry<MenuEntry>>[
         PopupMenuItem<MenuEntry>(

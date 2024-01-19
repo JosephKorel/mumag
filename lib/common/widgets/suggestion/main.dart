@@ -3,7 +3,10 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
 import 'package:mumag/common/services/spotify_search/providers/search.dart';
+import 'package:mumag/common/services/suggestion/domain/suggestion_events.dart';
 import 'package:mumag/common/services/suggestion/domain/suggestion_widget.dart';
+import 'package:mumag/common/services/suggestion/providers/suggestion.dart';
+import 'package:mumag/common/services/user/providers/user_provider.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/utils/media_query.dart';
 import 'package:mumag/common/widgets/image.dart';
@@ -106,6 +109,21 @@ class _SearchContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final currentUser = ref.watch(localUserProvider)!;
+    final visitingUser = ref.watch(viewingUserProfileProvider).requireValue;
+    final suggestionHandler = ref.watch(suggestionHandlerProvider);
+
+    Future<void> confirmSuggestion() async {
+      await ref.read(suggestionHandlerProvider.notifier)(
+        event: InsertSuggestionParams(
+          suggestedBy: visitingUser.id,
+          suggestedTo: currentUser.id,
+          spotifyId: selectedMediaId!,
+          type: type,
+        ),
+      );
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -144,7 +162,9 @@ class _SearchContent extends ConsumerWidget {
           height: 16,
         ),
         FilledButton(
-          onPressed: selectedMediaId == null ? null : () {},
+          onPressed: selectedMediaId == null || suggestionHandler.isLoading
+              ? null
+              : confirmSuggestion,
           child: const Text('Send Suggestion'),
         ),
       ],

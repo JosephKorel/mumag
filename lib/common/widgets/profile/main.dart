@@ -112,19 +112,21 @@ class UserProfileView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final appTheme = ref.watch(appThemeProvider);
     final colorScheme = ref.watch(
       dynamicColorSchemeProvider(imageUrl: user.backgroundUrl),
     );
 
     return colorScheme.when(
       data: (data) => Theme(
-        data: ThemeData(colorScheme: data.light),
+        data: appTheme.copyWith(colorScheme: data.light),
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
             elevation: 0,
             backgroundColor: data.light.primary.withOpacity(0.4),
             actions: appBarActions,
+            foregroundColor: context.onPrimary,
           ),
           extendBodyBehindAppBar: true,
           floatingActionButton: floatingActionButton,

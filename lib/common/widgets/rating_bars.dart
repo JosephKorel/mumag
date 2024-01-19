@@ -184,7 +184,7 @@ class RatingQuantity extends StatelessWidget {
 }
 
 double _barHeight(double maxHeight, int greatestScore, int scoreCount) {
-  final percentage = (scoreCount * maxHeight * .68) / greatestScore;
+  final percentage = (scoreCount * maxHeight * .64) / greatestScore;
   return percentage == 0 ? 10 : percentage;
 }
 

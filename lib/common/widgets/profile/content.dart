@@ -126,63 +126,13 @@ class ProfileBadgeGenres extends StatelessWidget {
             backgroundColor: context.primaryContainer,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            side: BorderSide.none,
           ),
         )
         .toList();
 
     return Wrap(
-      spacing: 2,
-      alignment: WrapAlignment.center,
-      children: genresBadges,
-    );
-  }
-}
-
-class ProfileGenres extends StatefulWidget {
-  const ProfileGenres({
-    required this.genres,
-    super.key,
-    this.updateGenres,
-  });
-
-  final List<String> genres;
-  final void Function()? updateGenres;
-
-  @override
-  State<ProfileGenres> createState() => ProfileGenresState();
-}
-
-class ProfileGenresState extends State<ProfileGenres> {
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // Update user genres every 7 days
-      widget.updateGenres?.call();
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final genresBadges = widget.genres
-        .map(
-          (e) => Chip(
-            label: Text(e.toUpperCase()),
-            padding: EdgeInsets.zero,
-            labelStyle: context.bodySmall.copyWith(
-              fontWeight: FontWeight.w600,
-              color: context.onPrimaryContainer,
-            ),
-            backgroundColor: context.primaryContainer,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          ),
-        )
-        .toList();
-
-    return Wrap(
-      spacing: 2,
+      spacing: 8,
       alignment: WrapAlignment.center,
       children: genresBadges,
     );

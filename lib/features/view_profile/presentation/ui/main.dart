@@ -42,7 +42,7 @@ class ViewUserProfileView extends ConsumerWidget {
               ),
         children: [
           const ViewingProfileSocial(),
-          ProfileGenres(genres: user.requireValue.genres.sublist(0, 5)),
+          ProfileBadgeGenres(genres: user.requireValue.genres.sublist(0, 5)),
           const SizedBox(
             height: 8,
           ),
