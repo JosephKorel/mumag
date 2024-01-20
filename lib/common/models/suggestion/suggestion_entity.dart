@@ -20,7 +20,7 @@ class SuggestionEntity with _$SuggestionEntity {
   factory SuggestionEntity({
     required int id,
     required SuggestionType type,
-    required int rating,
+    required int? rating,
     required int sentTo,
     required String spotifyId,
   }) = _SuggestionEntity;

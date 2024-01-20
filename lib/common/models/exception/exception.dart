@@ -66,6 +66,15 @@ final class GetRatingsException extends AppException {
 }
 
 // Suggestion
+final class GetUserSuggestionsException extends AppException {
+  GetUserSuggestionsException({
+    required this.error,
+    super.errorMsg = 'Failed to get suggestions.',
+  });
+
+  final Object error;
+}
+
 final class InsertSuggestionException extends AppException {
   InsertSuggestionException({
     required this.error,

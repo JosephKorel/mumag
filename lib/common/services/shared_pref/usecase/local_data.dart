@@ -33,4 +33,8 @@ final class LocalStorageUsecase {
 
     return jsonDecode(data) as T;
   }
+
+  String? getSuggestionString({required String key}) {
+    return _sharedPref.getString(key);
+  }
 }

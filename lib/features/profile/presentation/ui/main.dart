@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
 import 'package:mumag/common/utils/media_query.dart';
@@ -10,7 +9,7 @@ import 'package:mumag/features/profile/presentation/ui/profile_menu.dart';
 import 'package:mumag/features/profile/presentation/ui/social.dart';
 import 'package:mumag/features/profile/presentation/ui/user_albums.dart';
 import 'package:mumag/features/profile/presentation/ui/user_genres.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:mumag/features/profile/presentation/ui/user_suggestions.dart';
 
 class ProfileView extends ConsumerWidget {
   const ProfileView({super.key});
@@ -37,29 +36,7 @@ class ProfileView extends ConsumerWidget {
       offset: offset,
       onScroll: onScroll,
       appBarActions: const [ProfileMenuButton()],
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: Row(
-          children: [
-            PhosphorIcon(
-              PhosphorIcons.package(),
-            )
-                .animate(
-                  onComplete: (controller) => controller.repeat(reverse: true),
-                )
-                .moveY(
-                  end: -2,
-                  begin: 2,
-                  curve: Curves.easeOut,
-                  duration: 1.seconds,
-                ),
-            const SizedBox(
-              width: 8,
-            ),
-            const Text('Suggestions (1)'),
-          ],
-        ),
-      ),
+      floatingActionButton: const UserSuggestionsFAB(),
       children: [
         const SizedBox(
           height: 8,

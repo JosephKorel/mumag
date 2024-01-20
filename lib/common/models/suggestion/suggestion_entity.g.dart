@@ -11,7 +11,7 @@ _$SuggestionEntityImpl _$$SuggestionEntityImplFromJson(
     _$SuggestionEntityImpl(
       id: json['id'] as int,
       type: $enumDecode(_$SuggestionTypeEnumMap, json['type']),
-      rating: json['rating'] as int,
+      rating: json['rating'] as int?,
       sentTo: json['sentTo'] as int,
       spotifyId: json['spotifyId'] as String,
     );

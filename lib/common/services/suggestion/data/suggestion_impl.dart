@@ -55,8 +55,9 @@ class SuggestionRepositoryImpl extends SuggestionRepository {
         query: params.toMap(),
       );
 
-      return List<SuggestionEntity>.from(result!['data'] as List<dynamic>)
-          .map((e) => SuggestionEntity.fromJson(e as Map<String, dynamic>))
+      return (result!['data'] as List<dynamic>)
+          .whereType<Map<String, dynamic>>()
+          .map(SuggestionEntity.fromJson)
           .toList();
     } catch (e) {
       rethrow;

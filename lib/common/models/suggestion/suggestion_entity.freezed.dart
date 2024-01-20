@@ -22,7 +22,7 @@ SuggestionEntity _$SuggestionEntityFromJson(Map<String, dynamic> json) {
 mixin _$SuggestionEntity {
   int get id => throw _privateConstructorUsedError;
   SuggestionType get type => throw _privateConstructorUsedError;
-  int get rating => throw _privateConstructorUsedError;
+  int? get rating => throw _privateConstructorUsedError;
   int get sentTo => throw _privateConstructorUsedError;
   String get spotifyId => throw _privateConstructorUsedError;
 
@@ -39,7 +39,7 @@ abstract class $SuggestionEntityCopyWith<$Res> {
       _$SuggestionEntityCopyWithImpl<$Res, SuggestionEntity>;
   @useResult
   $Res call(
-      {int id, SuggestionType type, int rating, int sentTo, String spotifyId});
+      {int id, SuggestionType type, int? rating, int sentTo, String spotifyId});
 }
 
 /// @nodoc
@@ -57,7 +57,7 @@ class _$SuggestionEntityCopyWithImpl<$Res, $Val extends SuggestionEntity>
   $Res call({
     Object? id = null,
     Object? type = null,
-    Object? rating = null,
+    Object? rating = freezed,
     Object? sentTo = null,
     Object? spotifyId = null,
   }) {
@@ -70,10 +70,10 @@ class _$SuggestionEntityCopyWithImpl<$Res, $Val extends SuggestionEntity>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as SuggestionType,
-      rating: null == rating
+      rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       sentTo: null == sentTo
           ? _value.sentTo
           : sentTo // ignore: cast_nullable_to_non_nullable
@@ -95,7 +95,7 @@ abstract class _$$SuggestionEntityImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id, SuggestionType type, int rating, int sentTo, String spotifyId});
+      {int id, SuggestionType type, int? rating, int sentTo, String spotifyId});
 }
 
 /// @nodoc
@@ -111,7 +111,7 @@ class __$$SuggestionEntityImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? type = null,
-    Object? rating = null,
+    Object? rating = freezed,
     Object? sentTo = null,
     Object? spotifyId = null,
   }) {
@@ -124,10 +124,10 @@ class __$$SuggestionEntityImplCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as SuggestionType,
-      rating: null == rating
+      rating: freezed == rating
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       sentTo: null == sentTo
           ? _value.sentTo
           : sentTo // ignore: cast_nullable_to_non_nullable
@@ -158,7 +158,7 @@ class _$SuggestionEntityImpl implements _SuggestionEntity {
   @override
   final SuggestionType type;
   @override
-  final int rating;
+  final int? rating;
   @override
   final int sentTo;
   @override
@@ -206,7 +206,7 @@ abstract class _SuggestionEntity implements SuggestionEntity {
   factory _SuggestionEntity(
       {required final int id,
       required final SuggestionType type,
-      required final int rating,
+      required final int? rating,
       required final int sentTo,
       required final String spotifyId}) = _$SuggestionEntityImpl;
 
@@ -218,7 +218,7 @@ abstract class _SuggestionEntity implements SuggestionEntity {
   @override
   SuggestionType get type;
   @override
-  int get rating;
+  int? get rating;
   @override
   int get sentTo;
   @override

@@ -38,7 +38,7 @@ class SuggestionUsecase {
       () {
         return _repository.getUserSuggestions(params: params);
       },
-      (error, stackTrace) => DeleteSuggestionException(error: error),
+      (error, stackTrace) => GetUserSuggestionsException(error: error),
     );
   }
 }
