@@ -4,7 +4,6 @@ import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mumag/common/models/exception/exception.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
-import 'package:mumag/common/models/social_relations/user_simple.dart';
 import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/services/rating/domain/rating_events.dart';
 import 'package:mumag/common/services/rating/domain/rating_repository.dart';
@@ -44,7 +43,6 @@ void main() {
     avatarUrl: '',
     email: '',
     lastUpdatedAt: DateTime.now(),
-    socialRelations: UserSocialRelations.defaultValue(),
   );
   final getUserRatingParams = GetUserRatingParams(userId: 1);
   final userProviderMock = UserProviderMock();

@@ -371,12 +371,28 @@ class _SearchResultCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    Text(
-                      data.description,
-                      style: context.bodyMedium.copyWith(
-                        color: context.onSurface.withOpacity(0.7),
-                        fontStyle: FontStyle.italic,
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          '${data.description} ${data.artist != null ? ' by ' : ''}',
+                          style: context.bodyMedium.copyWith(
+                            color: context.onSurface.withOpacity(0.7),
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                        if (data.artist != null)
+                          Expanded(
+                            child: Text(
+                              data.artist!.join(', '),
+                              style: context.bodyMedium.copyWith(
+                                color: context.onSurface.withOpacity(0.7),
+                                fontStyle: FontStyle.italic,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                      ],
                     ),
                   ],
                 ),

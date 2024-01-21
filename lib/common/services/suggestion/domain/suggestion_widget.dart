@@ -8,6 +8,7 @@ final class SuggestionWidgetEntity {
     required this.description,
     required this.imageUrl,
     required this.spotifyId,
+    this.artist,
   });
 
   // Artist, album or track name
@@ -15,6 +16,7 @@ final class SuggestionWidgetEntity {
 
   // The type of it, artist, album or track
   final String description;
+  final List<String>? artist;
   final String imageUrl;
   final String spotifyId;
 
@@ -32,31 +34,36 @@ final class SuggestionWidgetEntity {
                 description: type.label,
                 imageUrl: e.images?.last.url ?? '',
                 spotifyId: e.id ?? '',
+                artist: e.artists?.map((e) => e.name ?? '').toList() ?? [],
               ),
             )
             .toList();
 
       case 'track':
+        // log('THIS IS THE DATA: ${data.whereType<TrackSimple>().first.}');
         return data
-            .whereType<TrackSimple>()
+            .whereType<Track>()
             .map(
               (e) => SuggestionWidgetEntity(
                 name: e.name ?? '',
                 description: type.label,
-                imageUrl: e.artists?.first.images?.last.url ?? '',
+                imageUrl: e.album?.images?.first.url ?? '',
                 spotifyId: e.id ?? '',
+                artist: e.artists?.map((e) => e.name ?? '').toList() ?? [],
               ),
             )
             .toList();
 
       case 'artist':
         return data
-            .whereType<AlbumSimple>()
+            .whereType<Artist>()
             .map(
               (e) => SuggestionWidgetEntity(
                 name: e.name ?? '',
                 description: type.label,
-                imageUrl: e.images?.last.url ?? '',
+                imageUrl: e.images == null || e.images!.isEmpty
+                    ? ''
+                    : e.images!.last.url ?? '',
                 spotifyId: e.id ?? '',
               ),
             )
