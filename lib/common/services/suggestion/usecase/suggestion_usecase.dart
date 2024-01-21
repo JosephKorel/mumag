@@ -41,6 +41,17 @@ class SuggestionUsecase {
       (error, stackTrace) => GetUserSuggestionsException(error: error),
     );
   }
+
+  ApiResult<List<SuggestionEntity>> getReceivedSuggestions({
+    required GetUserReceivedSuggestionParams params,
+  }) {
+    return TaskEither.tryCatch(
+      () {
+        return _repository.getReceivedSuggestions(params: params);
+      },
+      (error, stackTrace) => GetUserSuggestionsException(error: error),
+    );
+  }
 }
 
 class SuggestionUsecaseController {
@@ -54,6 +65,8 @@ class SuggestionUsecaseController {
       UpdateSuggestionParams() => _usecase.updateSuggestion(params: event),
       DeleteSuggestionParams() => _usecase.deleteSuggestion(params: event),
       GetUserSuggestionParams() => _usecase.getUserSuggestions(params: event),
+      GetUserReceivedSuggestionParams() =>
+        _usecase.getReceivedSuggestions(params: event),
     };
   }
 }

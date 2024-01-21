@@ -16,11 +16,12 @@ FutureOr<void> fetchUserSuggestions(FetchUserSuggestionsRef ref) async {
   final user = ref.watch(localUserProvider)!;
   final data = await ref
       .read(suggestionControllerProvider)(
-        event: GetUserSuggestionParams(userId: user.id),
+        event: GetUserReceivedSuggestionParams(userId: user.id),
       )
       .run();
+
   await data.fold((l) => null, (r) async {
-    final data = r as List<SuggestionEntity>;
+    final data = r as List<ReceivedSuggestion>;
     await ref
         .read(localDataProvider)
         .setString(
@@ -44,8 +45,8 @@ List<SuggestionEntity> userSuggestions(UserSuggestionsRef ref) {
 
   return data
       .map(
-        (e) => SuggestionEntity.fromJson(
-          e as Map<String, dynamic>,
+        (e) => ReceivedSuggestion.fromJson(
+          e as String,
         ),
       )
       .toList();

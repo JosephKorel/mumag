@@ -51,13 +51,30 @@ class SuggestionRepositoryImpl extends SuggestionRepository {
   }) async {
     try {
       final result = await _api.get(
-        path: '$_path/user-suggestions',
+        path: '$_path/sent-suggestions',
         query: params.toMap(),
       );
 
       return (result!['data'] as List<dynamic>)
-          .whereType<Map<String, dynamic>>()
-          .map(SuggestionEntity.fromJson)
+          .map((e) => SentSuggestion.fromJson(e.toString()))
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<SuggestionEntity>> getReceivedSuggestions({
+    required GetUserReceivedSuggestionParams params,
+  }) async {
+    try {
+      final result = await _api.get(
+        path: '$_path/received-suggestions',
+        query: params.toMap(),
+      );
+
+      return (result!['data'] as List<dynamic>)
+          .map((e) => ReceivedSuggestion.fromMap(e as Map<String, dynamic>))
           .toList();
     } catch (e) {
       rethrow;

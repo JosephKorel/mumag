@@ -77,3 +77,17 @@ class GetUserSuggestionParams extends SuggestionEvents {
     };
   }
 }
+
+class GetUserReceivedSuggestionParams extends SuggestionEvents {
+  GetUserReceivedSuggestionParams({
+    required this.userId,
+  });
+
+  final int userId;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'userId': userId,
+    };
+  }
+}

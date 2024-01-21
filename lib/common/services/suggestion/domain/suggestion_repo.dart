@@ -11,4 +11,8 @@ abstract class SuggestionRepository {
   Future<List<SuggestionEntity>> getUserSuggestions({
     required GetUserSuggestionParams params,
   });
+
+  Future<List<SuggestionEntity>> getReceivedSuggestions({
+    required GetUserReceivedSuggestionParams params,
+  });
 }
