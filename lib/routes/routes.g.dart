@@ -18,6 +18,7 @@ List<RouteBase> get $appRoutes => [
       $artistViewRoute,
       $albumViewRoute,
       $trackViewRoute,
+      $suggestionViewRoute,
     ];
 
 RouteBase get $splashRoute => GoRouteData.$route(
@@ -258,6 +259,30 @@ extension $TrackViewRouteExtension on TrackViewRoute {
 
   String get location => GoRouteData.$location(
         '/track',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $suggestionViewRoute => GoRouteData.$route(
+      path: '/suggestions',
+      name: 'suggestionsView',
+      factory: $SuggestionViewRouteExtension._fromState,
+    );
+
+extension $SuggestionViewRouteExtension on SuggestionViewRoute {
+  static SuggestionViewRoute _fromState(GoRouterState state) =>
+      const SuggestionViewRoute();
+
+  String get location => GoRouteData.$location(
+        '/suggestions',
       );
 
   void go(BuildContext context) => context.go(location);

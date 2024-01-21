@@ -7,7 +7,8 @@ part of 'suggestion_entity.dart';
 // **************************************************************************
 
 _$SuggestionEntityImpl _$$SuggestionEntityImplFromJson(
-        Map<String, dynamic> json) =>
+  Map<String, dynamic> json,
+) =>
     _$SuggestionEntityImpl(
       id: json['id'] as int,
       type: $enumDecode(_$SuggestionTypeEnumMap, json['type']),
@@ -17,10 +18,11 @@ _$SuggestionEntityImpl _$$SuggestionEntityImplFromJson(
     );
 
 Map<String, dynamic> _$$SuggestionEntityImplToJson(
-        _$SuggestionEntityImpl instance) =>
+  _$SuggestionEntityImpl instance,
+) =>
     <String, dynamic>{
       'id': instance.id,
-      'type': _$SuggestionTypeEnumMap[instance.type]!,
+      'type': _$SuggestionTypeEnumMap[instance.type],
       'rating': instance.rating,
       'sentTo': instance.sentTo,
       'spotifyId': instance.spotifyId,

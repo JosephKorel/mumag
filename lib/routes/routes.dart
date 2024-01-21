@@ -9,6 +9,7 @@ import 'package:mumag/features/profile/presentation/ui/main.dart';
 import 'package:mumag/features/search/presentation/ui/main.dart';
 import 'package:mumag/features/search/search_user/main.dart';
 import 'package:mumag/features/sign_in/presentation/ui/main.dart';
+import 'package:mumag/features/suggestion/presentation/ui/main.dart';
 import 'package:mumag/features/track_view/presentation/ui/main.dart';
 import 'package:mumag/features/view_profile/presentation/ui/main.dart';
 
@@ -121,5 +122,16 @@ class TrackViewRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const TrackMainView();
+  }
+}
+
+@TypedGoRoute<SuggestionViewRoute>(
+    path: '/suggestions', name: 'suggestionsView')
+class SuggestionViewRoute extends GoRouteData {
+  const SuggestionViewRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const MySugggestionsView();
   }
 }

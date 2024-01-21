@@ -1,4 +1,6 @@
+import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
 import 'package:mumag/common/services/spotify_auth/providers/api.dart';
+import 'package:mumag/common/services/suggestion/domain/suggestion_widget.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:spotify/spotify.dart';
 
@@ -75,5 +77,27 @@ class SpotifySearch extends _$SpotifySearch {
 
       return [...state.requireValue, ...items];
     });
+  }
+}
+
+@riverpod
+FutureOr<SuggestionWidgetEntity?> searchMediaById(
+  SearchMediaByIdRef ref, {
+  required SuggestionType type,
+  required String spotifyId,
+}) async {
+  final spotify = ref.watch(spotifyApiProvider);
+  switch (type) {
+    case SuggestionType.album:
+      final item = await spotify.albums.get(spotifyId);
+      return SuggestionWidgetEntity.parseSingleItem(item, type);
+
+    case SuggestionType.track:
+      final item = await spotify.tracks.get(spotifyId);
+      return SuggestionWidgetEntity.parseSingleItem(item, type);
+
+    case SuggestionType.artist:
+      final item = await spotify.artists.get(spotifyId);
+      return SuggestionWidgetEntity.parseSingleItem(item, type);
   }
 }

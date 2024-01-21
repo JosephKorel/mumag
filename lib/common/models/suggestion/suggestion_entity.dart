@@ -6,9 +6,9 @@ part 'suggestion_entity.freezed.dart';
 part 'suggestion_entity.g.dart';
 
 enum SuggestionType {
+  artist('Artist'),
   album('Album'),
-  track('Track'),
-  artist('Artist');
+  track('Track');
 
   const SuggestionType(this.label);
 
@@ -31,10 +31,13 @@ class SuggestionEntity with _$SuggestionEntity {
 
 extension SuggestionTypeIcon on SuggestionType {
   IconData get icon =>
-      [Icons.album, Icons.music_note_sharp, Icons.person][index];
+      [Icons.person, Icons.album, Icons.music_note_sharp][index];
 }
 
 extension ToSpotifyType on SuggestionType {
-  SearchType get type =>
-      [SearchType.album, SearchType.track, SearchType.artist][index];
+  SearchType get type => [
+        SearchType.artist,
+        SearchType.album,
+        SearchType.track,
+      ][index];
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mumag/features/profile/presentation/providers/suggestions.dart';
+import 'package:mumag/routes/routes.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class UserSuggestionsFAB extends ConsumerStatefulWidget {
@@ -28,7 +30,7 @@ class _UserSuggestionsFABState extends ConsumerState<UserSuggestionsFAB> {
     }
 
     return FloatingActionButton.extended(
-      onPressed: () {},
+      onPressed: () => context.push(const SuggestionViewRoute().location),
       label: Row(
         children: [
           PhosphorIcon(

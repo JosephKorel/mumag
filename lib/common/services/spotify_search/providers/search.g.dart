@@ -6,22 +6,7 @@ part of 'search.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$searchMediaHash() => r'ef00a1428b54277e45e211f2528c3a39eff46e49';
-
-/// See also [SearchMedia].
-@ProviderFor(SearchMedia)
-final searchMediaProvider =
-    AutoDisposeNotifierProvider<SearchMedia, String>.internal(
-  SearchMedia.new,
-  name: r'searchMediaProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$searchMediaHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$SearchMedia = AutoDisposeNotifier<String>;
-String _$spotifySearchHash() => r'a94e2594605420475ac72d741bab2ea4aec98304';
+String _$searchMediaByIdHash() => r'2e70fa333d826e2aabef108ec871f5c06ec6af49';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -43,6 +28,171 @@ class _SystemHash {
     return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
   }
 }
+
+/// See also [searchMediaById].
+@ProviderFor(searchMediaById)
+const searchMediaByIdProvider = SearchMediaByIdFamily();
+
+/// See also [searchMediaById].
+class SearchMediaByIdFamily
+    extends Family<AsyncValue<SuggestionWidgetEntity?>> {
+  /// See also [searchMediaById].
+  const SearchMediaByIdFamily();
+
+  /// See also [searchMediaById].
+  SearchMediaByIdProvider call({
+    required SuggestionType type,
+    required String spotifyId,
+  }) {
+    return SearchMediaByIdProvider(
+      type: type,
+      spotifyId: spotifyId,
+    );
+  }
+
+  @override
+  SearchMediaByIdProvider getProviderOverride(
+    covariant SearchMediaByIdProvider provider,
+  ) {
+    return call(
+      type: provider.type,
+      spotifyId: provider.spotifyId,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'searchMediaByIdProvider';
+}
+
+/// See also [searchMediaById].
+class SearchMediaByIdProvider
+    extends AutoDisposeFutureProvider<SuggestionWidgetEntity?> {
+  /// See also [searchMediaById].
+  SearchMediaByIdProvider({
+    required SuggestionType type,
+    required String spotifyId,
+  }) : this._internal(
+          (ref) => searchMediaById(
+            ref as SearchMediaByIdRef,
+            type: type,
+            spotifyId: spotifyId,
+          ),
+          from: searchMediaByIdProvider,
+          name: r'searchMediaByIdProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$searchMediaByIdHash,
+          dependencies: SearchMediaByIdFamily._dependencies,
+          allTransitiveDependencies:
+              SearchMediaByIdFamily._allTransitiveDependencies,
+          type: type,
+          spotifyId: spotifyId,
+        );
+
+  SearchMediaByIdProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.type,
+    required this.spotifyId,
+  }) : super.internal();
+
+  final SuggestionType type;
+  final String spotifyId;
+
+  @override
+  Override overrideWith(
+    FutureOr<SuggestionWidgetEntity?> Function(SearchMediaByIdRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: SearchMediaByIdProvider._internal(
+        (ref) => create(ref as SearchMediaByIdRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        type: type,
+        spotifyId: spotifyId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<SuggestionWidgetEntity?> createElement() {
+    return _SearchMediaByIdProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is SearchMediaByIdProvider &&
+        other.type == type &&
+        other.spotifyId == spotifyId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, type.hashCode);
+    hash = _SystemHash.combine(hash, spotifyId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin SearchMediaByIdRef
+    on AutoDisposeFutureProviderRef<SuggestionWidgetEntity?> {
+  /// The parameter `type` of this provider.
+  SuggestionType get type;
+
+  /// The parameter `spotifyId` of this provider.
+  String get spotifyId;
+}
+
+class _SearchMediaByIdProviderElement
+    extends AutoDisposeFutureProviderElement<SuggestionWidgetEntity?>
+    with SearchMediaByIdRef {
+  _SearchMediaByIdProviderElement(super.provider);
+
+  @override
+  SuggestionType get type => (origin as SearchMediaByIdProvider).type;
+  @override
+  String get spotifyId => (origin as SearchMediaByIdProvider).spotifyId;
+}
+
+String _$searchMediaHash() => r'ef00a1428b54277e45e211f2528c3a39eff46e49';
+
+/// See also [SearchMedia].
+@ProviderFor(SearchMedia)
+final searchMediaProvider =
+    AutoDisposeNotifierProvider<SearchMedia, String>.internal(
+  SearchMedia.new,
+  name: r'searchMediaProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$searchMediaHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$SearchMedia = AutoDisposeNotifier<String>;
+String _$spotifySearchHash() => r'a94e2594605420475ac72d741bab2ea4aec98304';
 
 abstract class _$SpotifySearch
     extends BuildlessAutoDisposeAsyncNotifier<List<dynamic>> {
