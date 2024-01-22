@@ -56,7 +56,7 @@ class SuggestionRepositoryImpl extends SuggestionRepository {
       );
 
       return (result!['data'] as List<dynamic>)
-          .map((e) => SentSuggestion.fromJson(e.toString()))
+          .map((e) => SentSuggestion.fromMap(e as Map<String, dynamic>))
           .toList();
     } catch (e) {
       rethrow;

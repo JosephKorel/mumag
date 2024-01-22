@@ -7,7 +7,7 @@ part of 'suggestions.dart';
 // **************************************************************************
 
 String _$fetchUserSuggestionsHash() =>
-    r'bf5c2460864c7a17efe17fd93456d1bfd624ad7f';
+    r'2055fecf9d9695764d4e12c5d40da2eb3cbe4ce2';
 
 /// See also [fetchUserSuggestions].
 @ProviderFor(fetchUserSuggestions)
@@ -22,7 +22,7 @@ final fetchUserSuggestionsProvider = AutoDisposeFutureProvider<void>.internal(
 );
 
 typedef FetchUserSuggestionsRef = AutoDisposeFutureProviderRef<void>;
-String _$userSuggestionsHash() => r'd2c58c363d1c850a29a04a620dec93d4aa9b399a';
+String _$userSuggestionsHash() => r'0509226d8d52be8e6e66b116f0119bd2c6c511c4';
 
 /// See also [userSuggestions].
 @ProviderFor(userSuggestions)

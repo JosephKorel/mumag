@@ -86,7 +86,7 @@ final class SentSuggestion extends SuggestionEntity {
           .single,
       rating: map['rating'] != null ? map['rating'] as int : null,
       spotifyId: map['spotifyId'] as String,
-      sentToId: int.tryParse(map['sentToId']['id'] as String)!,
+      sentToId: map['sentToId']['id'] as int,
       sentToName: map['sentTo']['name'] as String,
     );
   }
