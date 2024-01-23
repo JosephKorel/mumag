@@ -36,3 +36,9 @@ final class InsertSuggestionSuccess extends SuccessEvent {
     super.successMsg = 'Your suggestion was sent!',
   });
 }
+
+final class DeleteSuggestionSuccess extends SuccessEvent {
+  const DeleteSuggestionSuccess({
+    super.successMsg = 'Suggestion removed.',
+  });
+}

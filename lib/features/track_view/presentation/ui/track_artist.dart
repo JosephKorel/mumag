@@ -9,7 +9,7 @@ class TrackArtists extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final artists = ref.watch(viewingTrackProvider)!.artists;
+    final artists = ref.watch(getTrackProvider).requireValue!.artists;
 
     if (artists == null) {
       return const SizedBox.shrink();
@@ -44,7 +44,7 @@ class TrackArtistsList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final artists = ref.watch(viewingTrackProvider)!.artists!;
+    final artists = ref.watch(getTrackProvider).requireValue!.artists!;
 
     return ListView.builder(
       shrinkWrap: true,

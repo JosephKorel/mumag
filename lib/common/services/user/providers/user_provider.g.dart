@@ -49,7 +49,7 @@ final userExistsProvider = AutoDisposeFutureProvider<bool>.internal(
 );
 
 typedef UserExistsRef = AutoDisposeFutureProviderRef<bool>;
-String _$userHash() => r'046ff93e724357cbef25d1426f09d7e57c378025';
+String _$userHash() => r'beb7df6f45d67a71839633e3baa31ca3082b6a69';
 
 /// See also [User].
 @ProviderFor(User)

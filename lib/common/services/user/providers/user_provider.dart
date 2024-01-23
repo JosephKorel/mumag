@@ -79,14 +79,14 @@ class User extends _$User {
 
     return user.fold((l) => null, (r) async {
       // If user is already cached, skip it
-      if (localData.getString<Map<String, dynamic>>(key: _userKey) == null) {
-        await localData
-            .setString(
-              key: _userKey,
-              value: jsonEncode(userEntityToJson(r!)),
-            )
-            .run();
-      }
+
+      await localData
+          .setString(
+            key: _userKey,
+            value: jsonEncode(userEntityToJson(r!)),
+          )
+          .run();
+      ref.invalidate(localUserProvider);
 
       return r;
     });

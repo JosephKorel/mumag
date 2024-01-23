@@ -26,7 +26,7 @@ Future<AppColorScheme> dynamicColorScheme(
 }) async {
   const colorScheme = AppColorScheme();
   try {
-    if (imageUrl == null) {
+    if (imageUrl == null || imageUrl.isEmpty) {
       return colorScheme;
     }
 

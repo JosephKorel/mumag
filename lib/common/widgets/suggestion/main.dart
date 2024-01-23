@@ -116,8 +116,8 @@ class _SearchContent extends ConsumerWidget {
     Future<void> confirmSuggestion() async {
       await ref.read(suggestionHandlerProvider.notifier)(
         event: InsertSuggestionParams(
-          suggestedBy: visitingUser.id,
-          suggestedTo: currentUser.id,
+          suggestedBy: currentUser.id,
+          suggestedTo: visitingUser.id,
           spotifyId: selectedMediaId!,
           type: type,
         ),

@@ -49,6 +49,59 @@ class MediaContentContainer extends StatelessWidget {
   }
 }
 
+class MediaContentLoading extends StatelessWidget {
+  const MediaContentLoading({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          const LoadingSkeleton(height: 300),
+          Column(
+            children: [
+              const Expanded(child: SizedBox.expand()),
+              Expanded(
+                flex: 3,
+                child: SizedBox.expand(
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(32),
+                        topRight: Radius.circular(32),
+                      ),
+                      color: context.background,
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        children: [
+                          LoadingSkeleton(
+                            height: 68,
+                            width: 68,
+                            borderRadius: 34,
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          LoadingSkeleton(
+                            height: 18,
+                            width: 180,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 /// The top image of the page
 class MediaContentHeader extends StatelessWidget {
   const MediaContentHeader({required this.url, super.key});

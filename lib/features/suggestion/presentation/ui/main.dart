@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
 import 'package:mumag/common/services/spotify_search/providers/search.dart';
+import 'package:mumag/common/theme/theme_provider.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/utils/media_query.dart';
 import 'package:mumag/common/widgets/image.dart';
@@ -12,8 +12,6 @@ import 'package:mumag/features/profile/presentation/providers/suggestions.dart';
 import 'package:mumag/features/suggestion/presentation/providers/sent_suggestions.dart';
 import 'package:mumag/features/suggestion/presentation/ui/menu.dart';
 import 'package:mumag/features/suggestion/presentation/ui/rating.dart';
-import 'package:mumag/features/view_profile/presentation/providers/view_user.dart';
-import 'package:mumag/routes/routes.dart';
 
 class MySugggestionsView extends StatelessWidget {
   const MySugggestionsView({super.key});
@@ -67,10 +65,10 @@ class __ReceivedSuggestionsTabState
 
   @override
   Widget build(BuildContext context) {
+    final appScheme = ref.watch(appThemeProvider);
     final suggestions = ref
         .watch(userSuggestionsProvider)
         .whereType<ReceivedSuggestion>()
-        .where((element) => onlyType != null ? onlyType == element.type : true)
         .toList();
 
     return Padding(
@@ -107,15 +105,17 @@ class __ReceivedSuggestionsTabState
           Expanded(
             child: ListView.builder(
               itemCount: suggestions.length,
-              itemBuilder: (context, index) =>
-                  _ReceivedSuggestionItem(suggestion: suggestions[index])
-                      .animate()
-                      .fadeIn(duration: .4.seconds)
-                      .slideY(
-                        begin: 4,
-                        curve: Curves.easeOutQuart,
-                        delay: (100 + (index * 100)).milliseconds,
-                      ),
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: _ReceivedSuggestionItem(
+                  suggestion: suggestions[index],
+                  show: onlyType == null || onlyType == suggestions[index].type,
+                ).animate().fadeIn(duration: .4.seconds).slideY(
+                      begin: 4,
+                      curve: Curves.easeOutQuart,
+                      delay: (100 + (index * 100)).milliseconds,
+                    ),
+              ),
             ),
           ),
         ],
@@ -125,13 +125,13 @@ class __ReceivedSuggestionsTabState
 }
 
 class _ReceivedSuggestionItemMedia extends ConsumerWidget {
-  const _ReceivedSuggestionItemMedia({required this.suggestion});
+  const _ReceivedSuggestionItemMedia({
+    required this.suggestion,
+  });
 
   final ReceivedSuggestion suggestion;
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(viewingUserIdProvider);
     final item = ref.watch(
       searchMediaByIdProvider(
         type: suggestion.type,
@@ -259,14 +259,23 @@ class _ReceivedSuggestionItemMedia extends ConsumerWidget {
 }
 
 class _ReceivedSuggestionItem extends ConsumerWidget {
-  const _ReceivedSuggestionItem({required this.suggestion});
+  const _ReceivedSuggestionItem({required this.suggestion, required this.show});
   final ReceivedSuggestion suggestion;
+  final bool show;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    void visitUser() {
-      ref.read(viewingUserIdProvider.notifier).selectUser(suggestion.sentById);
-      context.push(const ViewUserRoute().location);
+    // When filtering, in order to prevent fetching it again
+    // Watch provider in this widget
+    ref.watch(
+      searchMediaByIdProvider(
+        type: suggestion.type,
+        spotifyId: suggestion.spotifyId,
+      ),
+    );
+
+    if (!show) {
+      return const SizedBox.shrink();
     }
 
     return DecoratedBox(
@@ -348,8 +357,10 @@ class __SentSuggestionsTabState extends ConsumerState<_SentSuggestionsTab> {
             child: suggestions.when(
               data: (data) => ListView.builder(
                 itemCount: data.length,
-                itemBuilder: (context, index) =>
-                    _SentSuggestionItem(suggestion: data[index]),
+                itemBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: _SentSuggestionItem(suggestion: data[index]),
+                ),
               ),
               error: (error, stackTrace) => const Text('Something went wrong'),
               loading: () => ListView.builder(

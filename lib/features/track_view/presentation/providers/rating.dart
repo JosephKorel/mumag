@@ -14,7 +14,7 @@ ApiResult<void> rateTrack(
   required int rateValue,
 }) {
   final user = ref.watch(userProvider).requireValue!;
-  final track = ref.watch(viewingTrackProvider)!;
+  final track = ref.watch(getTrackProvider).requireValue!;
 
   final ratingBaseParams = RatingBaseParams(
     type: RatingType.track,

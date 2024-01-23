@@ -70,7 +70,7 @@ class UpdateSuggestionParams extends SuggestionEvents {
 class DeleteSuggestionParams extends SuggestionEvents {
   const DeleteSuggestionParams({
     required this.suggestionId,
-    super.successMsg = const InsertSuggestionSuccess(),
+    super.successMsg = const DeleteSuggestionSuccess(),
   });
 
   final int suggestionId;

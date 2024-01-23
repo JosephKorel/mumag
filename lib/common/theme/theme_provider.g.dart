@@ -21,7 +21,7 @@ final appThemeProvider = AutoDisposeProvider<ThemeData>.internal(
 
 typedef AppThemeRef = AutoDisposeProviderRef<ThemeData>;
 String _$dynamicColorSchemeHash() =>
-    r'e3951ffda9d2a09df5082b564c877d0ab53c7da9';
+    r'b3e73ea0755749058d0e587e52cdf27b117a34f9';
 
 /// Copied from Dart SDK
 class _SystemHash {

@@ -50,7 +50,7 @@ class SuggestionRepositoryImpl extends SuggestionRepository {
     required DeleteSuggestionParams params,
   }) async {
     try {
-      await _api.post(path: _path, params: params.toMap());
+      await _api.delete(path: _path, params: params.toMap());
     } catch (e) {
       rethrow;
     }

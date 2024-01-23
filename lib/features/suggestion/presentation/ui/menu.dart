@@ -1,10 +1,18 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mumag/common/models/success_events/success_events.dart';
 import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
+import 'package:mumag/common/toast/toast_provider.dart';
+import 'package:mumag/features/album_view/presentation/providers/album.dart';
 import 'package:mumag/features/suggestion/presentation/providers/viewing_suggestion.dart';
 import 'package:mumag/features/suggestion/presentation/ui/rating.dart';
 import 'package:mumag/features/track_view/presentation/providers/track.dart';
+import 'package:mumag/features/view_profile/presentation/providers/view_user.dart';
+import 'package:mumag/routes/routes.dart';
 
 enum SuggestionMenuOptions {
   rate('Rate'),
@@ -25,7 +33,9 @@ class SuggestionMenuButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(viewingSuggestionProvider);
-    ref.watch(viewingTrackProvider);
+    ref.watch(getTrackProvider);
+    ref.watch(viewingAlbumProvider);
+    ref.watch(viewingUserIdProvider);
 
     void openRatingBottomSheet() {
       ref.read(viewingSuggestionProvider.notifier).updateState(suggestion);
@@ -38,19 +48,38 @@ class SuggestionMenuButton extends ConsumerWidget {
       });
     }
 
-    void viewMediaPage() {}
+    void visitUser() {
+      ref.read(viewingUserIdProvider.notifier).selectUser(suggestion.sentById);
+      context.push(const ViewUserRoute().location);
+    }
+
+    Future<bool> onDelete() async {
+      final deleted = await ref.read(deleteSuggestionProvider.future);
+
+      if (deleted) {
+        // Close the dialog
+        context.pop();
+      }
+
+      ref
+          .read(toastMessageProvider.notifier)
+          .onSuccessEvent(successEvent: const DeleteSuggestionSuccess());
+
+      return deleted;
+    }
 
     void onSelected(SuggestionMenuOptions item) {
       switch (item) {
         case SuggestionMenuOptions.rate:
           openRatingBottomSheet();
         case SuggestionMenuOptions.viewMedia:
-        // context.pushNamed(suggestion.type.)
+          _visitMedia(context, suggestion, ref);
 
         case SuggestionMenuOptions.visit:
-        //TODO - visit user
+          visitUser();
         case SuggestionMenuOptions.delete:
-        //TODO - open dialog to confirm delete
+          ref.read(viewingSuggestionProvider.notifier).updateState(suggestion);
+          _deleteSuggestion(context, ref, suggestion, onDelete);
       }
     }
 
@@ -61,7 +90,6 @@ class SuggestionMenuButton extends ConsumerWidget {
         Icons.more_vert,
         color: context.primary,
       ),
-      // splashRadius: Material.defaultSplashRadius / 1.5,
       itemBuilder: (BuildContext context) =>
           <PopupMenuEntry<SuggestionMenuOptions>>[
         PopupMenuItem<SuggestionMenuOptions>(
@@ -133,4 +161,83 @@ class SuggestionMenuButton extends ConsumerWidget {
       ],
     );
   }
+}
+
+class _ConfirmDeleteSuggestionButton extends ConsumerStatefulWidget {
+  const _ConfirmDeleteSuggestionButton({required this.onDelete});
+
+  final Future<bool> Function() onDelete;
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      __ConfirmDeleteSuggestionButtonState();
+}
+
+class __ConfirmDeleteSuggestionButtonState
+    extends ConsumerState<_ConfirmDeleteSuggestionButton> {
+  bool loading = false;
+
+  Future<void> _confirm() async {
+    setState(() {
+      loading = true;
+    });
+    await widget.onDelete();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FilledButton(
+      onPressed: loading ? null : _confirm,
+      style: FilledButton.styleFrom(
+        foregroundColor: context.onError,
+        backgroundColor: context.error,
+      ),
+      child: const Text('Remove'),
+    );
+  }
+}
+
+void _visitMedia(
+  BuildContext context,
+  SuggestionEntity suggestion,
+  WidgetRef ref,
+) {
+  switch (suggestion.type) {
+    case SuggestionType.artist:
+      return;
+    case SuggestionType.album:
+      ref
+          .read(viewingAlbumProvider.notifier)
+          .updateState(albumId: suggestion.spotifyId);
+      context.push(const AlbumViewRoute().location);
+
+    case SuggestionType.track:
+      ref.read(getTrackProvider.notifier).updateState(suggestion.spotifyId);
+      context.push(const TrackViewRoute().location);
+  }
+}
+
+void _deleteSuggestion(
+  BuildContext context,
+  WidgetRef ref,
+  ReceivedSuggestion suggestion,
+  Future<bool> Function() onDelete,
+) {
+  showDialog<void>(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('Hang On'),
+        content: Text(
+          "Are you sure you want to remove ${suggestion.sentByName}'s suggestion?",
+        ),
+        actions: [
+          TextButton(onPressed: context.pop, child: const Text('Cancel')),
+          _ConfirmDeleteSuggestionButton(
+            onDelete: onDelete,
+          ),
+        ],
+      );
+    },
+  );
 }

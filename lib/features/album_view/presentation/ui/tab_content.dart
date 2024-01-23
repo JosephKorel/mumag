@@ -89,7 +89,9 @@ class AlbumAboutTabContent extends ConsumerWidget {
     final dateFormat = DateFormat('dd/MM/yyyy');
     final releaseDate = album.releaseDate == null
         ? ''
-        : dateFormat.format(DateTime.parse(album.releaseDate!));
+        : album.releaseDate!.length == 4
+            ? album.releaseDate
+            : dateFormat.format(DateTime.parse(album.releaseDate!));
 
     final artists = album.artists == null
         ? ''
@@ -212,7 +214,7 @@ class AlbumTracksTabContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(viewingTrackProvider);
+    ref.watch(getTrackProvider);
     final album = ref.watch(viewingAlbumProvider).requireValue!;
     final tracks = album.tracks?.toList();
 
@@ -221,7 +223,7 @@ class AlbumTracksTabContent extends ConsumerWidget {
     }
 
     void onTap(TrackSimple track) {
-      ref.read(viewingTrackProvider.notifier).updateState(track: track);
+      ref.read(getTrackProvider.notifier).updateState(track.id!);
       const TrackViewRoute().push<void>(context);
     }
 

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -259,7 +257,6 @@ class _FollowingUserTile extends ConsumerWidget {
         ),
         () async {
           await Future.value(ref.refresh(mySocialRelationsProvider));
-          log('CAME RIGHT INTO HERE');
         },
       );
     }
