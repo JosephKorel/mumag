@@ -40,6 +40,7 @@ base class SuggestionEntity {
     required this.type,
     required this.rating,
     required this.spotifyId,
+    required this.createdAt,
   });
 
   factory SuggestionEntity.fromMap(Map<String, dynamic> map) {
@@ -50,6 +51,7 @@ base class SuggestionEntity {
           .single,
       rating: map['rating'] != null ? map['rating'] as int : null,
       spotifyId: map['spotifyId'] as String,
+      createdAt: map['createdAt'] as DateTime,
     );
   }
 
@@ -60,6 +62,7 @@ base class SuggestionEntity {
   final SuggestionType type;
   final int? rating;
   final String spotifyId;
+  final DateTime createdAt;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -67,6 +70,7 @@ base class SuggestionEntity {
       'type': type.name,
       'rating': rating,
       'spotifyId': spotifyId,
+      'createdAt': createdAt.toIso8601String(),
     };
   }
 
@@ -79,6 +83,7 @@ final class SentSuggestion extends SuggestionEntity {
     required super.type,
     required super.rating,
     required super.spotifyId,
+    required super.createdAt,
     required this.sentToId,
     required this.sentToName,
   });
@@ -96,6 +101,9 @@ final class SentSuggestion extends SuggestionEntity {
       spotifyId: map['spotifyId'] as String,
       sentToId: map['sentToId']['id'] as int,
       sentToName: map['sentTo']['name'] as String,
+      createdAt: map['createdAt'] == null
+          ? DateTime.now()
+          : DateTime.parse(map['createdAt'] as String).toUtc(),
     );
   }
 
@@ -117,6 +125,7 @@ final class ReceivedSuggestion extends SuggestionEntity {
     required super.type,
     required super.rating,
     required super.spotifyId,
+    required super.createdAt,
     required this.sentById,
     required this.sentByName,
   });
@@ -134,6 +143,9 @@ final class ReceivedSuggestion extends SuggestionEntity {
       spotifyId: map['spotifyId'] as String,
       sentById: map['sentBy']['id'] as int,
       sentByName: map['sentBy']['name'] as String,
+      createdAt: map['createdAt'] == null
+          ? DateTime.now()
+          : DateTime.parse(map['createdAt'] as String).toUtc(),
     );
   }
 

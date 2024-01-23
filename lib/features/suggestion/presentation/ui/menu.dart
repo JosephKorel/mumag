@@ -90,6 +90,7 @@ class SuggestionMenuButton extends ConsumerWidget {
         Icons.more_vert,
         color: context.primary,
       ),
+      surfaceTintColor: context.background,
       itemBuilder: (BuildContext context) =>
           <PopupMenuEntry<SuggestionMenuOptions>>[
         PopupMenuItem<SuggestionMenuOptions>(
@@ -98,7 +99,7 @@ class SuggestionMenuButton extends ConsumerWidget {
             children: [
               Icon(
                 Icons.star,
-                color: context.onBackground,
+                color: context.onBackground.withOpacity(0.6),
               ),
               const SizedBox(
                 width: 8,
@@ -113,7 +114,7 @@ class SuggestionMenuButton extends ConsumerWidget {
             children: [
               Icon(
                 suggestion.type.icon,
-                color: context.onBackground,
+                color: context.onBackground.withOpacity(0.6),
               ),
               const SizedBox(
                 width: 8,
@@ -130,7 +131,7 @@ class SuggestionMenuButton extends ConsumerWidget {
             children: [
               Icon(
                 Icons.person,
-                color: context.onBackground,
+                color: context.onBackground.withOpacity(0.6),
               ),
               const SizedBox(
                 width: 8,
@@ -147,7 +148,7 @@ class SuggestionMenuButton extends ConsumerWidget {
             children: [
               Icon(
                 Icons.close,
-                color: context.onBackground,
+                color: context.onBackground.withOpacity(0.6),
               ),
               const SizedBox(
                 width: 8,

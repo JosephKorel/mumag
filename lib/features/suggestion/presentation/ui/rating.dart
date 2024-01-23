@@ -230,7 +230,7 @@ class SuggestionRatingButtonContainer extends ConsumerWidget {
 
   void _showToast(WidgetRef ref) => ref
       .read(toastMessageProvider.notifier)
-      .onSuccessEvent(successEvent: InsertRatingSuccess());
+      .onSuccessEvent(successEvent: UpdateRatingSuccess());
 
   void onPressed(BuildContext context, WidgetRef ref) {
     showAppBottomSheet(

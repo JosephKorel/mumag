@@ -42,3 +42,9 @@ final class DeleteSuggestionSuccess extends SuccessEvent {
     super.successMsg = 'Suggestion removed.',
   });
 }
+
+final class UpdateSuggestionSuccess extends SuccessEvent {
+  const UpdateSuggestionSuccess({
+    super.successMsg = 'Rating sent!',
+  });
+}

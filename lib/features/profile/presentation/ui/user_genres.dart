@@ -15,7 +15,7 @@ class UserProfileGenres extends ConsumerStatefulWidget {
 
 class _UserProfileGenresState extends ConsumerState<UserProfileGenres> {
   void _updateGenres() {
-    final user = ref.read(userProvider).requireValue!;
+    final user = ref.read(localUserProvider)!;
     final lastUpdateDifference =
         DateTime.now().difference(user.lastUpdatedAt).inDays;
     if (lastUpdateDifference >= 7) {

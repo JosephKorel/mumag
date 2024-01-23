@@ -3,15 +3,13 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
 import 'package:mumag/common/services/spotify_search/providers/search.dart';
-import 'package:mumag/common/theme/theme_provider.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/utils/media_query.dart';
 import 'package:mumag/common/widgets/image.dart';
 import 'package:mumag/common/widgets/loading.dart';
 import 'package:mumag/features/profile/presentation/providers/suggestions.dart';
 import 'package:mumag/features/suggestion/presentation/providers/sent_suggestions.dart';
-import 'package:mumag/features/suggestion/presentation/ui/menu.dart';
-import 'package:mumag/features/suggestion/presentation/ui/rating.dart';
+import 'package:mumag/features/suggestion/presentation/ui/received_suggestions.dart';
 
 class MySugggestionsView extends StatelessWidget {
   const MySugggestionsView({super.key});
@@ -65,7 +63,6 @@ class __ReceivedSuggestionsTabState
 
   @override
   Widget build(BuildContext context) {
-    final appScheme = ref.watch(appThemeProvider);
     final suggestions = ref
         .watch(userSuggestionsProvider)
         .whereType<ReceivedSuggestion>()
@@ -107,7 +104,7 @@ class __ReceivedSuggestionsTabState
               itemCount: suggestions.length,
               itemBuilder: (context, index) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
-                child: _ReceivedSuggestionItem(
+                child: ReceivedSuggestionItem(
                   suggestion: suggestions[index],
                   show: onlyType == null || onlyType == suggestions[index].type,
                 ).animate().fadeIn(duration: .4.seconds).slideY(
@@ -119,183 +116,6 @@ class __ReceivedSuggestionsTabState
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _ReceivedSuggestionItemMedia extends ConsumerWidget {
-  const _ReceivedSuggestionItemMedia({
-    required this.suggestion,
-  });
-
-  final ReceivedSuggestion suggestion;
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final item = ref.watch(
-      searchMediaByIdProvider(
-        type: suggestion.type,
-        spotifyId: suggestion.spotifyId,
-      ),
-    );
-
-    return item.when(
-      data: (data) => SizedBox(
-        height: 68,
-        width: context.deviceWidth,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: CachedImage(
-                url: data!.imageUrl,
-                width: 68,
-                height: 68,
-              ),
-            ),
-            const SizedBox(
-              width: 8,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    data.name,
-                    style: context.bodyMedium
-                        .copyWith(fontWeight: FontWeight.w600),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        '${data.description} ${data.artist != null ? ' by ' : ''}',
-                        style: context.bodyMedium.copyWith(
-                          color: context.onSurface.withOpacity(0.7),
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                      if (data.artist != null)
-                        Expanded(
-                          child: Text(
-                            data.artist!.join(', '),
-                            style: context.bodyMedium.copyWith(
-                              color: context.onSurface.withOpacity(0.7),
-                              fontStyle: FontStyle.italic,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: context.onSurface.withOpacity(0.7),
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 2,
-                          horizontal: 8,
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              Icons.person,
-                              size: 18,
-                            ),
-                            const SizedBox(
-                              width: 4,
-                            ),
-                            Text(
-                              suggestion.sentByName,
-                              style: context.bodySmall.copyWith(
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-      error: (error, stackTrace) => const Center(
-        child: Icon(Icons.warning),
-      ),
-      loading: () => const SizedBox(
-        height: 52,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            LoadingSkeleton(
-              height: 52,
-              width: 52,
-            ),
-            SizedBox(
-              width: 8,
-            ),
-            Expanded(child: LoadingSkeleton(height: 18)),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ReceivedSuggestionItem extends ConsumerWidget {
-  const _ReceivedSuggestionItem({required this.suggestion, required this.show});
-  final ReceivedSuggestion suggestion;
-  final bool show;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // When filtering, in order to prevent fetching it again
-    // Watch provider in this widget
-    ref.watch(
-      searchMediaByIdProvider(
-        type: suggestion.type,
-        spotifyId: suggestion.spotifyId,
-      ),
-    );
-
-    if (!show) {
-      return const SizedBox.shrink();
-    }
-
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        border: Border.all(color: context.onSurface.withOpacity(0.8)),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: _ReceivedSuggestionItemMedia(suggestion: suggestion),
-            ),
-            SuggestionRatingButtonContainer(
-              child: SuggestionMenuButton(suggestion: suggestion),
-            ),
-          ],
-        ),
       ),
     );
   }
