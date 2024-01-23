@@ -7,6 +7,24 @@ sealed class SuggestionEvents {
   final SuccessEvent? successMsg;
 }
 
+class RateSuggestionParams extends SuggestionEvents {
+  const RateSuggestionParams({
+    required this.suggestionId,
+    required this.rateValue,
+    super.successMsg = const InsertSuggestionSuccess(),
+  });
+
+  final int suggestionId;
+  final int rateValue;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'suggestionId': suggestionId,
+      'rateValue': rateValue,
+    };
+  }
+}
+
 class InsertSuggestionParams extends SuggestionEvents {
   const InsertSuggestionParams({
     required this.suggestedBy,

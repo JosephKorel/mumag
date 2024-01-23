@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:mumag/routes/routes.dart';
 import 'package:spotify/spotify.dart';
 
 enum SuggestionType {
@@ -23,6 +24,13 @@ extension ToSpotifyType on SuggestionType {
         SearchType.artist,
         SearchType.album,
         SearchType.track,
+      ][index];
+
+  // Route name for each type
+  String get pageRoute => [
+        const ArtistViewRoute().location,
+        const AlbumViewRoute().location,
+        const TrackViewRoute().location,
       ][index];
 }
 

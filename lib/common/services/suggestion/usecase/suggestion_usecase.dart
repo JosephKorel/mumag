@@ -17,6 +17,13 @@ class SuggestionUsecase {
     );
   }
 
+  ApiResult<void> rateSuggestion({required RateSuggestionParams params}) {
+    return TaskEither.tryCatch(
+      () => _repository.rateSuggestion(params: params),
+      (error, stackTrace) => RateSuggestionException(error: error),
+    );
+  }
+
   ApiResult<int> updateSuggestion({required UpdateSuggestionParams params}) {
     return TaskEither.tryCatch(
       () => _repository.updateSuggestion(params: params),
@@ -67,6 +74,7 @@ class SuggestionUsecaseController {
       GetUserSuggestionParams() => _usecase.getUserSuggestions(params: event),
       GetUserReceivedSuggestionParams() =>
         _usecase.getReceivedSuggestions(params: event),
+      RateSuggestionParams() => _usecase.rateSuggestion(params: event)
     };
   }
 }

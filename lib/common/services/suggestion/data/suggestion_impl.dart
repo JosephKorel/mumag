@@ -22,6 +22,17 @@ class SuggestionRepositoryImpl extends SuggestionRepository {
   }
 
   @override
+  Future<void> rateSuggestion({
+    required RateSuggestionParams params,
+  }) async {
+    try {
+      await _api.post(path: '$_path/rate', params: params.toMap());
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<int> updateSuggestion({
     required UpdateSuggestionParams params,
   }) async {

@@ -1,4 +1,5 @@
 import 'package:mumag/common/models/rating/rating_entity.dart';
+import 'package:mumag/common/models/types/api_types.dart';
 import 'package:mumag/common/services/rating/domain/rating_events.dart';
 import 'package:mumag/common/services/rating/providers/rating.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

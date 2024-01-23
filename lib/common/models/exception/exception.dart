@@ -84,6 +84,15 @@ final class InsertSuggestionException extends AppException {
   final Object error;
 }
 
+final class RateSuggestionException extends AppException {
+  RateSuggestionException({
+    required this.error,
+    super.errorMsg = 'Failed to rate suggestion.',
+  });
+
+  final Object error;
+}
+
 final class UpdateSuggestionException extends AppException {
   UpdateSuggestionException({
     required this.error,
@@ -135,6 +144,34 @@ final class SearchUsersException extends AppException {
   SearchUsersException({
     required this.error,
     super.errorMsg = 'Something went wrong when searching for users.',
+  });
+
+  final Object error;
+}
+
+// Media
+final class GetTrackException extends AppException {
+  GetTrackException({
+    required this.error,
+    super.errorMsg = 'Failed to get track.',
+  });
+
+  final Object error;
+}
+
+final class GetAlbumException extends AppException {
+  GetAlbumException({
+    required this.error,
+    super.errorMsg = 'Failed to get album.',
+  });
+
+  final Object error;
+}
+
+final class GetArtistException extends AppException {
+  GetArtistException({
+    required this.error,
+    super.errorMsg = 'Failed to get artist.',
   });
 
   final Object error;

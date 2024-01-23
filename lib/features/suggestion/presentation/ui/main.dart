@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
 import 'package:mumag/common/services/spotify_search/providers/search.dart';
 import 'package:mumag/common/theme/utils.dart';
@@ -8,6 +10,10 @@ import 'package:mumag/common/widgets/image.dart';
 import 'package:mumag/common/widgets/loading.dart';
 import 'package:mumag/features/profile/presentation/providers/suggestions.dart';
 import 'package:mumag/features/suggestion/presentation/providers/sent_suggestions.dart';
+import 'package:mumag/features/suggestion/presentation/ui/menu.dart';
+import 'package:mumag/features/suggestion/presentation/ui/rating.dart';
+import 'package:mumag/features/view_profile/presentation/providers/view_user.dart';
+import 'package:mumag/routes/routes.dart';
 
 class MySugggestionsView extends StatelessWidget {
   const MySugggestionsView({super.key});
@@ -102,7 +108,14 @@ class __ReceivedSuggestionsTabState
             child: ListView.builder(
               itemCount: suggestions.length,
               itemBuilder: (context, index) =>
-                  _ReceivedSuggestionItem(suggestion: suggestions[index]),
+                  _ReceivedSuggestionItem(suggestion: suggestions[index])
+                      .animate()
+                      .fadeIn(duration: .4.seconds)
+                      .slideY(
+                        begin: 4,
+                        curve: Curves.easeOutQuart,
+                        delay: (100 + (index * 100)).milliseconds,
+                      ),
             ),
           ),
         ],
@@ -118,6 +131,7 @@ class _ReceivedSuggestionItemMedia extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(viewingUserIdProvider);
     final item = ref.watch(
       searchMediaByIdProvider(
         type: suggestion.type,
@@ -127,16 +141,17 @@ class _ReceivedSuggestionItemMedia extends ConsumerWidget {
 
     return item.when(
       data: (data) => SizedBox(
-        height: 52,
+        height: 68,
         width: context.deviceWidth,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: CachedImage(
                 url: data!.imageUrl,
-                width: 52,
-                height: 52,
+                width: 68,
+                height: 68,
               ),
             ),
             const SizedBox(
@@ -145,11 +160,11 @@ class _ReceivedSuggestionItemMedia extends ConsumerWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     data.name,
-                    style: context.titleMedium.copyWith(),
+                    style: context.bodyMedium
+                        .copyWith(fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -176,6 +191,44 @@ class _ReceivedSuggestionItemMedia extends ConsumerWidget {
                         ),
                     ],
                   ),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: context.onSurface.withOpacity(0.7),
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 2,
+                          horizontal: 8,
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.person,
+                              size: 18,
+                            ),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              suggestion.sentByName,
+                              style: context.bodySmall.copyWith(
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -188,6 +241,7 @@ class _ReceivedSuggestionItemMedia extends ConsumerWidget {
       loading: () => const SizedBox(
         height: 52,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             LoadingSkeleton(
               height: 52,
@@ -196,7 +250,7 @@ class _ReceivedSuggestionItemMedia extends ConsumerWidget {
             SizedBox(
               width: 8,
             ),
-            LoadingSkeleton(height: 18),
+            Expanded(child: LoadingSkeleton(height: 18)),
           ],
         ),
       ),
@@ -204,30 +258,35 @@ class _ReceivedSuggestionItemMedia extends ConsumerWidget {
   }
 }
 
-class _ReceivedSuggestionItem extends StatelessWidget {
+class _ReceivedSuggestionItem extends ConsumerWidget {
   const _ReceivedSuggestionItem({required this.suggestion});
   final ReceivedSuggestion suggestion;
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Column(
-        children: [
-          _ReceivedSuggestionItemMedia(suggestion: suggestion),
-          Row(
-            children: [
-              Text(
-                'Suggested by: ',
-                style: context.titleMedium,
-              ),
-              TextButton(
-                onPressed: () {},
-                child: Text(suggestion.sentByName),
-              ),
-            ],
-          ),
-        ],
+  Widget build(BuildContext context, WidgetRef ref) {
+    void visitUser() {
+      ref.read(viewingUserIdProvider.notifier).selectUser(suggestion.sentById);
+      context.push(const ViewUserRoute().location);
+    }
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        border: Border.all(color: context.onSurface.withOpacity(0.8)),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: _ReceivedSuggestionItemMedia(suggestion: suggestion),
+            ),
+            SuggestionRatingButtonContainer(
+              child: SuggestionMenuButton(suggestion: suggestion),
+            ),
+          ],
+        ),
       ),
     );
   }
