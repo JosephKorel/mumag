@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/models/social_relations/user_simple.dart';
 import 'package:mumag/common/services/search_users/providers/search.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
+import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/features/search/search_user/card.dart';
 import 'package:mumag/features/view_profile/presentation/providers/view_user.dart';
 
@@ -11,26 +12,61 @@ class SearchForUserView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const _SearchInput(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const _SearchInput(),
+        ),
+        body: const SearchResultsContainer(),
       ),
-      body: const SearchResultsContainer(),
     );
   }
 }
 
-class _SearchInput extends ConsumerWidget {
+class _SearchInput extends ConsumerStatefulWidget {
   const _SearchInput();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(searchValueProvider);
+  ConsumerState<ConsumerStatefulWidget> createState() => __SearchInputState();
+}
 
-    return TextField(
-      onChanged: ref.read(searchValueProvider.notifier).onSearch,
-      decoration: const InputDecoration(
-        hintText: 'Search',
+class __SearchInputState extends ConsumerState<_SearchInput> {
+  final _controller = TextEditingController();
+
+  void _clear() {
+    _controller.clear();
+    ref.invalidate(searchValueProvider);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final value = ref.watch(searchValueProvider);
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(6),
+      child: TextField(
+        controller: _controller,
+        onChanged: ref.read(searchValueProvider.notifier).onSearch,
+        decoration: InputDecoration(
+          hintText: 'Search',
+          suffixIcon: IconButton(
+            onPressed: value.isEmpty ? null : _clear,
+            icon: Icon(
+              Icons.clear,
+              color: value.isEmpty ? Colors.transparent : null,
+            ),
+          ),
+          filled: true,
+          fillColor: context.onSurface.withOpacity(0.1),
+          border: InputBorder.none,
+        ),
       ),
     );
   }
@@ -42,7 +78,6 @@ class SearchResultsContainer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final searching = ref.watch(searchValueProvider).isNotEmpty;
-
     final results = ref.watch(searchResultProvider);
     final userId = ref.watch(localUserProvider)!.id;
 
@@ -56,8 +91,19 @@ class SearchResultsContainer extends ConsumerWidget {
         return const Text('Something went wrong');
       }
 
-      if (data.isEmpty && searching) {
-        return const Text('No user found');
+      if (!results.isLoading && data.isEmpty && searching) {
+        return SizedBox(
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 38),
+            child: Text(
+              'No user found',
+              style: context.titleLarge
+                  .copyWith(color: context.onSurface.withOpacity(0.6)),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
       }
 
       return SearchResults<SocialUserSimple>(
