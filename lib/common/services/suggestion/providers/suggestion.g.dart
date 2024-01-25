@@ -57,6 +57,155 @@ final suggestionControllerProvider =
 
 typedef SuggestionControllerRef
     = AutoDisposeProviderRef<SuggestionUsecaseController>;
+String _$sendSuggestionHash() => r'4734d15dbecb8ec6aaa8e2e3763e60e7b2e5c145';
+
+/// Copied from Dart SDK
+class _SystemHash {
+  _SystemHash._();
+
+  static int combine(int hash, int value) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + value);
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
+    return hash ^ (hash >> 6);
+  }
+
+  static int finish(int hash) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
+    // ignore: parameter_assignments
+    hash = hash ^ (hash >> 11);
+    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
+  }
+}
+
+/// See also [sendSuggestion].
+@ProviderFor(sendSuggestion)
+const sendSuggestionProvider = SendSuggestionFamily();
+
+/// See also [sendSuggestion].
+class SendSuggestionFamily extends Family<AsyncValue<bool>> {
+  /// See also [sendSuggestion].
+  const SendSuggestionFamily();
+
+  /// See also [sendSuggestion].
+  SendSuggestionProvider call({
+    required InsertSuggestionParams event,
+  }) {
+    return SendSuggestionProvider(
+      event: event,
+    );
+  }
+
+  @override
+  SendSuggestionProvider getProviderOverride(
+    covariant SendSuggestionProvider provider,
+  ) {
+    return call(
+      event: provider.event,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'sendSuggestionProvider';
+}
+
+/// See also [sendSuggestion].
+class SendSuggestionProvider extends AutoDisposeFutureProvider<bool> {
+  /// See also [sendSuggestion].
+  SendSuggestionProvider({
+    required InsertSuggestionParams event,
+  }) : this._internal(
+          (ref) => sendSuggestion(
+            ref as SendSuggestionRef,
+            event: event,
+          ),
+          from: sendSuggestionProvider,
+          name: r'sendSuggestionProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$sendSuggestionHash,
+          dependencies: SendSuggestionFamily._dependencies,
+          allTransitiveDependencies:
+              SendSuggestionFamily._allTransitiveDependencies,
+          event: event,
+        );
+
+  SendSuggestionProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.event,
+  }) : super.internal();
+
+  final InsertSuggestionParams event;
+
+  @override
+  Override overrideWith(
+    FutureOr<bool> Function(SendSuggestionRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: SendSuggestionProvider._internal(
+        (ref) => create(ref as SendSuggestionRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        event: event,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<bool> createElement() {
+    return _SendSuggestionProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is SendSuggestionProvider && other.event == event;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, event.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin SendSuggestionRef on AutoDisposeFutureProviderRef<bool> {
+  /// The parameter `event` of this provider.
+  InsertSuggestionParams get event;
+}
+
+class _SendSuggestionProviderElement
+    extends AutoDisposeFutureProviderElement<bool> with SendSuggestionRef {
+  _SendSuggestionProviderElement(super.provider);
+
+  @override
+  InsertSuggestionParams get event => (origin as SendSuggestionProvider).event;
+}
+
 String _$suggestionHandlerHash() => r'd29be8b27b7b5c503ad1f5c8728afa43419ea1b5';
 
 /// See also [SuggestionHandler].

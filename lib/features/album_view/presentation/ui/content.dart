@@ -8,6 +8,7 @@ import 'package:mumag/common/widgets/media_view.dart';
 import 'package:mumag/common/widgets/rating_bottom_sheet.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
 import 'package:mumag/features/album_view/presentation/ui/rating.dart';
+import 'package:mumag/features/album_view/presentation/ui/suggest_button.dart';
 import 'package:mumag/features/album_view/presentation/ui/tab_content.dart';
 import 'package:mumag/features/artist_view/providers/artist.dart';
 
@@ -21,6 +22,7 @@ class AlbumContent extends ConsumerWidget {
 
     return MediaContentContainer(
       appBarTitle: album.name ?? '',
+      actions: const [SuggestButton()],
       headerImageUrl: album.images?.first.url,
       mainContent: const AlbumContentView(),
       fab: const RatingButtonContainer(child: RatingAlbumFAB()),

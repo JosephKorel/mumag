@@ -64,7 +64,7 @@ base class SuggestionEntity {
   final String spotifyId;
   final DateTime createdAt;
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toMap({bool receivedSuggestion = false}) {
     return <String, dynamic>{
       'id': id,
       'type': type.name,
@@ -77,30 +77,30 @@ base class SuggestionEntity {
   String toJson() => json.encode(toMap());
 }
 
-final class SentSuggestion extends SuggestionEntity {
-  const SentSuggestion({
+final class UserSuggestion extends SuggestionEntity {
+  const UserSuggestion({
     required super.id,
     required super.type,
     required super.rating,
     required super.spotifyId,
     required super.createdAt,
-    required this.sentToId,
-    required this.sentToName,
+    required this.suggesterId,
+    required this.suggesterName,
   });
 
-  factory SentSuggestion.fromJson(String source) =>
-      SentSuggestion.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UserSuggestion.fromJson(String source) =>
+      UserSuggestion.fromMap(json.decode(source) as Map<String, dynamic>);
 
-  factory SentSuggestion.fromMap(Map<String, dynamic> map) {
-    return SentSuggestion(
+  factory UserSuggestion.fromMap(Map<String, dynamic> map) {
+    return UserSuggestion(
       id: map['id'] as int,
       type: SuggestionType.values
           .where((element) => element.name == map['type'])
           .single,
       rating: map['rating'] != null ? map['rating'] as int : null,
       spotifyId: map['spotifyId'] as String,
-      sentToId: map['sentToId']['id'] as int,
-      sentToName: map['sentTo']['name'] as String,
+      suggesterId: map['suggester']['id'] as int,
+      suggesterName: map['suggester']['name'] as String,
       createdAt: map['createdAt'] == null
           ? DateTime.now()
           : DateTime.parse(map['createdAt'] as String).toUtc(),
@@ -108,55 +108,25 @@ final class SentSuggestion extends SuggestionEntity {
   }
 
   @override
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toMap({bool receivedSuggestion = false}) {
     return {
       ...super.toMap(),
-      'sentTo': {'id': sentToId, 'name': sentToName},
+      'suggester': {'id': suggesterId, 'name': suggesterName},
+    };
+
+    if (receivedSuggestion) {
+      return {
+        ...super.toMap(),
+        'sentBy': {'id': suggesterId, 'name': suggesterName},
+      };
+    }
+
+    return {
+      ...super.toMap(),
+      'sentTo': {'id': suggesterId, 'name': suggesterName},
     };
   }
 
-  final int sentToId;
-  final String sentToName;
-}
-
-final class ReceivedSuggestion extends SuggestionEntity {
-  const ReceivedSuggestion({
-    required super.id,
-    required super.type,
-    required super.rating,
-    required super.spotifyId,
-    required super.createdAt,
-    required this.sentById,
-    required this.sentByName,
-  });
-
-  factory ReceivedSuggestion.fromJson(String source) =>
-      ReceivedSuggestion.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  factory ReceivedSuggestion.fromMap(Map<String, dynamic> map) {
-    return ReceivedSuggestion(
-      id: map['id'] as int,
-      type: SuggestionType.values
-          .where((element) => element.name == map['type'])
-          .single,
-      rating: map['rating'] != null ? map['rating'] as int : null,
-      spotifyId: map['spotifyId'] as String,
-      sentById: map['sentBy']['id'] as int,
-      sentByName: map['sentBy']['name'] as String,
-      createdAt: map['createdAt'] == null
-          ? DateTime.now()
-          : DateTime.parse(map['createdAt'] as String).toUtc(),
-    );
-  }
-
-  @override
-  Map<String, dynamic> toMap() {
-    return {
-      ...super.toMap(),
-      'sentBy': {'id': sentById, 'name': sentByName},
-    };
-  }
-
-  final int sentById;
-  final String sentByName;
+  final int suggesterId;
+  final String suggesterName;
 }

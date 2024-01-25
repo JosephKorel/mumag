@@ -8,7 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'sent_suggestions.g.dart';
 
 @riverpod
-Future<List<SentSuggestion>> sentSuggestions(SentSuggestionsRef ref) async {
+Future<List<UserSuggestion>> sentSuggestions(SentSuggestionsRef ref) async {
   final user = ref.watch(localUserProvider)!;
   final data = await ref
       .read(suggestionControllerProvider)(
@@ -19,8 +19,8 @@ Future<List<SentSuggestion>> sentSuggestions(SentSuggestionsRef ref) async {
   return data.fold(
     (l) {
       ref.read(toastMessageProvider.notifier).onException(exception: l);
-      return <SentSuggestion>[];
+      return [];
     },
-    (r) => r as List<SentSuggestion>,
+    (r) => r as List<UserSuggestion>,
   );
 }

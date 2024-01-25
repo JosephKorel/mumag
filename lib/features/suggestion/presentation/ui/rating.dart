@@ -72,7 +72,7 @@ class _SuggestionRatingState extends ConsumerState<SuggestionRating> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          "How would you rate ${suggestion.sentByName}'s suggestion?",
+          "How would you rate ${suggestion.suggesterName}'s suggestion?",
           style: context.titleLarge,
         ),
         Expanded(

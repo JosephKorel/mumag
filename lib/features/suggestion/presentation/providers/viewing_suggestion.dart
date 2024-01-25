@@ -10,11 +10,11 @@ part 'viewing_suggestion.g.dart';
 @riverpod
 class ViewingSuggestion extends _$ViewingSuggestion {
   @override
-  ReceivedSuggestion? build() {
+  UserSuggestion? build() {
     return null;
   }
 
-  void updateState(ReceivedSuggestion suggestion) => state = suggestion;
+  void updateState(UserSuggestion suggestion) => state = suggestion;
 }
 
 @riverpod

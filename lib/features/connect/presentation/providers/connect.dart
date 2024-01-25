@@ -1,5 +1,4 @@
 import 'package:mumag/common/models/exception/exception.dart';
-import 'package:mumag/common/models/success_events/success_events.dart';
 import 'package:mumag/common/models/types/api_types.dart';
 import 'package:mumag/common/services/firebase/providers/auth.dart';
 import 'package:mumag/common/services/shared_pref/providers/shared_pref.dart';
@@ -52,14 +51,9 @@ class HandleConnection extends _$HandleConnection {
       final credentialsRequest =
           await ref.read(spotifyAuthControllerProvider).authenticate().run();
 
-      final credentials = credentialsRequest.fold((l) => null, (r) {
-        ref.read(toastMessageProvider.notifier).onSuccessEvent(
-              successEvent: SuccessMessage(successMsg: 'Got Credentials'),
-            );
-        return r;
-      });
+      final credentials = credentialsRequest.fold((l) => null, (r) => r);
 
-      if (credentials == null && credentials?.accessToken == null) {
+      if (credentials == null || credentials.accessToken == null) {
         ref.read(toastMessageProvider.notifier).onException(
               exception: ApiException(
                 errorMsg:
@@ -71,7 +65,7 @@ class HandleConnection extends _$HandleConnection {
 
       final saveCredentials =
           await ref.read(credentialsImplementationProvider).saveCredentials(
-                credentials: credentials!,
+                credentials: credentials,
               );
 
       if (!saveCredentials) {
@@ -80,11 +74,6 @@ class HandleConnection extends _$HandleConnection {
             );
         return;
       }
-
-      ref.read(toastMessageProvider.notifier).onSuccessEvent(
-            successEvent: SuccessMessage(
-                successMsg: 'Saved Credentials in Local Storage'),
-          );
 
       ref.invalidate(spotifyApiProvider);
 
@@ -97,7 +86,7 @@ class HandleConnection extends _$HandleConnection {
 
       final result = await ref.read(createUserProvider).run();
 
-      return result.fold(
+      result.fold(
         (l) {
           ref.read(toastMessageProvider.notifier).onException(
                 exception: ApiException(
@@ -105,7 +94,9 @@ class HandleConnection extends _$HandleConnection {
                 ),
               );
         },
-        (r) => ref.invalidate(userProvider),
+        (r) {
+          ref.invalidate(userProvider);
+        },
       );
     });
   }

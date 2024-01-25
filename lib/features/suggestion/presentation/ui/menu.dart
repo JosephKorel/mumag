@@ -28,7 +28,7 @@ enum SuggestionMenuOptions {
 class SuggestionMenuButton extends ConsumerWidget {
   const SuggestionMenuButton({required this.suggestion, super.key});
 
-  final ReceivedSuggestion suggestion;
+  final UserSuggestion suggestion;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -49,7 +49,9 @@ class SuggestionMenuButton extends ConsumerWidget {
     }
 
     void visitUser() {
-      ref.read(viewingUserIdProvider.notifier).selectUser(suggestion.sentById);
+      ref
+          .read(viewingUserIdProvider.notifier)
+          .selectUser(suggestion.suggesterId);
       context.push(const ViewUserRoute().location);
     }
 
@@ -93,21 +95,22 @@ class SuggestionMenuButton extends ConsumerWidget {
       surfaceTintColor: context.background,
       itemBuilder: (BuildContext context) =>
           <PopupMenuEntry<SuggestionMenuOptions>>[
-        PopupMenuItem<SuggestionMenuOptions>(
-          value: SuggestionMenuOptions.rate,
-          child: Row(
-            children: [
-              Icon(
-                Icons.star,
-                color: context.onBackground.withOpacity(0.6),
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              Text(SuggestionMenuOptions.rate.label),
-            ],
+        if (suggestion.rating == null)
+          PopupMenuItem<SuggestionMenuOptions>(
+            value: SuggestionMenuOptions.rate,
+            child: Row(
+              children: [
+                Icon(
+                  Icons.star,
+                  color: context.onBackground.withOpacity(0.6),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Text(SuggestionMenuOptions.rate.label),
+              ],
+            ),
           ),
-        ),
         PopupMenuItem<SuggestionMenuOptions>(
           value: SuggestionMenuOptions.viewMedia,
           child: Row(
@@ -137,7 +140,7 @@ class SuggestionMenuButton extends ConsumerWidget {
                 width: 8,
               ),
               Text(
-                '${SuggestionMenuOptions.visit.label} ${suggestion.sentByName}',
+                '${SuggestionMenuOptions.visit.label} ${suggestion.suggesterName}',
               ),
             ],
           ),
@@ -221,7 +224,7 @@ void _visitMedia(
 void _deleteSuggestion(
   BuildContext context,
   WidgetRef ref,
-  ReceivedSuggestion suggestion,
+  UserSuggestion suggestion,
   Future<bool> Function() onDelete,
 ) {
   showDialog<void>(
@@ -230,7 +233,7 @@ void _deleteSuggestion(
       return AlertDialog(
         title: const Text('Hang On'),
         content: Text(
-          "Are you sure you want to remove ${suggestion.sentByName}'s suggestion?",
+          "Are you sure you want to remove ${suggestion.suggesterName}'s suggestion?",
         ),
         actions: [
           TextButton(onPressed: context.pop, child: const Text('Cancel')),

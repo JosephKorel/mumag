@@ -12,12 +12,14 @@ class MediaContentContainer extends StatelessWidget {
     required this.appBarTitle,
     required this.headerImageUrl,
     required this.mainContent,
+    this.actions,
     super.key,
     this.fab,
   });
 
   final String appBarTitle;
   final String? headerImageUrl;
+  final List<Widget>? actions;
   final Widget mainContent;
   final Widget? fab;
 
@@ -28,6 +30,7 @@ class MediaContentContainer extends StatelessWidget {
         title: Text(appBarTitle),
         backgroundColor: context.primary.withOpacity(0.6),
         foregroundColor: context.onPrimary,
+        actions: actions,
       ),
       body: Stack(
         children: [

@@ -21,12 +21,12 @@ final deleteSuggestionProvider = AutoDisposeFutureProvider<bool>.internal(
 );
 
 typedef DeleteSuggestionRef = AutoDisposeFutureProviderRef<bool>;
-String _$viewingSuggestionHash() => r'9a8af9847b8aeb79adc6bf7874032da008db3a0a';
+String _$viewingSuggestionHash() => r'362b1ff54325f4a9ef69c349c4efb9029ac384f3';
 
 /// See also [ViewingSuggestion].
 @ProviderFor(ViewingSuggestion)
-final viewingSuggestionProvider = AutoDisposeNotifierProvider<ViewingSuggestion,
-    ReceivedSuggestion?>.internal(
+final viewingSuggestionProvider =
+    AutoDisposeNotifierProvider<ViewingSuggestion, UserSuggestion?>.internal(
   ViewingSuggestion.new,
   name: r'viewingSuggestionProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -36,6 +36,6 @@ final viewingSuggestionProvider = AutoDisposeNotifierProvider<ViewingSuggestion,
   allTransitiveDependencies: null,
 );
 
-typedef _$ViewingSuggestion = AutoDisposeNotifier<ReceivedSuggestion?>;
+typedef _$ViewingSuggestion = AutoDisposeNotifier<UserSuggestion?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

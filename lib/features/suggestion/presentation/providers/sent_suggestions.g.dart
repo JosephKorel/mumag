@@ -6,12 +6,12 @@ part of 'sent_suggestions.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$sentSuggestionsHash() => r'750c7595a30d0c2f554fdea71bd90940fa3b9bf4';
+String _$sentSuggestionsHash() => r'362c0878df254fd77a2df044f9f3b853503de00e';
 
 /// See also [sentSuggestions].
 @ProviderFor(sentSuggestions)
 final sentSuggestionsProvider =
-    AutoDisposeFutureProvider<List<SentSuggestion>>.internal(
+    AutoDisposeFutureProvider<List<UserSuggestion>>.internal(
   sentSuggestions,
   name: r'sentSuggestionsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -21,6 +21,6 @@ final sentSuggestionsProvider =
   allTransitiveDependencies: null,
 );
 
-typedef SentSuggestionsRef = AutoDisposeFutureProviderRef<List<SentSuggestion>>;
+typedef SentSuggestionsRef = AutoDisposeFutureProviderRef<List<UserSuggestion>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

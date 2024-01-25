@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/models/social_relations/user_simple.dart';
 import 'package:mumag/common/services/search_users/providers/search.dart';
+import 'package:mumag/common/services/user/providers/user_provider.dart';
 import 'package:mumag/features/search/search_user/card.dart';
 import 'package:mumag/features/view_profile/presentation/providers/view_user.dart';
 
@@ -41,9 +42,13 @@ class SearchResultsContainer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final results = ref.watch(searchResultProvider);
+    final userId = ref.watch(localUserProvider)!.id;
 
     if (results.hasValue) {
-      final data = results.requireValue.fold((l) => null, (r) => r);
+      final data = results.requireValue.fold(
+        (l) => null,
+        (r) => r.where((element) => element.id != userId).toList(),
+      );
 
       if (data == null) {
         return const Text('Something went wrong');

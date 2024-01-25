@@ -1,12 +1,25 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:mumag/common/models/rating/rating_entity.dart';
+import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
+import 'package:mumag/common/services/spotify_search/providers/search.dart';
+import 'package:mumag/common/services/suggestion/domain/suggestion_widget.dart';
+import 'package:mumag/common/theme/utils.dart';
+import 'package:mumag/common/utils/media_query.dart';
+import 'package:mumag/common/widgets/image.dart';
+import 'package:mumag/common/widgets/loading.dart';
+import 'package:mumag/features/suggestion/presentation/ui/menu.dart';
+import 'package:mumag/features/suggestion/presentation/ui/rating.dart';
 
-
-/* class ReceivedSuggestionItem extends ConsumerWidget {
-  const ReceivedSuggestionItem({
+class SuggestionCardItem extends ConsumerWidget {
+  const SuggestionCardItem({
     required this.suggestion,
     required this.show,
     super.key,
   });
-  final ReceivedSuggestion suggestion;
+
+  final UserSuggestion suggestion;
   final bool show;
 
   @override
@@ -76,7 +89,8 @@ class _ReceivedSuggestionItemMedia extends ConsumerWidget {
     required this.suggestion,
   });
 
-  final ReceivedSuggestion suggestion;
+  final UserSuggestion suggestion;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final item = ref.watch(
@@ -108,7 +122,7 @@ class _ReceivedSuggestionItemMedia extends ConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SuggesterUser(name: suggestion.sentByName),
+                      SuggesterUser(name: suggestion.suggesterName),
                       SentTimestamp(createdAt: suggestion.createdAt),
                     ],
                   ),
@@ -212,6 +226,64 @@ class _MediaDetails extends StatelessWidget {
   }
 }
 
+class SuggesterUser extends StatelessWidget {
+  const SuggesterUser({required this.name, super.key});
+
+  final String name;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: context.onSurface.withOpacity(0.7),
+        ),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 2,
+          horizontal: 8,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.person,
+              size: 18,
+            ),
+            const SizedBox(
+              width: 4,
+            ),
+            Text(
+              name,
+              style: context.bodySmall.copyWith(
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SentTimestamp extends StatelessWidget {
+  const SentTimestamp({required this.createdAt, super.key});
+
+  final DateTime createdAt;
+
+  @override
+  Widget build(BuildContext context) {
+    final text = _suggestionTimestamp(createdAt);
+    return Text(
+      text,
+      style: context.bodyMedium
+          .copyWith(color: context.onSurface.withOpacity(0.7)),
+    );
+  }
+}
+
 class _SuggestionRating extends StatelessWidget {
   const _SuggestionRating({required this.rating});
 
@@ -253,4 +325,25 @@ class _SuggestionRating extends StatelessWidget {
     );
   }
 }
- */
+
+String _suggestionTimestamp(DateTime createdAt) {
+  final difference = DateTime.now().difference(createdAt);
+
+  if (difference.inMinutes < 1) {
+    return '${difference.inSeconds} s ago';
+  }
+
+  if (difference.inHours < 1) {
+    return '${difference.inMinutes} min ago';
+  }
+
+  if (difference.inHours < 24) {
+    return '${difference.inHours} hours ago';
+  }
+
+  if (difference.inDays < 30) {
+    return '${difference.inDays} days ago';
+  }
+
+  return DateFormat.yMd(Intl.getCurrentLocale()).format(createdAt);
+}

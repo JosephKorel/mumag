@@ -53,3 +53,20 @@ class SuggestionHandler extends _$SuggestionHandler {
     });
   }
 }
+
+@riverpod
+FutureOr<bool> sendSuggestion(
+  SendSuggestionRef ref, {
+  required InsertSuggestionParams event,
+}) async {
+  final result =
+      await ref.read(suggestionControllerProvider)(event: event).run();
+
+  return result.fold(
+    (l) {
+      ref.read(toastMessageProvider.notifier).onException(exception: l);
+      return false;
+    },
+    (r) => true,
+  );
+}

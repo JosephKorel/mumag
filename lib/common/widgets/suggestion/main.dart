@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
 import 'package:mumag/common/services/spotify_search/providers/search.dart';
 import 'package:mumag/common/services/suggestion/domain/suggestion_events.dart';
@@ -8,6 +9,7 @@ import 'package:mumag/common/services/suggestion/domain/suggestion_widget.dart';
 import 'package:mumag/common/services/suggestion/providers/suggestion.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
 import 'package:mumag/common/theme/utils.dart';
+import 'package:mumag/common/toast/toast_provider.dart';
 import 'package:mumag/common/utils/media_query.dart';
 import 'package:mumag/common/widgets/image.dart';
 import 'package:mumag/common/widgets/loading.dart';
@@ -114,14 +116,24 @@ class _SearchContent extends ConsumerWidget {
     final suggestionHandler = ref.watch(suggestionHandlerProvider);
 
     Future<void> confirmSuggestion() async {
-      await ref.read(suggestionHandlerProvider.notifier)(
-        event: InsertSuggestionParams(
-          suggestedBy: currentUser.id,
-          suggestedTo: visitingUser.id,
-          spotifyId: selectedMediaId!,
-          type: type,
-        ),
+      final insertParams = InsertSuggestionParams(
+        suggestedBy: currentUser.id,
+        suggestedTo: visitingUser.id,
+        spotifyId: selectedMediaId!,
+        type: type,
       );
+
+      final result =
+          await ref.read(sendSuggestionProvider(event: insertParams).future);
+
+      if (result) {
+        // Close bottom sheet
+        context.pop();
+
+        ref
+            .read(toastMessageProvider.notifier)
+            .onSuccessEvent(successEvent: insertParams.successMsg!);
+      }
     }
 
     return Column(

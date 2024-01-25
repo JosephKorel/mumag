@@ -21,12 +21,16 @@ FutureOr<void> fetchUserSuggestions(FetchUserSuggestionsRef ref) async {
       .run();
 
   await data.fold((l) => null, (r) async {
-    final data = r as List<ReceivedSuggestion>;
+    final data = r as List<UserSuggestion>;
     await ref
         .read(localDataProvider)
         .setString(
           key: suggestionsKey,
-          value: jsonEncode(data.map((e) => e.toJson()).toList()),
+          value: jsonEncode(
+            data
+                .map((e) => json.encode(e.toMap(receivedSuggestion: true)))
+                .toList(),
+          ),
         )
         .run();
 
@@ -35,7 +39,7 @@ FutureOr<void> fetchUserSuggestions(FetchUserSuggestionsRef ref) async {
 }
 
 @riverpod
-List<SuggestionEntity> userSuggestions(UserSuggestionsRef ref) {
+List<UserSuggestion> userSuggestions(UserSuggestionsRef ref) {
   final localData = ref.watch(localDataProvider);
   final data = localData.getString<List<dynamic>>(key: suggestionsKey);
 
@@ -45,7 +49,7 @@ List<SuggestionEntity> userSuggestions(UserSuggestionsRef ref) {
 
   return data
       .map(
-        (e) => ReceivedSuggestion.fromJson(
+        (e) => UserSuggestion.fromJson(
           e as String,
         ),
       )
