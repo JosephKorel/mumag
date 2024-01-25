@@ -41,6 +41,8 @@ class SearchResultsContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final searching = ref.watch(searchValueProvider).isNotEmpty;
+
     final results = ref.watch(searchResultProvider);
     final userId = ref.watch(localUserProvider)!.id;
 
@@ -52,6 +54,10 @@ class SearchResultsContainer extends ConsumerWidget {
 
       if (data == null) {
         return const Text('Something went wrong');
+      }
+
+      if (data.isEmpty && searching) {
+        return const Text('No user found');
       }
 
       return SearchResults<SocialUserSimple>(

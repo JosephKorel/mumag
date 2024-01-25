@@ -1,35 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:mumag/features/search/presentation/ui/card.dart';
-import 'package:mumag/routes/routes.dart';
+import 'package:mumag/features/search/search_user/main.dart';
 
-class SearchView extends ConsumerWidget {
+class SearchVieww extends StatefulWidget {
+  const SearchVieww({super.key});
+
+  @override
+  State<SearchVieww> createState() => _SearchViewwState();
+}
+
+class _SearchViewwState extends State<SearchVieww> {
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: const TabBar(
+            tabs: [
+              Tab(
+                text: 'Users',
+                icon: Icon(Icons.person_2_outlined),
+              ),
+              Tab(
+                text: 'Content',
+                icon: Icon(Icons.library_music_outlined),
+              ),
+            ],
+          ),
+        ),
+        body: const TabBarView(
+          children: [SearchForUserView(), SearchForUserView()],
+        ),
+      ),
+    );
+  }
+}
+
+class SearchView extends StatelessWidget {
   const SearchView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    void searchUsers() => context.push(const SearchUserRoute().location);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Search'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            SearchOptionCard(
-              icon: Icons.person_2_outlined,
-              onPressed: searchUsers,
-              buttonLabel: '!Find people with similar taste',
-            ),
-            SearchOptionCard(
-              icon: Icons.album,
-              onPressed: searchUsers,
-              buttonLabel: 'Search for music content',
-            ),
-          ],
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: const TabBar(
+            tabs: [
+              Tab(
+                text: 'Users',
+                icon: Icon(Icons.person_2_outlined),
+              ),
+              Tab(
+                text: 'Content',
+                icon: Icon(Icons.library_music_outlined),
+              ),
+            ],
+          ),
+        ),
+        body: const TabBarView(
+          children: [SearchForUserView(), SearchForUserView()],
         ),
       ),
     );
