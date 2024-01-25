@@ -108,103 +108,110 @@ class AlbumAboutTabContent extends ConsumerWidget {
       context.push(const ArtistViewRoute().location);
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: context.onSurface.withOpacity(0.2)),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: RichText(
-              text: TextSpan(
-                children: [
-                  const TextSpan(
-                    text: 'Title: ',
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                  TextSpan(
-                    text: album.name ?? '',
-                  ),
-                ],
-                style: context.titleMedium
-                    .copyWith(color: context.onPrimaryContainer, fontSize: 18),
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        InkWell(
-          onTap: goToArtist,
-          borderRadius: BorderRadius.circular(8),
-          child: Ink(
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          DecoratedBox(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: context.onSurface.withOpacity(0.2)),
             ),
             child: Padding(
               padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          const TextSpan(
-                            text: 'Artist: ',
-                            style: TextStyle(fontWeight: FontWeight.w600),
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    const TextSpan(
+                      text: 'Title: ',
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    TextSpan(
+                      text: album.name ?? '',
+                    ),
+                  ],
+                  style: context.titleMedium.copyWith(
+                    color: context.onPrimaryContainer,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          InkWell(
+            onTap: goToArtist,
+            borderRadius: BorderRadius.circular(8),
+            child: Ink(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: context.onSurface.withOpacity(0.2)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            const TextSpan(
+                              text: 'Artist: ',
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                            TextSpan(
+                              text: artists,
+                            ),
+                          ],
+                          style: context.titleMedium.copyWith(
+                            color: context.onPrimaryContainer,
+                            fontSize: 18,
                           ),
-                          TextSpan(
-                            text: artists,
-                          ),
-                        ],
-                        style: context.titleMedium.copyWith(
-                          color: context.onPrimaryContainer,
-                          fontSize: 18,
                         ),
                       ),
                     ),
-                  ),
-                  const Icon(
-                    Icons.arrow_outward,
-                  ),
-                ],
+                    const Icon(
+                      Icons.arrow_outward,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: context.onSurface.withOpacity(0.2)),
+          const SizedBox(
+            height: 8,
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: RichText(
-              text: TextSpan(
-                children: [
-                  const TextSpan(
-                    text: 'Release Date: ',
-                    style: TextStyle(fontWeight: FontWeight.w600),
+          DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: context.onSurface.withOpacity(0.2)),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    const TextSpan(
+                      text: 'Release Date: ',
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    TextSpan(
+                      text: releaseDate,
+                    ),
+                  ],
+                  style: context.titleMedium.copyWith(
+                    color: context.onPrimaryContainer,
+                    fontSize: 18,
                   ),
-                  TextSpan(
-                    text: releaseDate,
-                  ),
-                ],
-                style: context.titleMedium
-                    .copyWith(color: context.onPrimaryContainer, fontSize: 18),
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -227,47 +234,50 @@ class AlbumTracksTabContent extends ConsumerWidget {
       const TrackViewRoute().push<void>(context);
     }
 
-    return ListView.builder(
-      itemCount: tracks.length,
-      padding: EdgeInsets.zero,
-      itemBuilder: (context, index) => Material(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: InkWell(
-            onTap: () => onTap(tracks[index]),
-            borderRadius: BorderRadius.circular(8),
-            child: Ink(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: context.onSurface.withOpacity(0.2)),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            tracks[index].name!,
-                            style: context.titleMedium,
-                          ),
-                          Text(
-                            getTrackDuration(tracks[index].duration),
-                            style: context.bodyMedium.copyWith(
-                              color: context.onSurface.withOpacity(0.7),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: ListView.builder(
+        itemCount: tracks.length,
+        padding: EdgeInsets.zero,
+        itemBuilder: (context, index) => Material(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: InkWell(
+              onTap: () => onTap(tracks[index]),
+              borderRadius: BorderRadius.circular(8),
+              child: Ink(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: context.onSurface.withOpacity(0.2)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              tracks[index].name!,
+                              style: context.titleMedium,
                             ),
-                          ),
-                        ],
+                            Text(
+                              getTrackDuration(tracks[index].duration),
+                              style: context.bodyMedium.copyWith(
+                                color: context.onSurface.withOpacity(0.7),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const Icon(Icons.arrow_outward),
-                  ],
+                      const Icon(Icons.arrow_outward),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ).animate().fadeIn(delay: (index == 0 ? .1 : index / 12).seconds),
+            ).animate().fadeIn(delay: (index == 0 ? .1 : index / 12).seconds),
+          ),
         ),
       ),
     );
@@ -288,7 +298,10 @@ class AlbumRatingTabContent extends ConsumerWidget {
         }
 
         return SizedBox.expand(
-          child: RatingBars(scoreList: data.map((e) => e.rating).toList()),
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: RatingBars(scoreList: data.map((e) => e.rating).toList()),
+          ),
         );
       },
       error: (error, stackTrace) => Container(),

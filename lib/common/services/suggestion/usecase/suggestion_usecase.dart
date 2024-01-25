@@ -17,6 +17,14 @@ class SuggestionUsecase {
     );
   }
 
+  ApiResult<void> insertManySuggestions(
+      {required InsertManySuggestionsParams params}) {
+    return TaskEither.tryCatch(
+      () => _repository.insertManySuggestions(params: params),
+      (error, stackTrace) => InsertSuggestionException(error: error),
+    );
+  }
+
   ApiResult<int> updateSuggestion({required UpdateSuggestionParams params}) {
     return TaskEither.tryCatch(
       () => _repository.updateSuggestion(params: params),
@@ -62,6 +70,8 @@ class SuggestionUsecaseController {
   ApiResult<dynamic> call({required SuggestionEvents event}) {
     return switch (event) {
       InsertSuggestionParams() => _usecase.insertSuggestion(params: event),
+      InsertManySuggestionsParams() =>
+        _usecase.insertManySuggestions(params: event),
       UpdateSuggestionParams() => _usecase.updateSuggestion(params: event),
       DeleteSuggestionParams() => _usecase.deleteSuggestion(params: event),
       GetUserSuggestionParams() => _usecase.getUserSuggestions(params: event),

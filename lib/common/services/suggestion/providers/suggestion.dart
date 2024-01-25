@@ -70,3 +70,20 @@ FutureOr<bool> sendSuggestion(
     (r) => true,
   );
 }
+
+@riverpod
+FutureOr<bool> sendManySuggestions(
+  SendManySuggestionsRef ref, {
+  required InsertManySuggestionsParams event,
+}) async {
+  final result =
+      await ref.read(suggestionControllerProvider)(event: event).run();
+
+  return result.fold(
+    (l) {
+      ref.read(toastMessageProvider.notifier).onException(exception: l);
+      return false;
+    },
+    (r) => true,
+  );
+}

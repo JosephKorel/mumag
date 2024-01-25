@@ -206,6 +206,136 @@ class _SendSuggestionProviderElement
   InsertSuggestionParams get event => (origin as SendSuggestionProvider).event;
 }
 
+String _$sendManySuggestionsHash() =>
+    r'adb692a1609a838b001e0dfb5829e2c77ee0e104';
+
+/// See also [sendManySuggestions].
+@ProviderFor(sendManySuggestions)
+const sendManySuggestionsProvider = SendManySuggestionsFamily();
+
+/// See also [sendManySuggestions].
+class SendManySuggestionsFamily extends Family<AsyncValue<bool>> {
+  /// See also [sendManySuggestions].
+  const SendManySuggestionsFamily();
+
+  /// See also [sendManySuggestions].
+  SendManySuggestionsProvider call({
+    required InsertManySuggestionsParams event,
+  }) {
+    return SendManySuggestionsProvider(
+      event: event,
+    );
+  }
+
+  @override
+  SendManySuggestionsProvider getProviderOverride(
+    covariant SendManySuggestionsProvider provider,
+  ) {
+    return call(
+      event: provider.event,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'sendManySuggestionsProvider';
+}
+
+/// See also [sendManySuggestions].
+class SendManySuggestionsProvider extends AutoDisposeFutureProvider<bool> {
+  /// See also [sendManySuggestions].
+  SendManySuggestionsProvider({
+    required InsertManySuggestionsParams event,
+  }) : this._internal(
+          (ref) => sendManySuggestions(
+            ref as SendManySuggestionsRef,
+            event: event,
+          ),
+          from: sendManySuggestionsProvider,
+          name: r'sendManySuggestionsProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$sendManySuggestionsHash,
+          dependencies: SendManySuggestionsFamily._dependencies,
+          allTransitiveDependencies:
+              SendManySuggestionsFamily._allTransitiveDependencies,
+          event: event,
+        );
+
+  SendManySuggestionsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.event,
+  }) : super.internal();
+
+  final InsertManySuggestionsParams event;
+
+  @override
+  Override overrideWith(
+    FutureOr<bool> Function(SendManySuggestionsRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: SendManySuggestionsProvider._internal(
+        (ref) => create(ref as SendManySuggestionsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        event: event,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<bool> createElement() {
+    return _SendManySuggestionsProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is SendManySuggestionsProvider && other.event == event;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, event.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin SendManySuggestionsRef on AutoDisposeFutureProviderRef<bool> {
+  /// The parameter `event` of this provider.
+  InsertManySuggestionsParams get event;
+}
+
+class _SendManySuggestionsProviderElement
+    extends AutoDisposeFutureProviderElement<bool> with SendManySuggestionsRef {
+  _SendManySuggestionsProviderElement(super.provider);
+
+  @override
+  InsertManySuggestionsParams get event =>
+      (origin as SendManySuggestionsProvider).event;
+}
+
 String _$suggestionHandlerHash() => r'd29be8b27b7b5c503ad1f5c8728afa43419ea1b5';
 
 /// See also [SuggestionHandler].

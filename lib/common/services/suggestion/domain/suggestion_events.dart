@@ -31,6 +31,17 @@ class InsertSuggestionParams extends SuggestionEvents {
   }
 }
 
+class InsertManySuggestionsParams extends SuggestionEvents {
+  const InsertManySuggestionsParams({required this.params});
+  final List<InsertSuggestionParams> params;
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'data': params.map((e) => e.toMap()).toList(),
+    };
+  }
+}
+
 class UpdateSuggestionParams extends SuggestionEvents {
   const UpdateSuggestionParams({
     required this.suggestionId,

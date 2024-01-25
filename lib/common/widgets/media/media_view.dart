@@ -28,7 +28,7 @@ class MediaContentContainer extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(appBarTitle),
-        backgroundColor: context.primary.withOpacity(0.6),
+        backgroundColor: context.primary.withOpacity(0.8),
         foregroundColor: context.onPrimary,
         actions: actions,
       ),
@@ -75,24 +75,21 @@ class MediaContentLoading extends StatelessWidget {
                       ),
                       color: context.background,
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Column(
-                        children: [
-                          LoadingSkeleton(
-                            height: 68,
-                            width: 68,
-                            borderRadius: 34,
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          LoadingSkeleton(
-                            height: 18,
-                            width: 180,
-                          ),
-                        ],
-                      ),
+                    child: const Column(
+                      children: [
+                        LoadingSkeleton(
+                          height: 68,
+                          width: 68,
+                          borderRadius: 34,
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        LoadingSkeleton(
+                          height: 18,
+                          width: 180,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -147,15 +144,15 @@ class MediaContentChild extends StatelessWidget {
         ),
         color: context.background,
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            MediaContentRating(asyncRating: asyncRating, type: type),
-            ...children,
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: MediaContentRating(asyncRating: asyncRating, type: type),
+          ),
+          ...children,
+        ],
       ),
     );
   }

@@ -22,6 +22,21 @@ class SuggestionRepositoryImpl extends SuggestionRepository {
   }
 
   @override
+  Future<void> insertManySuggestions({
+    required InsertManySuggestionsParams params,
+  }) async {
+    try {
+      final dataToSend = {'data': params.toMap()};
+      await _api.post(
+        path: '$_path/insert-many',
+        params: dataToSend,
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<int> updateSuggestion({
     required UpdateSuggestionParams params,
   }) async {

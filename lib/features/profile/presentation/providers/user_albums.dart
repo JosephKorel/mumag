@@ -31,6 +31,8 @@ Future<List<AlbumSimple>> userSavedAlbums(UserSavedAlbumsRef ref) async {
       )
       .run();
 
+  ref.invalidate(albumListProvider);
+
   return page.items!.toList();
 }
 

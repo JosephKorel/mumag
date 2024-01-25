@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
+import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/genres.dart';
 import 'package:mumag/common/widgets/loading.dart';
-import 'package:mumag/common/widgets/media_view.dart';
+import 'package:mumag/common/widgets/media/media_view.dart';
+import 'package:mumag/common/widgets/media/suggestion_button.dart';
 import 'package:mumag/common/widgets/rating_bottom_sheet.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
 import 'package:mumag/features/album_view/presentation/ui/rating.dart';
-import 'package:mumag/features/album_view/presentation/ui/suggest_button.dart';
 import 'package:mumag/features/album_view/presentation/ui/tab_content.dart';
 import 'package:mumag/features/artist_view/providers/artist.dart';
 
@@ -22,7 +23,12 @@ class AlbumContent extends ConsumerWidget {
 
     return MediaContentContainer(
       appBarTitle: album.name ?? '',
-      actions: const [SuggestButton()],
+      actions: [
+        SuggestMediaButton(
+          spotifyId: album.id!,
+          type: SuggestionType.album,
+        ),
+      ],
       headerImageUrl: album.images?.first.url,
       mainContent: const AlbumContentView(),
       fab: const RatingButtonContainer(child: RatingAlbumFAB()),
@@ -41,13 +47,6 @@ class AlbumContentView extends ConsumerWidget {
       asyncRating: rating,
       type: RatingType.album,
       children: const [
-        SizedBox(
-          height: 16,
-        ),
-        AlbumGenreList(),
-        SizedBox(
-          height: 16,
-        ),
         Expanded(child: AlbumTabView()),
       ],
     );
