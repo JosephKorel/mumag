@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mumag/features/search/search_media/main.dart';
 import 'package:mumag/features/search/search_user/main.dart';
 
 class SearchView extends StatelessWidget {
@@ -25,7 +26,7 @@ class SearchView extends StatelessWidget {
           ),
         ),
         body: const TabBarView(
-          children: [SearchForUserView(), SearchForUserView()],
+          children: [SearchForUserView(), SearchForMediaView()],
         ),
       ),
     );

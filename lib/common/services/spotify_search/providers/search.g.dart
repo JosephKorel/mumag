@@ -192,14 +192,14 @@ final searchMediaProvider =
 );
 
 typedef _$SearchMedia = AutoDisposeNotifier<String>;
-String _$spotifySearchHash() => r'a94e2594605420475ac72d741bab2ea4aec98304';
+String _$spotifySearchHash() => r'092295ee43f29a869facc27ce508f5916ffb1d10';
 
 abstract class _$SpotifySearch
     extends BuildlessAutoDisposeAsyncNotifier<List<dynamic>> {
-  late final SearchType type;
+  late final SearchType? type;
 
   FutureOr<List<dynamic>> build({
-    required SearchType type,
+    SearchType? type,
   });
 }
 
@@ -214,7 +214,7 @@ class SpotifySearchFamily extends Family<AsyncValue<List<dynamic>>> {
 
   /// See also [SpotifySearch].
   SpotifySearchProvider call({
-    required SearchType type,
+    SearchType? type,
   }) {
     return SpotifySearchProvider(
       type: type,
@@ -250,7 +250,7 @@ class SpotifySearchProvider
     extends AutoDisposeAsyncNotifierProviderImpl<SpotifySearch, List<dynamic>> {
   /// See also [SpotifySearch].
   SpotifySearchProvider({
-    required SearchType type,
+    SearchType? type,
   }) : this._internal(
           () => SpotifySearch()..type = type,
           from: spotifySearchProvider,
@@ -275,7 +275,7 @@ class SpotifySearchProvider
     required this.type,
   }) : super.internal();
 
-  final SearchType type;
+  final SearchType? type;
 
   @override
   FutureOr<List<dynamic>> runNotifierBuild(
@@ -324,7 +324,7 @@ class SpotifySearchProvider
 
 mixin SpotifySearchRef on AutoDisposeAsyncNotifierProviderRef<List<dynamic>> {
   /// The parameter `type` of this provider.
-  SearchType get type;
+  SearchType? get type;
 }
 
 class _SpotifySearchProviderElement
@@ -333,7 +333,152 @@ class _SpotifySearchProviderElement
   _SpotifySearchProviderElement(super.provider);
 
   @override
-  SearchType get type => (origin as SpotifySearchProvider).type;
+  SearchType? get type => (origin as SpotifySearchProvider).type;
+}
+
+String _$spotifyFullSearchHash() => r'83516e7b3adcbd195eb5e035f2621da5f506b0be';
+
+abstract class _$SpotifyFullSearch
+    extends BuildlessAutoDisposeAsyncNotifier<List<dynamic>> {
+  late final SearchType? type;
+
+  FutureOr<List<dynamic>> build({
+    SearchType? type,
+  });
+}
+
+/// See also [SpotifyFullSearch].
+@ProviderFor(SpotifyFullSearch)
+const spotifyFullSearchProvider = SpotifyFullSearchFamily();
+
+/// See also [SpotifyFullSearch].
+class SpotifyFullSearchFamily extends Family<AsyncValue<List<dynamic>>> {
+  /// See also [SpotifyFullSearch].
+  const SpotifyFullSearchFamily();
+
+  /// See also [SpotifyFullSearch].
+  SpotifyFullSearchProvider call({
+    SearchType? type,
+  }) {
+    return SpotifyFullSearchProvider(
+      type: type,
+    );
+  }
+
+  @override
+  SpotifyFullSearchProvider getProviderOverride(
+    covariant SpotifyFullSearchProvider provider,
+  ) {
+    return call(
+      type: provider.type,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'spotifyFullSearchProvider';
+}
+
+/// See also [SpotifyFullSearch].
+class SpotifyFullSearchProvider extends AutoDisposeAsyncNotifierProviderImpl<
+    SpotifyFullSearch, List<dynamic>> {
+  /// See also [SpotifyFullSearch].
+  SpotifyFullSearchProvider({
+    SearchType? type,
+  }) : this._internal(
+          () => SpotifyFullSearch()..type = type,
+          from: spotifyFullSearchProvider,
+          name: r'spotifyFullSearchProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$spotifyFullSearchHash,
+          dependencies: SpotifyFullSearchFamily._dependencies,
+          allTransitiveDependencies:
+              SpotifyFullSearchFamily._allTransitiveDependencies,
+          type: type,
+        );
+
+  SpotifyFullSearchProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.type,
+  }) : super.internal();
+
+  final SearchType? type;
+
+  @override
+  FutureOr<List<dynamic>> runNotifierBuild(
+    covariant SpotifyFullSearch notifier,
+  ) {
+    return notifier.build(
+      type: type,
+    );
+  }
+
+  @override
+  Override overrideWith(SpotifyFullSearch Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: SpotifyFullSearchProvider._internal(
+        () => create()..type = type,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        type: type,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeAsyncNotifierProviderElement<SpotifyFullSearch, List<dynamic>>
+      createElement() {
+    return _SpotifyFullSearchProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is SpotifyFullSearchProvider && other.type == type;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, type.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin SpotifyFullSearchRef
+    on AutoDisposeAsyncNotifierProviderRef<List<dynamic>> {
+  /// The parameter `type` of this provider.
+  SearchType? get type;
+}
+
+class _SpotifyFullSearchProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<SpotifyFullSearch,
+        List<dynamic>> with SpotifyFullSearchRef {
+  _SpotifyFullSearchProviderElement(super.provider);
+
+  @override
+  SearchType? get type => (origin as SpotifyFullSearchProvider).type;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

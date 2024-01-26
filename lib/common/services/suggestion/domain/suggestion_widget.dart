@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
 import 'package:spotify/spotify.dart';
 
@@ -119,5 +120,47 @@ final class SuggestionWidgetEntity {
       default:
         return [];
     }
+  }
+
+  static List<SuggestionWidgetEntity> parseDynamicList(
+    List<dynamic> data,
+  ) {
+    return data
+        .map((e) {
+          if (e is AlbumSimple) {
+            return SuggestionWidgetEntity(
+              name: e.name ?? '',
+              description: SuggestionType.album.label,
+              imageUrl: e.images?.last.url ?? '',
+              spotifyId: e.id ?? '',
+              artist: e.artists?.map((e) => e.name ?? '').toList() ?? [],
+            );
+          }
+
+          if (e is Track) {
+            return SuggestionWidgetEntity(
+              name: e.name ?? '',
+              description: SuggestionType.track.label,
+              imageUrl: e.album?.images?.first.url ?? '',
+              spotifyId: e.id ?? '',
+              artist: e.artists?.map((e) => e.name ?? '').toList() ?? [],
+            );
+          }
+
+          if (e is Artist) {
+            return SuggestionWidgetEntity(
+              name: e.name ?? '',
+              description: SuggestionType.artist.label,
+              imageUrl: e.images == null || e.images!.isEmpty
+                  ? ''
+                  : e.images!.last.url ?? '',
+              spotifyId: e.id ?? '',
+            );
+          }
+
+          return null;
+        })
+        .whereNotNull()
+        .toList();
   }
 }

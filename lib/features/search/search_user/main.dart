@@ -4,6 +4,7 @@ import 'package:mumag/common/models/social_relations/user_simple.dart';
 import 'package:mumag/common/services/search_users/providers/search.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
 import 'package:mumag/common/theme/utils.dart';
+import 'package:mumag/features/search/presentation/ui/search_input.dart';
 import 'package:mumag/features/search/search_user/card.dart';
 import 'package:mumag/features/view_profile/presentation/providers/view_user.dart';
 
@@ -16,7 +17,7 @@ class SearchForUserView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: Scaffold(
         appBar: AppBar(
-          title: const _SearchInput(),
+          title: const SearchInputContainer(),
         ),
         body: const SearchResultsContainer(),
       ),
@@ -24,50 +25,16 @@ class SearchForUserView extends StatelessWidget {
   }
 }
 
-class _SearchInput extends ConsumerStatefulWidget {
-  const _SearchInput();
+class SearchInputContainer extends ConsumerWidget {
+  const SearchInputContainer({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => __SearchInputState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(searchValueProvider);
 
-class __SearchInputState extends ConsumerState<_SearchInput> {
-  final _controller = TextEditingController();
-
-  void _clear() {
-    _controller.clear();
-    ref.invalidate(searchValueProvider);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final value = ref.watch(searchValueProvider);
-
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(6),
-      child: TextField(
-        controller: _controller,
-        onChanged: ref.read(searchValueProvider.notifier).onSearch,
-        decoration: InputDecoration(
-          hintText: 'Search',
-          suffixIcon: IconButton(
-            onPressed: value.isEmpty ? null : _clear,
-            icon: Icon(
-              Icons.clear,
-              color: value.isEmpty ? Colors.transparent : null,
-            ),
-          ),
-          filled: true,
-          fillColor: context.onSurface.withOpacity(0.1),
-          border: InputBorder.none,
-        ),
-      ),
+    return SearchInput(
+      onChanged: ref.read(searchValueProvider.notifier).onSearch,
+      provider: searchValueProvider,
     );
   }
 }

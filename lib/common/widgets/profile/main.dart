@@ -124,7 +124,7 @@ class UserProfileView extends ConsumerWidget {
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
             elevation: 0,
-            backgroundColor: data.light.primary.withOpacity(0.4),
+            backgroundColor: data.light.primary.withOpacity(0.6),
             actions: appBarActions,
             foregroundColor: context.onPrimary,
           ),
