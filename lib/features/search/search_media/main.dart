@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mumag/common/services/spotify_search/providers/search.dart';
 import 'package:mumag/common/services/suggestion/domain/suggestion_widget.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/utils/media_query.dart';
 import 'package:mumag/common/widgets/image.dart';
 import 'package:mumag/common/widgets/loading.dart';
+import 'package:mumag/features/album_view/presentation/providers/album.dart';
 import 'package:mumag/features/search/presentation/ui/search_input.dart';
 
 class SearchForMediaView extends StatelessWidget {
@@ -59,13 +61,13 @@ class _SearchMediaViewState extends ConsumerState<SearchMediaView> {
   int _offset = 0;
 
   void onScrollEnd() {
-    if (ref.read(spotifyFullSearchProvider()).isLoading) {
+    if (ref.read(spotifyFullSearchProvider).isLoading) {
       return;
     }
 
     _offset += increaseFactor;
 
-    ref.read(spotifyFullSearchProvider().notifier).onScrollEnd(offset: _offset);
+    ref.read(spotifyFullSearchProvider.notifier).onScrollEnd(offset: _offset);
   }
 
   @override
@@ -80,7 +82,8 @@ class _SearchMediaViewState extends ConsumerState<SearchMediaView> {
 
   @override
   Widget build(BuildContext context) {
-    final results = ref.watch(spotifyFullSearchProvider());
+    final results = ref.watch(spotifyFullSearchProvider);
+    ref.watch(viewingAlbumProvider);
 
     if (results.hasError) {
       return const Center(
@@ -93,7 +96,7 @@ class _SearchMediaViewState extends ConsumerState<SearchMediaView> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (results.isLoading || !results.hasValue)
+          if (results.isLoading && !results.hasValue)
             const SizedBox.shrink()
           else
             ListView.builder(
@@ -127,7 +130,7 @@ class _SearchMediaViewState extends ConsumerState<SearchMediaView> {
   }
 }
 
-class _SearchResultCard extends StatelessWidget {
+class _SearchResultCard extends ConsumerWidget {
   const _SearchResultCard({
     required this.data,
   });
@@ -135,11 +138,21 @@ class _SearchResultCard extends StatelessWidget {
   final SuggestionWidgetEntity data;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    void onTap() {
+      if (data.description == 'Album') {
+        ref
+            .read(viewingAlbumProvider.notifier)
+            .updateState(albumId: data.spotifyId);
+
+        context.push(data.mediaPageRoute());
+      }
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: InkWell(
-        onTap: () => {},
+        onTap: onTap,
         borderRadius: BorderRadius.circular(8),
         child: SizedBox(
           height: 52,

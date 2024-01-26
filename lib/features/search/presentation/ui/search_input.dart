@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mumag/common/services/search_users/providers/search.dart';
 import 'package:mumag/common/theme/utils.dart';
 
 class SearchInput extends ConsumerStatefulWidget {
@@ -22,7 +21,7 @@ class _SearchInputState extends ConsumerState<SearchInput> {
 
   void _clear() {
     _controller.clear();
-    ref.invalidate(searchValueProvider);
+    ref.invalidate(widget.provider);
   }
 
   @override

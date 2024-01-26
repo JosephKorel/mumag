@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
+import 'package:mumag/routes/routes.dart';
 import 'package:spotify/spotify.dart';
 
 /// Class for each card in suggestion
@@ -162,5 +163,21 @@ final class SuggestionWidgetEntity {
         })
         .whereNotNull()
         .toList();
+  }
+
+  String mediaPageRoute() {
+    switch (description) {
+      case 'Artist':
+        return const ArtistViewRoute().location;
+
+      case 'Album':
+        return const AlbumViewRoute().location;
+
+      case 'Track':
+        return const TrackViewRoute().location;
+
+      default:
+        return '';
+    }
   }
 }

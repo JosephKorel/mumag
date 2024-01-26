@@ -113,10 +113,10 @@ FutureOr<SuggestionWidgetEntity?> searchMediaById(
 class SpotifyFullSearch extends _$SpotifyFullSearch {
   static const searchAdapter = SearchAdapter();
 
+  static const types = [SearchType.track, SearchType.artist, SearchType.album];
+
   @override
-  FutureOr<List<dynamic>> build({
-    SearchType? type,
-  }) async {
+  FutureOr<List<dynamic>> build() async {
     final search = ref.watch(searchMediaProvider);
     final spotify = ref.watch(spotifyApiProvider);
 
@@ -136,10 +136,6 @@ class SpotifyFullSearch extends _$SpotifyFullSearch {
       throw Exception();
     }
 
-    final types = type != null
-        ? [type]
-        : [SearchType.track, SearchType.artist, SearchType.album];
-
     final result = await spotify.search.get(search, types: types).getPage(
           8,
         );
@@ -155,11 +151,9 @@ class SpotifyFullSearch extends _$SpotifyFullSearch {
 
   Future<void> onScrollEnd({
     required int offset,
-    SearchType? type,
   }) async {
     final search = ref.read(searchMediaProvider);
     final spotify = ref.read(spotifyApiProvider);
-    final types = type != null ? [type] : SearchType.values;
 
     state = const AsyncLoading();
 
@@ -169,13 +163,17 @@ class SpotifyFullSearch extends _$SpotifyFullSearch {
             offset,
           );
 
-      final items = result.first.items;
+      final items = result
+          .map((e) => e.items)
+          .whereNotNull()
+          .expand((element) => element);
 
-      if (items == null) {
-        return state.requireValue;
-      }
+      final newList = searchAdapter.searchForCompatibility(
+        search,
+        items.toList(),
+      );
 
-      return [...state.requireValue, ...items];
+      return [...state.requireValue, ...newList];
     });
   }
 }
