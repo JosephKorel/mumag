@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
@@ -48,6 +49,50 @@ class MediaContentContainer extends StatelessWidget {
       ),
       floatingActionButton: fab,
       extendBodyBehindAppBar: true,
+    );
+  }
+}
+
+class MediaContentError extends StatelessWidget {
+  const MediaContentError({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Oops'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Icon(
+              Icons.error_outline,
+              color: context.error,
+              size: 32,
+            )
+                .animate(
+                  onComplete: (controller) => controller.repeat(reverse: true),
+                )
+                .slideY(
+                  begin: .2,
+                  duration: 2.seconds,
+                  curve: Curves.easeOutQuint,
+                ),
+            const SizedBox(
+              height: 16,
+            ),
+            Text(
+              'Something went wrong',
+              style: context.titleLarge.copyWith(
+                color: context.onSurface.withOpacity(0.8),
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -10,6 +10,7 @@ final class SuggestionWidgetEntity {
     required this.description,
     required this.imageUrl,
     required this.spotifyId,
+    required this.type,
     this.artist,
   });
 
@@ -26,6 +27,7 @@ final class SuggestionWidgetEntity {
           imageUrl: e.images?.last.url ?? '',
           spotifyId: e.id ?? '',
           artist: e.artists?.map((e) => e.name ?? '').toList() ?? [],
+          type: SuggestionType.album,
         );
 
       case 'track':
@@ -37,6 +39,7 @@ final class SuggestionWidgetEntity {
           imageUrl: e.album?.images?.first.url ?? '',
           spotifyId: e.id ?? '',
           artist: e.artists?.map((e) => e.name ?? '').toList() ?? [],
+          type: SuggestionType.track,
         );
 
       case 'artist':
@@ -49,6 +52,7 @@ final class SuggestionWidgetEntity {
               ? ''
               : e.images!.last.url ?? '',
           spotifyId: e.id ?? '',
+          type: SuggestionType.artist,
         );
 
       default:
@@ -57,6 +61,7 @@ final class SuggestionWidgetEntity {
           description: '',
           imageUrl: '',
           spotifyId: '',
+          type: SuggestionType.artist,
         );
     }
   }
@@ -69,6 +74,7 @@ final class SuggestionWidgetEntity {
   final List<String>? artist;
   final String imageUrl;
   final String spotifyId;
+  final SuggestionType type;
 
   static List<SuggestionWidgetEntity> parseList(
     List<dynamic> data,
@@ -85,6 +91,7 @@ final class SuggestionWidgetEntity {
                 imageUrl: e.images?.last.url ?? '',
                 spotifyId: e.id ?? '',
                 artist: e.artists?.map((e) => e.name ?? '').toList() ?? [],
+                type: SuggestionType.album,
               ),
             )
             .toList();
@@ -99,6 +106,7 @@ final class SuggestionWidgetEntity {
                 imageUrl: e.album?.images?.first.url ?? '',
                 spotifyId: e.id ?? '',
                 artist: e.artists?.map((e) => e.name ?? '').toList() ?? [],
+                type: SuggestionType.track,
               ),
             )
             .toList();
@@ -114,6 +122,7 @@ final class SuggestionWidgetEntity {
                     ? ''
                     : e.images!.last.url ?? '',
                 spotifyId: e.id ?? '',
+                type: SuggestionType.artist,
               ),
             )
             .toList();
@@ -131,10 +140,13 @@ final class SuggestionWidgetEntity {
           if (e is AlbumSimple) {
             return SuggestionWidgetEntity(
               name: e.name ?? '',
-              description: SuggestionType.album.label,
+              description: e.albumType != null
+                  ? AlbumType.values[e.albumType!.index].name
+                  : SuggestionType.album.label,
               imageUrl: e.images?.last.url ?? '',
               spotifyId: e.id ?? '',
               artist: e.artists?.map((e) => e.name ?? '').toList() ?? [],
+              type: SuggestionType.album,
             );
           }
 
@@ -145,6 +157,7 @@ final class SuggestionWidgetEntity {
               imageUrl: e.album?.images?.first.url ?? '',
               spotifyId: e.id ?? '',
               artist: e.artists?.map((e) => e.name ?? '').toList() ?? [],
+              type: SuggestionType.track,
             );
           }
 
@@ -156,6 +169,7 @@ final class SuggestionWidgetEntity {
                   ? ''
                   : e.images!.last.url ?? '',
               spotifyId: e.id ?? '',
+              type: SuggestionType.artist,
             );
           }
 

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
 import 'package:mumag/common/services/spotify_search/providers/search.dart';
 import 'package:mumag/common/services/suggestion/domain/suggestion_widget.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/utils/media_query.dart';
-import 'package:mumag/common/widgets/image.dart';
 import 'package:mumag/common/widgets/loading.dart';
+import 'package:mumag/common/widgets/media/common.dart';
+import 'package:mumag/common/widgets/media/image.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
+import 'package:mumag/features/artist_view/providers/artist.dart';
 import 'package:mumag/features/search/presentation/ui/search_input.dart';
+import 'package:mumag/features/track_view/presentation/providers/track.dart';
 
 class SearchForMediaView extends StatelessWidget {
   const SearchForMediaView({super.key});
@@ -84,6 +88,8 @@ class _SearchMediaViewState extends ConsumerState<SearchMediaView> {
   Widget build(BuildContext context) {
     final results = ref.watch(spotifyFullSearchProvider);
     ref.watch(viewingAlbumProvider);
+    ref.watch(viewingArtistIdProvider);
+    ref.watch(getTrackProvider);
 
     if (results.hasError) {
       return const Center(
@@ -147,6 +153,20 @@ class _SearchResultCard extends ConsumerWidget {
 
         context.push(data.mediaPageRoute());
       }
+
+      if (data.description == 'Artist') {
+        ref
+            .read(viewingArtistIdProvider.notifier)
+            .updateState(id: data.spotifyId);
+
+        context.push(data.mediaPageRoute());
+      }
+
+      if (data.description == 'Track') {
+        ref.read(getTrackProvider.notifier).updateState(data.spotifyId);
+
+        context.push(data.mediaPageRoute());
+      }
     }
 
     return Padding(
@@ -159,25 +179,13 @@ class _SearchResultCard extends ConsumerWidget {
           width: context.deviceWidth,
           child: Row(
             children: [
-              Container(
-                height: 32,
-                width: 4,
-                decoration: BoxDecoration(
-                  color: context.primary,
-                  borderRadius: BorderRadius.circular(4),
-                ),
+              CardCilinder(
+                color: context.primary.withOpacity(0.4),
               ),
               const SizedBox(
                 width: 8,
               ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: CachedImage(
-                  url: data.imageUrl,
-                  width: 52,
-                  height: 52,
-                ),
-              ),
+              MediaImage(url: data.imageUrl, type: data.type),
               const SizedBox(
                 width: 8,
               ),
@@ -194,24 +202,17 @@ class _SearchResultCard extends ConsumerWidget {
                     ),
                     Row(
                       children: [
-                        Text(
-                          '${data.description} ${data.artist != null ? ' by ' : ''}',
-                          style: context.bodyMedium.copyWith(
-                            color: context.onSurface.withOpacity(0.7),
-                            fontStyle: FontStyle.italic,
-                          ),
+                        SmallBadge(
+                          icon: data.type.icon,
+                          text: data.description,
+                        ),
+                        const SizedBox(
+                          width: 8,
                         ),
                         if (data.artist != null)
-                          Expanded(
-                            child: Text(
-                              data.artist!.join(', '),
-                              style: context.bodyMedium.copyWith(
-                                color: context.onSurface.withOpacity(0.7),
-                                fontStyle: FontStyle.italic,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                          SmallBadge(
+                            icon: Icons.person,
+                            text: data.artist!.join(', '),
                           ),
                       ],
                     ),

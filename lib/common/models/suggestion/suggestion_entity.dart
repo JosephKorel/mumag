@@ -113,18 +113,6 @@ final class UserSuggestion extends SuggestionEntity {
       ...super.toMap(),
       'suggester': {'id': suggesterId, 'name': suggesterName},
     };
-
-    if (receivedSuggestion) {
-      return {
-        ...super.toMap(),
-        'sentBy': {'id': suggesterId, 'name': suggesterName},
-      };
-    }
-
-    return {
-      ...super.toMap(),
-      'sentTo': {'id': suggesterId, 'name': suggesterName},
-    };
   }
 
   final int suggesterId;

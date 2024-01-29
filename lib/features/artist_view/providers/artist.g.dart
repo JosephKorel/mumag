@@ -6,7 +6,7 @@ part of 'artist.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$viewingArtistHash() => r'b2bf6337ef6fe33d6b5a0465703d9dacc648345d';
+String _$viewingArtistHash() => r'770b363d1797c6e2aaadc77dfc523f5c5f45af42';
 
 /// See also [viewingArtist].
 @ProviderFor(viewingArtist)
@@ -52,5 +52,21 @@ final selectedArtistProvider =
 );
 
 typedef _$SelectedArtist = AutoDisposeNotifier<ArtistSimple?>;
+String _$viewingArtistIdHash() => r'4d88a455c292e044a7e20882639e99e1201572ae';
+
+/// See also [ViewingArtistId].
+@ProviderFor(ViewingArtistId)
+final viewingArtistIdProvider =
+    AutoDisposeNotifierProvider<ViewingArtistId, String?>.internal(
+  ViewingArtistId.new,
+  name: r'viewingArtistIdProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$viewingArtistIdHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$ViewingArtistId = AutoDisposeNotifier<String?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

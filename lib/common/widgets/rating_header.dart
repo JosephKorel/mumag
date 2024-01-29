@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
@@ -17,7 +15,6 @@ class RatingHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log('$rating');
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: RatingValue.values

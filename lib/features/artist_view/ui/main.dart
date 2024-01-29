@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
+import 'package:mumag/common/theme/theme_provider.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/loading.dart';
+import 'package:mumag/common/widgets/media/media_view.dart';
+import 'package:mumag/common/widgets/media/suggestion_button.dart';
 import 'package:mumag/features/artist_view/providers/artist.dart';
 import 'package:mumag/features/artist_view/ui/content.dart';
 
@@ -14,9 +18,28 @@ class ArtistMainView extends ConsumerWidget {
     final artist = ref.watch(viewingArtistProvider);
 
     return artist.when(
-      data: (data) => const ArtistMainViewLoaded(),
-      error: (error, stackTrace) => const Scaffold(),
-      loading: Scaffold.new,
+      data: (artistData) {
+        final dynamicColorScheme = ref.watch(
+          dynamicColorSchemeProvider(imageUrl: artistData.images?.first.url),
+        );
+        return dynamicColorScheme.when(
+          data: (data) => MediaContentContainer(
+            appBarTitle: artistData.name ?? '',
+            headerImageUrl: artistData.images?.first.url,
+            mainContent: const SizedBox(),
+            actions: [
+              SuggestMediaButton(
+                spotifyId: artistData.id!,
+                type: SuggestionType.artist,
+              ),
+            ],
+          ),
+          error: (error, stackTrace) => const MediaContentError(),
+          loading: MediaContentLoading.new,
+        );
+      },
+      error: (error, stackTrace) => const MediaContentError(),
+      loading: MediaContentLoading.new,
     );
   }
 }

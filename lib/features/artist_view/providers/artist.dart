@@ -16,7 +16,7 @@ class SelectedArtist extends _$SelectedArtist {
 
 @riverpod
 FutureOr<Artist> viewingArtist(ViewingArtistRef ref) async {
-  final artistId = ref.watch(selectedArtistProvider)!.id!;
+  final artistId = ref.watch(viewingArtistIdProvider)!;
   final spotify = ref.watch(spotifyApiProvider);
   final artist = await spotify.artists.get(artistId);
   return artist;
@@ -28,4 +28,14 @@ Future<List<AlbumSimple>> artistAlbums(ArtistAlbumsRef ref) async {
   final spotify = ref.watch(spotifyApiProvider);
   final albums = await spotify.artists.albums(artistId).all();
   return albums.toList();
+}
+
+@riverpod
+class ViewingArtistId extends _$ViewingArtistId {
+  @override
+  String? build() {
+    return null;
+  }
+
+  void updateState({required String id}) => state = id;
 }
