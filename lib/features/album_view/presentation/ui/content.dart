@@ -58,7 +58,6 @@ class _AlbumContainerViewState extends ConsumerState<AlbumContainerView> {
       ],
       headerImageUrl: album.images?.first.url,
       mainContent: MediaContentChild(
-        type: RatingType.album,
         children: [
           Padding(
             padding: const EdgeInsets.all(16),

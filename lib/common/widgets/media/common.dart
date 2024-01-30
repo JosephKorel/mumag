@@ -12,8 +12,8 @@ class CardCilinder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: width ?? 32,
-      width: height ?? 4,
+      height: height ?? 32,
+      width: width ?? 4,
       decoration: BoxDecoration(
         color: color ?? context.primary,
         borderRadius: BorderRadius.circular(4),
@@ -23,17 +23,23 @@ class CardCilinder extends StatelessWidget {
 }
 
 class SmallBadge extends StatelessWidget {
-  const SmallBadge({required this.text, required this.icon, super.key});
+  const SmallBadge({
+    required this.text,
+    this.icon,
+    super.key,
+    this.backgroundColor,
+  });
 
   final String text;
-  final IconData icon;
+  final IconData? icon;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: context.primaryContainer,
+        color: backgroundColor ?? context.primaryContainer,
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -43,10 +49,11 @@ class SmallBadge extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              icon,
-              size: 18,
-            ),
+            if (icon != null)
+              Icon(
+                icon,
+                size: 18,
+              ),
             const SizedBox(
               width: 4,
             ),

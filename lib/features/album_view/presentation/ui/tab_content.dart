@@ -7,6 +7,7 @@ import 'package:mumag/common/widgets/rating_bottom_sheet.dart';
 import 'package:mumag/features/album_view/domain/tabs.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
 import 'package:mumag/features/album_view/presentation/ui/about_tab.dart';
+import 'package:mumag/features/album_view/presentation/ui/tracks_tab.dart';
 import 'package:mumag/features/track_view/presentation/providers/track.dart';
 import 'package:mumag/routes/routes.dart';
 import 'package:spotify/spotify.dart';
@@ -67,7 +68,7 @@ class _AlbumTabViewState extends ConsumerState<AlbumTabView>
               controller: _controller,
               children: const [
                 AboutTabContent(),
-                AlbumTracksTabContent(),
+                TracksTabContent(),
                 AlbumRatingTabContent(),
               ],
             ),

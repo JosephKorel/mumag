@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/image.dart';
 import 'package:mumag/common/widgets/loading.dart';
@@ -165,13 +164,11 @@ class MediaContentHeader extends StatelessWidget {
 
 class MediaContentChild extends StatelessWidget {
   const MediaContentChild({
-    required this.type,
     required this.children,
     super.key,
   });
 
   final List<Widget> children;
-  final RatingType type;
 
   @override
   Widget build(BuildContext context) {

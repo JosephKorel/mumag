@@ -45,7 +45,7 @@ class ProfileMenuButton extends ConsumerWidget {
       onSelected: onSelected,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       icon: Icon(
-        Icons.settings,
+        Icons.more_vert,
         color: context.onPrimary,
       ),
       splashRadius: Material.defaultSplashRadius / 1.5,

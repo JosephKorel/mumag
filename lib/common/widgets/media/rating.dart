@@ -2,10 +2,87 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mumag/common/models/media/common.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
+import 'package:mumag/common/services/rating/domain/rating_events.dart';
 import 'package:mumag/common/services/rating/providers/rating.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/loading.dart';
+import 'package:mumag/common/widgets/media/appBar.dart';
+import 'package:mumag/common/widgets/media/media_view.dart';
+import 'package:mumag/common/widgets/media/suggestion_button.dart';
+
+class MediaView extends StatefulWidget {
+  const MediaView({
+    required this.media,
+    required this.child,
+    super.key,
+  });
+
+  final MediaEntity media;
+  final Widget child;
+
+  @override
+  State<MediaView> createState() => _MediaViewState();
+}
+
+class _MediaViewState extends State<MediaView> {
+  int _ratingValue = 0;
+
+  void close() {
+    setState(() {
+      _ratingValue = 0;
+    });
+  }
+
+  void onRate(int score) {
+    setState(() {
+      _ratingValue = score;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final media = widget.media;
+    final ratingParams = RatingBaseParams(
+      type: media.type,
+      spotifyId: media.spotifyId,
+      rating: _ratingValue,
+    );
+
+    return MediaContentContainer(
+      appBar: _ratingValue > 0
+          ? RatingAppBar(
+              close: close,
+              ratingParams: ratingParams,
+            )
+          : null,
+      appBarTitle: media.name,
+      actions: [
+        SuggestMediaButton(
+          spotifyId: media.spotifyId,
+          type: media.type.suggestionType,
+        ),
+      ],
+      headerImageUrl: media.imageUrl,
+      mainContent: MediaContentChild(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: MediaContentRating(
+              spotifyId: media.spotifyId,
+              type: media.type,
+              onRate: onRate,
+              ratingValue: _ratingValue,
+            ),
+          ),
+          Expanded(child: widget.child),
+        ],
+      ),
+      // fab: const RatingButtonContainer(child: RatingAlbumFAB()),
+    );
+  }
+}
 
 class MediaContentRating extends ConsumerWidget {
   const MediaContentRating({
@@ -154,32 +231,35 @@ class MediaContentRatingLoaded extends ConsumerWidget {
         const SizedBox(
           height: 8,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            DecoratedBox(
-              decoration: BoxDecoration(
-                color: context.primaryContainer,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Text(
+        DecoratedBox(
+          decoration: BoxDecoration(
+            color: context.primaryContainer,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(labelIcon(value)),
+                const SizedBox(
+                  width: 8,
+                ),
+                Text(
                   ratingLabel(value),
                   style: context.titleMedium.copyWith(
                     fontWeight: FontWeight.w700,
                     color: context.onPrimaryContainer,
                   ),
                 ),
-              ),
-            ).animate().fadeIn().slideX(
-                  begin: -4,
-                  duration: .4.seconds,
-                  curve: Curves.easeOutExpo,
-                ),
-          ],
-        ),
+              ],
+            ),
+          ),
+        ).animate().fadeIn().slideX(
+              begin: -4,
+              duration: .4.seconds,
+              curve: Curves.easeOutExpo,
+            ),
       ],
     );
   }

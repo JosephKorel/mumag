@@ -11,7 +11,7 @@ class UserRatingsWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ratings = ref.watch(
-      userProvider.select((value) => value.requireValue!.ratings),
+      localUserProvider.select((value) => value!.ratings),
     );
 
     return Column(

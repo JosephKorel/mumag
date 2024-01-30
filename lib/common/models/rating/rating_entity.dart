@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 part 'rating_entity.freezed.dart';
@@ -12,6 +13,14 @@ String ratingLabel(double rating) {
     return labels.last;
   }
   return labels[rating.floor() - 1];
+}
+
+IconData labelIcon(double rating) {
+  if (rating == 5) {
+    return RatingValue.masterpiece.icon;
+  }
+
+  return RatingValue.values[rating.floor() - 1].icon;
 }
 
 enum RatingValue {
@@ -72,6 +81,14 @@ extension RatingLabel on RatingValue {
               ? PhosphorIconsStyle.fill
               : PhosphorIconsStyle.light,
         ),
+      ][index];
+}
+
+extension RatingToSuggestion on RatingType {
+  SuggestionType get suggestionType => [
+        SuggestionType.album,
+        SuggestionType.track,
+        SuggestionType.artist,
       ][index];
 }
 

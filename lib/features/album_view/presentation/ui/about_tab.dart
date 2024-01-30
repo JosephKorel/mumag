@@ -105,6 +105,7 @@ class _AlbumArtists extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(viewingArtistIdProvider);
     final album = ref.watch(viewingAlbumProvider).requireValue!;
     if (album.artists == null) {
       return const SizedBox.shrink();
@@ -133,6 +134,9 @@ class _AlbumArtists extends ConsumerWidget {
             ),
           ],
         ),
+        const SizedBox(
+          height: 8,
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14),
           child: ListView.builder(
@@ -140,7 +144,8 @@ class _AlbumArtists extends ConsumerWidget {
             padding: EdgeInsets.zero,
             itemCount: album.artists!.length,
             itemBuilder: (context, index) => InkWell(
-              onTap: () {},
+              borderRadius: BorderRadius.circular(8),
+              onTap: () => goToArtist(album.artists![index].id ?? ''),
               child: Row(
                 children: [
                   Container(
@@ -158,7 +163,16 @@ class _AlbumArtists extends ConsumerWidget {
                     album.artists![index].name ?? '',
                     style: context.titleMedium.copyWith(
                       fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.italic,
                     ),
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Icon(
+                    Icons.arrow_outward,
+                    size: 16,
+                    color: context.onSurface.withOpacity(0.7),
                   ),
                 ],
               ),
@@ -194,6 +208,9 @@ class _ReleaseDate extends StatelessWidget {
               style: context.titleMedium.copyWith(fontWeight: FontWeight.w600),
             ),
           ],
+        ),
+        const SizedBox(
+          height: 8,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 14),
