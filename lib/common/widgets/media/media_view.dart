@@ -4,6 +4,7 @@ import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/image.dart';
 import 'package:mumag/common/widgets/loading.dart';
+import 'package:mumag/common/widgets/media/appBar.dart';
 
 /// Main Container that renders the page
 class MediaContentContainer extends StatelessWidget {
@@ -27,13 +28,7 @@ class MediaContentContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar ??
-          AppBar(
-            title: Text(appBarTitle),
-            backgroundColor: context.primary.withOpacity(0.8),
-            foregroundColor: context.onPrimary,
-            actions: actions,
-          ),
+      appBar: appBar ?? MediaAppBar(title: appBarTitle, actions: actions),
       body: Stack(
         children: [
           MediaContentHeader(url: headerImageUrl),

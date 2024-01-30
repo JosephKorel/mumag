@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mumag/common/models/social_relations/user_simple.dart';
@@ -33,7 +34,9 @@ class SuggestMediaButton extends StatelessWidget {
       );
     }
 
-    return IconButton(onPressed: onPressed, icon: const Icon(Icons.share));
+    return IconButton(onPressed: onPressed, icon: const Icon(Icons.share))
+        .animate()
+        .slideX(begin: 4, duration: .5.seconds, curve: Curves.easeOutQuint);
   }
 }
 
