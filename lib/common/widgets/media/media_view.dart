@@ -18,7 +18,7 @@ class MediaContentContainer extends StatelessWidget {
   });
 
   final String appBarTitle;
-  final AppBar? appBar;
+  final PreferredSizeWidget? appBar;
   final String? headerImageUrl;
   final List<Widget>? actions;
   final Widget mainContent;

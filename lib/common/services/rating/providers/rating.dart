@@ -98,3 +98,26 @@ Future<List<RatingEntity>?> mediaRating(
     (r) => r as List<RatingEntity>,
   );
 }
+
+@riverpod
+class RateMedia extends _$RateMedia {
+  @override
+  FutureOr<void> build() async {}
+
+  Future<void> call({
+    required RatingsDatabaseEvents event,
+  }) async {
+    state = const AsyncLoading();
+
+    state = await AsyncValue.guard(() async {
+      final ratingController = ref.watch(ratingControllerProvider);
+
+      final request = await ratingController(event: event).run();
+      request.fold(
+        (l) =>
+            ref.read(toastMessageProvider.notifier).onException(exception: l),
+        (r) {},
+      );
+    });
+  }
+}

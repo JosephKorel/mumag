@@ -250,5 +250,20 @@ final ratingHandlerProvider =
 );
 
 typedef _$RatingHandler = AutoDisposeAsyncNotifier<void>;
+String _$rateMediaHash() => r'ef69c3d83df7d63092e9b06f66a4df0daeed88b9';
+
+/// See also [RateMedia].
+@ProviderFor(RateMedia)
+final rateMediaProvider =
+    AutoDisposeAsyncNotifierProvider<RateMedia, void>.internal(
+  RateMedia.new,
+  name: r'rateMediaProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$rateMediaHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$RateMedia = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

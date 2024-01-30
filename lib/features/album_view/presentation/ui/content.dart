@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
+import 'package:mumag/common/services/rating/domain/rating_events.dart';
+import 'package:mumag/common/services/rating/providers/rating.dart';
 import 'package:mumag/common/widgets/media/media_view.dart';
 import 'package:mumag/common/widgets/media/rating.dart';
+import 'package:mumag/common/widgets/media/rating_appBar.dart';
 import 'package:mumag/common/widgets/media/suggestion_button.dart';
 import 'package:mumag/common/widgets/rating_bottom_sheet.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
@@ -19,14 +22,38 @@ class AlbumContainerView extends ConsumerStatefulWidget {
 }
 
 class _AlbumContainerViewState extends ConsumerState<AlbumContainerView> {
-  bool isRating = false;
+  int _ratingValue = 0;
+
+  void close() {
+    setState(() {
+      _ratingValue = 0;
+    });
+  }
+
+  void onRate(int score) {
+    setState(() {
+      _ratingValue = score;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final album = ref.watch(viewingAlbumProvider).requireValue!;
+    final ratingProvider = ref.watch(rateMediaProvider);
+    final ratingParams = RatingBaseParams(
+      type: RatingType.album,
+      spotifyId: album.id ?? '',
+      rating: _ratingValue,
+    );
 
     return MediaContentContainer(
-      // appBar: isRating ? RatingAppBar(close: close, onRate: onRate, loading: loading, rating: rating),
+      appBar: _ratingValue > 0
+          ? RatingAppBar(
+              close: close,
+              loading: ratingProvider.isLoading,
+              ratingParams: ratingParams,
+            )
+          : null,
       appBarTitle: album.name ?? '',
       actions: [
         SuggestMediaButton(
@@ -35,28 +62,27 @@ class _AlbumContainerViewState extends ConsumerState<AlbumContainerView> {
         ),
       ],
       headerImageUrl: album.images?.first.url,
-      mainContent: const AlbumContentView(),
+      mainContent: MediaContentChild(
+        type: RatingType.album,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: MediaContentRating(
+              spotifyId: album.id!,
+              type: RatingType.album,
+              onRate: onRate,
+              ratingValue: _ratingValue,
+            ),
+          ),
+          const Expanded(child: AlbumTabView()),
+        ],
+      ),
       fab: const RatingButtonContainer(child: RatingAlbumFAB()),
     );
   }
 }
 
-class AlbumContentView extends ConsumerWidget {
-  const AlbumContentView({super.key});
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final album = ref.watch(viewingAlbumProvider).requireValue!;
-
-    return MediaContentChild(
-      type: RatingType.album,
-      children: [
-        MediaContentRating(spotifyId: album.id!, type: RatingType.album),
-        const Expanded(child: AlbumTabView()),
-      ],
-    );
-  }
-}
 
 /* class AlbumGenreList extends ConsumerWidget {
   const AlbumGenreList({super.key});

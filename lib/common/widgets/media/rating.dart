@@ -10,11 +10,15 @@ class MediaContentRating extends ConsumerWidget {
   const MediaContentRating({
     required this.spotifyId,
     required this.type,
+    required this.onRate,
+    required this.ratingValue,
     super.key,
   });
 
   final String spotifyId;
   final RatingType type;
+  final void Function(int ratingValue) onRate;
+  final int ratingValue;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,6 +33,8 @@ class MediaContentRating extends ConsumerWidget {
         return MediaContentRatingLoaded(
           rating: data,
           type: type,
+          onRate: onRate,
+          ratingValue: ratingValue,
         );
       },
       error: (error, stackTrace) => const _MediaContentRatingError(),
@@ -88,38 +94,50 @@ class MediaContentRatingLoaded extends ConsumerWidget {
   const MediaContentRatingLoaded({
     required this.rating,
     required this.type,
+    required this.onRate,
+    required this.ratingValue,
     super.key,
   });
 
   final RatingType type;
   final List<RatingEntity> rating;
+  final int ratingValue;
+  final void Function(int ratingValue) onRate;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (rating.isEmpty) {
-      return Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(5, (index) => index)
-                .map(
-                  (e) => Icon(
-                    Icons.star_outline,
-                    size: 28,
-                    color: context.onSurface.withOpacity(0.6),
-                  ),
-                )
-                .toList(),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Text(
-            'This ${type.label.toLowerCase()} has no ratings yet',
-            style: context.bodyMedium
-                .copyWith(color: context.onSurface.withOpacity(0.6)),
-          ),
-        ],
+      return Material(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(5, (index) => index)
+                  .map(
+                    (e) => InkWell(
+                      onTap: () => onRate(e + 1),
+                      borderRadius: BorderRadius.circular(8),
+                      child: Icon(
+                        ratingValue >= e + 1 ? Icons.star : Icons.star_outline,
+                        size: 32,
+                        color: ratingValue >= e + 1
+                            ? context.primary
+                            : context.onSurface.withOpacity(0.6),
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Text(
+              'This ${type.label.toLowerCase()} has no ratings yet',
+              style: context.bodyMedium
+                  .copyWith(color: context.onSurface.withOpacity(0.6)),
+            ),
+          ],
+        ),
       );
     }
 
