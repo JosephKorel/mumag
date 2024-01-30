@@ -71,13 +71,17 @@ class TrackRatingContainer extends StatelessWidget {
       children: [
         Row(
           children: [
-            const BackgroundIcon(icon: Icons.star),
+            BackgroundIcon(
+              icon: Icons.star,
+              size: 16,
+              backgroundColor: context.primaryContainer,
+            ),
             const SizedBox(
               width: 8,
             ),
             Text(
               'Rating Distribution',
-              style: context.titleLarge.copyWith(fontWeight: FontWeight.w600),
+              style: context.titleMedium.copyWith(fontWeight: FontWeight.w600),
             ),
           ],
         ),
@@ -104,23 +108,7 @@ class TrackRatingBars extends ConsumerWidget {
         }
 
         if (data.isEmpty) {
-          return Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Text(
-                  'Seems like no one has rated this track yet',
-                  style: context.titleMedium,
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                const TrackRatingButtonContainer(
-                  child: FirstTimeTrackRating(),
-                ),
-              ],
-            ),
-          );
+          return const SizedBox.shrink();
         }
 
         return SizedBox.expand(

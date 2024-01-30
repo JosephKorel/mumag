@@ -164,6 +164,8 @@ class _AlbumArtists extends ConsumerWidget {
                     style: context.titleMedium.copyWith(
                       fontWeight: FontWeight.w400,
                       fontStyle: FontStyle.italic,
+                      decoration: TextDecoration.underline,
+                      decorationColor: context.primary.withOpacity(0.7),
                     ),
                   ),
                   const SizedBox(
@@ -172,7 +174,7 @@ class _AlbumArtists extends ConsumerWidget {
                   Icon(
                     Icons.arrow_outward,
                     size: 16,
-                    color: context.onSurface.withOpacity(0.7),
+                    color: context.primary.withOpacity(0.7),
                   ),
                 ],
               ),

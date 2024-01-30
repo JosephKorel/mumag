@@ -22,18 +22,23 @@ class TrackArtists extends ConsumerWidget {
         Row(
           children: [
             BackgroundIcon(
-              icon: artists.length == 1 ? Icons.person : Icons.people,
+              icon: Icons.person,
+              size: 16,
+              backgroundColor: context.primaryContainer,
             ),
             const SizedBox(
               width: 8,
             ),
             Text(
-              artists.length == 1 ? 'Artist' : 'Artists',
-              style: context.titleLarge.copyWith(fontWeight: FontWeight.w600),
+              'Artist',
+              style: context.titleMedium.copyWith(fontWeight: FontWeight.w600),
             ),
           ],
         ),
-        const Flexible(child: TrackArtistsList()),
+        const SizedBox(
+          height: 8,
+        ),
+        const TrackArtistsList(),
       ],
     );
   }
@@ -44,7 +49,11 @@ class TrackArtistsList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final artists = ref.watch(getTrackProvider).requireValue!.artists!;
+    final artists = ref.watch(getTrackProvider).requireValue!.artists;
+
+    if (artists == null) {
+      return const SizedBox.shrink();
+    }
 
     return ListView.builder(
       shrinkWrap: true,
@@ -52,27 +61,49 @@ class TrackArtistsList extends ConsumerWidget {
       itemCount: artists.length,
       itemBuilder: (context, index) => Padding(
         padding: const EdgeInsets.all(4),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                artists[index].name!,
-                style: context.titleMedium.copyWith(
-                  color: context.onSurface.withOpacity(0.8),
-                  fontSize: 18,
-                  fontWeight: FontWeight.w400,
-                ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14),
+          child: ListView.builder(
+            shrinkWrap: true,
+            padding: EdgeInsets.zero,
+            itemCount: artists.length,
+            itemBuilder: (context, index) => InkWell(
+              borderRadius: BorderRadius.circular(8),
+              onTap: () => {},
+              child: Row(
+                children: [
+                  Container(
+                    height: 4,
+                    width: 4,
+                    decoration: BoxDecoration(
+                      color: context.primary,
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    artists[index].name ?? '',
+                    style: context.titleMedium.copyWith(
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.italic,
+                      decoration: TextDecoration.underline,
+                      decorationColor: context.primary.withOpacity(0.7),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Icon(
+                    Icons.arrow_outward,
+                    size: 16,
+                    color: context.primary.withOpacity(0.7),
+                  ),
+                ],
               ),
             ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.arrow_outward),
-              style: IconButton.styleFrom(
-                backgroundColor: context.primaryContainer,
-                foregroundColor: context.primary,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

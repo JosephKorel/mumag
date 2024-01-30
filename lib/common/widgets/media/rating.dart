@@ -68,13 +68,18 @@ class _MediaViewState extends State<MediaView> {
       mainContent: MediaContentChild(
         children: [
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.only(top: 16),
             child: MediaContentRating(
               spotifyId: media.spotifyId,
               type: media.type,
               onRate: onRate,
               ratingValue: _ratingValue,
             ),
+          ),
+          const Divider(
+            height: 40,
+            endIndent: 16,
+            indent: 16,
           ),
           Expanded(child: widget.child),
         ],
@@ -186,6 +191,7 @@ class MediaContentRatingLoaded extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     if (rating.isEmpty) {
       return Material(
+        color: Colors.transparent,
         child: Column(
           children: [
             Row(
@@ -238,27 +244,44 @@ class MediaContentRatingLoaded extends ConsumerWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
+            child: Column(
               children: [
-                Icon(labelIcon(value)),
-                const SizedBox(
-                  width: 8,
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(labelIcon(value)),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      ratingLabel(value),
+                      style: context.titleMedium.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: context.onPrimaryContainer,
+                      ),
+                    ),
+                  ],
                 ),
                 Text(
-                  ratingLabel(value),
-                  style: context.titleMedium.copyWith(
-                    fontWeight: FontWeight.w700,
+                  '${rating.length} review${rating.length == 1 ? '' : 's'}',
+                  style: context.bodySmall.copyWith(
                     color: context.onPrimaryContainer,
+                    fontStyle: FontStyle.italic,
                   ),
                 ),
               ],
             ),
           ),
-        ).animate().fadeIn().slideX(
+        )
+            .animate()
+            .fadeIn()
+            .slideX(
               begin: -4,
               duration: .4.seconds,
               curve: Curves.easeOutExpo,
+            )
+            .shimmer(
+              duration: 1.seconds,
             ),
       ],
     );
@@ -293,25 +316,6 @@ class RatingHeader extends StatelessWidget {
       ),
     );
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          '$numberOfRatings reviews',
-          style: context.titleMedium.copyWith(
-            fontWeight: FontWeight.w600,
-            color: context.background,
-          ),
-        ),
-        stars,
-        Text(
-          '$numberOfRatings reviews',
-          style: context.titleMedium.copyWith(
-            fontWeight: FontWeight.w600,
-            color: context.onSurface.withOpacity(0.7),
-          ),
-        ),
-      ],
-    );
+    return stars;
   }
 }
