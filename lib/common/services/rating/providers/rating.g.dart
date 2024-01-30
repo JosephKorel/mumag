@@ -250,7 +250,7 @@ final ratingHandlerProvider =
 );
 
 typedef _$RatingHandler = AutoDisposeAsyncNotifier<void>;
-String _$rateMediaHash() => r'ef69c3d83df7d63092e9b06f66a4df0daeed88b9';
+String _$rateMediaHash() => r'9ead994278e9114793149df9ee5b40bcf12845ad';
 
 /// See also [RateMedia].
 @ProviderFor(RateMedia)

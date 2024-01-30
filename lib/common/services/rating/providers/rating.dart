@@ -116,7 +116,9 @@ class RateMedia extends _$RateMedia {
       request.fold(
         (l) =>
             ref.read(toastMessageProvider.notifier).onException(exception: l),
-        (r) {},
+        (r) {
+          ref.invalidate(mediaRatingProvider);
+        },
       );
     });
   }

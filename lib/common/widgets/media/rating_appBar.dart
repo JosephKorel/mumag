@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/services/rating/domain/rating_events.dart';
+import 'package:mumag/common/services/rating/providers/rating.dart';
+import 'package:mumag/common/services/user/providers/user_provider.dart';
 import 'package:mumag/common/theme/utils.dart';
 
 class RatingAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const RatingAppBar({
     required this.close,
-    required this.loading,
     required this.ratingParams,
     super.key,
   });
 
   final void Function() close;
-  final bool loading;
   final RatingBaseParams ratingParams;
 
   @override
@@ -20,11 +22,34 @@ class RatingAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final ratingProvider = ref.watch(rateMediaProvider);
+    final userId = ref.watch(localUserProvider)!.id;
+    final insertRatingEvent =
+        InsertRatingParams(userId: userId, insertParams: ratingParams);
+
+    Future<void> confirmRating() async {
+      await ref.read(rateMediaProvider.notifier)(event: insertRatingEvent);
+      close();
+    }
+
     return AppBar(
       backgroundColor: context.primary,
       foregroundColor: context.onPrimary,
-      title: Text(ratingParams.type.label),
-      leading: IconButton(onPressed: close, icon: const Icon(Icons.clear)),
+      title: Text(RatingValue.values[ratingParams.rating - 1].label)
+          .animate()
+          .fadeIn(),
+      leading: IconButton(onPressed: close, icon: const Icon(Icons.clear))
+          .animate()
+          .slideX(begin: -4, duration: .5.seconds, curve: Curves.easeOutQuint),
+      actions: [
+        ElevatedButton.icon(
+          onPressed: ratingProvider.isLoading ? null : confirmRating,
+          icon: const Icon(Icons.check),
+          label: Text('Rate ${ratingParams.type.label.toLowerCase()}'),
+        )
+            .animate()
+            .slideX(begin: 4, duration: .5.seconds, curve: Curves.easeOutQuint),
+      ],
     );
   }
 }

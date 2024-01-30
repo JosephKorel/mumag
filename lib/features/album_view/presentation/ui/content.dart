@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
 import 'package:mumag/common/services/rating/domain/rating_events.dart';
-import 'package:mumag/common/services/rating/providers/rating.dart';
 import 'package:mumag/common/widgets/media/media_view.dart';
 import 'package:mumag/common/widgets/media/rating.dart';
 import 'package:mumag/common/widgets/media/rating_appBar.dart';
@@ -39,7 +38,6 @@ class _AlbumContainerViewState extends ConsumerState<AlbumContainerView> {
   @override
   Widget build(BuildContext context) {
     final album = ref.watch(viewingAlbumProvider).requireValue!;
-    final ratingProvider = ref.watch(rateMediaProvider);
     final ratingParams = RatingBaseParams(
       type: RatingType.album,
       spotifyId: album.id ?? '',
@@ -50,7 +48,6 @@ class _AlbumContainerViewState extends ConsumerState<AlbumContainerView> {
       appBar: _ratingValue > 0
           ? RatingAppBar(
               close: close,
-              loading: ratingProvider.isLoading,
               ratingParams: ratingParams,
             )
           : null,
