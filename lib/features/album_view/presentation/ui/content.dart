@@ -2,26 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
-import 'package:mumag/common/theme/utils.dart';
-import 'package:mumag/common/widgets/genres.dart';
-import 'package:mumag/common/widgets/loading.dart';
 import 'package:mumag/common/widgets/media/media_view.dart';
+import 'package:mumag/common/widgets/media/rating.dart';
 import 'package:mumag/common/widgets/media/suggestion_button.dart';
 import 'package:mumag/common/widgets/rating_bottom_sheet.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
 import 'package:mumag/features/album_view/presentation/ui/rating.dart';
 import 'package:mumag/features/album_view/presentation/ui/tab_content.dart';
-import 'package:mumag/features/artist_view/providers/artist.dart';
 
-class AlbumContent extends ConsumerWidget {
-  const AlbumContent({super.key});
+class AlbumContainerView extends ConsumerStatefulWidget {
+  const AlbumContainerView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _AlbumContainerViewState();
+}
+
+class _AlbumContainerViewState extends ConsumerState<AlbumContainerView> {
+  bool isRating = false;
+
+  @override
+  Widget build(BuildContext context) {
     final album = ref.watch(viewingAlbumProvider).requireValue!;
-    ref.watch(selectedArtistProvider);
 
     return MediaContentContainer(
+      // appBar: isRating ? RatingAppBar(close: close, onRate: onRate, loading: loading, rating: rating),
       appBarTitle: album.name ?? '',
       actions: [
         SuggestMediaButton(
@@ -41,19 +46,19 @@ class AlbumContentView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final rating = ref.watch(albumRatingProvider);
+    final album = ref.watch(viewingAlbumProvider).requireValue!;
 
     return MediaContentChild(
-      asyncRating: rating,
       type: RatingType.album,
-      children: const [
-        Expanded(child: AlbumTabView()),
+      children: [
+        MediaContentRating(spotifyId: album.id!, type: RatingType.album),
+        const Expanded(child: AlbumTabView()),
       ],
     );
   }
 }
 
-class AlbumGenreList extends ConsumerWidget {
+/* class AlbumGenreList extends ConsumerWidget {
   const AlbumGenreList({super.key});
 
   @override
@@ -87,4 +92,4 @@ class AlbumGenreList extends ConsumerWidget {
       ),
     );
   }
-}
+} */

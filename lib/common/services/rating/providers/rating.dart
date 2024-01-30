@@ -81,3 +81,20 @@ class RatingHandler extends _$RatingHandler {
     });
   }
 }
+
+@riverpod
+Future<List<RatingEntity>?> mediaRating(
+  MediaRatingRef ref, {
+  required String spotifyId,
+}) async {
+  final ratingController = ref.watch(ratingControllerProvider);
+
+  final rating =
+      await ratingController(event: GetAllRatingParams(spotifyId: spotifyId))
+          .run();
+
+  return rating.fold(
+    (l) => null,
+    (r) => r as List<RatingEntity>,
+  );
+}

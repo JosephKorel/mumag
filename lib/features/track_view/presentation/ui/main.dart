@@ -54,10 +54,9 @@ class TrackContentView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final rating = ref.watch(trackRatingProvider);
-    return MediaContentChild(
-      asyncRating: rating,
+    return const MediaContentChild(
       type: RatingType.track,
-      children: const [
+      children: [
         SizedBox(
           height: 16,
         ),

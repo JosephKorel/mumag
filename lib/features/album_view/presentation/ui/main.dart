@@ -16,7 +16,7 @@ class AlbumMainView extends ConsumerWidget {
     return albumColors.when(
       data: (data) => Theme(
         data: appTheme.copyWith(colorScheme: data.light),
-        child: const AlbumContent(),
+        child: const AlbumContainerView(),
       ),
       error: (error, stackTrace) => const Scaffold(),
       loading: Scaffold.new,
