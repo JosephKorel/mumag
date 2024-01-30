@@ -7,9 +7,7 @@ import 'package:mumag/common/widgets/media/appBar.dart';
 import 'package:mumag/common/widgets/media/media_view.dart';
 import 'package:mumag/common/widgets/media/rating.dart';
 import 'package:mumag/common/widgets/media/suggestion_button.dart';
-import 'package:mumag/common/widgets/rating_bottom_sheet.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
-import 'package:mumag/features/album_view/presentation/ui/rating.dart';
 import 'package:mumag/features/album_view/presentation/ui/tab_content.dart';
 
 class AlbumContainerView extends ConsumerStatefulWidget {
@@ -74,7 +72,7 @@ class _AlbumContainerViewState extends ConsumerState<AlbumContainerView> {
           const Expanded(child: AlbumTabView()),
         ],
       ),
-      fab: const RatingButtonContainer(child: RatingAlbumFAB()),
+      // fab: const RatingButtonContainer(child: RatingAlbumFAB()),
     );
   }
 }

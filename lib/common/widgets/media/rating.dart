@@ -1,10 +1,11 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/services/rating/providers/rating.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/loading.dart';
-import 'package:mumag/common/widgets/rating_header.dart';
 
 class MediaContentRating extends ConsumerWidget {
   const MediaContentRating({
@@ -149,21 +150,86 @@ class MediaContentRatingLoaded extends ConsumerWidget {
 
     return Column(
       children: [
-        RatingHeader(rating: value, numberOfRatings: 8),
+        RatingHeader(rating: value, numberOfRatings: rating.length),
+        const SizedBox(
+          height: 8,
+        ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              '$value',
-              style: context.titleLarge.copyWith(fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(
-              width: 8,
-            ),
-            Text(
-              ratingLabel(value),
-              style: context.titleLarge.copyWith(fontWeight: FontWeight.w700),
-            ),
+            DecoratedBox(
+              decoration: BoxDecoration(
+                color: context.primaryContainer,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Text(
+                  ratingLabel(value),
+                  style: context.titleMedium.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: context.onPrimaryContainer,
+                  ),
+                ),
+              ),
+            ).animate().fadeIn().slideX(
+                  begin: -4,
+                  duration: .4.seconds,
+                  curve: Curves.easeOutExpo,
+                ),
           ],
+        ),
+      ],
+    );
+  }
+}
+
+class RatingHeader extends StatelessWidget {
+  const RatingHeader({
+    required this.rating,
+    required this.numberOfRatings,
+    super.key,
+  });
+
+  final double rating;
+  final int numberOfRatings;
+
+  @override
+  Widget build(BuildContext context) {
+    final stars = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: RatingValue.values
+            .mapIndexed(
+              (i, e) => Icon(
+                rating.floor() >= i + 1 ? Icons.star : Icons.star_outline,
+                color: context.primary,
+                size: 28,
+              ),
+            )
+            .toList(),
+      ),
+    );
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          '$numberOfRatings reviews',
+          style: context.titleMedium.copyWith(
+            fontWeight: FontWeight.w600,
+            color: context.background,
+          ),
+        ),
+        stars,
+        Text(
+          '$numberOfRatings reviews',
+          style: context.titleMedium.copyWith(
+            fontWeight: FontWeight.w600,
+            color: context.onSurface.withOpacity(0.7),
+          ),
         ),
       ],
     );
