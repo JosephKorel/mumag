@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/rating_bars.dart';
 import 'package:mumag/common/widgets/rating_bottom_sheet.dart';
 import 'package:mumag/features/album_view/domain/tabs.dart';
 import 'package:mumag/features/album_view/presentation/providers/album.dart';
-import 'package:mumag/features/artist_view/providers/artist.dart';
+import 'package:mumag/features/album_view/presentation/ui/about_tab.dart';
 import 'package:mumag/features/track_view/presentation/providers/track.dart';
 import 'package:mumag/routes/routes.dart';
 import 'package:spotify/spotify.dart';
@@ -68,7 +66,7 @@ class _AlbumTabViewState extends ConsumerState<AlbumTabView>
             child: TabBarView(
               controller: _controller,
               children: const [
-                AlbumAboutTabContent(),
+                AboutTabContent(),
                 AlbumTracksTabContent(),
                 AlbumRatingTabContent(),
               ],
@@ -76,142 +74,6 @@ class _AlbumTabViewState extends ConsumerState<AlbumTabView>
           ),
         ),
       ],
-    );
-  }
-}
-
-class AlbumAboutTabContent extends ConsumerWidget {
-  const AlbumAboutTabContent({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final album = ref.watch(viewingAlbumProvider).requireValue!;
-    final dateFormat = DateFormat('dd/MM/yyyy');
-    final releaseDate = album.releaseDate == null
-        ? ''
-        : album.releaseDate!.length == 4
-            ? album.releaseDate
-            : dateFormat.format(DateTime.parse(album.releaseDate!));
-
-    final artists = album.artists == null
-        ? ''
-        : album.artists!
-            .map(
-              (e) => e.name!,
-            )
-            .join(',');
-
-    void goToArtist() {
-      ref
-          .read(selectedArtistProvider.notifier)
-          .updateState(artist: album.artists!.first);
-      context.push(const ArtistViewRoute().location);
-    }
-
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: context.onSurface.withOpacity(0.2)),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    const TextSpan(
-                      text: 'Title: ',
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                    TextSpan(
-                      text: album.name ?? '',
-                    ),
-                  ],
-                  style: context.titleMedium.copyWith(
-                    color: context.onPrimaryContainer,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          InkWell(
-            onTap: goToArtist,
-            borderRadius: BorderRadius.circular(8),
-            child: Ink(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: context.onSurface.withOpacity(0.2)),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: RichText(
-                        text: TextSpan(
-                          children: [
-                            const TextSpan(
-                              text: 'Artist: ',
-                              style: TextStyle(fontWeight: FontWeight.w600),
-                            ),
-                            TextSpan(
-                              text: artists,
-                            ),
-                          ],
-                          style: context.titleMedium.copyWith(
-                            color: context.onPrimaryContainer,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const Icon(
-                      Icons.arrow_outward,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: context.onSurface.withOpacity(0.2)),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    const TextSpan(
-                      text: 'Release Date: ',
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                    TextSpan(
-                      text: releaseDate,
-                    ),
-                  ],
-                  style: context.titleMedium.copyWith(
-                    color: context.onPrimaryContainer,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
