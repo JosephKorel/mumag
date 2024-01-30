@@ -7,12 +7,12 @@ enum Pages { search, profile }
 extension BottomNavigationPage on Pages {
   Widget get page => [const SearchView(), const ProfileView()][index];
 
-  BottomNavigationBarItem get navPage => [
-        const BottomNavigationBarItem(
+  NavigationDestination get navPage => [
+        const NavigationDestination(
           icon: Icon(Icons.search),
           label: 'Search',
         ),
-        const BottomNavigationBarItem(
+        const NavigationDestination(
           icon: Icon(Icons.person),
           label: 'Profile',
         ),

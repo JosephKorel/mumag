@@ -13,10 +13,10 @@ class AppBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: activePage,
-      onTap: onTap,
-      items: Pages.values.map((e) => e.navPage).toList(),
+    return NavigationBar(
+      selectedIndex: activePage,
+      onDestinationSelected: onTap,
+      destinations: Pages.values.map((e) => e.navPage).toList(),
     );
   }
 }
