@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
+import 'package:mumag/common/widgets/image.dart';
 
 class ProfileMainView extends StatefulWidget {
   const ProfileMainView({
@@ -99,9 +100,13 @@ class _ProfilePicture extends StatelessWidget {
     }
 
     return Center(
-      child: CircleAvatar(
-        radius: 32,
-        backgroundImage: NetworkImage(avatarUrl!),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(24),
+        child: CachedImage(
+          url: avatarUrl!,
+          height: 52,
+          width: 52,
+        ),
       ),
     );
   }

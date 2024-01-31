@@ -6,39 +6,6 @@ import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/loading.dart';
 import 'package:mumag/common/widgets/profile/content.dart';
 
-class ProfileContainer extends ConsumerWidget {
-  const ProfileContainer({
-    required this.asyncUser,
-    required this.user,
-    required this.children,
-    required this.offset,
-    required this.onScroll,
-    super.key,
-    this.appBarActions,
-    this.floatingActionButton,
-  });
-  final AsyncValue<UserEntity?> asyncUser;
-  final UserEntity? user;
-  final List<Widget> children;
-  final double offset;
-  final List<Widget>? appBarActions;
-  final Widget? floatingActionButton;
-  final void Function(double offset) onScroll;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return const Scaffold();
-
-    /* return _UserProfileView(
-      appBarActions: appBarActions,
-      offset: offset,
-      floatingActionButton: floatingActionButton,
-      onScroll: onScroll,
-      children: children,
-    ); */
-  }
-}
-
 class ProfileLoadingScreen extends StatelessWidget {
   const ProfileLoadingScreen({super.key});
 

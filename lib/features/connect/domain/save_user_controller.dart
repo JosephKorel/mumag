@@ -38,14 +38,13 @@ class InsertParamsImpl extends InsertParamsRepository {
       final spotifyUser = await _saveUserRepo.spotifyUser();
       final backgroundUrl = await _saveUserRepo.getProfileBackground();
 
-      final avatarUrl =
-          spotifyUser.images != null ? spotifyUser.images![1].url : '';
+      final avatarUrl = spotifyUser.images?.first.url ?? '';
 
       return InsertParams(
         email: email,
         name: spotifyUser.displayName!,
         genres: genres.join(','),
-        avatarUrl: avatarUrl ?? '',
+        avatarUrl: avatarUrl,
         backgroundUrl: backgroundUrl ?? '',
       );
     } catch (e) {

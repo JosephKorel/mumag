@@ -15,23 +15,11 @@ import 'package:mumag/features/profile/presentation/providers/social.dart';
 import 'package:mumag/features/view_profile/presentation/providers/view_user.dart';
 import 'package:mumag/routes/routes.dart';
 
-class UserSocialRelationsWidget extends ConsumerStatefulWidget {
+class UserSocialRelationsWidget extends ConsumerWidget {
   const UserSocialRelationsWidget({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _UserSocialRelationsWidgetState();
-}
-
-class _UserSocialRelationsWidgetState
-    extends ConsumerState<UserSocialRelationsWidget> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final socialAsyncValue = ref.watch(mySocialRelationsProvider);
 
     if (socialAsyncValue.hasError) {
@@ -65,14 +53,14 @@ class _LoadedState extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final socialAsyncValue = ref.watch(mySocialRelationsProvider);
+    // final socialAsyncValue = ref.watch(mySocialRelationsProvider);
     final relations = ref.watch(userRelationsProvider);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SocialRelationsBadge(
-          loading: socialAsyncValue.isLoading,
+          loading: false,
           label: 'Followers: ${relations.followers.length}',
           onTap: () => showAppBottomSheet(
             context,
@@ -84,7 +72,7 @@ class _LoadedState extends ConsumerWidget {
           width: 16,
         ),
         SocialRelationsBadge(
-          loading: socialAsyncValue.isLoading,
+          loading: false,
           label: 'Following: ${relations.following.length}',
           onTap: () => showAppBottomSheet(
             context,

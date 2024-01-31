@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
-import 'package:mumag/common/utils/media_query.dart';
 import 'package:mumag/common/widgets/profile/main.dart';
-import 'package:mumag/common/widgets/profile/profile_rating_stats.dart';
 import 'package:mumag/features/profile/presentation/providers/profile.dart';
 import 'package:mumag/features/profile/presentation/ui/profile_menu.dart';
 import 'package:mumag/features/profile/presentation/ui/social.dart';
@@ -37,28 +35,28 @@ class ProfileView extends ConsumerWidget {
       onScroll: onScroll,
       appBarActions: const [ProfileMenuButton()],
       floatingActionButton: const UserSuggestionsFAB(),
-      children: [
-        const SizedBox(
+      children: const [
+        SizedBox(
           height: 8,
         ),
-        const UserSocialRelationsWidget(),
-        const SizedBox(
+        UserSocialRelationsWidget(),
+        SizedBox(
           height: 8,
         ),
-        const UserProfileGenres(),
-        const SizedBox(
+        UserProfileGenres(),
+        SizedBox(
           height: 16,
         ),
-        SizedBox(
+        /* SizedBox(
           height:
               cachedUser.ratings.isEmpty ? null : context.deviceHeight / 2.5,
           width: double.infinity,
           child: ProfileRatings(ratings: cachedUser.ratings),
-        ),
-        const SizedBox(
+        ), */
+        SizedBox(
           height: 16,
         ),
-        const SavedAlbumsView(),
+        SavedAlbumsView(),
       ],
     );
 
