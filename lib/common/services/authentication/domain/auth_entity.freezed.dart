@@ -152,7 +152,7 @@ class _$AuthStateImpl implements _AuthState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$AuthStateImpl);
   }
@@ -296,7 +296,7 @@ class _$UnauthenticatedImpl implements Unauthenticated {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$UnauthenticatedImpl);
   }
@@ -439,7 +439,7 @@ class _$LoadingImpl implements Loading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$LoadingImpl);
   }
@@ -581,7 +581,7 @@ class _$AuthenticatedImpl implements Authenticated {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$AuthenticatedImpl);
   }
@@ -725,7 +725,7 @@ class _$HasCredentialsImpl implements HasCredentials {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$HasCredentialsImpl);
   }
@@ -868,7 +868,7 @@ class _$ConnectedUserImpl implements ConnectedUser {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$ConnectedUserImpl);
   }

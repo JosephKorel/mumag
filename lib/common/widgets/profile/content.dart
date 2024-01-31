@@ -3,6 +3,45 @@ import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/image.dart';
 
+class ProfileContentWidget extends StatelessWidget {
+  const ProfileContentWidget({
+    required this.user,
+    required this.scrollController,
+    required this.child,
+    super.key,
+  });
+
+  final Widget child;
+  final UserEntity user;
+  final ScrollController scrollController;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(32),
+        topRight: Radius.circular(32),
+      ),
+      child: SingleChildScrollView(
+        controller: scrollController,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(32),
+              topRight: Radius.circular(32),
+            ),
+            color: context.background,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: child,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class ProfileMainView extends StatefulWidget {
   const ProfileMainView({
     required this.user,
@@ -57,22 +96,7 @@ class _ProfileMainViewState extends State<ProfileMainView> {
           ),
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: widget
-                .child, /* Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _ProfilePicture(widget.user.avatarUrl),
-                Text(
-                  widget.user.name,
-                  style: context.titleLarge.copyWith(),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                ...widget.children,
-              ],
-            ), */
+            child: widget.child,
           ),
         ),
       ),

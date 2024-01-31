@@ -21,7 +21,7 @@ final appThemeProvider = AutoDisposeProvider<ThemeData>.internal(
 
 typedef AppThemeRef = AutoDisposeProviderRef<ThemeData>;
 String _$dynamicColorSchemeHash() =>
-    r'b3e73ea0755749058d0e587e52cdf27b117a34f9';
+    r'8841763fbeadcf63c342ae4ebef2b1c6df413fcf';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -87,8 +87,7 @@ class DynamicColorSchemeFamily extends Family<AsyncValue<AppColorScheme>> {
 }
 
 /// See also [dynamicColorScheme].
-class DynamicColorSchemeProvider
-    extends AutoDisposeFutureProvider<AppColorScheme> {
+class DynamicColorSchemeProvider extends FutureProvider<AppColorScheme> {
   /// See also [dynamicColorScheme].
   DynamicColorSchemeProvider({
     required String? imageUrl,
@@ -140,7 +139,7 @@ class DynamicColorSchemeProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<AppColorScheme> createElement() {
+  FutureProviderElement<AppColorScheme> createElement() {
     return _DynamicColorSchemeProviderElement(this);
   }
 
@@ -158,14 +157,13 @@ class DynamicColorSchemeProvider
   }
 }
 
-mixin DynamicColorSchemeRef on AutoDisposeFutureProviderRef<AppColorScheme> {
+mixin DynamicColorSchemeRef on FutureProviderRef<AppColorScheme> {
   /// The parameter `imageUrl` of this provider.
   String? get imageUrl;
 }
 
 class _DynamicColorSchemeProviderElement
-    extends AutoDisposeFutureProviderElement<AppColorScheme>
-    with DynamicColorSchemeRef {
+    extends FutureProviderElement<AppColorScheme> with DynamicColorSchemeRef {
   _DynamicColorSchemeProviderElement(super.provider);
 
   @override

@@ -10,11 +10,11 @@ import 'package:mumag/features/album_view/presentation/providers/album.dart';
 import 'package:mumag/features/profile/presentation/providers/user_albums.dart';
 import 'package:mumag/routes/routes.dart';
 
-class SavedAlbumsView extends ConsumerWidget {
+class SavedAlbumsView extends StatelessWidget {
   const SavedAlbumsView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,

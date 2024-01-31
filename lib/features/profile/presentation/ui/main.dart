@@ -5,7 +5,6 @@ import 'package:mumag/common/utils/media_query.dart';
 import 'package:mumag/common/widgets/profile/content.dart';
 import 'package:mumag/common/widgets/profile/main.dart';
 import 'package:mumag/common/widgets/profile/profile_rating_stats.dart';
-import 'package:mumag/features/profile/presentation/providers/profile.dart';
 import 'package:mumag/features/profile/presentation/ui/profile_menu.dart';
 import 'package:mumag/features/profile/presentation/ui/social.dart';
 import 'package:mumag/features/profile/presentation/ui/user_albums.dart';
@@ -19,7 +18,6 @@ class ProfileView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncUser = ref.watch(userProvider);
     final cachedUser = ref.watch(localUserProvider);
-    final offset = ref.watch(scrollOffsetProvider);
 
     if (cachedUser == null && asyncUser.isLoading) {
       return const ProfileLoadingScreen();
@@ -29,20 +27,11 @@ class ProfileView extends ConsumerWidget {
       return const Scaffold();
     }
 
-    void onScroll(double offset) =>
-        ref.read(scrollOffsetProvider.notifier).onScroll(offset);
-
-    return UserProfileView(
+    return ProfileContainer(
       user: cachedUser!,
-      offset: offset,
-      onScroll: onScroll,
       appBarActions: const [ProfileMenuButton()],
       floatingActionButton: const UserSuggestionsFAB(),
-      child: ProfileMainView(
-        user: cachedUser,
-        onScroll: onScroll,
-        child: const Content(),
-      ),
+      child: const Content(),
     );
   }
 }

@@ -35,8 +35,7 @@ class _UserProfileGenresState extends ConsumerState<UserProfileGenres> {
 
   @override
   Widget build(BuildContext context) {
-    final genres =
-        ref.watch(localUserProvider.select((value) => value!.genres));
+    final genres = ref.watch(localUserProvider)!.genres;
     return ProfileBadgeGenres(genres: genres.sublist(0, 5));
   }
 }
