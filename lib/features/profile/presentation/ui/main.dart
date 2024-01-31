@@ -12,6 +12,41 @@ import 'package:mumag/features/profile/presentation/ui/user_albums.dart';
 import 'package:mumag/features/profile/presentation/ui/user_genres.dart';
 import 'package:mumag/features/profile/presentation/ui/user_suggestions.dart';
 
+class ProfileView extends ConsumerWidget {
+  const ProfileView({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final asyncUser = ref.watch(userProvider);
+    final cachedUser = ref.watch(localUserProvider);
+    final offset = ref.watch(scrollOffsetProvider);
+
+    if (cachedUser == null && asyncUser.isLoading) {
+      return const ProfileLoadingScreen();
+    }
+
+    if (asyncUser.hasError) {
+      return const Scaffold();
+    }
+
+    void onScroll(double offset) =>
+        ref.read(scrollOffsetProvider.notifier).onScroll(offset);
+
+    return UserProfileView(
+      user: cachedUser!,
+      offset: offset,
+      onScroll: onScroll,
+      appBarActions: const [ProfileMenuButton()],
+      floatingActionButton: const UserSuggestionsFAB(),
+      child: ProfileMainView(
+        user: cachedUser,
+        onScroll: onScroll,
+        child: const Content(),
+      ),
+    );
+  }
+}
+
 class ContentRating extends ConsumerWidget {
   const ContentRating({super.key});
 
@@ -63,41 +98,6 @@ class Content extends StatelessWidget {
         ),
         SavedAlbumsView(),
       ],
-    );
-  }
-}
-
-class ProfileView extends ConsumerWidget {
-  const ProfileView({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final asyncUser = ref.watch(userProvider);
-    final cachedUser = ref.watch(localUserProvider);
-    final offset = ref.watch(scrollOffsetProvider);
-
-    if (cachedUser == null && asyncUser.isLoading) {
-      return const ProfileLoadingScreen();
-    }
-
-    if (asyncUser.hasError) {
-      return const Scaffold();
-    }
-
-    void onScroll(double offset) =>
-        ref.read(scrollOffsetProvider.notifier).onScroll(offset);
-
-    return UserProfileView(
-      user: cachedUser!,
-      offset: offset,
-      onScroll: onScroll,
-      appBarActions: const [ProfileMenuButton()],
-      floatingActionButton: const UserSuggestionsFAB(),
-      child: ProfileMainView(
-        user: cachedUser,
-        onScroll: onScroll,
-        child: const Content(),
-      ),
     );
   }
 }

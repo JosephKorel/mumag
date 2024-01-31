@@ -121,30 +121,6 @@ class UserProfileView extends ConsumerWidget {
   }
 }
 
-/* class _Content extends ConsumerWidget {
-  const _Content({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(localUserProvider)!;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        ProfilePicture(user.avatarUrl),
-        Text(
-          user.name,
-          style: context.titleLarge.copyWith(),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        ...widget.children,
-      ],
-    );
-  }
-} */
-
 class _UserImageHeader extends StatelessWidget {
   const _UserImageHeader({required this.offset, this.backgroundUrl});
 

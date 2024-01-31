@@ -124,37 +124,3 @@ class ProfileMainView extends ConsumerWidget {
     );
   }
 }
-
-class ContainerColumns extends StatelessWidget {
-  const ContainerColumns({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        // _ProfilePicture(widget.user.avatarUrl),
-        Text(
-          'JosephKorel',
-          style: context.titleLarge.copyWith(),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        Container(
-          height: 400,
-          width: 200,
-          color: Colors.red,
-        ),
-        Container(
-          height: 400,
-          width: 200,
-          color: Colors.yellow,
-        ),
-
-        // ...widget.children,
-      ],
-    );
-  }
-}

@@ -70,7 +70,7 @@ GoRouter router(RouterRef ref) {
         hasCredentials: () {
           return shouldRedirectLocations.contains(state.fullPath) ||
                   state.fullPath == null
-              ? const ProfileRoute().location
+              ? const HomeRoute().location
               : null;
         },
         connectedUser: () => null,
