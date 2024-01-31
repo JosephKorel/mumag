@@ -27,7 +27,7 @@ class SavedAlbumsView extends StatelessWidget {
             ),
             Text(
               'Your Albums',
-              style: context.titleLarge,
+              style: context.titleLarge.copyWith(fontWeight: FontWeight.w600),
             ),
           ],
         ),

@@ -19,13 +19,25 @@ class ProfileRatings extends StatelessWidget {
       children: [
         Row(
           children: [
-            const BackgroundIcon(icon: Icons.star),
+            const BackgroundIcon(
+              icon: Icons.star,
+            ),
             const SizedBox(
               width: 8,
             ),
-            Text(
-              'Ratings',
-              style: context.titleLarge,
+            Expanded(
+              child: Text(
+                'Ratings',
+                style: context.titleLarge.copyWith(fontWeight: FontWeight.w600),
+              ),
+            ),
+            Directionality(
+              textDirection: TextDirection.rtl,
+              child: TextButton.icon(
+                onPressed: () {},
+                icon: const Icon(Icons.arrow_outward),
+                label: const Text('See All'),
+              ),
             ),
           ],
         ),
@@ -76,14 +88,18 @@ class _RatingStatItem extends StatelessWidget {
       children: [
         Text(
           '${ratings.where((element) => element.type == type).length}',
-          style: context.titleLarge.copyWith(color: context.primary),
+          style: context.titleLarge
+              .copyWith(color: context.primary, fontWeight: FontWeight.w800),
         ),
         const SizedBox(
           height: 8,
         ),
         Text(
           '${type.label}s',
-          style: context.titleMedium,
+          style: context.titleMedium.copyWith(
+            color: context.onSurface.withOpacity(0.8),
+            fontWeight: FontWeight.w400,
+          ),
         ),
       ],
     );
