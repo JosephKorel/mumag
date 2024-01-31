@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
+import 'package:mumag/common/theme/utils.dart';
+import 'package:mumag/common/utils/media_query.dart';
+import 'package:mumag/common/widgets/profile/content.dart';
 import 'package:mumag/common/widgets/profile/main.dart';
-import 'package:mumag/features/profile/presentation/providers/profile.dart';
+import 'package:mumag/common/widgets/profile/profile_rating_stats.dart';
 import 'package:mumag/features/profile/presentation/ui/profile_menu.dart';
 import 'package:mumag/features/profile/presentation/ui/social.dart';
 import 'package:mumag/features/profile/presentation/ui/user_albums.dart';
@@ -16,7 +19,6 @@ class ProfileView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncUser = ref.watch(userProvider);
     final cachedUser = ref.watch(localUserProvider);
-    final offset = ref.watch(scrollOffsetProvider);
 
     if (cachedUser == null && asyncUser.isLoading) {
       return const ProfileLoadingScreen();
@@ -26,16 +28,65 @@ class ProfileView extends ConsumerWidget {
       return const Scaffold();
     }
 
-    void onScroll(double offset) =>
-        ref.read(scrollOffsetProvider.notifier).onScroll(offset);
-
-    return UserProfileView(
+    return ProfileContainer(
       user: cachedUser!,
-      offset: offset,
-      onScroll: onScroll,
       appBarActions: const [ProfileMenuButton()],
       floatingActionButton: const UserSuggestionsFAB(),
-      children: const [
+      child: const Content(),
+    );
+  }
+}
+
+class ContentRating extends ConsumerWidget {
+  const ContentRating({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(localUserProvider)!;
+
+    return SizedBox(
+      height: user.ratings.isEmpty ? null : context.deviceHeight / 2.5,
+      width: double.infinity,
+      child: ProfileRatings(ratings: user.ratings),
+    );
+  }
+}
+
+class UserAvatarWidget extends ConsumerWidget {
+  const UserAvatarWidget({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(localUserProvider)!;
+
+    return ProfilePicture(user.avatarUrl);
+  }
+}
+
+class UsernameWidget extends ConsumerWidget {
+  const UsernameWidget({super.key});
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final name = ref.watch(localUserProvider)!.name;
+    return Text(
+      name,
+      style: context.titleMedium,
+    );
+  }
+}
+
+class Content extends StatelessWidget {
+  const Content({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        UserAvatarWidget(),
+        SizedBox(
+          height: 8,
+        ),
+        UsernameWidget(),
         SizedBox(
           height: 8,
         ),
@@ -47,55 +98,12 @@ class ProfileView extends ConsumerWidget {
         SizedBox(
           height: 16,
         ),
-        /* SizedBox(
-          height:
-              cachedUser.ratings.isEmpty ? null : context.deviceHeight / 2.5,
-          width: double.infinity,
-          child: ProfileRatings(ratings: cachedUser.ratings),
-        ), */
+        ContentRating(),
         SizedBox(
           height: 16,
         ),
         SavedAlbumsView(),
       ],
     );
-
-    /*   void onScroll(double offset) =>
-        ref.read(scrollOffsetProvider.notifier).onScroll(offset);
-
-
-    return ProfileContainer(
-      appBarActions: const [ProfileMenuButton()],
-      asyncUser: asyncUser,
-      user: cachedUser,
-      offset: offset,
-      onScroll: onScroll,
-      children: cachedUser == null
-          ? []
-          : [
-              const SizedBox(
-                height: 8,
-              ),
-              const UserSocialRelationsWidget(),
-              const SizedBox(
-                height: 8,
-              ),
-              const UserProfileGenres(),
-              const SizedBox(
-                height: 16,
-              ),
-              SizedBox(
-                height: cachedUser.ratings.isEmpty
-                    ? null
-                    : context.deviceHeight / 2.5,
-                width: double.infinity,
-                child: ProfileRatings(ratings: cachedUser.ratings),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              const SavedAlbumsView(),
-            ],
-    ); */
   }
 }

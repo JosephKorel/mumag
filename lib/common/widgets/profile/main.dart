@@ -5,6 +5,95 @@ import 'package:mumag/common/theme/theme_provider.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/loading.dart';
 import 'package:mumag/common/widgets/profile/content.dart';
+import 'package:mumag/features/profile/presentation/providers/profile.dart';
+
+class ProfileContainer extends ConsumerStatefulWidget {
+  const ProfileContainer({
+    required this.child,
+    required this.user,
+    super.key,
+    this.appBarActions,
+    this.floatingActionButton,
+  });
+
+  final UserEntity user;
+  final Widget child;
+  final List<Widget>? appBarActions;
+  final Widget? floatingActionButton;
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ProfileContainerState();
+}
+
+class _ProfileContainerState extends ConsumerState<ProfileContainer> {
+  final _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.hasClients) {
+        ref
+            .read(scrollOffsetProvider.notifier)
+            .onScroll(_scrollController.offset);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final appTheme = ref.watch(appThemeProvider);
+    final colorScheme = ref.watch(
+      dynamicColorSchemeProvider(imageUrl: widget.user.backgroundUrl),
+    );
+
+    return colorScheme.when(
+      data: (data) => Theme(
+        data: appTheme.copyWith(colorScheme: data.light),
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: data.light.primary.withOpacity(0.6),
+            actions: widget.appBarActions,
+            foregroundColor: context.onPrimary,
+          ),
+          extendBodyBehindAppBar: true,
+          floatingActionButton: widget.floatingActionButton,
+          body: Stack(
+            children: [
+              _UserImageHeader(
+                backgroundUrl: widget.user.backgroundUrl,
+              ),
+              Column(
+                children: [
+                  const Spacer(),
+                  Expanded(
+                    flex: 3,
+                    child: ProfileContentWidget(
+                      scrollController: _scrollController,
+                      user: widget.user,
+                      child: widget.child,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+      error: (error, stackTrace) => const Scaffold(),
+      loading: ProfileLoadingScreen.new,
+    );
+  }
+}
 
 class ProfileLoadingScreen extends StatelessWidget {
   const ProfileLoadingScreen({super.key});
@@ -59,81 +148,14 @@ class ProfileLoadingScreen extends StatelessWidget {
   }
 }
 
-class UserProfileView extends ConsumerWidget {
-  const UserProfileView({
-    required this.children,
-    required this.offset,
-    required this.onScroll,
-    required this.user,
-    super.key,
-    this.appBarActions,
-    this.floatingActionButton,
-  });
+class _UserImageHeader extends ConsumerWidget {
+  const _UserImageHeader({this.backgroundUrl});
 
-  final UserEntity user;
-  final List<Widget> children;
-  final double offset;
-  final List<Widget>? appBarActions;
-  final Widget? floatingActionButton;
-  final void Function(double offset) onScroll;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final appTheme = ref.watch(appThemeProvider);
-    final colorScheme = ref.watch(
-      dynamicColorSchemeProvider(imageUrl: user.backgroundUrl),
-    );
-
-    return colorScheme.when(
-      data: (data) => Theme(
-        data: appTheme.copyWith(colorScheme: data.light),
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: data.light.primary.withOpacity(0.6),
-            actions: appBarActions,
-            foregroundColor: context.onPrimary,
-          ),
-          extendBodyBehindAppBar: true,
-          floatingActionButton: floatingActionButton,
-          body: Stack(
-            children: [
-              _UserImageHeader(
-                backgroundUrl: user.backgroundUrl,
-                offset: offset,
-              ),
-              Column(
-                children: [
-                  const Spacer(),
-                  Expanded(
-                    flex: 3,
-                    child: ProfileMainView(
-                      user: user,
-                      onScroll: onScroll,
-                      children: children,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-      error: (error, stackTrace) => const Scaffold(),
-      loading: ProfileLoadingScreen.new,
-    );
-  }
-}
-
-class _UserImageHeader extends StatelessWidget {
-  const _UserImageHeader({required this.offset, this.backgroundUrl});
-
-  final double offset;
   final String? backgroundUrl;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final offset = ref.watch(scrollOffsetProvider);
     final scrollOffset = offset / 56;
 
     return Image(

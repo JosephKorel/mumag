@@ -154,7 +154,7 @@ class _$RatingEntityImpl implements _RatingEntity {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RatingEntityImpl &&

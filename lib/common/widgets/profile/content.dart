@@ -3,15 +3,54 @@ import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/image.dart';
 
+class ProfileContentWidget extends StatelessWidget {
+  const ProfileContentWidget({
+    required this.user,
+    required this.scrollController,
+    required this.child,
+    super.key,
+  });
+
+  final Widget child;
+  final UserEntity user;
+  final ScrollController scrollController;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(32),
+        topRight: Radius.circular(32),
+      ),
+      child: SingleChildScrollView(
+        controller: scrollController,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(32),
+              topRight: Radius.circular(32),
+            ),
+            color: context.background,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: child,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class ProfileMainView extends StatefulWidget {
   const ProfileMainView({
     required this.user,
     required this.onScroll,
-    required this.children,
+    required this.child,
     super.key,
   });
 
-  final List<Widget> children;
+  final Widget child;
   final UserEntity user;
   final void Function(double offset) onScroll;
 
@@ -33,7 +72,7 @@ class _ProfileMainViewState extends State<ProfileMainView> {
     super.initState();
     _scrollController.addListener(() {
       if (_scrollController.hasClients) {
-        widget.onScroll(_scrollController.offset);
+        // widget.onScroll(_scrollController.offset);
       }
     });
   }
@@ -57,21 +96,7 @@ class _ProfileMainViewState extends State<ProfileMainView> {
           ),
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _ProfilePicture(widget.user.avatarUrl),
-                Text(
-                  widget.user.name,
-                  style: context.titleLarge.copyWith(),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                ...widget.children,
-              ],
-            ),
+            child: widget.child,
           ),
         ),
       ),
@@ -79,8 +104,8 @@ class _ProfileMainViewState extends State<ProfileMainView> {
   }
 }
 
-class _ProfilePicture extends StatelessWidget {
-  const _ProfilePicture(this.avatarUrl);
+class ProfilePicture extends StatelessWidget {
+  const ProfilePicture(this.avatarUrl, {super.key});
 
   final String? avatarUrl;
 

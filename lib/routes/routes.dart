@@ -51,7 +51,7 @@ class HomeRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const HomeView();
+    return const AppMainPage();
   }
 }
 
@@ -126,7 +126,9 @@ class TrackViewRoute extends GoRouteData {
 }
 
 @TypedGoRoute<SuggestionViewRoute>(
-    path: '/suggestions', name: 'suggestionsView')
+  path: '/suggestions',
+  name: 'suggestionsView',
+)
 class SuggestionViewRoute extends GoRouteData {
   const SuggestionViewRoute();
 

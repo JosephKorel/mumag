@@ -19,7 +19,9 @@ ThemeData appTheme(AppThemeRef ref) {
   );
 }
 
-@riverpod
+// Keep it alive, so when going back to profile page
+// It won't load the colors again
+@Riverpod(keepAlive: true)
 Future<AppColorScheme> dynamicColorScheme(
   DynamicColorSchemeRef ref, {
   required String? imageUrl,

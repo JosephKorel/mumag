@@ -51,32 +51,36 @@ class _RatingBarsState extends State<RatingBars> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: scores
               .mapIndexed(
-                (i, e) => Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    RatingQuantity(quantity: e),
-                    TweenAnimationBuilder(
-                      tween: Tween(
-                        begin: 0,
-                        end: _barHeight(height, greatestValue, e),
+                (i, e) => Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      RatingQuantity(quantity: e),
+                      TweenAnimationBuilder(
+                        tween: Tween(
+                          begin: 0,
+                          end: _barHeight(height, greatestValue, e),
+                        ),
+                        curve: Curves.easeOutCirc,
+                        duration: 2.seconds,
+                        builder: (context, value, child) => Container(
+                          height: value.toDouble(),
+                          width: 40,
+                          decoration: BoxDecoration(color: context.primary),
+                        ),
                       ),
-                      curve: Curves.easeOutCirc,
-                      duration: 2.seconds,
-                      builder: (context, value, child) => Container(
-                        height: value.toDouble(),
-                        width: 40,
-                        decoration: BoxDecoration(color: context.primary),
+                      const SizedBox(
+                        height: 8,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      RatingValue.values[i].label,
-                      style: context.titleMedium
-                          .copyWith(color: context.onSurface.withOpacity(0.8)),
-                    ),
-                  ],
+                      Text(
+                        RatingValue.values[i].label,
+                        style: context.bodyMedium.copyWith(
+                          color: context.onSurface.withOpacity(0.8),
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               )
               .toList(),

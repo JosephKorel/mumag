@@ -53,14 +53,14 @@ class _LoadedState extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final socialAsyncValue = ref.watch(mySocialRelationsProvider);
+    final socialAsyncValue = ref.watch(mySocialRelationsProvider);
     final relations = ref.watch(userRelationsProvider);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SocialRelationsBadge(
-          loading: false,
+          loading: socialAsyncValue.isLoading,
           label: 'Followers: ${relations.followers.length}',
           onTap: () => showAppBottomSheet(
             context,
@@ -72,7 +72,7 @@ class _LoadedState extends ConsumerWidget {
           width: 16,
         ),
         SocialRelationsBadge(
-          loading: false,
+          loading: socialAsyncValue.isLoading,
           label: 'Following: ${relations.following.length}',
           onTap: () => showAppBottomSheet(
             context,
