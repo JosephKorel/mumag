@@ -21,7 +21,7 @@ final globalKeyProvider =
 );
 
 typedef GlobalKeyRef = AutoDisposeProviderRef<GlobalKey<NavigatorState>>;
-String _$routerHash() => r'4cdf210e535191c17b9d68f3762ce2b8a2485d50';
+String _$routerHash() => r'c5e71b165d2018f768361233e85704a8df4818d8';
 
 /// See also [router].
 @ProviderFor(router)

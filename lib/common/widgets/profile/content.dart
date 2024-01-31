@@ -7,11 +7,11 @@ class ProfileMainView extends StatefulWidget {
   const ProfileMainView({
     required this.user,
     required this.onScroll,
-    required this.children,
+    required this.child,
     super.key,
   });
 
-  final List<Widget> children;
+  final Widget child;
   final UserEntity user;
   final void Function(double offset) onScroll;
 
@@ -33,7 +33,7 @@ class _ProfileMainViewState extends State<ProfileMainView> {
     super.initState();
     _scrollController.addListener(() {
       if (_scrollController.hasClients) {
-        widget.onScroll(_scrollController.offset);
+        // widget.onScroll(_scrollController.offset);
       }
     });
   }
@@ -57,7 +57,8 @@ class _ProfileMainViewState extends State<ProfileMainView> {
           ),
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: Column(
+            child: widget
+                .child, /* Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _ProfilePicture(widget.user.avatarUrl),
@@ -71,7 +72,7 @@ class _ProfileMainViewState extends State<ProfileMainView> {
                 ),
                 ...widget.children,
               ],
-            ),
+            ), */
           ),
         ),
       ),
@@ -79,8 +80,8 @@ class _ProfileMainViewState extends State<ProfileMainView> {
   }
 }
 
-class _ProfilePicture extends StatelessWidget {
-  const _ProfilePicture(this.avatarUrl);
+class ProfilePicture extends StatelessWidget {
+  const ProfilePicture(this.avatarUrl, {super.key});
 
   final String? avatarUrl;
 

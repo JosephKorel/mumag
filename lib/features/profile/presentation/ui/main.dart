@@ -1,13 +1,71 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
+import 'package:mumag/common/utils/media_query.dart';
+import 'package:mumag/common/widgets/profile/content.dart';
 import 'package:mumag/common/widgets/profile/main.dart';
+import 'package:mumag/common/widgets/profile/profile_rating_stats.dart';
 import 'package:mumag/features/profile/presentation/providers/profile.dart';
 import 'package:mumag/features/profile/presentation/ui/profile_menu.dart';
 import 'package:mumag/features/profile/presentation/ui/social.dart';
 import 'package:mumag/features/profile/presentation/ui/user_albums.dart';
 import 'package:mumag/features/profile/presentation/ui/user_genres.dart';
 import 'package:mumag/features/profile/presentation/ui/user_suggestions.dart';
+
+class ContentRating extends ConsumerWidget {
+  const ContentRating({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(localUserProvider)!;
+
+    return SizedBox(
+      height: user.ratings.isEmpty ? null : context.deviceHeight / 2.5,
+      width: double.infinity,
+      child: ProfileRatings(ratings: user.ratings),
+    );
+  }
+}
+
+class UserAvatarWidget extends ConsumerWidget {
+  const UserAvatarWidget({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(localUserProvider)!;
+
+    return ProfilePicture(user.avatarUrl);
+  }
+}
+
+class Content extends StatelessWidget {
+  const Content({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        UserAvatarWidget(),
+        SizedBox(
+          height: 8,
+        ),
+        UserSocialRelationsWidget(),
+        SizedBox(
+          height: 8,
+        ),
+        UserProfileGenres(),
+        SizedBox(
+          height: 16,
+        ),
+        ContentRating(),
+        SizedBox(
+          height: 16,
+        ),
+        SavedAlbumsView(),
+      ],
+    );
+  }
+}
 
 class ProfileView extends ConsumerWidget {
   const ProfileView({super.key});
@@ -35,67 +93,11 @@ class ProfileView extends ConsumerWidget {
       onScroll: onScroll,
       appBarActions: const [ProfileMenuButton()],
       floatingActionButton: const UserSuggestionsFAB(),
-      children: const [
-        SizedBox(
-          height: 8,
-        ),
-        UserSocialRelationsWidget(),
-        SizedBox(
-          height: 8,
-        ),
-        UserProfileGenres(),
-        SizedBox(
-          height: 16,
-        ),
-        /* SizedBox(
-          height:
-              cachedUser.ratings.isEmpty ? null : context.deviceHeight / 2.5,
-          width: double.infinity,
-          child: ProfileRatings(ratings: cachedUser.ratings),
-        ), */
-        SizedBox(
-          height: 16,
-        ),
-        SavedAlbumsView(),
-      ],
+      child: ProfileMainView(
+        user: cachedUser,
+        onScroll: onScroll,
+        child: const Content(),
+      ),
     );
-
-    /*   void onScroll(double offset) =>
-        ref.read(scrollOffsetProvider.notifier).onScroll(offset);
-
-
-    return ProfileContainer(
-      appBarActions: const [ProfileMenuButton()],
-      asyncUser: asyncUser,
-      user: cachedUser,
-      offset: offset,
-      onScroll: onScroll,
-      children: cachedUser == null
-          ? []
-          : [
-              const SizedBox(
-                height: 8,
-              ),
-              const UserSocialRelationsWidget(),
-              const SizedBox(
-                height: 8,
-              ),
-              const UserProfileGenres(),
-              const SizedBox(
-                height: 16,
-              ),
-              SizedBox(
-                height: cachedUser.ratings.isEmpty
-                    ? null
-                    : context.deviceHeight / 2.5,
-                width: double.infinity,
-                child: ProfileRatings(ratings: cachedUser.ratings),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              const SavedAlbumsView(),
-            ],
-    ); */
   }
 }

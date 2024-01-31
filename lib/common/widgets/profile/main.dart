@@ -4,7 +4,6 @@ import 'package:mumag/common/models/user/user_entity.dart';
 import 'package:mumag/common/theme/theme_provider.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/loading.dart';
-import 'package:mumag/common/widgets/profile/content.dart';
 
 class ProfileLoadingScreen extends StatelessWidget {
   const ProfileLoadingScreen({super.key});
@@ -61,7 +60,7 @@ class ProfileLoadingScreen extends StatelessWidget {
 
 class UserProfileView extends ConsumerWidget {
   const UserProfileView({
-    required this.children,
+    required this.child,
     required this.offset,
     required this.onScroll,
     required this.user,
@@ -71,7 +70,7 @@ class UserProfileView extends ConsumerWidget {
   });
 
   final UserEntity user;
-  final List<Widget> children;
+  final Widget child;
   final double offset;
   final List<Widget>? appBarActions;
   final Widget? floatingActionButton;
@@ -108,11 +107,7 @@ class UserProfileView extends ConsumerWidget {
                   const Spacer(),
                   Expanded(
                     flex: 3,
-                    child: ProfileMainView(
-                      user: user,
-                      onScroll: onScroll,
-                      children: children,
-                    ),
+                    child: child,
                   ),
                 ],
               ),
@@ -125,6 +120,30 @@ class UserProfileView extends ConsumerWidget {
     );
   }
 }
+
+/* class _Content extends ConsumerWidget {
+  const _Content({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(localUserProvider)!;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ProfilePicture(user.avatarUrl),
+        Text(
+          user.name,
+          style: context.titleLarge.copyWith(),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        ...widget.children,
+      ],
+    );
+  }
+} */
 
 class _UserImageHeader extends StatelessWidget {
   const _UserImageHeader({required this.offset, this.backgroundUrl});

@@ -4,8 +4,8 @@ import 'package:mumag/common/widgets/splash.dart';
 import 'package:mumag/features/album_view/presentation/ui/main.dart';
 import 'package:mumag/features/artist_view/ui/main.dart';
 import 'package:mumag/features/connect/presentation/ui/main.dart';
-import 'package:mumag/features/home/main.dart';
 import 'package:mumag/features/profile/presentation/ui/main.dart';
+import 'package:mumag/features/profile/presentation/ui/performant.dart';
 import 'package:mumag/features/search/presentation/ui/main.dart';
 import 'package:mumag/features/search/search_user/main.dart';
 import 'package:mumag/features/sign_in/presentation/ui/main.dart';
@@ -51,7 +51,7 @@ class HomeRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const HomeView();
+    return const ProfileView();
   }
 }
 
@@ -61,7 +61,7 @@ class ProfileRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const ProfileView();
+    return const ProfilePerformantView();
   }
 }
 
@@ -126,7 +126,9 @@ class TrackViewRoute extends GoRouteData {
 }
 
 @TypedGoRoute<SuggestionViewRoute>(
-    path: '/suggestions', name: 'suggestionsView')
+  path: '/suggestions',
+  name: 'suggestionsView',
+)
 class SuggestionViewRoute extends GoRouteData {
   const SuggestionViewRoute();
 
