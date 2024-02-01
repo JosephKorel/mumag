@@ -12,6 +12,7 @@ List<RouteBase> get $appRoutes => [
       $connectToSpotifyRoute,
       $homeRoute,
       $profileRoute,
+      $myRatingsRoute,
       $searchRoute,
       $searchUserRoute,
       $viewUserRoute,
@@ -120,6 +121,29 @@ extension $ProfileRouteExtension on ProfileRoute {
 
   String get location => GoRouteData.$location(
         '/profile',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $myRatingsRoute => GoRouteData.$route(
+      path: '/my-ratings',
+      factory: $MyRatingsRouteExtension._fromState,
+    );
+
+extension $MyRatingsRouteExtension on MyRatingsRoute {
+  static MyRatingsRoute _fromState(GoRouterState state) =>
+      const MyRatingsRoute();
+
+  String get location => GoRouteData.$location(
+        '/my-ratings',
       );
 
   void go(BuildContext context) => context.go(location);

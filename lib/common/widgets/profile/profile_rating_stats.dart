@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/background_icon.dart';
 import 'package:mumag/common/widgets/rating_bars.dart';
+import 'package:mumag/routes/routes.dart';
 
 const _ratingTypes = [RatingType.artist, RatingType.album, RatingType.track];
 
@@ -34,7 +36,7 @@ class ProfileRatings extends StatelessWidget {
             Directionality(
               textDirection: TextDirection.rtl,
               child: TextButton.icon(
-                onPressed: () {},
+                onPressed: () => context.push(const MyRatingsRoute().location),
                 icon: const Icon(Icons.arrow_outward),
                 label: const Text('See All'),
               ),

@@ -5,6 +5,7 @@ import 'package:mumag/features/album_view/presentation/ui/main.dart';
 import 'package:mumag/features/artist_view/ui/main.dart';
 import 'package:mumag/features/connect/presentation/ui/main.dart';
 import 'package:mumag/features/home/main.dart';
+import 'package:mumag/features/my_ratings/presentation/ui/main.dart';
 import 'package:mumag/features/profile/presentation/ui/main.dart';
 import 'package:mumag/features/search/presentation/ui/main.dart';
 import 'package:mumag/features/search/search_user/main.dart';
@@ -62,6 +63,16 @@ class ProfileRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const ProfileView();
+  }
+}
+
+@TypedGoRoute<MyRatingsRoute>(path: '/my-ratings')
+class MyRatingsRoute extends GoRouteData {
+  const MyRatingsRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AllUserRatingsView();
   }
 }
 

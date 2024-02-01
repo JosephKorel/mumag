@@ -84,6 +84,10 @@ extension RatingLabel on RatingValue {
       ][index];
 }
 
+extension RatingTypeIcon on RatingType {
+  IconData get icon => [Icons.album, Icons.music_note, Icons.person][index];
+}
+
 extension RatingToSuggestion on RatingType {
   SuggestionType get suggestionType => [
         SuggestionType.album,
