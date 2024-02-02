@@ -18,12 +18,14 @@ class RatingsGrid extends StatelessWidget {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
+        crossAxisSpacing: 32,
+        mainAxisSpacing: 32,
+        childAspectRatio: 0.8,
       ),
       itemCount: ratings.length,
       itemBuilder: (context, index) => RatingGridItem(
         rating: ratings[index],
+        index: index,
       ).animate().slide(
             begin: Offset(index.isEven ? -4 : 4, 0),
             duration: .8.seconds,

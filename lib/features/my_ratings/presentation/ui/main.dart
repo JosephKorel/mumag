@@ -34,7 +34,7 @@ class _AllUserRatingsViewState extends ConsumerState<AllUserRatingsView> {
           children: [
             SearchInput(onChanged: _onChanged),
             const SizedBox(
-              height: 8,
+              height: 16,
             ),
             Expanded(
               child: RatingsGrid(ratings: ratings, searchValue: _searchValue),

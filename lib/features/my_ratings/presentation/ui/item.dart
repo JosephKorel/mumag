@@ -8,9 +8,10 @@ import 'package:mumag/common/widgets/loading.dart';
 import 'package:mumag/features/my_ratings/providers/media.dart';
 
 class RatingGridItem extends ConsumerWidget {
-  const RatingGridItem({required this.rating, super.key});
+  const RatingGridItem({required this.rating, required this.index, super.key});
 
   final RatingEntity rating;
+  final int index;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,7 +20,11 @@ class RatingGridItem extends ConsumerWidget {
     );
 
     return media.when(
-      data: (data) => _LoadedState(rating: rating, media: data),
+      data: (data) => _LoadedState(
+        rating: rating,
+        media: data,
+        index: index,
+      ),
       error: (error, stackTrace) => const SizedBox(
         height: 64,
       ),
@@ -33,30 +38,42 @@ class _LoadingState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const LoadingSkeleton(height: 64);
+    return const LoadingSkeleton(height: double.infinity);
   }
 }
 
 class _LoadedState extends StatelessWidget {
-  const _LoadedState({required this.rating, required this.media, super.key});
+  const _LoadedState({
+    required this.rating,
+    required this.media,
+    required this.index,
+    super.key,
+  });
 
   final MediaEntity media;
   final RatingEntity rating;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 84,
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: context.onSurface.withOpacity(0.1)),
+        color: context.background,
+        boxShadow: [
+          BoxShadow(
+            color: context.onSurface.withOpacity(0.2),
+            blurRadius: 4,
+            offset: Offset(index.isEven ? 4 : -4, 4),
+          ),
+        ],
       ),
       clipBehavior: Clip.hardEdge,
       child: Column(
         children: [
           Expanded(
-            flex: 5,
+            flex: 3,
             child: _MediaImage(
               url: media.imageUrl ?? '',
               ratingValue: rating.rating,
@@ -66,7 +83,19 @@ class _LoadedState extends StatelessWidget {
           const SizedBox(
             height: 8,
           ),
-          Expanded(child: Text(media.name)),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Text(
+                media.name,
+                style: context.bodyMedium.copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: context.onSurface.withOpacity(0.8),
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -90,13 +119,6 @@ class _MediaImage extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: context.background,
-        boxShadow: [
-          BoxShadow(
-            color: context.onSurface.withOpacity(0.6),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
         borderRadius: BorderRadius.circular(8),
       ),
       child: ClipRRect(
