@@ -37,13 +37,11 @@ class SuggestionRepositoryImpl extends SuggestionRepository {
   }
 
   @override
-  Future<int> updateSuggestion({
+  Future<void> updateSuggestion({
     required UpdateSuggestionParams params,
   }) async {
     try {
-      final result = await _api.put(path: _path, params: params.toMap());
-
-      return result!['rating'] as int;
+      await _api.put(path: _path, params: params.toMap());
     } catch (e) {
       rethrow;
     }

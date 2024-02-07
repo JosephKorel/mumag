@@ -8,7 +8,7 @@ abstract class SuggestionRepository {
     required InsertManySuggestionsParams params,
   });
 
-  Future<int> updateSuggestion({required UpdateSuggestionParams params});
+  Future<void> updateSuggestion({required UpdateSuggestionParams params});
 
   Future<void> deleteSuggestion({required DeleteSuggestionParams params});
 

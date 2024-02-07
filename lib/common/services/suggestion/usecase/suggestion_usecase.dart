@@ -17,15 +17,16 @@ class SuggestionUsecase {
     );
   }
 
-  ApiResult<void> insertManySuggestions(
-      {required InsertManySuggestionsParams params}) {
+  ApiResult<void> insertManySuggestions({
+    required InsertManySuggestionsParams params,
+  }) {
     return TaskEither.tryCatch(
       () => _repository.insertManySuggestions(params: params),
       (error, stackTrace) => InsertSuggestionException(error: error),
     );
   }
 
-  ApiResult<int> updateSuggestion({required UpdateSuggestionParams params}) {
+  ApiResult<void> updateSuggestion({required UpdateSuggestionParams params}) {
     return TaskEither.tryCatch(
       () => _repository.updateSuggestion(params: params),
       (error, stackTrace) => UpdateSuggestionException(error: error),

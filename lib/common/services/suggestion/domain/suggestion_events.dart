@@ -46,9 +46,15 @@ class UpdateSuggestionParams extends SuggestionEvents {
   const UpdateSuggestionParams({
     required this.suggestionId,
     required this.rating,
+    required this.type,
+    required this.spotifyId,
+    required this.userId,
     super.successMsg = const InsertSuggestionSuccess(),
   });
 
+  final SuggestionType type;
+  final int userId;
+  final String spotifyId;
   final int suggestionId;
   final int rating;
 
@@ -56,6 +62,9 @@ class UpdateSuggestionParams extends SuggestionEvents {
     return <String, dynamic>{
       'suggestionId': suggestionId,
       'rating': rating,
+      'spotifyId': spotifyId,
+      'userId': userId,
+      'type': type.name,
     };
   }
 }

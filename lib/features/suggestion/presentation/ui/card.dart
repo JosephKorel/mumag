@@ -330,7 +330,7 @@ String _suggestionTimestamp(DateTime createdAt) {
   final difference = DateTime.now().difference(createdAt);
 
   if (difference.inMinutes < 1) {
-    return '${difference.inSeconds} s ago';
+    return '${difference.inSeconds}s ago';
   }
 
   if (difference.inHours < 1) {
