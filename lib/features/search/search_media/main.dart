@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -42,9 +44,13 @@ class SearchInputContainer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(searchMediaProvider);
 
+    void onClear() {
+      ref.invalidate(searchMediaProvider);
+    }
+
     return SearchInput(
       onChanged: ref.read(searchMediaProvider.notifier).onSearch,
-      provider: searchMediaProvider,
+      onClear: onClear,
     );
   }
 }
@@ -146,7 +152,8 @@ class _SearchResultCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     void onTap() {
-      if (data.description == 'Album') {
+      log(data.description);
+      if (data.description == 'album') {
         ref
             .read(viewingAlbumProvider.notifier)
             .updateState(albumId: data.spotifyId);
@@ -154,7 +161,7 @@ class _SearchResultCard extends ConsumerWidget {
         context.push(data.mediaPageRoute());
       }
 
-      if (data.description == 'Artist') {
+      if (data.description == 'artist') {
         ref
             .read(viewingArtistIdProvider.notifier)
             .updateState(id: data.spotifyId);
@@ -162,7 +169,7 @@ class _SearchResultCard extends ConsumerWidget {
         context.push(data.mediaPageRoute());
       }
 
-      if (data.description == 'Track') {
+      if (data.description == 'track') {
         ref.read(getTrackProvider.notifier).updateState(data.spotifyId);
 
         context.push(data.mediaPageRoute());

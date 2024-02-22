@@ -1,35 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/models/media/common.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/image.dart';
 import 'package:mumag/common/widgets/loading.dart';
-import 'package:mumag/features/my_ratings/providers/media.dart';
 
 class RatingGridItem extends ConsumerWidget {
-  const RatingGridItem({required this.rating, required this.index, super.key});
+  const RatingGridItem({
+    required this.rating,
+    required this.index,
+    required this.media,
+    required this.parentBuiltAt,
+    super.key,
+  });
 
   final RatingEntity rating;
   final int index;
+  final int parentBuiltAt;
+  final MediaEntity media;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final media = ref.watch(
-      getMediaProvider(spotifyId: rating.spotifyId, type: rating.type),
-    );
+    final builtAt = DateTime.now().millisecondsSinceEpoch;
 
-    return media.when(
-      data: (data) => _LoadedState(
-        rating: rating,
-        media: data,
-        index: index,
-      ),
-      error: (error, stackTrace) => const SizedBox(
-        height: 64,
-      ),
-      loading: _LoadingState.new,
-    );
+    final shouldAnimate = builtAt - parentBuiltAt <= 40;
+
+    return _LoadedState(
+      rating: rating,
+      media: media,
+      index: index,
+      parentBuiltAt: parentBuiltAt,
+    ).animate().slide(
+          begin: Offset(
+            index.isEven
+                ? shouldAnimate
+                    ? -4
+                    : 0
+                : shouldAnimate
+                    ? 4
+                    : 0,
+            0,
+          ),
+          duration: .8.seconds,
+          curve: Curves.easeOutQuint,
+        );
   }
 }
 
@@ -47,12 +63,14 @@ class _LoadedState extends StatelessWidget {
     required this.rating,
     required this.media,
     required this.index,
+    required this.parentBuiltAt,
     super.key,
   });
 
   final MediaEntity media;
   final RatingEntity rating;
   final int index;
+  final int parentBuiltAt;
 
   @override
   Widget build(BuildContext context) {

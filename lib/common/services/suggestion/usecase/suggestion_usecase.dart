@@ -10,7 +10,7 @@ class SuggestionUsecase {
 
   final SuggestionRepository _repository;
 
-  ApiResult<void> insertSuggestion({required InsertSuggestionParams params}) {
+  ApiResult<bool> insertSuggestion({required InsertSuggestionParams params}) {
     return TaskEither.tryCatch(
       () => _repository.insertSuggestion(params: params),
       (error, stackTrace) => InsertSuggestionException(error: error),
@@ -44,9 +44,7 @@ class SuggestionUsecase {
     required GetUserSuggestionParams params,
   }) {
     return TaskEither.tryCatch(
-      () {
-        return _repository.getUserSuggestions(params: params);
-      },
+      () => _repository.getUserSuggestions(params: params),
       (error, stackTrace) => GetUserSuggestionsException(error: error),
     );
   }
@@ -55,9 +53,7 @@ class SuggestionUsecase {
     required GetUserReceivedSuggestionParams params,
   }) {
     return TaskEither.tryCatch(
-      () {
-        return _repository.getReceivedSuggestions(params: params);
-      },
+      () => _repository.getReceivedSuggestions(params: params),
       (error, stackTrace) => GetUserSuggestionsException(error: error),
     );
   }

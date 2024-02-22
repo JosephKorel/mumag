@@ -15,6 +15,10 @@ class ProfileRatings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void onBarTap(int barIndex) {
+      context.push(MyRatingsRoute(rating: barIndex + 1).location);
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -44,16 +48,14 @@ class ProfileRatings extends StatelessWidget {
           ],
         ),
         const SizedBox(
-          height: 16,
+          height: 8,
         ),
         _ProfileRatingStatsContainer(ratings: ratings),
         if (ratings.isNotEmpty) ...[
-          const SizedBox(
-            height: 8,
-          ),
           Expanded(
             child: RatingBars(
               scoreList: ratings.map((e) => e.rating).toList(),
+              onBarTap: onBarTap,
             ),
           ),
         ],
@@ -86,24 +88,43 @@ class _RatingStatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          '${ratings.where((element) => element.type == type).length}',
-          style: context.titleLarge
-              .copyWith(color: context.primary, fontWeight: FontWeight.w800),
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        Text(
-          '${type.label}s',
-          style: context.titleMedium.copyWith(
-            color: context.onSurface.withOpacity(0.8),
-            fontWeight: FontWeight.w400,
+    void onBarTap() {
+      context.push(MyRatingsRoute(type: type).location);
+    }
+
+    final numberOfRatings =
+        ratings.where((element) => element.type == type).length;
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(8),
+        onTap: numberOfRatings == 0 ? null : onBarTap,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            children: [
+              Text(
+                '$numberOfRatings',
+                style: context.titleLarge.copyWith(
+                  color: context.primary,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Text(
+                '${type.label}s',
+                style: context.titleMedium.copyWith(
+                  color: context.onSurface.withOpacity(0.8),
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ],
           ),
         ),
-      ],
+      ),
     );
   }
 }

@@ -32,9 +32,13 @@ class SearchInputContainer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(searchValueProvider);
 
+    void onClear() {
+      ref.invalidate(searchValueProvider);
+    }
+
     return SearchInput(
       onChanged: ref.read(searchValueProvider.notifier).onSearch,
-      provider: searchValueProvider,
+      onClear: onClear,
     );
   }
 }

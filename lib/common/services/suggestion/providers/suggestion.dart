@@ -1,3 +1,4 @@
+import 'package:mumag/common/models/exception/exception.dart';
 import 'package:mumag/common/services/backend_api/providers/api.dart';
 import 'package:mumag/common/services/suggestion/data/suggestion_impl.dart';
 import 'package:mumag/common/services/suggestion/domain/suggestion_events.dart';
@@ -67,7 +68,19 @@ FutureOr<bool> sendSuggestion(
       ref.read(toastMessageProvider.notifier).onException(exception: l);
       return false;
     },
-    (r) => true,
+    (r) {
+      final sent = r as bool;
+
+      if (!sent) {
+        ref.read(toastMessageProvider.notifier).onException(
+              exception: NotSentSuggestionException(
+                error: Object(),
+              ),
+            );
+      }
+
+      return sent;
+    },
   );
 }
 

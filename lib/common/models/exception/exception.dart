@@ -84,6 +84,15 @@ final class InsertSuggestionException extends AppException {
   final Object error;
 }
 
+final class NotSentSuggestionException extends AppException {
+  NotSentSuggestionException({
+    required this.error,
+    super.errorMsg = 'It seems like this user already knows your suggestion.',
+  });
+
+  final Object error;
+}
+
 final class RateSuggestionException extends AppException {
   RateSuggestionException({
     required this.error,

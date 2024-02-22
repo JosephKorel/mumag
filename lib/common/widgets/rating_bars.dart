@@ -5,9 +5,14 @@ import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
 
 class RatingBars extends StatefulWidget {
-  const RatingBars({required this.scoreList, super.key});
+  const RatingBars({
+    required this.scoreList,
+    this.onBarTap,
+    super.key,
+  });
 
   final List<int> scoreList;
+  final void Function(int barIndex)? onBarTap;
 
   @override
   State<RatingBars> createState() => _RatingBarsState();
@@ -63,10 +68,17 @@ class _RatingBarsState extends State<RatingBars> {
                         ),
                         curve: Curves.easeOutCirc,
                         duration: 2.seconds,
-                        builder: (context, value, child) => Container(
-                          height: value.toDouble(),
-                          width: 40,
-                          decoration: BoxDecoration(color: context.primary),
+                        builder: (context, value, child) => Material(
+                          color: context.primary,
+                          child: InkWell(
+                            onTap: e == 0 || widget.onBarTap == null
+                                ? null
+                                : () => widget.onBarTap!(i),
+                            child: SizedBox(
+                              height: value.toDouble(),
+                              width: 40,
+                            ),
+                          ),
                         ),
                       ),
                       const SizedBox(

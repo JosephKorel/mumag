@@ -139,11 +139,19 @@ RouteBase get $myRatingsRoute => GoRouteData.$route(
     );
 
 extension $MyRatingsRouteExtension on MyRatingsRoute {
-  static MyRatingsRoute _fromState(GoRouterState state) =>
-      const MyRatingsRoute();
+  static MyRatingsRoute _fromState(GoRouterState state) => MyRatingsRoute(
+        type: _$convertMapValue(
+            'type', state.uri.queryParameters, _$RatingTypeEnumMap._$fromName),
+        rating:
+            _$convertMapValue('rating', state.uri.queryParameters, int.parse),
+      );
 
   String get location => GoRouteData.$location(
         '/my-ratings',
+        queryParams: {
+          if (type != null) 'type': _$RatingTypeEnumMap[type!],
+          if (rating != null) 'rating': rating!.toString(),
+        },
       );
 
   void go(BuildContext context) => context.go(location);
@@ -154,6 +162,26 @@ extension $MyRatingsRouteExtension on MyRatingsRoute {
       context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
+}
+
+const _$RatingTypeEnumMap = {
+  RatingType.album: 'album',
+  RatingType.track: 'track',
+  RatingType.artist: 'artist',
+};
+
+T? _$convertMapValue<T>(
+  String key,
+  Map<String, String> map,
+  T Function(String) converter,
+) {
+  final value = map[key];
+  return value == null ? null : converter(value);
+}
+
+extension<T extends Enum> on Map<T, String> {
+  T _$fromName(String value) =>
+      entries.singleWhere((element) => element.value == value).key;
 }
 
 RouteBase get $searchRoute => GoRouteData.$route(

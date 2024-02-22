@@ -5,12 +5,12 @@ import 'package:mumag/common/theme/utils.dart';
 class SearchInput extends ConsumerStatefulWidget {
   const SearchInput({
     required this.onChanged,
-    this.provider,
+    required this.onClear,
     super.key,
   });
 
   final void Function(String value) onChanged;
-  final ProviderOrFamily? provider;
+  final void Function() onClear;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _SearchInputState();
@@ -21,9 +21,7 @@ class _SearchInputState extends ConsumerState<SearchInput> {
 
   void _clear() {
     _controller.clear();
-    if (widget.provider != null) {
-      ref.invalidate(widget.provider!);
-    }
+    widget.onClear();
   }
 
   @override

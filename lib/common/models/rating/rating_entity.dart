@@ -105,6 +105,22 @@ class RatingEntity with _$RatingEntity {
     required int rating,
   }) = _RatingEntity;
 
+  const RatingEntity._();
+
   factory RatingEntity.fromJson(Map<String, dynamic> json) =>
       _$RatingEntityFromJson(json);
+
+  static List<RatingEntity> ratingsByTypeAndValue(
+    List<RatingEntity> ratingList,
+    RatingType? type,
+    int? rating,
+  ) {
+    return ratingList
+        .where(
+          (e) =>
+              (type == null || e.type == type) &&
+              (rating == null || e.rating >= rating),
+        )
+        .toList();
+  }
 }

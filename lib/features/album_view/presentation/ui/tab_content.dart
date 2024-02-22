@@ -59,15 +59,13 @@ class _AlbumTabViewState extends ConsumerState<AlbumTabView>
           height: 16,
         ),
         Expanded(
-          child: Material(
-            child: TabBarView(
-              controller: _controller,
-              children: const [
-                AboutTabContent(),
-                TracksTabContent(),
-                AlbumRatingTabContent(),
-              ],
-            ),
+          child: TabBarView(
+            controller: _controller,
+            children: const [
+              AboutTabContent(),
+              TracksTabContent(),
+              AlbumRatingTabContent(),
+            ],
           ),
         ),
       ],

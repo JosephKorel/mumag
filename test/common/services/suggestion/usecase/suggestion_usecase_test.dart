@@ -21,15 +21,20 @@ class DeleteSuggestionParamsMock extends Mock
 void main() {
   final suggestionRepository = SuggestionRepositoryMock();
   final suggestionUsecase = SuggestionUsecase(suggestionRepository);
-  final insertSuggestionParams = InsertSuggestionParams(
+  const insertSuggestionParams = InsertSuggestionParams(
     suggestedBy: 1,
     suggestedTo: 2,
     spotifyId: '',
     type: SuggestionType.album,
   );
-  final updateSuggestionParams =
-      UpdateSuggestionParams(suggestionId: 1, rating: 1);
-  final deleteSuggestionParams = DeleteSuggestionParams(suggestionId: 1);
+  const updateSuggestionParams = UpdateSuggestionParams(
+    suggestionId: 1,
+    rating: 1,
+    spotifyId: '',
+    type: SuggestionType.album,
+    userId: 2,
+  );
+  const deleteSuggestionParams = DeleteSuggestionParams(suggestionId: 1);
 
   setUpAll(() {
     registerFallbackValue(InsertSuggestionParamsMock());
@@ -38,11 +43,11 @@ void main() {
 
     when(
       () => suggestionRepository.insertSuggestion(params: any(named: 'params')),
-    ).thenAnswer((invocation) async {});
+    ).thenAnswer((invocation) async => true);
 
     when(
       () => suggestionRepository.updateSuggestion(params: any(named: 'params')),
-    ).thenAnswer((invocation) async => 1);
+    ).thenAnswer((invocation) async => {});
 
     when(
       () => suggestionRepository.deleteSuggestion(params: any(named: 'params')),
@@ -56,7 +61,7 @@ void main() {
         () => suggestionRepository.insertSuggestion(
           params: insertSuggestionParams,
         ),
-      ).thenAnswer((invocation) async {});
+      ).thenAnswer((invocation) async => true);
 
       // prepare
       final result = await suggestionUsecase
@@ -73,18 +78,15 @@ void main() {
         () => suggestionRepository.updateSuggestion(
           params: updateSuggestionParams,
         ),
-      ).thenAnswer((invocation) async => 1);
+      ).thenAnswer((invocation) async => {});
 
       // prepare
       final result = await suggestionUsecase
           .updateSuggestion(params: updateSuggestionParams)
           .run();
 
-      final rating = result.fold((l) => null, (r) => r);
-
       // assert
-      expect(result, isA<Right<AppException, int>>());
-      expect(rating, 1);
+      expect(result, isA<Right<AppException, void>>());
     });
 
     test('Delete suggestion and return Right', () async {

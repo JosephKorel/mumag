@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/background_icon.dart';
 import 'package:mumag/common/widgets/rating_bars.dart';
+import 'package:mumag/routes/routes.dart';
 
 const _ratingTypes = [RatingType.artist, RatingType.album, RatingType.track];
 
@@ -13,6 +15,10 @@ class ProfileRatings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void onBarTap(int barIndex) {
+      context.push(MyRatingsRoute(rating: barIndex + 1).location);
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -40,6 +46,7 @@ class ProfileRatings extends StatelessWidget {
           Expanded(
             child: RatingBars(
               scoreList: ratings.map((e) => e.rating).toList(),
+              onBarTap: onBarTap,
             ),
           ),
         ],

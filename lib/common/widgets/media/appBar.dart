@@ -21,6 +21,10 @@ class MediaAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(title).animate().fadeIn(),
+      titleTextStyle: context.titleLarge.copyWith(
+        color: context.onPrimary,
+        fontWeight: FontWeight.w600,
+      ),
       leading: IconButton(
         onPressed: context.pop,
         icon: const Icon(Icons.arrow_back),

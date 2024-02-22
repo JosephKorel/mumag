@@ -6,7 +6,7 @@ part of 'media.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getMediaHash() => r'f27c34c77427eb0b949afb40d84bcb1782a5fa49';
+String _$getMediaListHash() => r'a56db5e3a41bb35e1f03990da4dce216f4b6fbbe';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,33 +29,30 @@ class _SystemHash {
   }
 }
 
-/// See also [getMedia].
-@ProviderFor(getMedia)
-const getMediaProvider = GetMediaFamily();
+/// See also [getMediaList].
+@ProviderFor(getMediaList)
+const getMediaListProvider = GetMediaListFamily();
 
-/// See also [getMedia].
-class GetMediaFamily extends Family<AsyncValue<MediaEntity>> {
-  /// See also [getMedia].
-  const GetMediaFamily();
+/// See also [getMediaList].
+class GetMediaListFamily extends Family<AsyncValue<List<MediaEntity>>> {
+  /// See also [getMediaList].
+  const GetMediaListFamily();
 
-  /// See also [getMedia].
-  GetMediaProvider call({
-    required String spotifyId,
-    required RatingType type,
+  /// See also [getMediaList].
+  GetMediaListProvider call({
+    required List<RatingEntity> ratings,
   }) {
-    return GetMediaProvider(
-      spotifyId: spotifyId,
-      type: type,
+    return GetMediaListProvider(
+      ratings: ratings,
     );
   }
 
   @override
-  GetMediaProvider getProviderOverride(
-    covariant GetMediaProvider provider,
+  GetMediaListProvider getProviderOverride(
+    covariant GetMediaListProvider provider,
   ) {
     return call(
-      spotifyId: provider.spotifyId,
-      type: provider.type,
+      ratings: provider.ratings,
     );
   }
 
@@ -71,104 +68,93 @@ class GetMediaFamily extends Family<AsyncValue<MediaEntity>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'getMediaProvider';
+  String? get name => r'getMediaListProvider';
 }
 
-/// See also [getMedia].
-class GetMediaProvider extends AutoDisposeFutureProvider<MediaEntity> {
-  /// See also [getMedia].
-  GetMediaProvider({
-    required String spotifyId,
-    required RatingType type,
+/// See also [getMediaList].
+class GetMediaListProvider
+    extends AutoDisposeFutureProvider<List<MediaEntity>> {
+  /// See also [getMediaList].
+  GetMediaListProvider({
+    required List<RatingEntity> ratings,
   }) : this._internal(
-          (ref) => getMedia(
-            ref as GetMediaRef,
-            spotifyId: spotifyId,
-            type: type,
+          (ref) => getMediaList(
+            ref as GetMediaListRef,
+            ratings: ratings,
           ),
-          from: getMediaProvider,
-          name: r'getMediaProvider',
+          from: getMediaListProvider,
+          name: r'getMediaListProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$getMediaHash,
-          dependencies: GetMediaFamily._dependencies,
-          allTransitiveDependencies: GetMediaFamily._allTransitiveDependencies,
-          spotifyId: spotifyId,
-          type: type,
+                  : _$getMediaListHash,
+          dependencies: GetMediaListFamily._dependencies,
+          allTransitiveDependencies:
+              GetMediaListFamily._allTransitiveDependencies,
+          ratings: ratings,
         );
 
-  GetMediaProvider._internal(
+  GetMediaListProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.spotifyId,
-    required this.type,
+    required this.ratings,
   }) : super.internal();
 
-  final String spotifyId;
-  final RatingType type;
+  final List<RatingEntity> ratings;
 
   @override
   Override overrideWith(
-    FutureOr<MediaEntity> Function(GetMediaRef provider) create,
+    FutureOr<List<MediaEntity>> Function(GetMediaListRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: GetMediaProvider._internal(
-        (ref) => create(ref as GetMediaRef),
+      override: GetMediaListProvider._internal(
+        (ref) => create(ref as GetMediaListRef),
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        spotifyId: spotifyId,
-        type: type,
+        ratings: ratings,
       ),
     );
   }
 
   @override
-  AutoDisposeFutureProviderElement<MediaEntity> createElement() {
-    return _GetMediaProviderElement(this);
+  AutoDisposeFutureProviderElement<List<MediaEntity>> createElement() {
+    return _GetMediaListProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is GetMediaProvider &&
-        other.spotifyId == spotifyId &&
-        other.type == type;
+    return other is GetMediaListProvider && other.ratings == ratings;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, spotifyId.hashCode);
-    hash = _SystemHash.combine(hash, type.hashCode);
+    hash = _SystemHash.combine(hash, ratings.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-mixin GetMediaRef on AutoDisposeFutureProviderRef<MediaEntity> {
-  /// The parameter `spotifyId` of this provider.
-  String get spotifyId;
-
-  /// The parameter `type` of this provider.
-  RatingType get type;
+mixin GetMediaListRef on AutoDisposeFutureProviderRef<List<MediaEntity>> {
+  /// The parameter `ratings` of this provider.
+  List<RatingEntity> get ratings;
 }
 
-class _GetMediaProviderElement
-    extends AutoDisposeFutureProviderElement<MediaEntity> with GetMediaRef {
-  _GetMediaProviderElement(super.provider);
+class _GetMediaListProviderElement
+    extends AutoDisposeFutureProviderElement<List<MediaEntity>>
+    with GetMediaListRef {
+  _GetMediaListProviderElement(super.provider);
 
   @override
-  String get spotifyId => (origin as GetMediaProvider).spotifyId;
-  @override
-  RatingType get type => (origin as GetMediaProvider).type;
+  List<RatingEntity> get ratings => (origin as GetMediaListProvider).ratings;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

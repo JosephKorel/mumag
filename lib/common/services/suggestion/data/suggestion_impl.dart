@@ -11,11 +11,12 @@ class SuggestionRepositoryImpl extends SuggestionRepository {
   static const _path = '/suggestion';
 
   @override
-  Future<void> insertSuggestion({
+  Future<bool> insertSuggestion({
     required InsertSuggestionParams params,
   }) async {
     try {
-      await _api.post(path: _path, params: params.toMap());
+      final request = await _api.post(path: _path, params: params.toMap());
+      return request!['sent'] as bool;
     } catch (e) {
       rethrow;
     }

@@ -57,7 +57,7 @@ final suggestionControllerProvider =
 
 typedef SuggestionControllerRef
     = AutoDisposeProviderRef<SuggestionUsecaseController>;
-String _$sendSuggestionHash() => r'4734d15dbecb8ec6aaa8e2e3763e60e7b2e5c145';
+String _$sendSuggestionHash() => r'17f91dcfe881d475d892fd4d1401c946d922e17c';
 
 /// Copied from Dart SDK
 class _SystemHash {

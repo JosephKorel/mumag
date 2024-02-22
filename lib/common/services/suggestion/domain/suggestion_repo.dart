@@ -2,7 +2,7 @@ import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
 import 'package:mumag/common/services/suggestion/domain/suggestion_events.dart';
 
 abstract class SuggestionRepository {
-  Future<void> insertSuggestion({required InsertSuggestionParams params});
+  Future<bool> insertSuggestion({required InsertSuggestionParams params});
 
   Future<void> insertManySuggestions({
     required InsertManySuggestionsParams params,

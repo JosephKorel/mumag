@@ -6,24 +6,26 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'media.g.dart';
 
 @riverpod
-FutureOr<MediaEntity> getMedia(
-  GetMediaRef ref, {
-  required String spotifyId,
-  required RatingType type,
+FutureOr<List<MediaEntity>> getMediaList(
+  GetMediaListRef ref, {
+  required List<RatingEntity> ratings,
 }) async {
   final spotify = ref.watch(spotifyApiProvider);
 
-  switch (type) {
-    case RatingType.album:
-      final item = await spotify.albums.get(spotifyId);
-      return MediaEntity.fromDynamicMedia(item);
+  final futures = ratings.map((element) async {
+    Object spotifyItem;
+    switch (element.type) {
+      case RatingType.album:
+        spotifyItem = await spotify.albums.get(element.spotifyId);
+      case RatingType.track:
+        spotifyItem = await spotify.tracks.get(element.spotifyId);
+      case RatingType.artist:
+        spotifyItem = await spotify.artists.get(element.spotifyId);
+    }
+    return spotifyItem;
+  });
 
-    case RatingType.track:
-      final item = await spotify.tracks.get(spotifyId);
-      return MediaEntity.fromDynamicMedia(item);
+  final spotifyItems = await Future.wait(futures);
 
-    case RatingType.artist:
-      final item = await spotify.artists.get(spotifyId);
-      return MediaEntity.fromDynamicMedia(item);
-  }
+  return spotifyItems.map(MediaEntity.fromDynamicMedia).toList();
 }

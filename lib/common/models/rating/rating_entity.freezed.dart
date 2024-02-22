@@ -129,12 +129,13 @@ class __$$RatingEntityImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$RatingEntityImpl implements _RatingEntity {
+class _$RatingEntityImpl extends _RatingEntity {
   _$RatingEntityImpl(
       {required this.id,
       required this.type,
       required this.spotifyId,
-      required this.rating});
+      required this.rating})
+      : super._();
 
   factory _$RatingEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$RatingEntityImplFromJson(json);
@@ -183,12 +184,13 @@ class _$RatingEntityImpl implements _RatingEntity {
   }
 }
 
-abstract class _RatingEntity implements RatingEntity {
+abstract class _RatingEntity extends RatingEntity {
   factory _RatingEntity(
       {required final int id,
       required final RatingType type,
       required final String spotifyId,
       required final int rating}) = _$RatingEntityImpl;
+  _RatingEntity._() : super._();
 
   factory _RatingEntity.fromJson(Map<String, dynamic> json) =
       _$RatingEntityImpl.fromJson;

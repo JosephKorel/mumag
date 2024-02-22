@@ -142,7 +142,7 @@ final class SuggestionWidgetEntity {
               name: e.name ?? '',
               description: e.albumType != null
                   ? AlbumType.values[e.albumType!.index].name
-                  : SuggestionType.album.label,
+                  : SuggestionType.album.name,
               imageUrl: e.images?.last.url ?? '',
               spotifyId: e.id ?? '',
               artist: e.artists?.map((e) => e.name ?? '').toList() ?? [],
@@ -153,7 +153,7 @@ final class SuggestionWidgetEntity {
           if (e is Track) {
             return SuggestionWidgetEntity(
               name: e.name ?? '',
-              description: SuggestionType.track.label,
+              description: SuggestionType.track.name,
               imageUrl: e.album?.images?.first.url ?? '',
               spotifyId: e.id ?? '',
               artist: e.artists?.map((e) => e.name ?? '').toList() ?? [],
@@ -164,7 +164,7 @@ final class SuggestionWidgetEntity {
           if (e is Artist) {
             return SuggestionWidgetEntity(
               name: e.name ?? '',
-              description: SuggestionType.artist.label,
+              description: SuggestionType.artist.name,
               imageUrl: e.images == null || e.images!.isEmpty
                   ? ''
                   : e.images!.last.url ?? '',
@@ -181,13 +181,13 @@ final class SuggestionWidgetEntity {
 
   String mediaPageRoute() {
     switch (description) {
-      case 'Artist':
+      case 'artist':
         return const ArtistViewRoute().location;
 
-      case 'Album':
+      case 'album':
         return const AlbumViewRoute().location;
 
-      case 'Track':
+      case 'track':
         return const TrackViewRoute().location;
 
       default:

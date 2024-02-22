@@ -47,7 +47,7 @@ void main() {
   final suggestionRepository = SuggestionRepositoryMock();
   final suggestionUsecase = SuggestionUsecase(suggestionRepository);
   final suggestionController = SuggestionUsecaseController(suggestionUsecase);
-  final insertSuggestionParams = InsertSuggestionParams(
+  const insertSuggestionParams = InsertSuggestionParams(
     suggestedBy: 1,
     suggestedTo: 2,
     spotifyId: '',
@@ -65,11 +65,11 @@ void main() {
 
     when(
       () => suggestionRepository.insertSuggestion(params: any(named: 'params')),
-    ).thenAnswer((invocation) async {});
+    ).thenAnswer((invocation) async => true);
 
     when(
       () => suggestionRepository.updateSuggestion(params: any(named: 'params')),
-    ).thenAnswer((invocation) async => 1);
+    ).thenAnswer((invocation) async {});
 
     when(
       () => suggestionRepository.deleteSuggestion(params: any(named: 'params')),
@@ -115,7 +115,7 @@ void main() {
         () => suggestionRepository.insertSuggestion(
           params: insertSuggestionParams,
         ),
-      ).thenAnswer((invocation) async {});
+      ).thenAnswer((invocation) async => true);
 
       final container = createContainer(
         overrides: [
@@ -134,7 +134,7 @@ void main() {
 
       expect(
         result,
-        isA<RightType<void>>(),
+        isA<RightType<bool>>(),
       );
     });
 
