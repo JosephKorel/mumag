@@ -1009,10 +1009,10 @@ packages:
     dependency: "direct main"
     description:
       name: spotify
-      sha256: e967c5e295792e9d38f4c5e9e60d7c2868ed9cb2a8fac2a67c75303f8395e374
+      sha256: "5c4d80a3d6a263c26d4922faf0cb9688234c721760ea3a0dd72e0172bb6fa72c"
       url: "https://pub.dev"
     source: hosted
-    version: "0.12.0"
+    version: "0.13.1"
   sprintf:
     dependency: transitive
     description:

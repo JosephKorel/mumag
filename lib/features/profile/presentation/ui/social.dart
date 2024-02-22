@@ -136,6 +136,7 @@ class FollowersList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(viewingUserIdProvider);
     final followers = ref
         .watch(
           userRelationsProvider,
@@ -146,7 +147,7 @@ class FollowersList extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'Followers',
+          'Your Followers',
           style: context.titleLarge,
         ),
         const SizedBox(
@@ -176,12 +177,39 @@ class _FollowerUserTile extends ConsumerWidget {
   final SocialUserSimple user;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
-      children: [
-        CachedImage(url: user.avatarUrl),
-        Expanded(child: Text(user.name)),
-        const Icon(Icons.arrow_outward),
-      ],
+    return InkWell(
+      borderRadius: BorderRadius.circular(8),
+      onTap: () {
+        ref.read(viewingUserIdProvider.notifier).selectUser(user.id);
+        context.push(const ViewUserRoute().location);
+      },
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+            clipBehavior: Clip.hardEdge,
+            child: CachedImage(
+              url: user.avatarUrl,
+              width: 40,
+              height: 40,
+            ),
+          ),
+          const SizedBox(
+            width: 16,
+          ),
+          Expanded(
+            child: Text(
+              user.name,
+              style: context.titleMedium,
+            ),
+          ),
+          Icon(
+            Icons.arrow_outward,
+            color: context.onSurface.withOpacity(0.7),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -219,8 +247,11 @@ class FollowingList extends ConsumerWidget {
           Expanded(
             child: ListView.builder(
               itemCount: following.length,
-              itemBuilder: (context, index) => _FollowingUserTile(
-                user: following[index],
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: _FollowingUserTile(
+                  user: following[index],
+                ),
               ),
             ),
           ),
@@ -282,7 +313,7 @@ class _FollowingUserTile extends ConsumerWidget {
                 ),
                 Icon(
                   Icons.arrow_outward,
-                  color: context.onSurface.withOpacity(0.8),
+                  color: context.onSurface.withOpacity(0.7),
                 ),
               ],
             ),

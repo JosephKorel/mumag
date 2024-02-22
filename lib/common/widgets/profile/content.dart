@@ -42,68 +42,6 @@ class ProfileContentWidget extends StatelessWidget {
   }
 }
 
-class ProfileMainView extends StatefulWidget {
-  const ProfileMainView({
-    required this.user,
-    required this.onScroll,
-    required this.child,
-    super.key,
-  });
-
-  final Widget child;
-  final UserEntity user;
-  final void Function(double offset) onScroll;
-
-  @override
-  State<ProfileMainView> createState() => _ProfileMainViewState();
-}
-
-class _ProfileMainViewState extends State<ProfileMainView> {
-  final _scrollController = ScrollController();
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener(() {
-      if (_scrollController.hasClients) {
-        // widget.onScroll(_scrollController.offset);
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(32),
-        topRight: Radius.circular(32),
-      ),
-      child: SingleChildScrollView(
-        controller: _scrollController,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(32),
-              topRight: Radius.circular(32),
-            ),
-            color: context.background,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: widget.child,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class ProfilePicture extends StatelessWidget {
   const ProfilePicture(this.avatarUrl, {super.key});
 
@@ -165,6 +103,19 @@ class ProfileBadgeGenres extends StatelessWidget {
       spacing: 8,
       alignment: WrapAlignment.center,
       children: genresBadges,
+    );
+  }
+}
+
+class DisplayUsername extends StatelessWidget {
+  const DisplayUsername({required this.name, super.key});
+
+  final String name;
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      name,
+      style: context.titleMedium,
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:mumag/common/services/social_relations/domain/relations_events.d
 import 'package:mumag/common/services/social_relations/providers/local_data.dart';
 import 'package:mumag/common/services/social_relations/providers/social.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
+import 'package:mumag/common/widgets/chip.dart';
 import 'package:mumag/features/profile/presentation/providers/social.dart';
 import 'package:mumag/features/view_profile/presentation/providers/view_user.dart';
 
@@ -21,7 +22,7 @@ class ViewingProfileSocial extends ConsumerWidget {
     );
 
     if (isFollowing) {
-      return const Chip(label: Text('Following'));
+      return const CustomChip(text: 'Following');
     }
 
     final socialHandler = ref.watch(socialHandlerProvider);

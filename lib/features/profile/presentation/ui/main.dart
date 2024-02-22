@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/services/user/providers/user_provider.dart';
-import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/utils/media_query.dart';
 import 'package:mumag/common/widgets/profile/content.dart';
 import 'package:mumag/common/widgets/profile/main.dart';
@@ -65,13 +64,12 @@ class UserAvatarWidget extends ConsumerWidget {
 
 class UsernameWidget extends ConsumerWidget {
   const UsernameWidget({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final name = ref.watch(localUserProvider)!.name;
-    return Text(
-      name,
-      style: context.titleMedium,
-    );
+
+    return DisplayUsername(name: name);
   }
 }
 
