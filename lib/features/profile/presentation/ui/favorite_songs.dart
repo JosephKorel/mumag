@@ -7,7 +7,7 @@ class FavoriteSongs extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final songs = ref.watch(getFavoriteSongsProvider);
+    final songs = ref.watch(userFavoriteTracksProvider);
     return Container();
   }
 }
