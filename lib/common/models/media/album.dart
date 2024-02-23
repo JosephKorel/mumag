@@ -1,8 +1,21 @@
 import 'dart:convert';
 
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mumag/common/models/media/artist.dart';
 import 'package:mumag/common/models/media/track.dart';
 import 'package:spotify/spotify.dart';
+
+part 'album.freezed.dart';
+part 'album.g.dart';
+
+@freezed
+class SimpleAlbum with _$SimpleAlbum {
+  factory SimpleAlbum({required String name, required String spotifyId}) =
+      _SimpleAlbum;
+
+  factory SimpleAlbum.fromJson(Map<String, dynamic> json) =>
+      _$SimpleAlbumFromJson(json);
+}
 
 class AlbumEntity {
   AlbumEntity({

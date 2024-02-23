@@ -5,6 +5,7 @@ import 'package:mumag/common/utils/media_query.dart';
 import 'package:mumag/common/widgets/profile/content.dart';
 import 'package:mumag/common/widgets/profile/main.dart';
 import 'package:mumag/common/widgets/profile/profile_rating_stats.dart';
+import 'package:mumag/features/profile/presentation/ui/favorite_songs.dart';
 import 'package:mumag/features/profile/presentation/ui/profile_menu.dart';
 import 'package:mumag/features/profile/presentation/ui/social.dart';
 import 'package:mumag/features/profile/presentation/ui/user_albums.dart';
@@ -100,7 +101,8 @@ class Content extends StatelessWidget {
         SizedBox(
           height: 16,
         ),
-        SavedAlbumsView(),
+        UserAlbums(),
+        FavoriteSongs(),
       ],
     );
   }

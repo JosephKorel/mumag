@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/utils/media_query.dart';
 import 'package:mumag/common/widgets/bottom_sheet.dart';
-import 'package:mumag/common/widgets/fab.dart';
 import 'package:mumag/common/widgets/profile/content.dart';
 import 'package:mumag/common/widgets/profile/main.dart';
 import 'package:mumag/common/widgets/profile/profile_rating_stats.dart';
@@ -21,19 +21,12 @@ class ViewUserProfileView extends ConsumerWidget {
     return user.when(
       data: (data) => ProfileContainer(
         user: data,
-        floatingActionButton: user.isLoading
-            ? null
-            : AnimatedFAB(
-                show: true,
-                onPressed: () => showAppBottomSheet(
-                  context,
-                  child: const SuggestionContainer(),
-                  height: context.deviceHeight / 2,
-                ),
-                child: Icon(
-                  PhosphorIcons.paperPlaneTilt(PhosphorIconsStyle.bold),
-                ),
-              ),
+        appBarActions: const [
+          _SendSuggestion(),
+          SizedBox(
+            width: 8,
+          ),
+        ],
         child: Column(
           children: [
             ProfilePicture(data.avatarUrl),
@@ -60,6 +53,29 @@ class ViewUserProfileView extends ConsumerWidget {
       ),
       error: (error, stackTrace) => const Scaffold(),
       loading: ProfileLoadingScreen.new,
+    );
+  }
+}
+
+class _SendSuggestion extends StatelessWidget {
+  const _SendSuggestion({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    void onPressed() => showAppBottomSheet(
+          context,
+          child: const SuggestionContainer(),
+          height: context.deviceHeight / 2,
+        );
+
+    return TextButton.icon(
+      onPressed: onPressed,
+      style: TextButton.styleFrom(
+        backgroundColor: context.onPrimary,
+        foregroundColor: context.primary,
+      ),
+      icon: const Icon(PhosphorIconsBold.paperPlaneTilt),
+      label: const Text('Send suggestion'),
     );
   }
 }

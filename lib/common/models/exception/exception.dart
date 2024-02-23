@@ -168,6 +168,15 @@ final class GetTrackException extends AppException {
   final Object error;
 }
 
+final class GetFavoriteTrackException extends AppException {
+  GetFavoriteTrackException({
+    required this.error,
+    super.errorMsg = 'Failed to get favorite tracks',
+  });
+
+  final Object error;
+}
+
 final class GetAlbumException extends AppException {
   GetAlbumException({
     required this.error,
