@@ -40,7 +40,6 @@ _$SingleTrackImpl _$$SingleTrackImplFromJson(Map<String, dynamic> json) =>
           .toList(),
       spotifyId: json['spotifyId'] as String,
       imageUrl: json['imageUrl'] as String,
-      addedAt: DateTime.parse(json['addedAt'] as String),
     );
 
 Map<String, dynamic> _$$SingleTrackImplToJson(_$SingleTrackImpl instance) =>
@@ -51,5 +50,4 @@ Map<String, dynamic> _$$SingleTrackImplToJson(_$SingleTrackImpl instance) =>
       'artist': instance.artist,
       'spotifyId': instance.spotifyId,
       'imageUrl': instance.imageUrl,
-      'addedAt': instance.addedAt.toIso8601String(),
     };

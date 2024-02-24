@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mumag/features/profile/domain/data_repository.dart';
+import 'package:spotify/spotify.dart';
 
 part 'entity.freezed.dart';
 part 'entity.g.dart';
@@ -31,8 +32,29 @@ class SingleTrack with _$SingleTrack implements BaseFromJson<SingleTrack> {
     required List<SimpleArtist> artist,
     required String spotifyId,
     required String imageUrl,
-    required DateTime addedAt,
   }) = _SingleTrack;
+
+  factory SingleTrack.fromSpotifyTrack(Track track) {
+    return SingleTrack(
+      id: 0,
+      name: track.name ?? '',
+      album: SimpleAlbum(
+        name: track.album?.name ?? '',
+        spotifyId: track.album?.id ?? '',
+      ),
+      imageUrl: track.album?.images?[1].url ?? '',
+      spotifyId: track.id ?? '',
+      artist: track.artists
+              ?.map(
+                (e) => SimpleArtist(
+                  name: e.name ?? '',
+                  spotifyId: e.id ?? '',
+                ),
+              )
+              .toList() ??
+          [],
+    );
+  }
 
   const SingleTrack._();
 

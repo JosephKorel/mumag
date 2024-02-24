@@ -336,7 +336,6 @@ mixin _$SingleTrack {
   List<SimpleArtist> get artist => throw _privateConstructorUsedError;
   String get spotifyId => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
-  DateTime get addedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -356,8 +355,7 @@ abstract class $SingleTrackCopyWith<$Res> {
       SimpleAlbum album,
       List<SimpleArtist> artist,
       String spotifyId,
-      String imageUrl,
-      DateTime addedAt});
+      String imageUrl});
 
   $SimpleAlbumCopyWith<$Res> get album;
 }
@@ -381,7 +379,6 @@ class _$SingleTrackCopyWithImpl<$Res, $Val extends SingleTrack>
     Object? artist = null,
     Object? spotifyId = null,
     Object? imageUrl = null,
-    Object? addedAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -408,10 +405,6 @@ class _$SingleTrackCopyWithImpl<$Res, $Val extends SingleTrack>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      addedAt: null == addedAt
-          ? _value.addedAt
-          : addedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ) as $Val);
   }
 
@@ -438,8 +431,7 @@ abstract class _$$SingleTrackImplCopyWith<$Res>
       SimpleAlbum album,
       List<SimpleArtist> artist,
       String spotifyId,
-      String imageUrl,
-      DateTime addedAt});
+      String imageUrl});
 
   @override
   $SimpleAlbumCopyWith<$Res> get album;
@@ -462,7 +454,6 @@ class __$$SingleTrackImplCopyWithImpl<$Res>
     Object? artist = null,
     Object? spotifyId = null,
     Object? imageUrl = null,
-    Object? addedAt = null,
   }) {
     return _then(_$SingleTrackImpl(
       id: null == id
@@ -489,10 +480,6 @@ class __$$SingleTrackImplCopyWithImpl<$Res>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      addedAt: null == addedAt
-          ? _value.addedAt
-          : addedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ));
   }
 }
@@ -506,8 +493,7 @@ class _$SingleTrackImpl extends _SingleTrack {
       required this.album,
       required final List<SimpleArtist> artist,
       required this.spotifyId,
-      required this.imageUrl,
-      required this.addedAt})
+      required this.imageUrl})
       : _artist = artist,
         super._();
 
@@ -532,12 +518,10 @@ class _$SingleTrackImpl extends _SingleTrack {
   final String spotifyId;
   @override
   final String imageUrl;
-  @override
-  final DateTime addedAt;
 
   @override
   String toString() {
-    return 'SingleTrack(id: $id, name: $name, album: $album, artist: $artist, spotifyId: $spotifyId, imageUrl: $imageUrl, addedAt: $addedAt)';
+    return 'SingleTrack(id: $id, name: $name, album: $album, artist: $artist, spotifyId: $spotifyId, imageUrl: $imageUrl)';
   }
 
   @override
@@ -552,21 +536,13 @@ class _$SingleTrackImpl extends _SingleTrack {
             (identical(other.spotifyId, spotifyId) ||
                 other.spotifyId == spotifyId) &&
             (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl) &&
-            (identical(other.addedAt, addedAt) || other.addedAt == addedAt));
+                other.imageUrl == imageUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      name,
-      album,
-      const DeepCollectionEquality().hash(_artist),
-      spotifyId,
-      imageUrl,
-      addedAt);
+  int get hashCode => Object.hash(runtimeType, id, name, album,
+      const DeepCollectionEquality().hash(_artist), spotifyId, imageUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -589,8 +565,7 @@ abstract class _SingleTrack extends SingleTrack {
       required final SimpleAlbum album,
       required final List<SimpleArtist> artist,
       required final String spotifyId,
-      required final String imageUrl,
-      required final DateTime addedAt}) = _$SingleTrackImpl;
+      required final String imageUrl}) = _$SingleTrackImpl;
   _SingleTrack._() : super._();
 
   factory _SingleTrack.fromJson(Map<String, dynamic> json) =
@@ -608,8 +583,6 @@ abstract class _SingleTrack extends SingleTrack {
   String get spotifyId;
   @override
   String get imageUrl;
-  @override
-  DateTime get addedAt;
   @override
   @JsonKey(ignore: true)
   _$$SingleTrackImplCopyWith<_$SingleTrackImpl> get copyWith =>

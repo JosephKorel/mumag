@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
 import 'package:mumag/common/services/spotify_auth/providers/api.dart';
 import 'package:mumag/common/services/spotify_search/adapter/search.dart';
+import 'package:mumag/common/services/spotify_search/domain/search_usecase.dart';
 import 'package:mumag/common/services/suggestion/domain/suggestion_widget.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:spotify/spotify.dart';
