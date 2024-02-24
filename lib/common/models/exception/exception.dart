@@ -194,3 +194,31 @@ final class GetArtistException extends AppException {
 
   final Object error;
 }
+
+// Favorites
+final class CreateFavSongException extends AppException {
+  CreateFavSongException({
+    required this.error,
+    super.errorMsg = 'Failed to add songs',
+  });
+
+  final Object error;
+}
+
+final class CreateFavAlbumException extends AppException {
+  CreateFavAlbumException({
+    required this.error,
+    super.errorMsg = 'Failed to add albums',
+  });
+
+  final Object error;
+}
+
+final class CreateFavArtistException extends AppException {
+  CreateFavArtistException({
+    required this.error,
+    super.errorMsg = 'Failed to add artists',
+  });
+
+  final Object error;
+}
