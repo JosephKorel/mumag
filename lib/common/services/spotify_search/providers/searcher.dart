@@ -14,24 +14,25 @@ SpotifySearchUsecase spotifySearcher(SpotifySearcherRef ref) {
 }
 
 @riverpod
-class SearchParams extends _$SearchParams {
+class SongSearchParams extends _$SongSearchParams {
   @override
-  SpotifySearchParams build({required SpotifySearchParams params}) {
-    return params;
+  SpotifySearchParams build() {
+    return SpotifySearchParams.songSearch();
   }
 
   void onInputChange(String value) =>
       state = state.copyWith(searchValue: value);
+
+  void onScrollEnd(int offset) => state = state.copyWith(offset: offset);
 }
 
 @riverpod
 FutureOr<List<dynamic>> handleSearch(
-  HandleSearchRef ref, {
-  required SpotifySearchParams params,
-}) async {
+  HandleSearchRef ref,
+) async {
   var disposed = false;
   final searcher = ref.watch(spotifySearcherProvider);
-  final searchParams = ref.watch(searchParamsProvider(params: params));
+  final searchParams = ref.watch(songSearchParamsProvider);
 
   if (searchParams.searchValue.isEmpty) {
     return [];

@@ -15,7 +15,7 @@ class _SearchField extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     void onChanged(String value) => ref
         .read(
-          searchParamsProvider(params: _initialParams).notifier,
+          songSearchParamsProvider.notifier,
         )
         .onInputChange(value);
 
@@ -26,25 +26,78 @@ class _SearchField extends ConsumerWidget {
   }
 }
 
-class _SongsListView extends ConsumerWidget {
+class _SongsListView extends ConsumerStatefulWidget {
   const _SongsListView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final searchResult =
-        ref.watch(handleSearchProvider(params: _initialParams));
+  ConsumerState<ConsumerStatefulWidget> createState() => __SongsListViewState();
+}
+
+class __SongsListViewState extends ConsumerState<_SongsListView> {
+  static const _increaseFactor = 8;
+  final _controller = ScrollController();
+  bool _loading = true;
+  int _offset = 0;
+
+  void onScrollEnd() {
+    if (_loading) {
+      return;
+    }
+
+    _offset += _increaseFactor;
+
+    ref.read(songSearchParamsProvider.notifier).onScrollEnd(_offset);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(() {
+      if (_controller.position.atEdge && _controller.offset != 0) {
+        // onScrollEnd();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    ref.listen(handleSearchProvider, (previous, next) {
+      _loading = next.isLoading;
+    });
+
+    final searchResult = ref.watch(handleSearchProvider);
 
     return searchResult.when(
       data: (data) {
+        final tracks = data.whereType<Track>().toList();
+
         final songs =
             data.whereType<Track>().map(SingleTrack.fromSpotifyTrack).toList();
-
-        return ListView.builder(
-          itemCount: songs.length,
-          itemBuilder: (context, index) => Text(songs[index].name),
+        return Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                controller: _controller,
+                itemCount: songs.length,
+                itemBuilder: (context, index) => Text(songs[index].name),
+              ),
+            ),
+            if (searchResult.isLoading)
+              const Center(
+                child: CircularProgressIndicator(),
+              ),
+          ],
         );
       },
-      error: (error, stackTrace) => const Scaffold(),
+      error: (error, stackTrace) => Scaffold(
+        body: Text('$error'),
+      ),
       loading: CircularProgressIndicator.new,
     );
   }

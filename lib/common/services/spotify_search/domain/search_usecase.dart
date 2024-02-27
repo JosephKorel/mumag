@@ -16,7 +16,11 @@ final class SpotifySearchUsecase {
           .get(params.searchValue, types: params.searchType)
           .getPage(_limit, params.offset);
 
-      return result.map((e) => e.items).whereNotNull().toList();
+      return result
+          .map((e) => e.items)
+          .whereNotNull()
+          .expand((element) => element)
+          .toList();
     } catch (e) {
       rethrow;
     }
