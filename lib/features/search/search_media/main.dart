@@ -192,7 +192,7 @@ class _SearchResultCard extends ConsumerWidget {
               const SizedBox(
                 width: 8,
               ),
-              MediaImage(url: data.imageUrl, type: data.type),
+              MediaImage(url: data.imageUrl, type: data.type.ratingType),
               const SizedBox(
                 width: 8,
               ),

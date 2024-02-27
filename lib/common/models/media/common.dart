@@ -7,6 +7,7 @@ final class MediaEntity {
     required this.spotifyId,
     required this.type,
     required this.imageUrl,
+    this.artists,
     this.typeLabel,
   });
 
@@ -24,6 +25,7 @@ final class MediaEntity {
         imageUrl: e.images?[1].url ?? '',
         spotifyId: e.id ?? '',
         type: RatingType.album,
+        artists: e.artists?.map((e) => e.name ?? '').toList() ?? [],
       );
     }
 
@@ -34,6 +36,7 @@ final class MediaEntity {
         imageUrl: e.album?.images?[1].url ?? '',
         spotifyId: e.id ?? '',
         type: RatingType.track,
+        artists: e.artists?.map((e) => e.name ?? '').toList() ?? [],
       );
     }
 
@@ -62,4 +65,5 @@ final class MediaEntity {
   final RatingType type;
   final String? imageUrl;
   final String? typeLabel;
+  final List<String>? artists;
 }

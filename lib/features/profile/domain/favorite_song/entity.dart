@@ -1,4 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:mumag/common/models/media/common.dart';
+import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/features/profile/domain/data_repository.dart';
 import 'package:spotify/spotify.dart';
 
@@ -64,4 +66,12 @@ class SingleTrack with _$SingleTrack implements BaseFromJson<SingleTrack> {
   @override
   SingleTrack fromJson(Map<String, dynamic> json) =>
       _$SingleTrackFromJson(json);
+
+  MediaEntity toMediaEntity() => MediaEntity(
+        name: name,
+        spotifyId: spotifyId,
+        type: RatingType.track,
+        imageUrl: imageUrl,
+        artists: artist.map((e) => e.name).toList(),
+      );
 }

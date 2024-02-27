@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/routes/routes.dart';
 import 'package:spotify/spotify.dart';
 
@@ -24,6 +25,12 @@ extension ToSpotifyType on SuggestionType {
         SearchType.artist,
         SearchType.album,
         SearchType.track,
+      ][index];
+
+  RatingType get ratingType => [
+        RatingType.artist,
+        RatingType.album,
+        RatingType.track,
       ][index];
 
   // Route name for each type

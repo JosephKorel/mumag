@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/services/spotify_search/domain/search_params.dart';
 import 'package:mumag/common/services/spotify_search/providers/searcher.dart';
+import 'package:mumag/common/widgets/favorites/card.dart';
 import 'package:mumag/features/profile/domain/favorite_song/entity.dart';
 import 'package:mumag/features/search/presentation/ui/search_input.dart';
 import 'package:spotify/spotify.dart';
@@ -75,8 +76,6 @@ class __SongsListViewState extends ConsumerState<_SongsListView> {
 
     return searchResult.when(
       data: (data) {
-        final tracks = data.whereType<Track>().toList();
-
         final songs =
             data.whereType<Track>().map(SingleTrack.fromSpotifyTrack).toList();
         return Column(
@@ -85,7 +84,9 @@ class __SongsListViewState extends ConsumerState<_SongsListView> {
               child: ListView.builder(
                 controller: _controller,
                 itemCount: songs.length,
-                itemBuilder: (context, index) => Text(songs[index].name),
+                itemBuilder: (context, index) => SearchMediaCard(
+                  data: songs[index].toMediaEntity(),
+                ),
               ),
             ),
             if (searchResult.isLoading)
@@ -112,11 +113,17 @@ class EditFavoriteSongsView extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('My favorite songs'),
       ),
-      body: const Column(
-        children: [
-          _SearchField(),
-          Expanded(child: _SongsListView()),
-        ],
+      body: const Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            _SearchField(),
+            SizedBox(
+              height: 16,
+            ),
+            Expanded(child: _SongsListView()),
+          ],
+        ),
       ),
     );
   }

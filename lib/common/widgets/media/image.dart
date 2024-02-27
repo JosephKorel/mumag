@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mumag/common/models/suggestion/suggestion_entity.dart';
+import 'package:mumag/common/models/rating/rating_entity.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/image.dart';
 
@@ -11,7 +11,7 @@ class MediaImage extends StatelessWidget {
     this.width,
   });
 
-  final SuggestionType type;
+  final RatingType type;
   final String? url;
   final double? width;
 
