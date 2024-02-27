@@ -19,6 +19,9 @@ class SearchParams extends _$SearchParams {
   SpotifySearchParams build({required SpotifySearchParams params}) {
     return params;
   }
+
+  void onInputChange(String value) =>
+      state = state.copyWith(searchValue: value);
 }
 
 @riverpod

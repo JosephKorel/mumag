@@ -7,6 +7,7 @@ import 'package:mumag/features/artist_view/ui/main.dart';
 import 'package:mumag/features/connect/presentation/ui/main.dart';
 import 'package:mumag/features/home/main.dart';
 import 'package:mumag/features/my_ratings/presentation/ui/main.dart';
+import 'package:mumag/features/profile/presentation/ui/favorite/songs/edit.dart';
 import 'package:mumag/features/profile/presentation/ui/main.dart';
 import 'package:mumag/features/search/presentation/ui/main.dart';
 import 'package:mumag/features/search/search_user/main.dart';
@@ -153,5 +154,18 @@ class SuggestionViewRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const MySugggestionsView();
+  }
+}
+
+// Favorites
+@TypedGoRoute<EditFavoriteSongsViewRoute>(
+  path: '/favorite/songs',
+)
+class EditFavoriteSongsViewRoute extends GoRouteData {
+  const EditFavoriteSongsViewRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const EditFavoriteSongsView();
   }
 }

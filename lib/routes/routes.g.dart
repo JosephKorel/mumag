@@ -20,6 +20,7 @@ List<RouteBase> get $appRoutes => [
       $albumViewRoute,
       $trackViewRoute,
       $suggestionViewRoute,
+      $editFavoriteSongsViewRoute,
     ];
 
 RouteBase get $splashRoute => GoRouteData.$route(
@@ -335,6 +336,29 @@ extension $SuggestionViewRouteExtension on SuggestionViewRoute {
 
   String get location => GoRouteData.$location(
         '/suggestions',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $editFavoriteSongsViewRoute => GoRouteData.$route(
+      path: '/favorite/songs',
+      factory: $EditFavoriteSongsViewRouteExtension._fromState,
+    );
+
+extension $EditFavoriteSongsViewRouteExtension on EditFavoriteSongsViewRoute {
+  static EditFavoriteSongsViewRoute _fromState(GoRouterState state) =>
+      const EditFavoriteSongsViewRoute();
+
+  String get location => GoRouteData.$location(
+        '/favorite/songs',
       );
 
   void go(BuildContext context) => context.go(location);

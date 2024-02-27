@@ -172,7 +172,7 @@ class _HandleSearchProviderElement
   SpotifySearchParams get params => (origin as HandleSearchProvider).params;
 }
 
-String _$searchParamsHash() => r'4320a4d4a4f8114a2da1745ee3132f61c2f09416';
+String _$searchParamsHash() => r'b75082db56110a5522755810ab1127097064e3c5';
 
 abstract class _$SearchParams
     extends BuildlessAutoDisposeNotifier<SpotifySearchParams> {
