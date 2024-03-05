@@ -166,6 +166,6 @@ class EditFavoriteSongsViewRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const EditFavoriteSongsView();
+    return const FavoriteSongsEditionView();
   }
 }

@@ -222,3 +222,22 @@ final class CreateFavArtistException extends AppException {
 
   final Object error;
 }
+
+// Favorite Titles
+final class GetFavTitlesException extends AppException {
+  GetFavTitlesException({
+    required this.error,
+    super.errorMsg = 'Failed to retrieve your profile data',
+  });
+
+  final Object error;
+}
+
+final class FailedToSaveFavException extends AppException {
+  FailedToSaveFavException({
+    required this.error,
+    super.errorMsg = 'Failed to update title',
+  });
+
+  final Object error;
+}

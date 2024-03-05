@@ -7,10 +7,12 @@ import 'package:mumag/common/widgets/media/image.dart';
 class SearchMediaCard extends StatelessWidget {
   const SearchMediaCard({
     required this.data,
+    this.trailling,
     super.key,
   });
 
   final MediaEntity data;
+  final Widget? trailling;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,7 @@ class SearchMediaCard extends StatelessWidget {
                 ],
               ),
             ),
+            trailling ?? const SizedBox.shrink(),
           ],
         ),
       ),

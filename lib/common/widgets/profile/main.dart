@@ -156,7 +156,7 @@ class _UserImageHeader extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final offset = ref.watch(scrollOffsetProvider);
-    final scrollOffset = offset / 56;
+    final scrollOffset = offset / 168;
 
     return Image(
       image: NetworkImage(backgroundUrl!),

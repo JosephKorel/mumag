@@ -105,7 +105,7 @@ class Content extends StatelessWidget {
         SizedBox(
           height: 16,
         ),
-        UserFavoriteSongs(),
+        SizedBox(height: 400, child: FavoriteSongsContainer()),
       ],
     );
   }
