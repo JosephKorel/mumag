@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mumag/common/services/spotify_search/providers/searcher.dart';
 import 'package:mumag/common/widgets/favorites/card.dart';
+import 'package:mumag/common/widgets/loading.dart';
 import 'package:mumag/features/profile/domain/favorite_song/entity.dart';
 import 'package:mumag/features/profile/presentation/ui/favorite/songs/controller.dart';
 import 'package:mumag/features/search/presentation/ui/search_input.dart';
-import 'package:spotify/spotify.dart';
 
 class _SearchField extends ConsumerWidget {
   const _SearchField({super.key});
@@ -36,28 +36,26 @@ class _SongsListView extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => __SongsListViewState();
 }
 
-class __SongsListViewState extends ConsumerState<_SongsListView> {
+class __SongsListViewState extends ConsumerState<_SongsListView>
+    with FavoriteSongsEditionController {
   static const _increaseFactor = 8;
-  final _controller = ScrollController();
-  bool _loading = true;
-  int _offset = 0;
 
-  void onScrollEnd() {
-    if (_loading) {
+  void _onScrollEnd() {
+    if (loading) {
       return;
     }
 
-    _offset += _increaseFactor;
+    offset += _increaseFactor;
 
-    ref.read(songSearchParamsProvider.notifier).onScrollEnd(_offset);
+    ref.read(songSearchParamsProvider.notifier).onScrollEnd(offset);
   }
 
   @override
   void initState() {
     super.initState();
-    _controller.addListener(() {
-      if (_controller.position.atEdge && _controller.offset != 0) {
-        // onScrollEnd();
+    controller.addListener(() {
+      if (controller.position.atEdge && controller.offset != 0) {
+        _onScrollEnd();
       }
     });
   }
@@ -65,46 +63,66 @@ class __SongsListViewState extends ConsumerState<_SongsListView> {
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();
+    controller.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     ref.listen(handleSearchProvider, (previous, next) {
-      _loading = next.isLoading;
+      loading = next.isLoading;
+      if (next.hasValue) {
+        addSongs(next.requireValue);
+      }
     });
 
     final searchResult = ref.watch(handleSearchProvider);
 
-    return searchResult.when(
-      data: (data) {
-        final songs =
-            data.whereType<Track>().map(SingleTrack.fromSpotifyTrack).toList();
-        return Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                controller: _controller,
-                itemCount: songs.length,
-                itemBuilder: (context, index) => InkWell(
-                  onTap: () => widget.onSongTap(songs[index]),
-                  child: SearchMediaCard(
-                    data: songs[index].toMediaEntity(),
-                  ),
-                ),
+    if (searchResult.hasError) {
+      return const Center(
+        child: Text('Something wrong'),
+      );
+    }
+
+    if (!searchResult.hasValue && loading) {
+      return const _LoadingListView();
+    }
+
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+            controller: controller,
+            itemCount: songs.length,
+            itemBuilder: (context, index) => InkWell(
+              onTap: () => widget.onSongTap(songs[index]),
+              child: SearchMediaCard(
+                data: songs[index].toMediaEntity(),
               ),
             ),
-            if (searchResult.isLoading)
-              const Center(
-                child: CircularProgressIndicator(),
-              ),
-          ],
-        );
-      },
-      error: (error, stackTrace) => Scaffold(
-        body: Text('$error'),
+          ),
+        ),
+        if (searchResult.isLoading)
+          const Center(
+            child: CircularProgressIndicator(),
+          ),
+      ],
+    );
+  }
+}
+
+class _LoadingListView extends StatelessWidget {
+  const _LoadingListView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: List.generate(
+        6,
+        (index) => const Padding(
+          padding: EdgeInsets.symmetric(vertical: 8),
+          child: LoadingSkeleton(height: 80),
+        ),
       ),
-      loading: CircularProgressIndicator.new,
     );
   }
 }
@@ -119,25 +137,20 @@ class _SearchSongsToAddView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('My favorite songs'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            const _SearchField(),
-            const SizedBox(
-              height: 16,
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          const _SearchField(),
+          const SizedBox(
+            height: 16,
+          ),
+          Expanded(
+            child: _SongsListView(
+              onSongTap: onSongTap,
             ),
-            Expanded(
-              child: _SongsListView(
-                onSongTap: onSongTap,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -182,7 +195,7 @@ class _FavoriteSongsEditionViewState extends State<FavoriteSongsEditionView>
     with FavoriteSongsEditionController {
   void _onSongTap(SingleTrack track) {
     setState(() {
-      _onSongTap(track);
+      onSongTap(track);
     });
   }
 
