@@ -6,7 +6,7 @@ base class FavoriteRepositoryImpl {
 
   final ApiRepository _api;
 
-  static const _path = '/favorites';
+  static const _path = '/favorite';
 
   String get path => _path;
 
@@ -14,7 +14,7 @@ base class FavoriteRepositoryImpl {
     required Map<String, dynamic> params,
   }) async {
     try {
-      await _api.post(path: _path, params: params);
+      await _api.post(path: path, params: params);
     } catch (e) {
       rethrow;
     }
@@ -25,7 +25,7 @@ base class FavoriteRepositoryImpl {
   }) async {
     try {
       final baseClass = BaseFromJson<T>();
-      final result = await _api.get(path: _path, query: {'userId': userId});
+      final result = await _api.get(path: path, query: {'userId': userId});
       final myList = result!['data'] as List<dynamic>;
       return myList
           .map((e) => baseClass.fromJson(e as Map<String, dynamic>))

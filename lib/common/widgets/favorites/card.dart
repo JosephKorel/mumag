@@ -8,11 +8,13 @@ class SearchMediaCard extends StatelessWidget {
   const SearchMediaCard({
     required this.data,
     this.trailling,
+    this.highlight = false,
     super.key,
   });
 
   final MediaEntity data;
   final Widget? trailling;
+  final bool highlight;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class SearchMediaCard extends StatelessWidget {
         child: Row(
           children: [
             CardCilinder(
-              color: context.primary.withOpacity(0.4),
+              color: context.primary.withOpacity(highlight ? 1 : 0.4),
             ),
             const SizedBox(
               width: 8,
@@ -44,9 +46,12 @@ class SearchMediaCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   if (data.artists != null)
-                    SmallBadge(
-                      icon: Icons.person,
-                      text: data.artists!.join(', '),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: SmallBadge(
+                        icon: Icons.person,
+                        text: data.artists!.join(', '),
+                      ),
                     ),
                 ],
               ),

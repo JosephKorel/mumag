@@ -4,6 +4,7 @@ import 'package:mumag/common/services/spotify_search/providers/searcher.dart';
 import 'package:mumag/common/widgets/favorites/card.dart';
 import 'package:mumag/common/widgets/loading.dart';
 import 'package:mumag/features/profile/domain/favorite_song/entity.dart';
+import 'package:mumag/features/profile/presentation/providers/favorite_songs.dart';
 import 'package:mumag/features/profile/presentation/ui/favorite/songs/controller.dart';
 import 'package:mumag/features/search/presentation/ui/search_input.dart';
 
@@ -83,7 +84,7 @@ class __SongsListViewState extends ConsumerState<_SongsListView>
       );
     }
 
-    if (!searchResult.hasValue && loading) {
+    if (songs.isEmpty && loading) {
       return const _LoadingListView();
     }
 
@@ -156,7 +157,7 @@ class _SearchSongsToAddView extends ConsumerWidget {
   }
 }
 
-class _SelectedSongsTab extends StatelessWidget {
+class _SelectedSongsTab extends ConsumerStatefulWidget {
   const _SelectedSongsTab({
     required this.selectedSongs,
     required this.onSongTap,
@@ -167,17 +168,44 @@ class _SelectedSongsTab extends StatelessWidget {
   final void Function(SingleTrack track) onSongTap;
 
   @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      __SelectedSongsTabState();
+}
+
+class __SelectedSongsTabState extends ConsumerState<_SelectedSongsTab>
+    with FavoriteSongsEditionController {
+  @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: selectedSongs.length,
-      itemBuilder: (context, index) => SearchMediaCard(
-        data: selectedSongs[index].toMediaEntity(),
-        trailling: IconButton(
-          onPressed: () => onSongTap(selectedSongs[index]),
-          icon: const Icon(
-            Icons.close,
+    final userSongs = ref.watch(userSongsProvider);
+    final songs = [...userSongs, ...widget.selectedSongs];
+
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: songs.length,
+              itemBuilder: (context, index) => SearchMediaCard(
+                data: songs[index].toMediaEntity(),
+                highlight: !userSongs.contains(songs[index]),
+                trailling: IconButton(
+                  onPressed: () => widget.onSongTap(songs[index]),
+                  icon: const Icon(
+                    Icons.close,
+                  ),
+                ),
+              ),
+            ),
           ),
-        ),
+          const SizedBox(
+            height: 16,
+          ),
+          FilledButton(
+            onPressed: () => confirm(context, ref, songs),
+            child: const Text('Confirm'),
+          ),
+        ],
       ),
     );
   }
@@ -205,6 +233,7 @@ class _FavoriteSongsEditionViewState extends State<FavoriteSongsEditionView>
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          title: const Text('Song selection '),
           bottom: TabBar(
             tabs: [
               const Tab(

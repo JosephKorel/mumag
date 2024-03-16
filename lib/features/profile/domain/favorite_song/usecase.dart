@@ -1,13 +1,13 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:mumag/common/models/exception/exception.dart';
 import 'package:mumag/common/models/types/api_types.dart';
-import 'package:mumag/features/profile/data/favorite_song/data_impl.dart';
+import 'package:mumag/features/profile/data/impl.dart';
 import 'package:mumag/features/profile/domain/data_repository.dart';
 import 'package:mumag/features/profile/domain/favorite_song/entity.dart';
 
 final class FavoriteSongUsecaseImpl implements FavoritesRepository {
   const FavoriteSongUsecaseImpl(this._impl);
-  final FavoriteSongImpl _impl;
+  final FavoriteRepositoryImpl _impl;
 
   @override
   ApiResult<void> createMany({required Map<String, dynamic> params}) {
@@ -28,7 +28,7 @@ final class FavoriteSongUsecaseImpl implements FavoritesRepository {
 
 final class FavoriteSongUsecase {
   const FavoriteSongUsecase(this._usecaseImpl);
-  final FavoriteSongUsecaseImpl _usecaseImpl;
+  final FavoritesRepository _usecaseImpl;
 
   ApiResult<void> createMany({required Map<String, dynamic> params}) =>
       _usecaseImpl.createMany(params: params);

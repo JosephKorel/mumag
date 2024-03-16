@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/background_icon.dart';
 import 'package:mumag/features/profile/domain/favorite_song/entity.dart';
+import 'package:mumag/features/profile/presentation/providers/favorite_songs.dart';
 import 'package:mumag/features/profile/presentation/providers/favorite_titles/provider.dart';
 import 'package:mumag/routes/routes.dart';
 
@@ -14,14 +15,15 @@ class FavoriteSongsContainer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final favoriteTitles = ref.watch(currentUserFavTitlesProvider);
+    final songs = ref.watch(userSongsProvider);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         FavoriteSongsTitleWidget(title: favoriteTitles.songsTitle),
-        const Expanded(
+        Expanded(
           child: UserFavoriteSongs(
-            mediaList: [],
+            mediaList: songs,
           ),
         ),
       ],

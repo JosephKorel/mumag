@@ -333,9 +333,10 @@ mixin _$SingleTrack {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   SimpleAlbum get album => throw _privateConstructorUsedError;
-  List<SimpleArtist> get artist => throw _privateConstructorUsedError;
+  List<SimpleArtist> get artists => throw _privateConstructorUsedError;
   String get spotifyId => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
+  int get index => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -353,9 +354,10 @@ abstract class $SingleTrackCopyWith<$Res> {
       {int id,
       String name,
       SimpleAlbum album,
-      List<SimpleArtist> artist,
+      List<SimpleArtist> artists,
       String spotifyId,
-      String imageUrl});
+      String imageUrl,
+      int index});
 
   $SimpleAlbumCopyWith<$Res> get album;
 }
@@ -376,9 +378,10 @@ class _$SingleTrackCopyWithImpl<$Res, $Val extends SingleTrack>
     Object? id = null,
     Object? name = null,
     Object? album = null,
-    Object? artist = null,
+    Object? artists = null,
     Object? spotifyId = null,
     Object? imageUrl = null,
+    Object? index = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -393,9 +396,9 @@ class _$SingleTrackCopyWithImpl<$Res, $Val extends SingleTrack>
           ? _value.album
           : album // ignore: cast_nullable_to_non_nullable
               as SimpleAlbum,
-      artist: null == artist
-          ? _value.artist
-          : artist // ignore: cast_nullable_to_non_nullable
+      artists: null == artists
+          ? _value.artists
+          : artists // ignore: cast_nullable_to_non_nullable
               as List<SimpleArtist>,
       spotifyId: null == spotifyId
           ? _value.spotifyId
@@ -405,6 +408,10 @@ class _$SingleTrackCopyWithImpl<$Res, $Val extends SingleTrack>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      index: null == index
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 
@@ -429,9 +436,10 @@ abstract class _$$SingleTrackImplCopyWith<$Res>
       {int id,
       String name,
       SimpleAlbum album,
-      List<SimpleArtist> artist,
+      List<SimpleArtist> artists,
       String spotifyId,
-      String imageUrl});
+      String imageUrl,
+      int index});
 
   @override
   $SimpleAlbumCopyWith<$Res> get album;
@@ -451,9 +459,10 @@ class __$$SingleTrackImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? album = null,
-    Object? artist = null,
+    Object? artists = null,
     Object? spotifyId = null,
     Object? imageUrl = null,
+    Object? index = null,
   }) {
     return _then(_$SingleTrackImpl(
       id: null == id
@@ -468,9 +477,9 @@ class __$$SingleTrackImplCopyWithImpl<$Res>
           ? _value.album
           : album // ignore: cast_nullable_to_non_nullable
               as SimpleAlbum,
-      artist: null == artist
-          ? _value._artist
-          : artist // ignore: cast_nullable_to_non_nullable
+      artists: null == artists
+          ? _value._artists
+          : artists // ignore: cast_nullable_to_non_nullable
               as List<SimpleArtist>,
       spotifyId: null == spotifyId
           ? _value.spotifyId
@@ -480,6 +489,10 @@ class __$$SingleTrackImplCopyWithImpl<$Res>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      index: null == index
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -491,10 +504,11 @@ class _$SingleTrackImpl extends _SingleTrack {
       {required this.id,
       required this.name,
       required this.album,
-      required final List<SimpleArtist> artist,
+      required final List<SimpleArtist> artists,
       required this.spotifyId,
-      required this.imageUrl})
-      : _artist = artist,
+      required this.imageUrl,
+      this.index = 0})
+      : _artists = artists,
         super._();
 
   factory _$SingleTrackImpl.fromJson(Map<String, dynamic> json) =>
@@ -506,22 +520,25 @@ class _$SingleTrackImpl extends _SingleTrack {
   final String name;
   @override
   final SimpleAlbum album;
-  final List<SimpleArtist> _artist;
+  final List<SimpleArtist> _artists;
   @override
-  List<SimpleArtist> get artist {
-    if (_artist is EqualUnmodifiableListView) return _artist;
+  List<SimpleArtist> get artists {
+    if (_artists is EqualUnmodifiableListView) return _artists;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_artist);
+    return EqualUnmodifiableListView(_artists);
   }
 
   @override
   final String spotifyId;
   @override
   final String imageUrl;
+  @override
+  @JsonKey()
+  final int index;
 
   @override
   String toString() {
-    return 'SingleTrack(id: $id, name: $name, album: $album, artist: $artist, spotifyId: $spotifyId, imageUrl: $imageUrl)';
+    return 'SingleTrack(id: $id, name: $name, album: $album, artists: $artists, spotifyId: $spotifyId, imageUrl: $imageUrl, index: $index)';
   }
 
   @override
@@ -532,17 +549,25 @@ class _$SingleTrackImpl extends _SingleTrack {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.album, album) || other.album == album) &&
-            const DeepCollectionEquality().equals(other._artist, _artist) &&
+            const DeepCollectionEquality().equals(other._artists, _artists) &&
             (identical(other.spotifyId, spotifyId) ||
                 other.spotifyId == spotifyId) &&
             (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl));
+                other.imageUrl == imageUrl) &&
+            (identical(other.index, index) || other.index == index));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, album,
-      const DeepCollectionEquality().hash(_artist), spotifyId, imageUrl);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      album,
+      const DeepCollectionEquality().hash(_artists),
+      spotifyId,
+      imageUrl,
+      index);
 
   @JsonKey(ignore: true)
   @override
@@ -563,9 +588,10 @@ abstract class _SingleTrack extends SingleTrack {
       {required final int id,
       required final String name,
       required final SimpleAlbum album,
-      required final List<SimpleArtist> artist,
+      required final List<SimpleArtist> artists,
       required final String spotifyId,
-      required final String imageUrl}) = _$SingleTrackImpl;
+      required final String imageUrl,
+      final int index}) = _$SingleTrackImpl;
   _SingleTrack._() : super._();
 
   factory _SingleTrack.fromJson(Map<String, dynamic> json) =
@@ -578,11 +604,13 @@ abstract class _SingleTrack extends SingleTrack {
   @override
   SimpleAlbum get album;
   @override
-  List<SimpleArtist> get artist;
+  List<SimpleArtist> get artists;
   @override
   String get spotifyId;
   @override
   String get imageUrl;
+  @override
+  int get index;
   @override
   @JsonKey(ignore: true)
   _$$SingleTrackImplCopyWith<_$SingleTrackImpl> get copyWith =>

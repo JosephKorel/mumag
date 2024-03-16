@@ -35,11 +35,12 @@ _$SingleTrackImpl _$$SingleTrackImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int,
       name: json['name'] as String,
       album: SimpleAlbum.fromJson(json['album'] as Map<String, dynamic>),
-      artist: (json['artist'] as List<dynamic>)
+      artists: (json['artists'] as List<dynamic>)
           .map((e) => SimpleArtist.fromJson(e as Map<String, dynamic>))
           .toList(),
       spotifyId: json['spotifyId'] as String,
       imageUrl: json['imageUrl'] as String,
+      index: json['index'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$$SingleTrackImplToJson(_$SingleTrackImpl instance) =>
@@ -47,7 +48,8 @@ Map<String, dynamic> _$$SingleTrackImplToJson(_$SingleTrackImpl instance) =>
       'id': instance.id,
       'name': instance.name,
       'album': instance.album,
-      'artist': instance.artist,
+      'artists': instance.artists,
       'spotifyId': instance.spotifyId,
       'imageUrl': instance.imageUrl,
+      'index': instance.index,
     };

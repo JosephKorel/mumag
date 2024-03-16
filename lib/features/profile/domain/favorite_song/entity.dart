@@ -31,9 +31,10 @@ class SingleTrack with _$SingleTrack implements BaseFromJson<SingleTrack> {
     required int id,
     required String name,
     required SimpleAlbum album,
-    required List<SimpleArtist> artist,
+    required List<SimpleArtist> artists,
     required String spotifyId,
     required String imageUrl,
+    @Default(0) int index,
   }) = _SingleTrack;
 
   factory SingleTrack.fromSpotifyTrack(Track track) {
@@ -46,7 +47,7 @@ class SingleTrack with _$SingleTrack implements BaseFromJson<SingleTrack> {
       ),
       imageUrl: track.album?.images?[1].url ?? '',
       spotifyId: track.id ?? '',
-      artist: track.artists
+      artists: track.artists
               ?.map(
                 (e) => SimpleArtist(
                   name: e.name ?? '',
@@ -67,11 +68,17 @@ class SingleTrack with _$SingleTrack implements BaseFromJson<SingleTrack> {
   SingleTrack fromJson(Map<String, dynamic> json) =>
       _$SingleTrackFromJson(json);
 
+  static Map<String, dynamic> toMap(SingleTrack track, int index) => {
+        ...track.toJson(),
+        'userId': track.id,
+        'index': index,
+      };
+
   MediaEntity toMediaEntity() => MediaEntity(
         name: name,
         spotifyId: spotifyId,
         type: RatingType.track,
         imageUrl: imageUrl,
-        artists: artist.map((e) => e.name).toList(),
+        artists: artists.map((e) => e.name).toList(),
       );
 }
