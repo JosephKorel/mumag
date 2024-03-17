@@ -205,6 +205,15 @@ final class CreateFavSongException extends AppException {
   final Object error;
 }
 
+final class GetFavSongException extends AppException {
+  GetFavSongException({
+    required this.error,
+    super.errorMsg = 'Failed to get your favorite songs',
+  });
+
+  final Object error;
+}
+
 final class CreateFavAlbumException extends AppException {
   CreateFavAlbumException({
     required this.error,

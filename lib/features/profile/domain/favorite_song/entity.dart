@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mumag/common/models/media/common.dart';
 import 'package:mumag/common/models/rating/rating_entity.dart';
-import 'package:mumag/features/profile/domain/data_repository.dart';
+import 'package:mumag/features/profile/domain/usecase_repository.dart';
 import 'package:spotify/spotify.dart';
 
 part 'entity.freezed.dart';

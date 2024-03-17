@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mumag/common/theme/utils.dart';
 import 'package:mumag/common/widgets/background_icon.dart';
+import 'package:mumag/common/widgets/favorites/card.dart';
 import 'package:mumag/features/profile/domain/favorite_song/entity.dart';
 import 'package:mumag/features/profile/presentation/providers/favorite_songs.dart';
 import 'package:mumag/features/profile/presentation/providers/favorite_titles/provider.dart';
@@ -21,6 +22,9 @@ class FavoriteSongsContainer extends ConsumerWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         FavoriteSongsTitleWidget(title: favoriteTitles.songsTitle),
+        const SizedBox(
+          height: 16,
+        ),
         Expanded(
           child: UserFavoriteSongs(
             mediaList: songs,
@@ -104,8 +108,9 @@ class UserFavoriteSongs extends StatelessWidget {
 
     return ListView.builder(
       itemCount: mediaList.length,
-      itemBuilder: (context, index) => Text(
-        mediaList[index].name,
+      padding: EdgeInsets.zero,
+      itemBuilder: (context, index) => FavoriteSongTile(
+        data: mediaList[index].toMediaEntity(),
       ),
     );
   }

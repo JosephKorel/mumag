@@ -6,12 +6,40 @@ part of 'favorite_songs.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$favSongsImplHash() => r'ca45731bfaf70662b55ac78a86ae4d698af797f3';
+String _$songsParamsHash() => r'9d4199f5f1a15fe2ed514d1aab810e75ddaf7d73';
+
+/// See also [songsParams].
+@ProviderFor(songsParams)
+final songsParamsProvider = AutoDisposeProvider<FavoriteParams>.internal(
+  songsParams,
+  name: r'songsParamsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$songsParamsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef SongsParamsRef = AutoDisposeProviderRef<FavoriteParams>;
+String _$favDatasourceHash() => r'28044d28c1c8fde27f923b29285f54766ed54529';
+
+/// See also [favDatasource].
+@ProviderFor(favDatasource)
+final favDatasourceProvider = AutoDisposeProvider<FavoriteDatasource>.internal(
+  favDatasource,
+  name: r'favDatasourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$favDatasourceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef FavDatasourceRef = AutoDisposeProviderRef<FavoriteDatasource>;
+String _$favSongsImplHash() => r'41f698524458c873de907958f58c8693a24e47eb';
 
 /// See also [favSongsImpl].
 @ProviderFor(favSongsImpl)
-final favSongsImplProvider =
-    AutoDisposeProvider<FavoriteRepositoryImpl>.internal(
+final favSongsImplProvider = AutoDisposeProvider<FavoritesRepository>.internal(
   favSongsImpl,
   name: r'favSongsImplProvider',
   debugGetCreateSourceHash:
@@ -20,7 +48,21 @@ final favSongsImplProvider =
   allTransitiveDependencies: null,
 );
 
-typedef FavSongsImplRef = AutoDisposeProviderRef<FavoriteRepositoryImpl>;
+typedef FavSongsImplRef = AutoDisposeProviderRef<FavoritesRepository>;
+String _$songsUsecaseHash() => r'03bfc54fd6ed5a9402f7e06434222eb4546f6715';
+
+/// See also [songsUsecase].
+@ProviderFor(songsUsecase)
+final songsUsecaseProvider = AutoDisposeProvider<FavoriteSongUsecase>.internal(
+  songsUsecase,
+  name: r'songsUsecaseProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$songsUsecaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef SongsUsecaseRef = AutoDisposeProviderRef<FavoriteSongUsecase>;
 String _$localFavSongsHash() => r'1dfbc51f91acab3d7abb4aa6bacf38f768d599c9';
 
 /// See also [localFavSongs].
@@ -50,66 +92,7 @@ final userSongsProvider = AutoDisposeProvider<List<SingleTrack>>.internal(
 );
 
 typedef UserSongsRef = AutoDisposeProviderRef<List<SingleTrack>>;
-String _$songsImplHash() => r'8e919c45bac338d377ad816744e3bf2a417c9777';
-
-/// See also [songsImpl].
-@ProviderFor(songsImpl)
-final songsImplProvider = AutoDisposeProvider<FavoriteRepositoryImpl>.internal(
-  songsImpl,
-  name: r'songsImplProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$songsImplHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef SongsImplRef = AutoDisposeProviderRef<FavoriteRepositoryImpl>;
-String _$songsRepositoryHash() => r'8a4e2b63fff96fc53992ad0c0cd7dc8b1ef88475';
-
-/// See also [songsRepository].
-@ProviderFor(songsRepository)
-final songsRepositoryProvider =
-    AutoDisposeProvider<FavoritesRepository>.internal(
-  songsRepository,
-  name: r'songsRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$songsRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef SongsRepositoryRef = AutoDisposeProviderRef<FavoritesRepository>;
-String _$songsUsecaseHash() => r'c6bf25977af0ce0ba183debd4a49f18b50ce8d45';
-
-/// See also [songsUsecase].
-@ProviderFor(songsUsecase)
-final songsUsecaseProvider = AutoDisposeProvider<FavoriteSongUsecase>.internal(
-  songsUsecase,
-  name: r'songsUsecaseProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$songsUsecaseHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef SongsUsecaseRef = AutoDisposeProviderRef<FavoriteSongUsecase>;
-String _$userFavSongsHash() => r'b27f5523fe1db41bc45f02d6314dc76d29713fa6';
-
-/// See also [userFavSongs].
-@ProviderFor(userFavSongs)
-final userFavSongsProvider =
-    AutoDisposeFutureProvider<List<SingleTrack>>.internal(
-  userFavSongs,
-  name: r'userFavSongsProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$userFavSongsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef UserFavSongsRef = AutoDisposeFutureProviderRef<List<SingleTrack>>;
-String _$saveSongsHash() => r'fbb68ecaace5245937359396753d55a255a0f8b5';
+String _$saveSongsHash() => r'81aaed1ea0208aed111f7e6d47cf353d8fcd7c0a';
 
 /// Copied from Dart SDK
 class _SystemHash {
